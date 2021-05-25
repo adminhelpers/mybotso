@@ -80,10 +80,11 @@ class events(commands.Cog):
 
         if name == None:
             return await ctx.send(embed = setembed(text = f'❌ Вы не указали параметр `[название шаблона]`\n\n『🗓』**{prefix}new_embed`(nmb)`** - `Создать новый шаблон эмбеда`\n-- Пример использования: `{prefix}nmb Новости 11.05`'), delete_after = 5)
-
-        otdel.insert_one({"guild": ctx.guild.id, "proverka": 1703, "name": name, "text": '-', "title": '-', "image": '-', "thumbnail": '-', "color": '-', "footer": '-', "everyone": 0, "goto": 0, "author": ctx.author.id, "active": 1, "number": len([i["name"] for i in otdel.find({"guild": ctx.guild.id, "proverka": 1703})]) + 1})
-        return await ctx.send(embed = setembed(text = f'✅ Вы успешно создани новый шаблон `[{name}]`, он выбран **основным** по умолчанию.\n\n『🕵』 Для того что бы узнать информацию по его заполнению используйте команду: `{prefix}embed_use(euse)`\n『📋』 Список команд embed-шаблонов: `{prefix}embed_help(ehelp)`'), delete_after = 15)
-   
+        number = otdel.find_one({"guild": ctx.guild.id, "proverka": 1702})["number"]    
+        otdel.insert_one({"guild": ctx.guild.id, "proverka": 1703, "name": name, "text": '-', "title": '-', "image": '-', "thumbnail": '-', "color": '-', "footer": '-', "everyone": 0, "goto": 0, "author": ctx.author.id, "active": 1, "number": number})
+        otdel.update_one({"guild": ctx.guild.id, "proverka": 1702, "number": number}, {"$set": {"number": int(number) + 1}})
+        return await ctx.send(embed = setembed(text = f'✅ Вы успешно создани новый шаблон `[{name} | №{number}]`, он выбран **основным** по умолчанию.\n\n『🕵』 Для того что бы узнать информацию по его заполнению используйте команду: `{prefix}embed_use(euse)`\n『📋』 Список команд embed-шаблонов: `{prefix}embed_help(ehelp)`'), delete_after = 15)
+        
     @commands.command(aliases = ['edelete'])
     @commands.has_permissions(administrator = True)
     async def embed_delete(self, ctx, amount: int = None):
