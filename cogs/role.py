@@ -71,8 +71,9 @@ class role(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, ctx):
         if ctx.content == f'<@!{self.bot.user.id}>' or  ctx.content == f'<@{self.bot.user.id}>':
-            await ctx.channel.send(f'{ctx.author.mention},', embed = discord.Embed(title = 'Основная информация', description = f'**Привет! Меня зовут Rodina RP бот.\nСоздатель бота: adminhelper#777\n\n> `Префикс установленный на этом сервере:`    /\n> `Ссылка на добавление бота:` https://discord.com/api/oauth2/authorize?client_id=729309765431328799&permissions=8&scope=bot\n\n`Информация о боте -` /botinfo\n`Информация по командам -` /help**', colour = 0xFB9E14), delete_after = 20)
-  
+            #await ctx.channel.send(f'{ctx.author.mention},', embed = discord.Embed(title = 'Основная информация', description = f'**Привет! Меня зовут Rodina RP бот.\nСоздатель бота: adminhelper#777\n\n> `Префикс установленный на этом сервере:`    /\n> `Ссылка на добавление бота:` https://discord.com/api/oauth2/authorize?client_id=729309765431328799&permissions=8&scope=bot\n\n`Информация о боте -` /botinfo\n`Информация по командам -` /help**', colour = 0xFB9E14), delete_after = 20)
+            return
+
         global uje
         role_registr = [ 'роль', 'роли', 'дайте роль', 'хочу роль', 'роль дайте', 'выдайте роль', '-роль', 'Роль', 'Роли', 'Дайте роль', 'Хочу роль', 'Роль дайте', 'Выдайте роль', '-Роль', '!Роль', '!роль' ]
         nick_registr = ['Пра', 'ФСБ', 'ГУВД', 'ГИБДД', 'ПЭ', 'МЗ', 'ПЛ', 'Армия', 'ТСР', 'ЦБ', 'НГ', 'ПР', 'КМ', 'ФМ', 'СТ', 'СБ', 'РМ', 'УМ', 'ЧК']
