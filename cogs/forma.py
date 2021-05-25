@@ -58,6 +58,14 @@ class getform(commands.Cog):
         if amount == None or not amount.split(' ')[0] in [f'{prefix}ban', f'{prefix}bantime', f'{prefix}kick', f'{prefix}warn', f'{prefix}unwarn', f'{prefix}mute', f'{prefix}unmute']:
             return await ctx.send(embed = discord.Embed(description = f':exclamation: **Пожалуйста ознакомьтесь с методом использования данной команды**\n\n> :sparkles: `| Как это работает?`\nВы отправляете форму на пользователя, после чего она будет добавлена в очередь, из которой её будут получать исполнители.\nПосле того, как Ваша форма будет принята, Вы получите уведомление об этом и данное действие будет записано в вашу модерскую статистику\n\n> :grey_question: `| Как правильно пользоваться командой?`\n**Команда:** `{prefix}addforma(af|форма) {prefix}command [**args]`\n\n> `{prefix}af {prefix}ban @Провокатор#1234 4.15 || dollar`\n-- Я добавлю в очередь форму на `бан` пользователя с указанием причины: `"4.15 || dollar"`\n\n> `{prefix}af {prefix}bantime @Провокатор#1234 3d 4.15 || dollar`\n-- Я добавлю в очередь форму на `временный бан` пользователя, сроком на `3 дня` с указанием причины: `"4.15 || dollar"`\n\n**Доступные команды**: `{prefix}ban, {prefix}bantime, {prefix}kick, {prefix}warn, {prefix}unwarn, {prefix}mute, {prefix}unmute`', color = 0xFB9E14), delete_after = 30)
 
+        if not amount.split(' ')[0] in [f'{prefix}unwarn', f'{prefix}unmute']:
+            try:
+                id = int(amount.split(' ')[1].replace('<@!', '').replace('>', ''))
+                if discord.utils.get(ctx.guild.members, id = id).top_role.position >= ctx.author.top_role.position:
+                    return await ctx.send(embed = discord.Embed(description = f'❌ Вы не можете наказать человека роль которого выше или равна вашей.', color = 0xFB9E14), delete_after = 10)
+            except:
+                return await ctx.send(embed = discord.Embed(description = f'❌ Вы не указали пользователя/ID либо указали его не верно.', color = 0xFB9E14), delete_after = 10)
+          
         message = await ctx.send(embed = discord.Embed(title = 'Подтверждение отправки формы', description = f'**Ваша форма:**\n> {amount}\n\n`Для подтверждения нажмите` ✅\n`Для отмены нажмите` ❌', color = 0xFB9E14), delete_after = 10)
         await message.add_reaction('✅')
         await message.add_reaction('❌')
