@@ -172,5 +172,5 @@ async def ставка(ctx, storona = None):
         await member.send(embed = discord.Embed(description = f'**Пользователи сделавшие ставки:\n{str_a}**'))
 '''
 
-tokens = ('NzI5MzA5NzY1NDMxMzI4Nzk5.XwHEpQ.1zBVN3jJibhlToIbKyW4jXEaD3I')
+tokens = ('NzI5MzA5NzY1NDMxMzI4Nzk5.XwHEpQ.lpJLdFAtNa10WYhOFghpD-s0558')
 bot.run(tokens)
