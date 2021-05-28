@@ -68,6 +68,41 @@ class role(commands.Cog):
         embed.set_thumbnail(url = ctx.guild.icon_url)
         await ctx.send(embed=embed)
 
+    @commands.command()
+    @commands.has_permissions(administrator = True)
+    async def allsn(self, ctx, member: discord.Member):
+        number = 0
+        for i in rolef.find({"is_active": 2, "leader": member.id}):
+            channel = self.bot.get_channel(i["kuda"])
+            message = await channel.fetch_messages(i["message_id"])
+            await message.delete()
+            rol = ctx.guild.get_role(i["role_id"])
+            chan = self.bot.get_channel(i["channel"])
+            membs = discord.utils.get(ctx.guild.members, id = i["leader"])
+            membr = discord.utils.get(ctx.guild.members, id = i["user_id"])
+            try:
+                await membr.remove_roles(rol)
+                number += 1
+                await chan.send(f'`[ACCEPT]` {ctx.author.mention} `одобрил снятие роли ({rol.name}) от` {membs.mention}, `пользователю {membr.display_name}, с ID: {membr.id}`')
+                mas.append(f'[ACCEPT №{number}]  | {ctx.author.display_name} одобрил снятие роли ({rol.name}) от {membs.display_name}, пользователю {membr.display_name}, с ID: {membr.id}\n')
+                rolef.delete_one({"_id": i["_id"]})
+                add(ctx.author, "derols")
+            except:
+                pass
+        obfile = open(f'{member.id}.txt', 'w', encoding='utf-8')
+        obfile.write(f'[System]: Начался процесс снятия ролей по формам {member.display_name}\n\n')
+        
+        str_a = ''.join(mas)
+        try:
+            obfile.write(f'{str_a}\n\n')
+        except:
+            pass
+        obfile.write(f'[System]: По формам {member.display_name}({member}) было снято {number} ролей.')
+        obfile.close()
+
+        await ctx.send(embed = discord.Embed(description = f'💎 Выполнены все формы от пользователя {member.mention}`({member})`\n\n`Действия сохранены в системном файле`',colour=0xFB9E14),file=discord.File(fp=f'{member.id}.txt'))
+        os.remove(f'{member.id}.txt')
+
     @commands.Cog.listener()
     async def on_message(self, ctx):
         if ctx.content == f'<@!{self.bot.user.id}>' or  ctx.content == f'<@{self.bot.user.id}>':
