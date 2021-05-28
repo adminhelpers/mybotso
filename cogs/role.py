@@ -72,6 +72,7 @@ class role(commands.Cog):
     @commands.has_permissions(administrator = True)
     async def allsn(self, ctx, member: discord.Member):
         number = 0
+        mas = [ ]
         for i in rolef.find({"is_active": 2, "leader": member.id}):
             channel = self.bot.get_channel(i["kuda"])
             message = await channel.fetch_message(i["message_id"])
@@ -81,9 +82,9 @@ class role(commands.Cog):
             membs = discord.utils.get(ctx.guild.members, id = i["leader"])
             membr = discord.utils.get(ctx.guild.members, id = i["user_id"])
             try:
-                await membr.remove_roles(rol)
+                #await membr.remove_roles(rol)
                 number += 1
-                await chan.send(f'`[ACCEPT]` {ctx.author.mention} `одобрил снятие роли ({rol.name}) от` {membs.mention}, `пользователю {membr.display_name}, с ID: {membr.id}`')
+                #await chan.send(f'`[ACCEPT]` {ctx.author.mention} `одобрил снятие роли ({rol.name}) от` {membs.mention}, `пользователю {membr.display_name}, с ID: {membr.id}`')
                 mas.append(f'[ACCEPT №{number}]  | {ctx.author.display_name} одобрил снятие роли ({rol.name}) от {membs.display_name}, пользователю {membr.display_name}, с ID: {membr.id}\n')
                 rolef.delete_one({"_id": i["_id"]})
                 add(ctx.author, "derols")
