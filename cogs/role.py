@@ -74,7 +74,7 @@ class role(commands.Cog):
         number = 0
         for i in rolef.find({"is_active": 2, "leader": member.id}):
             channel = self.bot.get_channel(i["kuda"])
-            message = await channel.fetch_messages(i["message_id"])
+            message = await channel.fetch_message(i["message_id"])
             await message.delete()
             rol = ctx.guild.get_role(i["role_id"])
             chan = self.bot.get_channel(i["channel"])
