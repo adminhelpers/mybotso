@@ -244,8 +244,7 @@ class role(commands.Cog):
                 await ctx.delete()
                 return await ctx.channel.send(embed = discord.Embed(description = f'**❌ {ctx.author.name}, получать роли нужно только в канале <#815924842984898590>!**', colour = 0xFB9E14), delete_after = 5)
 
-            ath = re.findall(r'\w*', ctx.author.display_name)
-            ath = ctx.author.display_name.split(' ')
+            ath = ctx.author.display_name.split(' ').replace('[', '').replace(']', '')
             for z in ath:
                 if z in nick_registr:
                     break
