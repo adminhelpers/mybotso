@@ -246,6 +246,7 @@ class role(commands.Cog):
 
             ath = ctx.author.display_name.split(' ')
             for z in ath:
+                print(z.replace('[', '').replace(']', ''))
                 if z.replace('[', '').replace(']', '') in nick_registr:
                     break
 
