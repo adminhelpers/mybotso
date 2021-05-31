@@ -248,6 +248,7 @@ class role(commands.Cog):
             for z in ath:
                 print(z.replace('[', '').replace(']', ''))
                 if z.replace('[', '').replace(']', '') in nick_registr:
+                    z = z.replace('[', '').replace(']', '')
                     break
 
             if not z in nick_registr:
