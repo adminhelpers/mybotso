@@ -265,9 +265,18 @@ class getform(commands.Cog):
                                         sleep = int(time) * 60
                                         tp = f'{int(time)} минут'
                                     
-                                reason = nat["forma"].split(' ')[3]
+                                reas = nat["forma"].split(' ')
+                                reason = [f'{i} ' for i in reas]
+                                reason.remove(reason[0])
+                                reason.remove(reason[0])
+                                reason.remove(reason[0])
+                                reason = ''.join(reason)
                             else:
-                                reason = nat["forma"].split(' ')[2]
+                                reas = nat["forma"].split(' ')
+                                reason = [f'{i} ' for i in reas]
+                                reason.remove(reason[0])
+                                reason.remove(reason[0])
+                                reason = ''.join(reason)
 
                     if cmd == 'ban':
                         embed = discord.Embed(colour = member.color, timestamp = ctx.message.created_at) 
@@ -280,6 +289,8 @@ class getform(commands.Cog):
                         embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
                         channel = self.bot.get_channel(834039427541631016)
                         await channel.send(embed = embed) 
+                        logsuser = self.bot.get_channel(850605849343819836)
+                        await loguser.send(embed = embed)
                         await ctx.guild.ban(member, reason = f'BANNED by {modr} | REASON: {reason} | FORM ACCEPTED: {ctx.author.display_name}')
 
                     elif cmd == 'kick':
@@ -293,6 +304,8 @@ class getform(commands.Cog):
                         embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
                         channel = self.bot.get_channel(834039427541631016)
                         await channel.send(embed = embed) 
+                        logsuser = self.bot.get_channel(850605849343819836)
+                        await loguser.send(embed = embed)
                         await ctx.guild.kick(member, reason = f'KICK by {modr} | REASON: {reason} | FORM ACCEPTED: {ctx.author.display_name}')
 
                     elif cmd == 'mute':
@@ -311,6 +324,8 @@ class getform(commands.Cog):
                         embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
                         logs = self.bot.get_channel(834039427541631016)
                         await logs.send(embed = embed)
+                        logsuser = self.bot.get_channel(850605849343819836)
+                        await loguser.send(embed = embed)
                         await member.add_roles(mute_role)
                         muted.insert_one({"guild": ctx.guild.id, "id": member.id, "time": sleep})
 
@@ -328,6 +343,8 @@ class getform(commands.Cog):
                             embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
                             channel = self.bot.get_channel(834039427541631016)
                             await channel.send(embed = embed) 
+                            logsuser = self.bot.get_channel(850605849343819836)
+                            await loguser.send(embed = embed)
                             embed = discord.Embed(colour = member.color, timestamp = ctx.message.created_at) 
                             embed.set_author(name = f'Вы были временно забанены на сервере {ctx.guild.name}!')
                             embed.add_field(name = 'Модератор отправивший форму:', value = f'**{modr.mention}**`({modr})`', inline = False)    
@@ -353,6 +370,8 @@ class getform(commands.Cog):
                         await member.remove_roles(mute_role)
                         logs = self.bot.get_channel(834039427541631016)
                         await logs.send(embed = discord.Embed(description = f'**Модератор {ctx.author.mention}`({ctx.author})`, снял мут с пользователя {member.mention}`({member})` по форме от {modr.mention}`({modr})`**', colour = 0xFB9E14, timestamp = ctx.message.created_at))
+                        logsuser = self.bot.get_channel(850605849343819836)
+                        await loguser.send(embed = discord.Embed(description = f'**Модератор {ctx.author.mention}`({ctx.author})`, снял мут с пользователя {member.mention}`({member})` по форме от {modr.mention}`({modr})`**', colour = 0xFB9E14, timestamp = ctx.message.created_at))
                     
                     elif cmd == 'warn':
                         s = 0
@@ -367,7 +386,7 @@ class getform(commands.Cog):
                             warns.update_one({"proverka": 1}, {"$set": {"numbed": warns.find_one({"proverka": 1})["numbed"] + 1}})
                             embed = discord.Embed(colour = member.color, timestamp = ctx.message.created_at) 
                             embed.set_author(name = f'Пользователь был кикнут по форме!')
-                            embed.add_field(name = 'Пользователь', value = f'**{member.display_name}** ({member.id})', inline = False) 
+                            embed.add_field(name = 'Пользователь', value = f'**{member.display_name}**`({member})`', inline = False) 
                             embed.add_field(name = 'Модератор отправивший форму:', value = f'**{modr.mention}**`({modr})`', inline = False)    
                             embed.add_field(name = 'Модератор принявший форму:', value = f'**{ctx.author.mention}**`({ctx.author})`', inline = False) 
                             embed.add_field(name = 'Причина', value = f'3/6 Предупреждений | `(Команда {prefix}warn)` | Last: {reason}', inline = False)  
@@ -375,6 +394,8 @@ class getform(commands.Cog):
                             embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
                             channel = self.bot.get_channel(834039427541631016)
                             await channel.send(embed = embed) 
+                            logsuser = self.bot.get_channel(850605849343819836)
+                            await loguser.send(embed = embed)
                         elif int(s) == 5:
                             reason = f'[{ctx.message.created_at.strftime("%m.%d - %H:%M:%S")}]: {reason}'
                             await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, вы выдали пользователю {member.mention} предупреждение.\nКол-во предупреждений: 6/6 | Пользователь забанен.**', colour = 0xFB9E14))
@@ -383,7 +404,7 @@ class getform(commands.Cog):
                                 warns.delete_one({"_id": i["id"]})
                             embed = discord.Embed(colour = member.color, timestamp = ctx.message.created_at) 
                             embed.set_author(name = f'Пользователь был забанен по форме!')
-                            embed.add_field(name = 'Пользователь', value = f'**{member.display_name}** ({member.id})', inline = False) 
+                            embed.add_field(name = 'Пользователь', value = f'**{member.display_name}**`({member})`', inline = False) 
                             embed.add_field(name = 'Модератор отправивший форму:', value = f'**{modr.mention}**`({modr})`', inline = False)    
                             embed.add_field(name = 'Модератор принявший форму:', value = f'**{ctx.author.mention}**`({ctx.author})`', inline = False) 
                             embed.add_field(name = 'Причина', value = f'6/6 Предупреждений | `(Команда {prefix}warn)` | Last: {reason}', inline = False)  
@@ -391,13 +412,15 @@ class getform(commands.Cog):
                             embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
                             channel = self.bot.get_channel(834039427541631016)
                             await channel.send(embed = embed) 
+                            logsuser = self.bot.get_channel(850605849343819836)
+                            await loguser.send(embed = embed)
                         else:
                             reason = f'[{ctx.message.created_at.strftime("%m.%d - %H:%M:%S")}]: {reason}'
                             warns.insert_one({"proverka": 0, "numbed": warns.find_one({"proverka": 1})["numbed"], "id": member.id, "kto": f'{modr.name}#{modr.discriminator}', "reas": reason})
                             warns.update_one({"proverka": 1}, {"$set": {"numbed": warns.find_one({"proverka": 1})["numbed"] + 1}})
                             chan = self.bot.get_channel(834039427541631016)
                             embed = discord.Embed(title = 'Пользователю выдано предупреждение по форме!', colour = 0xFB9E14, timestamp = ctx.message.created_at)
-                            embed.add_field(name = 'Пользователь', value = f'**{member.display_name}** ({member.id})', inline = False) 
+                            embed.add_field(name = 'Пользователь', value = f'**{member.display_name}**`({member})`', inline = False) 
                             embed.add_field(name = 'Модератор отправивший форму:', value = f'**{modr.mention}**`({modr})`', inline = False)    
                             embed.add_field(name = 'Модератор принявший форму:', value = f'**{ctx.author.mention}**`({ctx.author})`', inline = False) 
                             embed.add_field(name = 'Количество предупреждений', value = f'**{s}/3**', inline = False)
@@ -405,6 +428,8 @@ class getform(commands.Cog):
                             embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = self.bot.user.avatar_url)
                             embed.set_thumbnail(url = ctx.guild.icon_url)
                             await chan.send(embed = embed)
+                            logsuser = self.bot.get_channel(850605849343819836)
+                            await loguser.send(embed = embed)
 
                     elif cmd == 'unwarn':
                         if warns.count_documents({"numbed": numbed}) == 1:    
