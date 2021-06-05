@@ -290,7 +290,7 @@ class getform(commands.Cog):
                         channel = self.bot.get_channel(834039427541631016)
                         await channel.send(embed = embed) 
                         logsuser = self.bot.get_channel(850605849343819836)
-                        await loguser.send(embed = embed)
+                        await logsuser.send(embed = embed)
                         await ctx.guild.ban(member, reason = f'BANNED by {modr} | REASON: {reason} | FORM ACCEPTED: {ctx.author.display_name}')
 
                     elif cmd == 'kick':
@@ -305,7 +305,7 @@ class getform(commands.Cog):
                         channel = self.bot.get_channel(834039427541631016)
                         await channel.send(embed = embed) 
                         logsuser = self.bot.get_channel(850605849343819836)
-                        await loguser.send(embed = embed)
+                        await logsuser.send(embed = embed)
                         await ctx.guild.kick(member, reason = f'KICK by {modr} | REASON: {reason} | FORM ACCEPTED: {ctx.author.display_name}')
 
                     elif cmd == 'mute':
@@ -325,7 +325,7 @@ class getform(commands.Cog):
                         logs = self.bot.get_channel(834039427541631016)
                         await logs.send(embed = embed)
                         logsuser = self.bot.get_channel(850605849343819836)
-                        await loguser.send(embed = embed)
+                        await logsuser.send(embed = embed)
                         await member.add_roles(mute_role)
                         muted.insert_one({"guild": ctx.guild.id, "id": member.id, "time": sleep})
 
@@ -344,7 +344,7 @@ class getform(commands.Cog):
                             channel = self.bot.get_channel(834039427541631016)
                             await channel.send(embed = embed) 
                             logsuser = self.bot.get_channel(850605849343819836)
-                            await loguser.send(embed = embed)
+                            await logsuser.send(embed = embed)
                             embed = discord.Embed(colour = member.color, timestamp = ctx.message.created_at) 
                             embed.set_author(name = f'Вы были временно забанены на сервере {ctx.guild.name}!')
                             embed.add_field(name = 'Модератор отправивший форму:', value = f'**{modr.mention}**`({modr})`', inline = False)    
@@ -371,7 +371,7 @@ class getform(commands.Cog):
                         logs = self.bot.get_channel(834039427541631016)
                         await logs.send(embed = discord.Embed(description = f'**Модератор {ctx.author.mention}`({ctx.author})`, снял мут с пользователя {member.mention}`({member})` по форме от {modr.mention}`({modr})`**', colour = 0xFB9E14, timestamp = ctx.message.created_at))
                         logsuser = self.bot.get_channel(850605849343819836)
-                        await loguser.send(embed = discord.Embed(description = f'**Модератор {ctx.author.mention}`({ctx.author})`, снял мут с пользователя {member.mention}`({member})` по форме от {modr.mention}`({modr})`**', colour = 0xFB9E14, timestamp = ctx.message.created_at))
+                        await logsuser.send(embed = discord.Embed(description = f'**Модератор {ctx.author.mention}`({ctx.author})`, снял мут с пользователя {member.mention}`({member})` по форме от {modr.mention}`({modr})`**', colour = 0xFB9E14, timestamp = ctx.message.created_at))
                     
                     elif cmd == 'warn':
                         s = 0
@@ -395,7 +395,7 @@ class getform(commands.Cog):
                             channel = self.bot.get_channel(834039427541631016)
                             await channel.send(embed = embed) 
                             logsuser = self.bot.get_channel(850605849343819836)
-                            await loguser.send(embed = embed)
+                            await logsuser.send(embed = embed)
                         elif int(s) == 5:
                             reason = f'[{ctx.message.created_at.strftime("%m.%d - %H:%M:%S")}]: {reason}'
                             await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, вы выдали пользователю {member.mention} предупреждение.\nКол-во предупреждений: 6/6 | Пользователь забанен.**', colour = 0xFB9E14))
@@ -413,7 +413,7 @@ class getform(commands.Cog):
                             channel = self.bot.get_channel(834039427541631016)
                             await channel.send(embed = embed) 
                             logsuser = self.bot.get_channel(850605849343819836)
-                            await loguser.send(embed = embed)
+                            await logsuser.send(embed = embed)
                         else:
                             reason = f'[{ctx.message.created_at.strftime("%m.%d - %H:%M:%S")}]: {reason}'
                             warns.insert_one({"proverka": 0, "numbed": warns.find_one({"proverka": 1})["numbed"], "id": member.id, "kto": f'{modr.name}#{modr.discriminator}', "reas": reason})
@@ -429,7 +429,7 @@ class getform(commands.Cog):
                             embed.set_thumbnail(url = ctx.guild.icon_url)
                             await chan.send(embed = embed)
                             logsuser = self.bot.get_channel(850605849343819836)
-                            await loguser.send(embed = embed)
+                            await logsuser.send(embed = embed)
 
                     elif cmd == 'unwarn':
                         if warns.count_documents({"numbed": numbed}) == 1:    
