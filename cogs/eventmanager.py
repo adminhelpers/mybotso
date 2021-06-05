@@ -153,10 +153,10 @@ class events(commands.Cog):
                     return await ctx.send(embed = setembed(title = 'Отмена', text = f'❌ Старая информация успешно сохранена.'), delete_after = 5) 
                 elif str(react.emoji) == '✅':
                     otdel.update_one({"guild": ctx.guild.id, "proverka": 1703, "author": ctx.author.id, "active": 1}, {"$set": {"text": amount}})
-                    return await ctx.send(embed = setembed(title = 'Успешно!', text = f'✅ Вы установили новый текст в embed-сообщение в шаблоне `[{n["name"]}]`:\n> {amount}'), delete_after = 15) 
+                    return await ctx.send(embed = setembed(title = 'Успешно!', text = f'✅ Вы установили новый текст в embed-сообщение в шаблоне `[{n["name"]}]`:\n{amount}'), delete_after = 15) 
         else:
             otdel.update_one({"guild": ctx.guild.id, "proverka": 1703, "author": ctx.author.id, "active": 1}, {"$set": {"text": amount}})
-            return await ctx.send(embed = setembed(title = 'Успешно!', text = f'✅ Вы установили новый текст в embed-сообщение в шаблоне `[{n["name"]}]`:\n> {amount}'), delete_after = 15) 
+            return await ctx.send(embed = setembed(title = 'Успешно!', text = f'✅ Вы установили новый текст в embed-сообщение в шаблоне `[{n["name"]}]`:\n{amount}'), delete_after = 15) 
 
     @commands.command(aliases = ['euse'])
     @commands.has_permissions(administrator = True)
@@ -283,11 +283,11 @@ class events(commands.Cog):
             return await ctx.send(embed = setembed(text = f'❌ Вы не имеете ни одного шаблона!\nДля того что бы его создать используйте `{prefix}new_embed(nmb)`'), delete_after = 5)
     
         if amount == None or not amount in [0, 1]:
-            return await ctx.send(embed = setembed(text = f'❌ Вы не указали параметр `[значение | 1 - С упоминанием, 0 - Без упоминания @everyone]`\n\n『🔳』**{prefix}embed_everyone`(everyemb)`** - `Установить значение упоминания @everyone`\n-- Пример использования: `{prefix}everyemb 1`'), delete_after = 5)
+            return await ctx.send(embed = setembed(text = f'❌ Вы не указали параметр упоминания @everyone `[значение | 1 - С упоминанием, 0 - Без упоминания @everyone]`\n\n『🔳』**{prefix}embed_everyone`(everyemb)`** - `Установить значение упоминания @everyone`\n-- Пример использования: `{prefix}everyemb 1`'), delete_after = 10)
 
         otdel.update_one({"guild": ctx.guild.id, "proverka": 1703, "author": ctx.author.id, "active": 1}, {"$set": {"everyone": int(amount)}})
         answer = {0: "Не упоминать", 1: "Упоминать"}
-        return await ctx.send(embed = setembed(title = 'Успешно!', text = f'✅ Вы значение упоминания @everyone на `[{answer[int(amount)]}]`'), delete_after = 15)
+        return await ctx.send(embed = setembed(title = 'Успешно!', text = f'✅ Вы установили значение упоминания @everyone на `[{answer[int(amount)]}]`'), delete_after = 15)
 
     @commands.command(aliases = ['ename'])
     @commands.has_permissions(administrator = True)
@@ -429,7 +429,7 @@ class events(commands.Cog):
 
         prefix = reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]
 
-        embed = discord.Embed(title = 'Настройка мероприятия', description = f'**Команды доступные для Вас:**\n> 『⏳』 `{prefix}new_embed(nmb)` - Создать embed-шаблон\n> 『🗓』 `{prefix}embed_text(etext)` - Установить текст embed-сообщения\n-- Пример использования: `{prefix}etext Всем привет, сейчас я покажу Вам как работает система embed-сообщений!`\n> 『📋』 `{prefix}embed_use(euse)` - Схема использования embed-системы.\n> 『🔳』 `{prefix}embed_footer(efooter)` - Установить подпись в embed-сообщение\n-- Пример использования: `{prefix}efooter Support Team by dollar ム baby#3603`\n> 『🪁』 `{prefix}embed_image(eimage)` - Установить изображение в embed-сообщение\n-- Пример использования: `{prefix}eimage https://clck.ru/UkEeQ` | `"-" вместо ссылки уберёт картинку из сообщения`\n> 『🚩』 `{prefix}embed_everyone(everyemb)` - Установить значение упоминания @everyone\n-- Пример использования: `{prefix}everyemb 1 | [значение | 1 - С упоминанием, 0 - Без упоминания @everyone]`\n> 『🌟』 `{prefix}embed_thumbnail(ethumb)` - Установить боковую фотографию embed-сообщения\n-- Пример использования: `{prefix}ethumb https://clck.ru/UkEeQ` | `"-" вместо ссылки будет использовать аватар сервера`\n\n> 『🎭』 `{prefix}embed_visual(evs)` - Посмотреть внешний вид embed-шаблона\n> 『📌』 `{prefix}get_embed(gmb)` - Выбрать необходимый шаблон\n> 『🕵』 `{prefix}my_embeds(myemb)` - Посмотреть список ваших шаблонов\n> 『 🌹 』 `{prefix}embed_color(ecolor)` - Установить цвет embed-сообщения\n> 『🔔』 `{prefix}embed_send(esend)` - Отправить embed-сообщение в канал\n> 『🔒』 `{prefix}embed_delete(edelete)` - Удалить шаблон embed-сообщения', color = 0xFB0E14)
+        embed = discord.Embed(title = 'Настройка embed-шаблона', description = f'**Команды доступные для Вас:**\n> 『⏳』 `{prefix}new_embed(nmb)` - Создать embed-шаблон\n> 『🗓』 `{prefix}embed_text(etext)` - Установить текст embed-сообщения\n-- Пример использования: `{prefix}etext Всем привет, сейчас я покажу Вам как работает система embed-сообщений!`\n> 『📋』 `{prefix}embed_use(euse)` - Схема использования embed-системы.\n> 『🔳』 `{prefix}embed_footer(efooter)` - Установить подпись в embed-сообщение\n-- Пример использования: `{prefix}efooter Support Team by dollar ム baby#3603`\n> 『🪁』 `{prefix}embed_image(eimage)` - Установить изображение в embed-сообщение\n-- Пример использования: `{prefix}eimage https://clck.ru/UkEeQ` | `"-" вместо ссылки уберёт картинку из сообщения`\n> 『🚩』 `{prefix}embed_everyone(everyemb)` - Установить значение упоминания @everyone\n-- Пример использования: `{prefix}everyemb 1 | [значение | 1 - С упоминанием, 0 - Без упоминания @everyone]`\n> 『🌟』 `{prefix}embed_thumbnail(ethumb)` - Установить боковую фотографию embed-сообщения\n-- Пример использования: `{prefix}ethumb https://clck.ru/UkEeQ` | `"-" вместо ссылки будет использовать аватар сервера`\n\n> 『🎭』 `{prefix}embed_visual(evs)` - Посмотреть внешний вид embed-шаблона\n> 『📌』 `{prefix}get_embed(gmb)` - Выбрать необходимый шаблон\n> 『🕵』 `{prefix}my_embeds(myemb)` - Посмотреть список ваших шаблонов\n> 『 🌹 』 `{prefix}embed_color(ecolor)` - Установить цвет embed-сообщения\n> 『🔔』 `{prefix}embed_send(esend)` - Отправить embed-сообщение в канал\n> 『🔒』 `{prefix}embed_delete(edelete)` - Удалить шаблон embed-сообщения', color = 0xFB0E14)
         embed.set_thumbnail(url = ctx.guild.icon_url)
         embed.set_footer(text = f'❌ - Закрыть | Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
         message = await ctx.send(embed = embed)
@@ -691,8 +691,8 @@ class events(commands.Cog):
 
         nat = event.find_one({"guild": ctx.guild.id, "channelid": ctx.channel.id})
         name, org, site, ecolor = 'Не заполнено' if nat["eventname"] == '-' else nat["eventname"], 'Не указан' if nat["organize"] == 0 else f'{discord.utils.get(ctx.guild.members, id = nat["organize"]).mention}`({discord.utils.get(ctx.guild.members, id = nat["organize"])})`', 'Не установлена' if nat["eventtext"] == '-' else nat["eventtext"], '0xFB9E14' if nat["embedcolor"] == '-' else nat["embedcolor"]
-        date, times, chan, thems = 'Дата не установлена' if nat["eventdate"] == '-' else nat["eventdate"], 'Время не установлено' if nat["eventtime"] == '-' else nat["eventtime"], 'Не установлен' if nat["etext"] == 0 else f'#{self.bot.get_channel(nat["etext"]).name}', 'Не установлена' if nat["theme"] == '-' else nat["theme"]
-        embed = discord.Embed(title = f'Мероприятие: {name}', description = f'**Организатор:** {org}\n**Название мероприятия:** `{name}`\n\n**Тематика мероприятия:** {thems}\n**Суть мероприятия:**\n> `{site}`', color = int(ecolor, 16), timestamp = ctx.message.created_at)
+        date, times, chan, thems, priz = 'Дата не установлена' if nat["eventdate"] == '-' else nat["eventdate"], 'Время не установлено' if nat["eventtime"] == '-' else nat["eventtime"], 'Не установлен' if nat["etext"] == 0 else f'#{self.bot.get_channel(nat["etext"]).name}', 'Не установлена' if nat["theme"] == '-' else nat["theme"], f'**\n\nПризовые места:**\n>{nat["eventpriz"]}' if nat["eventpriz"] != '-' else ''
+        embed = discord.Embed(title = f'Мероприятие: {name}', description = f'**Организатор:** {org}\n**Название мероприятия:** `{name}`\n\n**Тематика мероприятия:** {thems}\n**Суть мероприятия:**\n`{site}`{priz}', color = int(ecolor, 16), timestamp = ctx.message.created_at)
         embed.add_field(name="‎‎‎‎", value="‎", inline=True)
         embed.add_field(name = f'🗓 {date}', value = '✅ __Буду точно__ `(0)`', inline = False)
         embed.add_field(name="‎‎‎‎", value="‎", inline=True)
@@ -751,8 +751,8 @@ class events(commands.Cog):
                 except:
                     pass
                 name, org, site, ecolor = 'Не заполнено' if nat["eventname"] == '-' else nat["eventname"], 'Не указан' if nat["organize"] == 0 else f'{discord.utils.get(guild.members, id = nat["organize"]).mention}`({discord.utils.get(guild.members, id = nat["organize"])})`', 'Не установлена' if nat["eventtext"] == '-' else nat["eventtext"], '0xFB9E14' if nat["embedcolor"] == '-' else nat["embedcolor"]
-                date, times, chan, thems = 'Дата не установлена' if nat["eventdate"] == '-' else nat["eventdate"], 'Время не установлено' if nat["eventtime"] == '-' else nat["eventtime"], 'Не установлен' if nat["etext"] == 0 else f'#{self.bot.get_channel(840934012637020190).name}', 'Не установлена' if nat["theme"] == '-' else nat["theme"]
-                embed = discord.Embed(title = f'Мероприятие: {name}', description = f'**Организатор:** {org}\n**Название мероприятия:** `{name}`\n\n**Тематика мероприятия:** {thems}\n**Суть мероприятия:**\n> `{site}`', color = int(ecolor, 16), timestamp = message.created_at)
+                date, times, chan, thems, priz = 'Дата не установлена' if nat["eventdate"] == '-' else nat["eventdate"], 'Время не установлено' if nat["eventtime"] == '-' else nat["eventtime"], 'Не установлен' if nat["etext"] == 0 else f'#{self.bot.get_channel(nat["etext"]).name}', 'Не установлена' if nat["theme"] == '-' else nat["theme"], f'**\n\nПризовые места:**\n>{nat["eventpriz"]}' if nat["eventpriz"] != '-' else ''
+                embed = discord.Embed(title = f'Мероприятие: {name}', description = f'**Организатор:** {org}\n**Название мероприятия:** `{name}`\n\n**Тематика мероприятия:** {thems}\n**Суть мероприятия:**\n`{site}`{priz}', color = int(ecolor, 16), timestamp = ctx.message.created_at)
                 embed.add_field(name="‎‎‎‎", value="‎", inline=True)
                 embed.add_field(name = f'🗓 {date}', value = f'✅ __Буду точно__ `({event.find_one({"guild_id": guild.id, "id": message.id, "proverka": 1703})["lenmemberaccept"]})`:\n{"".join([f"`{discord.utils.get(guild.members, id = i)}`, " for i in event.find_one({"guild_id": guild.id, "id": message.id, "proverka": 1703})["accept"] if not i == 0])}', inline = False)
                 embed.add_field(name="‎‎‎‎", value="‎", inline=True)
@@ -790,8 +790,8 @@ class events(commands.Cog):
                 await self.bot.get_channel(840934012637020190).set_permissions(memb, view_channel = False, read_messages = False, read_message_history = False)
 
                 name, org, site, ecolor = 'Не заполнено' if nat["eventname"] == '-' else nat["eventname"], 'Не указан' if nat["organize"] == 0 else f'{discord.utils.get(guild.members, id = nat["organize"]).mention}`({discord.utils.get(guild.members, id = nat["organize"])})`', 'Не установлена' if nat["eventtext"] == '-' else nat["eventtext"], '0xFB9E14' if nat["embedcolor"] == '-' else nat["embedcolor"]
-                date, times, chan, thems = 'Дата не установлена' if nat["eventdate"] == '-' else nat["eventdate"], 'Время не установлено' if nat["eventtime"] == '-' else nat["eventtime"], 'Не установлен' if nat["etext"] == 0 else f'#{self.bot.get_channel(840934012637020190).name}', 'Не установлена' if nat["theme"] == '-' else nat["theme"]
-                embed = discord.Embed(title = f'Мероприятие: {name}', description = f'**Организатор:** {org}\n**Название мероприятия:** `{name}`\n\n**Тематика мероприятия:** {thems}\n**Суть мероприятия:**\n> `{site}`', color = int(ecolor, 16), timestamp = message.created_at)
+                date, times, chan, thems, priz = 'Дата не установлена' if nat["eventdate"] == '-' else nat["eventdate"], 'Время не установлено' if nat["eventtime"] == '-' else nat["eventtime"], 'Не установлен' if nat["etext"] == 0 else f'#{self.bot.get_channel(nat["etext"]).name}', 'Не установлена' if nat["theme"] == '-' else nat["theme"], f'**\n\nПризовые места:**\n>{nat["eventpriz"]}' if nat["eventpriz"] != '-' else ''
+                embed = discord.Embed(title = f'Мероприятие: {name}', description = f'**Организатор:** {org}\n**Название мероприятия:** `{name}`\n\n**Тематика мероприятия:** {thems}\n**Суть мероприятия:**\n`{site}`{priz}', color = int(ecolor, 16), timestamp = ctx.message.created_at)
                 embed.add_field(name="‎‎‎‎", value="‎", inline=True)
                 embed.add_field(name = f'🗓 {date}', value = f'✅ __Буду точно__ `({event.find_one({"guild_id": guild.id, "id": message.id, "proverka": 1703})["lenmemberaccept"]})`:\n{"".join([f"`{discord.utils.get(guild.members, id = i)}`, " for i in event.find_one({"guild_id": guild.id, "id": message.id, "proverka": 1703})["accept"] if not i == 0])}', inline = False)
                 embed.add_field(name="‎‎‎‎", value="‎", inline=True)
@@ -822,8 +822,8 @@ class events(commands.Cog):
                 except:
                     pass
                 name, org, site, ecolor = 'Не заполнено' if nat["eventname"] == '-' else nat["eventname"], 'Не указан' if nat["organize"] == 0 else f'{discord.utils.get(guild.members, id = nat["organize"]).mention}`({discord.utils.get(guild.members, id = nat["organize"])})`', 'Не установлена' if nat["eventtext"] == '-' else nat["eventtext"], '0xFB9E14' if nat["embedcolor"] == '-' else nat["embedcolor"]
-                date, times, chan, thems = 'Дата не установлена' if nat["eventdate"] == '-' else nat["eventdate"], 'Время не установлено' if nat["eventtime"] == '-' else nat["eventtime"], 'Не установлен' if nat["etext"] == 0 else f'#{self.bot.get_channel(840934012637020190).name}', 'Не установлена' if nat["theme"] == '-' else nat["theme"]
-                embed = discord.Embed(title = f'Мероприятие: {name}', description = f'**Организатор:** {org}\n**Название мероприятия:** `{name}`\n\n**Тематика мероприятия:** {thems}\n**Суть мероприятия:**\n> `{site}`', color = int(ecolor, 16), timestamp = message.created_at)
+                date, times, chan, thems, priz = 'Дата не установлена' if nat["eventdate"] == '-' else nat["eventdate"], 'Время не установлено' if nat["eventtime"] == '-' else nat["eventtime"], 'Не установлен' if nat["etext"] == 0 else f'#{self.bot.get_channel(nat["etext"]).name}', 'Не установлена' if nat["theme"] == '-' else nat["theme"], f'**\n\nПризовые места:**\n>{nat["eventpriz"]}' if nat["eventpriz"] != '-' else ''
+                embed = discord.Embed(title = f'Мероприятие: {name}', description = f'**Организатор:** {org}\n**Название мероприятия:** `{name}`\n\n**Тематика мероприятия:** {thems}\n**Суть мероприятия:**\n`{site}`{priz}', color = int(ecolor, 16), timestamp = ctx.message.created_at)
                 embed.add_field(name="‎‎‎‎", value="‎", inline=True)
                 embed.add_field(name = f'🗓 {date}', value = f'✅ __Буду точно__ `({event.find_one({"guild_id": guild.id, "id": message.id, "proverka": 1703})["lenmemberaccept"]})`:\n{"".join([f"`{discord.utils.get(guild.members, id = i)}`,  " for i in event.find_one({"guild_id": guild.id, "id": message.id, "proverka": 1703})["accept"] if not i == 0])}', inline = False)
                 embed.add_field(name="‎‎‎‎", value="‎", inline=True)
@@ -849,7 +849,7 @@ class events(commands.Cog):
                     mas2 = [i for i in event.find_one({"guild_id": guild.id, "id": message.id, "proverka": 1703})["maybe"]]
                     mas2.remove(memb.id)
                     event.update_one({"guild_id": guild.id, "id": message.id, "proverka": 1703}, {"$set": {"maybe": mas2, "decline": mas, "lenmembermaybe": event.find_one({"guild_id": guild.id, "id": message.id, "proverka": 1703})["lenmembermaybe"] - 1, "lenmemberdecline": event.find_one({"guild_id": guild.id, "id": message.id, "proverka": 1703})["lenmemberdecline"] + 1}}, upsert = True)
-                    embed = discord.Embed(title = f'Мероприятие: {name}', description = f'**Организатор:** {org}\n**Название мероприятия:** `{name}`\n\n**Тематика мероприятия:** {thems}\n**Суть мероприятия:**\n> `{site}`', color = int(ecolor, 16), timestamp = message.created_at)
+                    embed = discord.Embed(title = f'Мероприятие: {name}', description = f'**Организатор:** {org}\n**Название мероприятия:** `{name}`\n\n**Тематика мероприятия:** {thems}\n**Суть мероприятия:**\n> `{site}`{priz}', color = int(ecolor, 16), timestamp = message.created_at)
                     embed.add_field(name="‎‎‎‎", value="‎", inline=True)
                     embed.add_field(name = f'🗓 {date}', value = f'✅ __Буду точно__ `({event.find_one({"guild_id": guild.id, "id": message.id, "proverka": 1703})["lenmemberaccept"]})`:\n{"".join([f"`{discord.utils.get(guild.members, id = i)}`, " for i in event.find_one({"guild_id": guild.id, "id": message.id, "proverka": 1703})["accept"] if not i == 0])}', inline = False)
                     embed.add_field(name="‎‎‎‎", value="‎", inline=True)
@@ -1411,8 +1411,8 @@ class events(commands.Cog):
 
         ent = event.find_one({"guild": ctx.guild.id, "channelid": ctx.channel.id})
         name, org, site, ecolor = 'Не заполнено' if ent["eventname"] == '-' else ent["eventname"], 'Не указан' if ent["organize"] == 0 else f'{discord.utils.get(ctx.guild.members, id = ent["organize"]).mention}`({discord.utils.get(ctx.guild.members, id = ent["organize"])})`', 'Не установлена' if ent["eventtext"] == '-' else ent["eventtext"], '0xFB9E14' if ent["embedcolor"] == '-' else ent["embedcolor"]
-        date, times, chan, thems = 'Дата не установлена' if ent["eventdate"] == '-' else ent["eventdate"], 'Время не установлено' if ent["eventtime"] == '-' else ent["eventtime"], 'Не установлен' if ent["etext"] == 0 else f'#{self.bot.get_channel(ent["etext"]).name}', 'Не установлена' if ent["theme"] == '-' else ent["theme"]
-        embed = discord.Embed(title = f'Мероприятие: {name}', description = f'**Организатор:** {org}\n**Название мероприятия:** `{name}`\n\n**Тематика мероприятия:** {thems}\n**Суть мероприятия:**\n> `{site}`', color = int(ecolor, 16), timestamp = ctx.message.created_at)
+        date, times, chan, thems, priz = 'Дата не установлена' if nat["eventdate"] == '-' else nat["eventdate"], 'Время не установлено' if nat["eventtime"] == '-' else nat["eventtime"], 'Не установлен' if nat["etext"] == 0 else f'#{self.bot.get_channel(nat["etext"]).name}', 'Не установлена' if nat["theme"] == '-' else nat["theme"], f'**\n\nПризовые места:**\n>{nat["eventpriz"]}' if nat["eventpriz"] != '-' else ''
+        embed = discord.Embed(title = f'Мероприятие: {name}', description = f'**Организатор:** {org}\n**Название мероприятия:** `{name}`\n\n**Тематика мероприятия:** {thems}\n**Суть мероприятия:**\n`{site}`{priz}', color = int(ecolor, 16), timestamp = ctx.message.created_at)
         embed.add_field(name="‎‎‎‎", value="‎", inline=True)
         embed.add_field(name = f'🗓 {date}', value = '✅ __Буду точно__ `(0)`', inline = False)
         embed.add_field(name="‎‎‎‎", value="‎", inline=True)
