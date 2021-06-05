@@ -227,7 +227,7 @@ class moderation(commands.Cog):
         e.add_field(name = "Выдал", value = f"{ctx.author.display_name}`({ctx.author})`")
         e.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
         await logs.send(embed = e)
-        await loguser.send(embed = e)
+        await logsuser.send(embed = e)
         add(ctx.author, "vmute")
 
     @commands.command()
@@ -253,7 +253,7 @@ class moderation(commands.Cog):
         e.add_field(name = "Снял", value = f"{ctx.author.display_name}`({ctx.author})`")
         e.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
         await logs.send(embed = e)
-        await loguser.send(embed = e)
+        await logsuser.send(embed = e)
         add(ctx.author, "vunmute")
 
     @commands.command()
@@ -296,7 +296,7 @@ class moderation(commands.Cog):
         channel = self.bot.get_channel(834039427541631016)
         logsuser = self.bot.get_channel(850605849343819836)
         await channel.send(embed = embed) 
-        await loguser.send(embed = embed)
+        await logsuser.send(embed = embed)
         await ctx.guild.ban(member, reason = f'BANNED by {ctx.author.display_name} | REASON: {reason}')
         add(ctx.author, "ban")
         await ctx.message.add_reaction('✅')
@@ -375,7 +375,7 @@ class moderation(commands.Cog):
           await ctx.send(embed = embed)
           channel = self.bot.get_channel(834039427541631016)
           logsuser = self.bot.get_channel(850605849343819836)
-          await loguser.send(embed = embed)
+          await logsuser.send(embed = embed)
           await channel.send(embed = embed) 
           embed = discord.Embed(colour = member.color, timestamp = ctx.message.created_at) 
           embed.set_author(name = f'Вы были забанены на сервере {ctx.guild.name}!')
@@ -430,7 +430,7 @@ class moderation(commands.Cog):
 
         channel = self.bot.get_channel(834039427541631016)
         logsuser = self.bot.get_channel(850605849343819836)
-        await loguser.send(embed = embed)
+        await logsuser.send(embed = embed)
         await channel.send(embed = embed)
         await ctx.guild.kick(member, reason = f'KICKED by {ctx.author.display_name} | REASON: {reason}')
         add(ctx.author, "kick")
@@ -547,7 +547,7 @@ class moderation(commands.Cog):
         logsuser = self.bot.get_channel(850605849343819836)
         await ctx.message.add_reaction('✅')
         await logs.send(embed = embed)
-        await loguser.send(embed = embed)
+        await logsuser.send(embed = embed)
         if f == 1:
           await asyncio.sleep(sleep)
           try:
@@ -957,7 +957,7 @@ class moderation(commands.Cog):
           embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = self.bot.user.avatar_url)
           embed.set_thumbnail(url = ctx.guild.icon_url)
           await chan.send(embed = embed)
-          await loguser.send(embed = embed)
+          await logsuser.send(embed = embed)
           reason = f'[{ctx.message.created_at.strftime("%m, %d - %H:%M:%S")}]: {reason}'
           warns.insert_one({"proverka": 0, "numbed": warns.find_one({"proverka": 1})["numbed"], "id": member.id, "kto": ctx.author.display_name, "reas": reason})
           warns.update_one({"proverka": 1}, {"$set": {"numbed": warns.find_one({"proverka": 1})["numbed"] + 1}})
@@ -974,7 +974,7 @@ class moderation(commands.Cog):
           embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = self.bot.user.avatar_url)
           embed.set_thumbnail(url = ctx.guild.icon_url)
           await chan.send(embed = embed)
-          await loguser.send(embed = embed)
+          await logsuser.send(embed = embed)
           for i in warns.find({"id": member.id}):
               warns.delete_one({"_id": i["_id"]})
         else:
@@ -991,7 +991,7 @@ class moderation(commands.Cog):
           embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = self.bot.user.avatar_url)
           embed.set_thumbnail(url = ctx.guild.icon_url)
           await chan.send(embed = embed)
-          await loguser.send(embed = embed)
+          await logsuser.send(embed = embed)
         add(ctx.author, "warn")
 
     @commands.command()
