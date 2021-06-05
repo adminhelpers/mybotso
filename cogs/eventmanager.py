@@ -86,10 +86,12 @@ class events(commands.Cog):
         return await ctx.send(embed = setembed(text = f'✅ Вы успешно создани новый шаблон `[{name} | №{number}]`, он выбран **основным** по умолчанию.\n\n『🕵』 Для того что бы узнать информацию по его заполнению используйте команду: `{prefix}embed_use(euse)`\n『📋』 Список команд embed-шаблонов: `{prefix}embed_help(ehelp)`'), delete_after = 15)
         
     @commands.command(aliases = ['edelete'])
-    @commands.has_permissions(administrator = True)
     async def embed_delete(self, ctx, amount: int = None):
         if not ctx.guild.id == 477547500232769536:
             return
+
+        if not discord.utils.get(ctx.guild.roles, id = 803620300415565874) in ctx.author.roles:
+            return await ctx.message.delete()
 
         await ctx.message.delete()
 
@@ -122,10 +124,12 @@ class events(commands.Cog):
                 return await ctx.send(embed = setembed(title = 'Успешно!', text = f'✅ Вы удалили шаблон №{n["number"]}`({n["name"]})`'), delete_after = 15) 
     
     @commands.command(aliases = ['etext'])
-    @commands.has_permissions(administrator = True)
     async def embed_text(self, ctx, *, amount = None):
         if not ctx.guild.id == 477547500232769536:
             return
+        
+        if not discord.utils.get(ctx.guild.roles, id = 803620300415565874) in ctx.author.roles:
+            return await ctx.message.delete()
 
         await ctx.message.delete()
 
@@ -159,10 +163,12 @@ class events(commands.Cog):
             return await ctx.send(embed = setembed(title = 'Успешно!', text = f'✅ Вы установили новый текст в embed-сообщение в шаблоне `[{n["name"]}]`:\n{amount}'), delete_after = 15) 
 
     @commands.command(aliases = ['euse'])
-    @commands.has_permissions(administrator = True)
     async def embed_use(self, ctx):
         if not ctx.guild.id == 477547500232769536:
             return
+
+        if not discord.utils.get(ctx.guild.roles, id = 803620300415565874) in ctx.author.roles:
+            return await ctx.message.delete()
 
         await ctx.message.delete()
 
@@ -175,10 +181,12 @@ class events(commands.Cog):
         await ctx.send(embed = embed)
 
     @commands.command(aliases = ['efooter'])
-    @commands.has_permissions(administrator = True)
     async def embed_footer(self, ctx, *, amount = None):
         if not ctx.guild.id == 477547500232769536:
             return
+
+        if not discord.utils.get(ctx.guild.roles, id = 803620300415565874) in ctx.author.roles:
+            return await ctx.message.delete()
 
         await ctx.message.delete()
 
@@ -212,10 +220,12 @@ class events(commands.Cog):
             return await ctx.send(embed = setembed(title = 'Успешно!', text = f'✅ Вы установили новую подпись в embed-сообщение в шаблоне `[{n["name"]}]`:\n> {amount}'), delete_after = 15) 
 
     @commands.command(aliases = ['myemb'])
-    @commands.has_permissions(administrator = True)
     async def my_embeds(self, ctx):
         if not ctx.guild.id == 477547500232769536:
             return
+
+        if not discord.utils.get(ctx.guild.roles, id = 803620300415565874) in ctx.author.roles:
+            return await ctx.message.delete()
 
         await ctx.message.delete()
 
@@ -236,10 +246,12 @@ class events(commands.Cog):
                 return await message.delete()
 
     @commands.command(aliases = ['gmb'])
-    @commands.has_permissions(administrator = True)
     async def get_embed(self, ctx, amount: int = None):
         if not ctx.guild.id == 477547500232769536:
             return
+
+        if not discord.utils.get(ctx.guild.roles, id = 803620300415565874) in ctx.author.roles:
+            return await ctx.message.delete()
 
         await ctx.message.delete()
 
@@ -270,10 +282,12 @@ class events(commands.Cog):
                 return await message.delete()
     
     @commands.command(aliases = ['everyemb'])
-    @commands.has_permissions(administrator = True)
     async def embed_everyone(self, ctx, amount: int = None):
         if not ctx.guild.id == 477547500232769536:
             return
+
+        if not discord.utils.get(ctx.guild.roles, id = 803620300415565874) in ctx.author.roles:
+            return await ctx.message.delete()
 
         await ctx.message.delete()
 
@@ -290,10 +304,12 @@ class events(commands.Cog):
         return await ctx.send(embed = setembed(title = 'Успешно!', text = f'✅ Вы установили значение упоминания @everyone на `[{answer[int(amount)]}]`'), delete_after = 15)
 
     @commands.command(aliases = ['ename'])
-    @commands.has_permissions(administrator = True)
     async def embed_name(self, ctx, *, amount = None):
         if not ctx.guild.id == 477547500232769536:
             return
+
+        if not discord.utils.get(ctx.guild.roles, id = 803620300415565874) in ctx.author.roles:
+            return await ctx.message.delete()
 
         await ctx.message.delete()
 
@@ -327,10 +343,12 @@ class events(commands.Cog):
             return await ctx.send(embed = setembed(title = 'Успешно!', text = f'✅ Вы установили новый боковой заголовок embed-сообщения в шаблоне `[{n["name"]}]`:\n> {amount}'), delete_after = 15) 
 
     @commands.command(aliases = ['ethumb'])
-    @commands.has_permissions(administrator = True)
     async def set_thumbnail(self, ctx, amount = None):
         if not ctx.guild.id == 477547500232769536:
             return
+
+        if not discord.utils.get(ctx.guild.roles, id = 803620300415565874) in ctx.author.roles:
+            return await ctx.message.delete()
 
         await ctx.message.delete()
 
@@ -364,10 +382,12 @@ class events(commands.Cog):
             return await ctx.send(embed = setembed(title = 'Успешно!', text = f'✅ Вы установили новый боковой аватар embed-сообщения в шаблоне `[{n["name"]}]`:\n> {amount}'), delete_after = 15) 
 
     @commands.command(aliases = ['eimage'])
-    @commands.has_permissions(administrator = True)
     async def embed_image(self, ctx, amount = None):
         if not ctx.guild.id == 477547500232769536:
             return
+
+        if not discord.utils.get(ctx.guild.roles, id = 803620300415565874) in ctx.author.roles:
+            return await ctx.message.delete()
 
         await ctx.message.delete()
 
@@ -401,10 +421,12 @@ class events(commands.Cog):
             return await ctx.send(embed = setembed(title = 'Успешно!', text = f'✅ Вы установили новое изображение в embed-сообщение в шаблоне `[{n["name"]}]`:\n> {amount}'), delete_after = 15) 
 
     @commands.command(aliases = ['ecolor'])
-    @commands.has_permissions(administrator = True)
     async def embed_color(self, ctx, *, amount = None):
         if not ctx.guild.id == 477547500232769536:
             return
+
+        if not discord.utils.get(ctx.guild.roles, id = 803620300415565874) in ctx.author.roles:
+            return await ctx.message.delete()
 
         await ctx.message.delete()
 
@@ -420,10 +442,12 @@ class events(commands.Cog):
         return await ctx.send(embed = setembed(title = 'Успешно!', text = f'✅ Вы установили `[{amount}]`, как цвет embed-сообщения.'), delete_after = 15) 
 
     @commands.command(aliases = ['ehelp'])
-    @commands.has_permissions(administrator = True)
     async def embed_help(self, ctx):
         if not ctx.guild.id == 477547500232769536:
             return
+
+        if not discord.utils.get(ctx.guild.roles, id = 803620300415565874) in ctx.author.roles:
+            return await ctx.message.delete()
 
         await ctx.message.delete()
 
@@ -443,10 +467,12 @@ class events(commands.Cog):
                 return await message.delete()
     
     @commands.command(aliases = ['evs'])
-    @commands.has_permissions(administrator = True)
     async def embed_visual(self, ctx):
         if not ctx.guild.id == 477547500232769536:
             return
+
+        if not discord.utils.get(ctx.guild.roles, id = 803620300415565874) in ctx.author.roles:
+            return await ctx.message.delete()
 
         await ctx.message.delete()
 
@@ -473,10 +499,12 @@ class events(commands.Cog):
                 return await message.delete()
     
     @commands.command(aliases = ['esend'])
-    @commands.has_permissions(administrator = True)
     async def embed_send(self, ctx, *, amount = None):
         if not ctx.guild.id == 477547500232769536:
             return
+
+        if not discord.utils.get(ctx.guild.roles, id = 803620300415565874) in ctx.author.roles:
+            return await ctx.message.delete()
 
         await ctx.message.delete()
 
