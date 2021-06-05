@@ -223,7 +223,7 @@ class moderation(commands.Cog):
         logs = self.bot.get_channel(834039427541631016)
         e = discord.Embed(colour = 0xFB9E14, timestamp = datetime.datetime.utcnow())
         e.set_author(name = 'Выдача голосового мута', icon_url = ctx.author.avatar_url)
-        e.add_field(name = "Выдали", value = f"{member.display_name}`({member})`)
+        e.add_field(name = "Выдали", value = f"{member.display_name}`({member})`")
         e.add_field(name = "Выдал", value = f"{ctx.author.display_name}`({ctx.author})`")
         e.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
         await logs.send(embed = e)
