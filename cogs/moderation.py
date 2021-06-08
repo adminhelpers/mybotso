@@ -1534,7 +1534,7 @@ class moderation(commands.Cog):
           member = ctx.author
           
         
-        if not discord.utils.get(ctx.guild.roles, id = 652869023599558656) in member.roles and not discord.utils.get(ctx.guild.roles, id = 817813676178407425) in member.roles:
+        if not discord.utils.get(ctx.guild.roles, id = 652869023599558656) in member.roles and not discord.utils.get(ctx.guild.roles, id = 817813676178407425) in member.roles and not discord.utils.get(ctx.guild.roles, id = 851768758267412480) in member.roles:
             return await ctx.send(f'`[ERR]` {ctx.author.mention}, `вам не доступна данная команда!`', delete_after = 5) 
 
         if not discord.utils.get(ctx.guild.roles, id = 652869023599558656) in member.roles and not discord.utils.get(ctx.guild.roles, id = 817813676178407425) in member.roles:
