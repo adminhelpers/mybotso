@@ -202,7 +202,7 @@ class moderation(commands.Cog):
             # await ctx.send(embed = discord.Embed(title = f'Discord Helper', description = f'''**Единая ссылка на приглашения пользователей --\n https://discord.gg/TmTCP9S**''', colour = 0xFB9E14))
             return
         else:
-            await ctx.send(embed = discord.Embed(title = f'Discord Helper', description = f'''**Единая ссылка на приглашения пользователей --\n https://discord.gg/anPWSdB**''', colour = 0xFB9E14))
+            await ctx.send(embed = discord.Embed(title = f'Discord Helper', description = f'''**Единая ссылка на приглашения пользователей --\n https://discord.gg/rodina03**''', colour = 0xFB9E14))
 
     @commands.command()
     async def vmute(self, ctx, member: discord.Member = None):
