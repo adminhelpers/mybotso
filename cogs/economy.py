@@ -301,7 +301,7 @@ class econom(commands.Cog):
                 embed = discord.Embed(title = f'Достижение {ctx.author.name}', description = f'🎉 `Написать` {msgs} `сообщений!`\n✨ Награда за выполнение: {give[msgs]}', colour = 0xFB9E14)
                 embed.set_thumbnail(url = ctx.author.avatar_url)
                 await ctx.channel.send(embed = embed)
-    		addbt(ctx.author, st[msgs])
+    	        addbt(ctx.author, st[msgs])
                 if st[msgs] == 20: 
                     return await ctx.author.add_roles(discord.utils.get(ctx.guild.roles, id = 855358889067675649))
 
