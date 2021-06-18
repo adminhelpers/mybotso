@@ -293,17 +293,26 @@ class econom(commands.Cog):
     		users.update_one({"id": ctx.author.id}, {"$set": {"messages": a + 1}})
 
     	st = 0
-    	if len(list(ctx.content)) >= 1:
+    	if len(list(ctx.content)) >= 4:
     		msgs = users.find_one({"id": ctx.author.id})["messages"]
-    		if msgs == 2000:
-    			await ctx.channel.send(embed = discord.Embed(title = 'Новое достижение!', description = f'**🎉 {ctx.author.mention}, вы получили новое достижение: `Написать 2000 сообщений!`\n🎉Вам добавлен бонус в размере 5 семечек <3**', colour = discord.Colour.blue()))
-    			st += 5
-    		if msgs == 5000:
-    			await ctx.channel.send(embed = discord.Embed(title = 'Новое достижение!', description = f'**🎉 {ctx.author.mention}, вы получили новое достижение: `Написать 5000 сообщений!`\n🎉 Вам добавлен бонус в размере 15 семечек <3**', colour = discord.Colour.blue()))
-    			st += 15
+    		if msgs in [2000, 5000, 10000, 20000, 30000]:
+                        give = {2000: "**3** `D-Coin's`", 5000: "**5** `D-Coin's`", 10000: "**10** `D-Coin's`", 20000: "**15** `D-Coin's`", 30000: "**20** `D-Coin's и уникальная роль` <@&855358889067675649>"}
+                        st = {2000: 3, 5000: 5, 10000: 10, 20000: 15, 30000: 20}
+    			embed = discord.Embed(title = f'Достижение {ctx.author.name}', description = f'🎉 `Написать` {msgs} `сообщений!`\n✨ Награда за выполнение: give[msgs]', colour = 0xFB9E14)
+                        embed.set_thumbnail(url = ctx.author.avatar_url)
+                        await ctx.channel.send(embed = embed)
+    			addbt(ctx.author, st[msgs])
+                        if st[msgs] == 20: 
+                            return await ctx.author.add_roles(discord.utils.get(ctx.guild.roles, id = 855358889067675649))
 
-    		if st > 0:
-    			addbt(ctx.author, st)
+    @commands.command(aliases = ["награды", "allachive"])
+    async def __prizs(self, ctx):
+        if not ctx.guild.id == 477547500232769536:
+            return
+        embed = discord.Embed(title = 'Награды за сообщения', description = f"За активность в чате можно не только прокачивать свой уровень, но и зарабатывать Discord-Coin's`(D-Coin's)` - Валюту нашего дискорд-сервера\n\n**Список наград:**\n✨ 2000 сообщений - **3** `D-Coin's`\n💸 5000 сообщений - **5** `D-Coin's`\n🔥 10000 сообщений - **10** `D-Coin's`\n🎀 20000 сообщений - **15** `D-Coin's`\n💎 30000 сообщений - **20** `D-Coin's и уникальная роль` <@&855358889067675649>", color = 0xFB9E14)
+        embed.set_thumbnail(url = ctx.guild.icon_url)
+        embed.set_footer(text = 'Support Team by dollar ム baby#3603', icon_url = self.bot.user.avatar_url)
+        return await ctx.send(embed = embed)
 
     @commands.command(aliases = ["messages", "сообщения"])
     async def __message(self, ctx, member: discord.Member = None):
