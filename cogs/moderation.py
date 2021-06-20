@@ -1557,12 +1557,13 @@ class moderation(commands.Cog):
             b.append(moderr.find_one({"guild": ctx.guild.id, "id": member.id})[v])
           except:
             b.append(0)
-  
+
+        now = datetime.datetime.now()
         foc = int(i[0]) + int(i[1]) + int(i[2]) + int(i[3]) + int(i[4]) + int(i[5]) + int(i[6]) + int(i[7]) + int(i[8]) + int(i[9]) + int(i[10]) + int(i[12]) + int(i[13]) + int(b[0]) + int(b[1]) + int(b[3]) + int(b[4]) 
-        embed = discord.Embed(title = f'Статистика модератора 📍 {member}', description = f'**👁️ Всего действий от него: {foc}**', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow())
+        embed = discord.Embed(title = f'Статистика модератора 📍 {member}', description = f'**👁️ Всего действий от него: {foc}**', colour = 0xFB9E14)
         embed.add_field(name = '❔ | `Статистика вопросов`', value = f'**Всего действий:** {int(b[0]) + int(b[1]) + int(b[3]) + int(b[4])}\n> 🔹 `Принято вопросов:` {b[3]}\n> 🔹 `Закрыто вопросов:` {b[0]}\n> 🔹 `Поставлено на рассмотрение:` {b[1]}\n> 🔹 `Добавлено людей к репортам:` {b[4]}\n\n> ➕ `Репутация:` {b[2]}', inline = False)
         embed.add_field(name = '🔰 | `Статистика модерирования`', value = f'**Всего действий: {foc - int(b[0]) - int(b[1]) - int(b[3]) - int(b[4])}\n> ✏️ | `Выдано текстовых мутов:` {i[2]}\n> 🔊 | `Выдано голосовых мутов:` {i[8]}\n> ✏️ | `Снято текстовых мутов:` {i[7]}\n> 🔊 | `Снято голосовых мутов:` {i[9]}\n\n> `Выдано предупреждений:` {i[5]}\n> `Снято предупреждений:` {i[6]}\n> `Кикнул:` {i[3]}\n> `Забанил:` {i[4]}\n\n> `Одобрено запросов на выдачу роли:` {i[10]}\n> `Отправлено запросов на снятие роли:` {i[13]}\n> `Одобрено запросов на снятие роли:` {i[12]}\n\n> ❗ `Выговоров:` {i[14]} ❗**', inline = False)
-        embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = self.bot.user.avatar_url)
+        embed.set_footer(text = f'Support Team by dollar ム baby#3603 | Дата: {now.strftime("%d-%m-%Y %H:%M")}', icon_url = self.bot.user.avatar_url)
         await ctx.send(embed = embed)
 
     '''
