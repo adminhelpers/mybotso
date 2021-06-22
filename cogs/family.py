@@ -153,7 +153,6 @@ class family(commands.Cog):
 								await msg4.delete()
 								await m4.edit(embed = discord.Embed(description = f'Вы успешно отказались от создания семьи!'), delete_after = 5)
 
-	@commands.cooldown(1, 30, commands.BucketType.user)
 	@commands.command()
 	async def faminvite(self, ctx, member: discord.Member = None):
 		if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id}):
