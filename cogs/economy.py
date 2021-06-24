@@ -284,6 +284,9 @@ class econom(commands.Cog):
             
     @commands.Cog.listener()
     async def on_message(self, ctx):
+        if not ctx.guild.id == 477547500232769536:
+            return
+
     	if users.count_documents({"id": ctx.author.id}) == 0:
     		users.insert_one({"id": ctx.author.id, "messages": 0})
     		a = users.find_one({"id": ctx.author.id})["messages"]
@@ -304,6 +307,20 @@ class econom(commands.Cog):
                 addbt(ctx.author, st[msgs])
                 if st[msgs] == 20: 
                     return await ctx.author.add_roles(discord.utils.get(ctx.guild.roles, id = 855358889067675649))
+
+    @commands.Cog.listener()
+    async def on_message_delete(self, message):
+        if message.guild == None:
+            return
+       
+        if not message.guild.id == 477547500232769536:
+            return
+
+        if message.author.bot:
+            return
+
+        a = users.find_one({"id": message.author.id})["messages"]
+        users.update_one({"id": message.author.id}, {"$set": {"messages": a - 1}})
 
     @commands.command(aliases = ["награды", "allachive"])
     async def __prizs(self, ctx):
