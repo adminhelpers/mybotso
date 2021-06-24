@@ -158,7 +158,7 @@ class econom(commands.Cog):
         if before.guild == None:
             return
 
-        if not before.author.id == 770962166617604117: return
+        if not before.id == 770962166617604117: return
 
         murka = discord.utils.get(before.guild.members, id = 770962166617604117)
         if not after.display_name == "[SP] Мурлёночек ♥️": return murka.edit(nick = '[SP] Мурёночек ♥️')
