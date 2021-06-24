@@ -287,13 +287,13 @@ class econom(commands.Cog):
         if not ctx.guild.id == 477547500232769536:
             return
 
-    	if users.count_documents({"id": ctx.author.id}) == 0:
-    		users.insert_one({"id": ctx.author.id, "messages": 0})
-    		a = users.find_one({"id": ctx.author.id})["messages"]
-    		users.update_one({"id": ctx.author.id}, {"$set": {"messages": a + 1}})
-    	else:
-    		a = users.find_one({"id": ctx.author.id})["messages"]
-    		users.update_one({"id": ctx.author.id}, {"$set": {"messages": a + 1}})
+        if users.count_documents({"id": ctx.author.id}) == 0:
+            users.insert_one({"id": ctx.author.id, "messages": 0})
+            a = users.find_one({"id": ctx.author.id})["messages"]
+            users.update_one({"id": ctx.author.id}, {"$set": {"messages": a + 1}})
+        else:
+            a = users.find_one({"id": ctx.author.id})["messages"]
+            users.update_one({"id": ctx.author.id}, {"$set": {"messages": a + 1}})
 
     	st = 0
     	if len(list(ctx.content)) >= 4:
