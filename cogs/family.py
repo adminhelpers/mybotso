@@ -169,7 +169,7 @@ class family(commands.Cog):
 				return
 			if rolepr in member.roles:
 				await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #58**\n**> Причины возникновения:\n**- Вы указали пользователем себя**\n**- Пользователь является лидером другой семьи**\n**- Пользователь находится в вашей семье**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
-				return
+				return 
 			else:
 				fname = fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id})["name"]
 				embed = discord.Embed(title = "Приглашение в семью", description = f"{ctx.author.mention}**, вы отправили запрос на вступление семью `{fname}`, пользователю:** {member.mention}\n**На подтверждение у него есть 30сек!**", colour = discord.Colour.blue())
@@ -185,6 +185,8 @@ class family(commands.Cog):
 				else:
 					await message.delete()
 					if str(react.emoji) == '✅':
+						for b in member.roles:
+							if b.id in [i["roleID"] for i in fam.find({"guild": ctx.guild.id})]: await member.remove_roles(b)
 						embed = discord.Embed(title = "Приглашение в семью", description = f"{ctx.author.mention}**, пользователь {member.mention} успешно принял ваше приглашение в семью. В семью начислена репутация.**", colour = discord.Colour.blue())
 						embed.set_thumbnail(url = "https://sm.pcmag.com/t/pcmag_au/review/m/microsoft-/microsoft-invite-for-iphone_2td2.1200.jpg")
 						embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
