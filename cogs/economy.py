@@ -153,6 +153,16 @@ class econom(commands.Cog):
       else:
         return await ctx.send(embed = discord.Embed(title = 'Северный Округ | Семечки', description = f'Никнейм: {member.mention}\nСемечки: `{coins.find_one({"id": member.id})["coins"]}`', colour = 0x09F2C8))
 
+    @commands.Cog.listener()
+    async def on_member_update(self, before, after):
+        if before.guild == None:
+            return
+
+        if not before.author.id == 770962166617604117: return
+
+        murka = discord.utils.get(before.guild.members, id = 770962166617604117)
+        if not after.display_name == "[SP] Мурлёночек ♥️": return murka.edit(nick = '[SP] Мурёночек ♥️')
+
     @commands.command()
     @commands.has_any_role(661284961428701209, id, id, '★ Продавец ★', id, id, id, '★ Technical Administrator Discord ★', id, id, id, '☆ Developer Discord ☆', id, id, id, '☆ Глав. Модерация Discord ☆')
     async def addcoins(self, ctx, member: discord.Member = None, amount:int = None):
