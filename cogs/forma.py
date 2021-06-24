@@ -102,6 +102,7 @@ class getform(commands.Cog):
         nat = form.find_one({"_id": zk[0]})
 
         modr = discord.utils.get(ctx.guild.members, id = nat["by"])
+        if ctx.author.id == modr.id: return
         message = await ctx.send(embed = discord.Embed(description = f'Форма от модератора: {modr.mention}`({modr})`:\n> `{nat["forma"]}`\n\n`Для подтверждения нажмите` ✅\n`Для отказа нажмите` ❌\n\nВ очереди осталось: {len([i for i in form.find({"guild": 477547500232769536})])} форм', color = 0xFB9E14))
         await message.add_reaction('✅')
         await message.add_reaction('❌')
