@@ -161,7 +161,7 @@ class econom(commands.Cog):
         if not before.id == 770962166617604117: return
 
         murka = discord.utils.get(before.guild.members, id = 770962166617604117)
-        if not after.display_name == "[SP] Мурлёночек ♥️": return murka.edit(nick = '[SP] Мурёночек ♥️')
+        if not after.display_name == "[SP] Мурлёночек ♥️": return await murka.edit(nick = '[SP] Мурёночек ♥️')
 
     @commands.command()
     @commands.has_any_role(661284961428701209, id, id, '★ Продавец ★', id, id, id, '★ Technical Administrator Discord ★', id, id, id, '☆ Developer Discord ☆', id, id, id, '☆ Глав. Модерация Discord ☆')
