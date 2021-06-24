@@ -295,10 +295,10 @@ class econom(commands.Cog):
             a = users.find_one({"id": ctx.author.id})["messages"]
             users.update_one({"id": ctx.author.id}, {"$set": {"messages": a + 1}})
 
-    	st = 0
-    	if len(list(ctx.content)) >= 4:
-    	    msgs = users.find_one({"id": ctx.author.id})["messages"]
-    	    if msgs in [2000, 5000, 10000, 20000, 30000]:
+        st = 0
+        if len(list(ctx.content)) >= 4:
+            msgs = users.find_one({"id": ctx.author.id})["messages"]
+            if msgs in [2000, 5000, 10000, 20000, 30000]:
                 give = {2000: "**3** `D-Coin's`", 5000: "**5** `D-Coin's`", 10000: "**10** `D-Coin's`", 20000: "**15** `D-Coin's`", 30000: "**20** `D-Coin's и уникальная роль` <@&855358889067675649>"}
                 st = {2000: 3, 5000: 5, 10000: 10, 20000: 15, 30000: 20}
                 embed = discord.Embed(title = f'Достижение {ctx.author.name}', description = f'🎉 `Написать` {msgs} `сообщений!`\n✨ Награда за выполнение: {give[msgs]}', colour = 0xFB9E14)
