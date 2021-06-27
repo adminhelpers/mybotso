@@ -43,8 +43,8 @@ class privats(commands.Cog):
                 return
 
         if not after.channel == None:
-            if after.channel.id == 806485613222166538:
-                if s == 1:
+            if after.channel.id == 858567874507702272:
+                if s == 1: 
                     s = 0
                     return await member.move_to(None)
                 s = 1
@@ -54,7 +54,7 @@ class privats(commands.Cog):
                         await i.delete()
                 channel2 = await member.guild.create_voice_channel(name=f"{member.display_name}",category=mainCategory)
                 await channel2.set_permissions(member, view_channel = True, connect = True, manage_channels = True, manage_permissions = False, speak = True, move_members = False, use_voice_activation = True, priority_speaker = True, mute_members = False, deafen_members = False)
-                vch = self.bot.get_channel(806485613222166538)
+                vch = self.bot.get_channel(858567874507702272)
                 if not vch.members:
                     s = 0
                     return await channel2.delete()
@@ -73,7 +73,7 @@ class privats(commands.Cog):
                 
                 for i in mainCategory.channels:
                     if isinstance(i, discord.VoiceChannel):
-                        if not i.id == 806485613222166538:
+                        if not i.id == 858567874507702272:
                             if len(i.members) == 0:
                                 try:
                                     await i.delete()
