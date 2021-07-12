@@ -93,6 +93,7 @@ class econom(commands.Cog):
       for i in coins.find({"guild": ctx.guild.id}):
         if not i["id"] in [user.id for user in ctx.guild.members]: continue
         mname = discord.utils.get(ctx.guild.members, id = i["id"])
+        if mname.bot: continue 
         m.append(i["coins"])
         cz.append(mname.name)
 
