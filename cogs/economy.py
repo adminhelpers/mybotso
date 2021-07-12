@@ -142,6 +142,15 @@ class econom(commands.Cog):
     async def topmessages(self, ctx):
       if not ctx.guild.id == 477547500232769536:
         return
+      m = [ ]
+      for i in users.find():
+        m.append(i["messages"]
+      print(m)
+
+    @commands.command(aliases = ["mtop"])
+    async def topmessages(self, ctx):
+      if not ctx.guild.id == 477547500232769536:
+        return
       zb = 0
 
       m = [ ]
