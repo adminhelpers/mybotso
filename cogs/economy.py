@@ -138,8 +138,8 @@ class econom(commands.Cog):
 
       mes = await ctx.send(embed = embed)
 
-    @commands.command(aliases = ["mtop"])
-    async def topmessages(self, ctx):
+    @commands.command()
+    async def mtest(self, ctx):
       if not ctx.guild.id == 477547500232769536:
         return
       m = [ ]
