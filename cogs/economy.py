@@ -91,9 +91,8 @@ class econom(commands.Cog):
       fr = 0
       zb = 50
       for i in coins.find({"guild": ctx.guild.id}):
+        if not i["id"] in [user.id for user in ctx.guild.members]: continue
         mname = discord.utils.get(ctx.guild.members, id = i["id"])
-        if mname == None:
-          continue
         m.append(i["coins"])
         cz.append(mname.name)
 
@@ -155,9 +154,8 @@ class econom(commands.Cog):
       fr = 0
       zb = 50
       for i in users.find():
+        if not i["id"] in [user.id for user in ctx.guild.members]: continue
         mname = discord.utils.get(ctx.guild.members, id = i["id"])
-        if mname == None:
-          continue
         m.append(i["messages"])
         cz.append(mname.name)
 
