@@ -165,10 +165,12 @@ class econom(commands.Cog):
       fr = 0
       zb = 50
       for i in users.find():
-        if not i["id"] in [user.id for user in ctx.guild.members]: continue
-        mname = discord.utils.get(ctx.guild.members, id = i["id"])
-        m.append(i["messages"])
-        cz.append(mname.name)
+        try:
+          mname = discord.utils.get(ctx.guild.members, id = i["id"]).name
+          m.append(i["messages"])
+          cz.append(mname)
+        except:
+          pass
 
         coins = i["messages"]
 
@@ -178,8 +180,6 @@ class econom(commands.Cog):
           break
       
       t = sorted(m)[::-1]
-      print(t)
-      print(m)
       m2 = m
       m3 = m
       c2 = c
