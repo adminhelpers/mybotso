@@ -165,6 +165,7 @@ class econom(commands.Cog):
       fr = 0
       zb = 50
       for i in users.find():
+        if i["messages"] < 5000: continue 
         try:
           mname = discord.utils.get(ctx.guild.members, id = i["id"]).name
           m.append(i["messages"])
