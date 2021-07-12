@@ -202,6 +202,8 @@ class econom(commands.Cog):
           break     
 
       mes = await ctx.send(embed = embed)
+
+
 		
     @commands.command()
     async def coins(self, ctx, member: discord.Member = None):
@@ -372,6 +374,18 @@ class econom(commands.Cog):
                 addbt(ctx.author, st[msgs])
                 if st[msgs] == 20: 
                     return await ctx.author.add_roles(discord.utils.get(ctx.guild.roles, id = 855358889067675649))
+
+    @commands.command(aliases = ["mset"])
+    @commands.has_permissions(administrator = True)
+    async def setmessages(self, ctx, member: discord.Member = None, count: int = None):
+        if not ctx.guild.id == 477547500232769536:
+            return
+
+        if member == None or count == None: return await ctx.message.delete()
+   
+        if users.count_documents({"id": member.id}) == 0: users.insert_one({"id": member.id, "messages": count})
+        else: users.update_one({"id": member.id}, {"$set": {"messages": count}})
+        return await ctx.send('Выполнено!', delete_after = 3)
 
     @commands.Cog.listener()
     async def on_message_delete(self, message):
