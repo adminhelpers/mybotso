@@ -171,6 +171,7 @@ class econom(commands.Cog):
           cz.append(mname)
         except:
           pass
+      print([b for b in m if b > 20000])
 
         coins = i["messages"]
 
