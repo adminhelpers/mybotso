@@ -169,6 +169,7 @@ class econom(commands.Cog):
         if i["messages"] < 5000: continue 
         try:
           mname = discord.utils.get(ctx.guild.members, id = i["id"]).name
+          if mname.bot: continue
           m.append(i["messages"])
           cz.append(mname)
         
