@@ -144,7 +144,9 @@ class econom(commands.Cog):
         return
       m = [ ]
       for i in users.find():
-        m.append(i["messages"])
+        if i["messages"] > 20000: 
+          try: m.append(f'{discord.utils.get(ctx.guild.members, id = i["id"]).name} - {i["messages"]} coins')
+          except: m.append(f'Неизвестный тип с ID: {i["id"]} - {i["messages"]} coins')
       print(m)
 
     @commands.command(aliases = ["mtop"])
