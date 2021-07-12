@@ -138,6 +138,70 @@ class econom(commands.Cog):
           break     
 
       mes = await ctx.send(embed = embed)
+
+    @commands.command(aliases = ["mtop"])
+    async def topmessages(self, ctx):
+      if not ctx.guild.id == 477547500232769536:
+        return
+      zb = 0
+
+      m = [ ]
+      m2 = [ ]
+      m3 = [ ]
+      c = [ ]
+      c2 = [ ]
+      cz = [ ]
+      cz2 = [ ]
+      fr = 0
+      zb = 50
+      for i in users.find():
+        mname = discord.utils.get(ctx.guild.members, id = i["id"])
+        if mname == None:
+          continue
+        m.append(i["messages"])
+        cz.append(mname.name)
+
+        coins = i["messages"]
+
+        c.append(f'**Сообщений:** `{coins}`')
+        fr += 1
+        if fr >= 50:
+          break
+      
+      m2 = m
+      m3 = m
+      c2 = c
+      cz2 = cz
+      t = sorted(m)[::-1]
+
+      frf = 0
+      frfz = 0
+      stra = 1
+      zbs = zb//10
+      if zbs == 0:
+        zbs = 1
+      embed = discord.Embed(title = f'Таблица лидеров', description = None, colour = 0xFB9E14)
+      for v in t:
+        frfz += 1
+        frf += 1
+        f = m2.index(v)
+        if frf == 1:
+          frs = f'💎 1. {cz[f]}'
+        elif frf == 2:
+          frs = f'🔥 2. {cz[f]}'
+        elif frf == 3:
+          frs = f'✨ 3. {cz[f]}'
+        else:
+          frs = f'{frf}. {cz[f]}'
+        embed.add_field(name = frs, value = c[f], inline = False)
+        c.remove(c[f])
+        cz.remove(cz[f])
+        m2.remove(m2[f])
+        if frfz == 15:
+          frfz = 0
+          break     
+
+      mes = await ctx.send(embed = embed)
 		
     @commands.command()
     async def coins(self, ctx, member: discord.Member = None):
