@@ -168,6 +168,9 @@ class econom(commands.Cog):
         if fr >= 50:
           break
       
+      t = sorted(m)[::-1]
+      print(t)
+      print(m)
       m2 = m
       m3 = m
       c2 = c
