@@ -169,15 +169,12 @@ class econom(commands.Cog):
           mname = discord.utils.get(ctx.guild.members, id = i["id"]).name
           m.append(i["messages"])
           cz.append(mname)
-        except:
-          pass
         
-        coins = i["messages"]
+          coins = i["messages"]
 
-        c.append(f'**Сообщений:** `{coins}`')
-        fr += 1
-        if fr >= 50:
-          break
+          c.append(f'**Сообщений:** `{coins}`')
+        except: pass
+
       
       t = sorted(m)[::-1]
       m2 = m
