@@ -144,7 +144,7 @@ class econom(commands.Cog):
         return
       m = [ ]
       for i in users.find():
-        m.append(i["messages"]
+        m.append(i["messages"])
       print(m)
 
     @commands.command(aliases = ["mtop"])
