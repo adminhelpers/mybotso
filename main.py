@@ -35,7 +35,7 @@ async def get_prefix(bot, message):
 
 intents = discord.Intents.default()
 intents.members = True
-bot = commands.Bot(command_prefix = get_prefix, intents=intents)
+bot = commands.Bot(command_prefix = '!', intents=intents)
 buttons = ButtonsClient(bot)
 bot.load_extension('jishaku')
 bot.remove_command('help')
