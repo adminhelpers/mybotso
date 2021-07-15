@@ -229,11 +229,8 @@ class role(commands.Cog):
           embed.add_field(name = 'Отправлено с канала', value = f'{ctx.channel.mention}', inline = False)
           embed.add_field(name = 'Действия', value = '`[✔️] - снять роль.`\n`[❌] - отказать.`\n`[🇩] - удалить сообщение.`')
           embed.set_image(url = member.avatar_url)
-          message = await channel.send(embed = embed)
-          rolef.insert_one({"user_id": member.id, "role_id": nad_role.id, "message_id": message.id, "is_active": 2, "channel": ctx.channel.id, "leader": ctx.author.id, "kuda": channel.id})
-          await message.add_reaction('✔️')
-          await message.add_reaction('❌')
-          await message.add_reaction('🇩')
+          await buttons.send(embed = embed, channel = channel.id, components = [ActionRow([Button(emoji = {"id": None,"name": "✔️","animated": False}, style = ButtonType().Success, custom_id = "button_accept_s"), Button(emoji = {"id": None,"name": "❌","animated": False}, style = ButtonType().Danger, custom_id = "button_remove_s"), Button(emoji = {"id": None,"name": "🇩","animated": False}, style = ButtonType().Primary, custom_id = "button_deny_s")])])
+          rolef.insert_one({"user_id": member.id, "role_id": nad_role.id, "message_id": channel.last_message_id, "is_active": 2, "channel": ctx.channel.id, "leader": ctx.author.id, "kuda": channel.id})
 
           add(ctx.author, "dezaprols")
           return await ctx.add_reaction('📨')
@@ -302,30 +299,273 @@ class role(commands.Cog):
                   embed.add_field(name = 'Роль для выдачи', value = f'`Роль для выдачи`: {nad_role.mention}', inline = False)
                 embed.add_field(name = 'Отправлено с канала', value = f'{ctx.channel.mention}', inline = False)
                 if not lidrole == 1:
-                  embed.add_field(name = 'Действия', value = '`[✔️] - выдать роли старшего состава и организации.`\n`[➕] - Выдать роль организации`\n`[❌] - отказать.`\n`[🇩] - удалить сообщение.`\n`[❔] - Запросить скрин-шот статистики`\n`[✏️] - Установить пользователю Nick_Name`')
+                  embed.add_field(name = 'Действия', value = '`[✔️] - выдать роли старшего состава и организации.`\n`[➕] - Выдать роль организации`\n`[❌] - отказать.`\n`[🇩] - удалить сообщение.`\n`[❔] - Запросить скрин-шот статистики`')
                 else:
-                  embed.add_field(name = 'Действия', value = '`[✔️] - выдать роль.`\n`[❌] - отказать.`\n`[🇩] - удалить сообщение.`\n`[❔] - Запросить скрин-шот статистики`\n`[✏️] - Установить пользователю Nick_Name`')
+                  embed.add_field(name = 'Действия', value = '`[✔️] - выдать роль.`\n`[❌] - отказать.`\n`[🇩] - удалить сообщение.`\n`[❔] - Запросить скрин-шот статистики`')
                 embed.set_image(url = ctx.author.avatar_url)
 
                 if nad_role in ctx.author.roles:
                     await ctx.channel.send(f'{ctx.author.mention}, `у вас уже есть роль` {nad_role.mention}', delete_after = 5)
                     return await ctx.add_reaction('❌')
 
-                await ctx.add_reaction('📨')
-
-                message = await channel.send(embed = embed)
-                await message.add_reaction('✔️')
-
                 if not lidrole == 1:
+                    await buttons.send(embed = embed, channel = channel.id, components = [ActionRow([Button(emoji = {"id": None,"name": "✔️","animated": False}, style = ButtonType().Success, custom_id = "button_accept_r"), Button(emoji = {"id": None,"name": "➕","animated": False}, style = ButtonType().Success, custom_id = "button_lider_r"), Button(emoji = {"id": None,"name": "❌","animated": False}, style = ButtonType().Danger, custom_id = "button_remove_r"), Button(emoji = {"id": None,"name": "🇩","animated": False}, style = ButtonType().Primary, custom_id = "button_deny_r"), Button(emoji = {"id": None,"name": "❔","animated": False}, style = ButtonType().Success, custom_id = "button_stats_r")])])
+                    message = channel.last_message_id
                     rolef.insert_one({"user_id": ctx.author.id, "role_id": nad_role.id, "message_id": message.id, "is_active": 1, "channel": ctx.channel.id, "leader": lidrole.id, "pruf": 0, "zaproschannel": 0, "prufid": 0, "zapid": 0, "kuda": channel.id, "setn": 0})
-                    await message.add_reaction('➕')
                 else:
-                    rolef.insert_one({"user_id": ctx.author.id, "role_id": nad_role.id, "message_id": message.id, "is_active": 1, "channel": ctx.channel.id, "leader": 0, "pruf": 0, "zaproschannel": 0, "prufid": 0, "zapid": 0, "kuda": channel.id, "setn": 0})
-                await message.add_reaction('❌')
-                await message.add_reaction('🇩')
-                await message.add_reaction('❔')
-                await message.add_reaction('✏️')
+                    await buttons.send(embed = embed, channel = channel.id, components = [ActionRow([Button(emoji = {"id": None,"name": "✔️","animated": False}, style = ButtonType().Success, custom_id = "button_accept_r"), Button(emoji = {"id": None,"name": "❌","animated": False}, style = ButtonType().Danger, custom_id = "button_remove_r"), Button(emoji = {"id": None,"name": "🇩","animated": False}, style = ButtonType().Primary, custom_id = "button_deny_r"), Button(emoji = {"id": None,"name": "❔","animated": False}, style = ButtonType().Success, custom_id = "button_stats_r"), ])])
+                    message = channel.last_message_id
+                    rolef.insert_one({"user_id": ctx.author.id, "role_id": nad_role.id, "message_id": message.id, "is_active": 1, "channel": ctx.channel.id, "leader": lidrole.id, "pruf": 0, "zaproschannel": 0, "prufid": 0, "zapid": 0, "kuda": channel.id, "setn": 0})
+    
+    @buttons.click
+    async def button_stats_r(ctx):
+        if rolef.count_documents({"message_id": ctx.message.id}) == 0: 
+            await ctx.message.delete()
+            return await ctx.channel.send(f'`[BUGTRAKER]` {ctx.member.mention} `удалил багнутый запрос`')
 
+        if not ctx.channel.id == 505009452571820032: return
+        if ctx.guild == None: return
+        if not ctx.guild.id == 477547500232769536: return
+        if ctx.member.bot: return
+        channel = ctx.channel
+        message = ctx.message
+        memb = ctx.member
+        rolecheck = rolef.find_one({"message_id": ctx.message.id})
+        member = ctx.guild.get_member(rolecheck["user_id"])  
+        chan = self.bot.get_channel(rolecheck["channel"])
+        if rolecheck["pruf"] == 0:
+            await chan.send(f'{member.mention}, `модератор` {memb.mention} `запрашивает у вас статистику игрового аккаунта, отправьте в личные сообщения боту скриншот [/stats + /time]`')
+            serf = await channel.send(f'`[PRUF]` {memb.mention} `запросил доказательства от {member.display_name}, c ID: {rolecheck["user_id"]}`')
+            rolef.update_one({"message_id": message.id}, {"$set": {"pruf": 1, "zaproschannel": channel.id, "zapid": serf.id}})
+            await member.send(f'{member.mention}, `модератор {memb.display_name} запрашивает у вас статистику игрового аккаунта, отправьте в личные сообщения боту скриншот [/stats + /time]`')
+        else:
+            await ctx.reply('Статистику уже запросил другой модератор.', flags = MessageFlags().EPHEMERAL)
+
+    @buttons.click
+    async def button_lider_r(ctx):
+        if rolef.count_documents({"message_id": ctx.message.id}) == 0: 
+            await ctx.message.delete()
+            return await ctx.channel.send(f'`[BUGTRAKER]` {ctx.member.mention} `удалил багнутый запрос`')
+        if not ctx.channel.id == 505009452571820032: return
+        if ctx.guild == None: return
+        if not ctx.guild.id == 477547500232769536: return
+        if ctx.member.bot: return
+        channel = ctx.channel
+        message = ctx.message
+        memb = ctx.member
+        rolecheck = rolef.find_one({"message_id": ctx.message.id})
+        member = ctx.guild.get_member(rolecheck["user_id"])  
+        chan = self.bot.get_channel(rolecheck["channel"])
+        for role in member.roles:
+            if role.id in role_checkers:
+                await member.remove_roles(role)
+            else:
+                pass
+
+        if not rolecheck["prufid"] == 0:
+            msg = await channel.fetch_message(rolecheck["prufid"])
+            await msg.delete()
+
+        if not rolecheck["zapid"] == 0:
+            msg1 = await channel.fetch_message(rolecheck["zapid"])
+            await msg1.delete()
+
+        await member.add_roles(ctx.guild.get_role(rolecheck["role_id"]))
+        await chan.send(f'{member.mention}, `модератор` {memb.mention} `одобрил ваш запрос на выдачу роли.`\n`Роль` <@&{rolecheck["role_id"]}> `была выдана!`')
+        await channel.send(f'`[ACCEPT]` {memb.mention} `одобрил запрос от {member.display_name}, c ID: {rolecheck["user_id"]}`')
+        await ctx.reply('Вы одобрили выдачу роли пользователю.\nДействие добавлено в вашу модерскую статистику `(!imd)`', flags = MessageFlags().EPHEMERAL)
+        rolef.delete_one({"message_id": message.id})
+        add(memb, "rols")
+        return await message.delete()
+
+    @buttons.click
+    async def button_deny_r(ctx):
+        if rolef.count_documents({"message_id": ctx.message.id}) == 0: 
+            await ctx.message.delete()
+            return await ctx.channel.send(f'`[BUGTRAKER]` {ctx.member.mention} `удалил багнутый запрос`')
+        if not ctx.channel.id == 505009452571820032: return
+        if ctx.guild == None: return
+        if not ctx.guild.id == 477547500232769536: return
+        if ctx.member.bot: return
+        channel = ctx.channel
+        message = ctx.message
+        memb = ctx.member
+        rolecheck = rolef.find_one({"message_id": ctx.message.id})
+        if rolecheck["is_active"] == 1:
+            member = ctx.guild.get_member(rolecheck["user_id"])  
+            chan = self.bot.get_channel(rolecheck["channel"])
+            if not rolecheck["prufid"] == 0:
+                msg = await channel.fetch_message(rolecheck["prufid"])
+                await msg.delete()
+
+            if not rolecheck["zapid"] == 0:
+                msg1 = await channel.fetch_message(rolecheck["zapid"])
+                await msg1.delete()
+
+            await chan.send(f'{member.mention}, `модератор` {memb.mention} `отклонил ваш запрос на выдачу роли.`\n`Ваш ник при отправке: {member.display_name}`\n`Установите ник на: [Фракция Ранг/10] Имя_Фамилия\nАватар фракции можно найти с помощью команды +photo <фракция>`')
+            await channel.send(f'`[DENY]` {memb.mention} `отклонил запрос от {member.display_name}, c ID: {rolecheck["user_id"]}`')
+            rolef.delete_one({"message_id": message.id})
+            await message.delete()
+            await ctx.reply('Вы удалили запрос на выдачу роли пользователю.', flags = MessageFlags().EPHEMERAL)
+
+    @buttons.click
+    async def button_deny_s(ctx):
+        if rolef.count_documents({"message_id": ctx.message.id}) == 0: 
+            await ctx.message.delete()
+            return await ctx.channel.send(f'`[BUGTRAKER]` {ctx.member.mention} `удалил багнутый запрос`')
+        if not ctx.channel.id == 505009452571820032: return
+        if ctx.guild == None: return
+        if not ctx.guild.id == 477547500232769536: return
+        if ctx.member.bot: return
+        channel = ctx.channel
+        message = ctx.message
+        memb = ctx.member
+        rolecheck = rolef.find_one({"message_id": ctx.message.id})
+        if rolecheck["is_active"] == 2:
+            chan = self.bot.get_channel(rolecheck["channel"])
+            member = ctx.guild.get_member(rolecheck["leader"])
+            if member.id == memb.id:
+                await channel.send(f'`[DENY]` {memb.mention} `удалил свой запрос`')
+            else:
+                await chan.send(f'{member.mention}, `модератор` {memb.mention} `отклонил ваш запрос на снятие роли у пользователя` <@!{rolecheck["user_id"]}>`.`')
+                await channel.send(f'`[DENY]` {memb.mention} `отклонил запрос от {member.display_name}, c ID: {rolecheck["user_id"]}`')
+            rolef.delete_one({"message_id": message.id})
+            await message.delete()
+            await ctx.reply('Вы удалили запрос на снятие роли пользователю.', flags = MessageFlags().EPHEMERAL)
+
+    @buttons.click
+    async def button_remove_r(ctx):
+        if rolef.count_documents({"message_id": ctx.message.id}) == 0: 
+            await ctx.message.delete()
+            return await ctx.channel.send(f'`[BUGTRAKER]` {ctx.member.mention} `удалил багнутый запрос`')
+        if not ctx.channel.id == 505009452571820032: return
+        if ctx.guild == None: return
+        if not ctx.guild.id == 477547500232769536: return
+        if ctx.member.bot: return
+        channel = ctx.channel
+        message = ctx.message
+        memb = ctx.member
+        rolecheck = rolef.find_one({"message_id": ctx.message.id})
+        if rolecheck["is_active"] == 1:
+            member = ctx.guild.get_member(rolecheck["user_id"])  
+            chan = self.bot.get_channel(rolecheck["channel"])
+            await message.delete()
+            if not rolecheck["prufid"] == 0:
+                msg = await channel.fetch_message(rolecheck["prufid"])
+                await msg.delete()
+
+            if not rolecheck["zapid"] == 0:
+                msg1 = await channel.fetch_message(rolecheck["zapid"])
+                await msg1.delete()
+
+            await chan.send(f'{member.mention}, `модератор` {memb.mention} `отклонил ваш запрос на выдачу роли.`\n`Ваш ник при отправке: {member.display_name}`\n`Установите ник на: [Фракция Ранг/10] Имя_Фамилия\nАватар фракции можно найти с помощью команды +photo <фракция>`')
+            await channel.send(f'`[DENY]` {memb.mention} `отклонил запрос от {member.display_name}, c ID: {rolecheck["user_id"]}`')
+            rolef.delete_one({"message_id": message.id})
+            await ctx.reply('Вы отклонили выдачу роли пользователю.\nДанное действие пока что не добавляется в вашу модерскую статистику `(!imd)`', flags = MessageFlags().EPHEMERAL)
+
+    @buttons.click
+    async def button_remove_s(ctx):
+        if rolef.count_documents({"message_id": ctx.message.id}) == 0: 
+            await ctx.message.delete()
+            return await ctx.channel.send(f'`[BUGTRAKER]` {ctx.member.mention} `удалил багнутый запрос`')
+        if not ctx.channel.id == 505009452571820032: return
+        if ctx.guild == None: return
+        if not ctx.guild.id == 477547500232769536: return
+        if ctx.member.bot: return
+        channel = ctx.channel
+        message = ctx.message
+        memb = ctx.member
+
+        rolecheck = rolef.find_one({"message_id": ctx.message.id})
+        if rolecheck["is_active"] == 2:
+            member = ctx.guild.get_member(rolecheck["user_id"])  
+            chan = self.bot.get_channel(rolecheck["channel"])
+
+            member = ctx.guild.get_member(rolecheck["leader"])
+            await message.delete()
+            await chan.send(f'{member.mention}, `модератор` {memb.mention} `отклонил ваш запрос на снятие роли у пользователя` {member.mention}')
+            await channel.send(f'`[DENY]` {memb.mention} `отклонил запрос от {member.display_name}, c ID: {rolecheck["user_id"]}`')
+            rolef.delete_one({"message_id": message.id})
+            await ctx.reply('Вы отклонили снятие роли пользователю.\nДанное действие пока что не добавляется в вашу модерскую статистику `(!imd)`', flags = MessageFlags().EPHEMERAL)
+
+    @buttons.click
+    async def button_accept_r(ctx):
+        if rolef.count_documents({"message_id": ctx.message.id}) == 0: 
+            await ctx.message.delete()
+            return await ctx.channel.send(f'`[BUGTRAKER]` {ctx.member.mention} `удалил багнутый запрос`')
+        if not ctx.channel.id == 505009452571820032: return
+        if ctx.guild == None: return
+        if not ctx.guild.id == 477547500232769536: return
+        if ctx.member.bot: return
+        channel = ctx.channel
+        message = ctx.message
+        memb = ctx.member
+        role_checkers = [862361473988821012, 860207024930160680, 478970291444383766, 848630088170078269, 848658294759227392, 848660081222483988, 848661195166842900, 848663860399046666, 848664593524850748, 848971714858844191, 848973072006512676, 848974272541622362, 848977375093325844, 848977843228115024, 479198132211548161, 479049028705976340, 479049200768647169, 479198415578988554, 479198488563810315, 479185785510166567]
+
+        rolecheck = rolef.find_one({"message_id": ctx.message.id})
+        if rolecheck["is_active"] == 1:              
+            member = ctx.guild.get_member(rolecheck["user_id"])  
+            chan = self.bot.get_channel(rolecheck["channel"])
+            for role in member.roles:
+                if role.id in role_checkers:
+                    await member.remove_roles(role)
+                else:
+                    pass
+
+            if not rolecheck["prufid"] == 0:
+                msg = await channel.fetch_message(rolecheck["prufid"])
+                await msg.delete()
+
+            if not rolecheck["zapid"] == 0:
+                msg1 = await channel.fetch_message(rolecheck["zapid"])
+                await msg1.delete()
+
+            if rolecheck["leader"] > 1:
+                await member.add_roles(ctx.guild.get_role(rolecheck["role_id"]))
+                await member.add_roles(ctx.guild.get_role(rolecheck["leader"]))
+                await chan.send(f'{member.mention}, `модератор` {memb.mention} `одобрил ваш запрос на выдачу фракционных ролей.`\n`Роли` <@&{rolecheck["role_id"]}> `и` <@&{rolecheck["leader"]}> `были выданы!`')
+                await ctx.message.delete()
+                await ctx.reply('Вы одобрили выдачу ролей пользователю.\nДействие добавлено в вашу модерскую статистику `(!imd)`', flags = MessageFlags().EPHEMERAL)
+            else:
+                await member.add_roles(ctx.guild.get_role(rolecheck["role_id"]))
+                await chan.send(f'{member.mention}, `модератор` {memb.mention} `одобрил ваш запрос на выдачу роли.`\n`Роль` <@&{rolecheck["role_id"]}> `была выдана!`')
+                await ctx.message.delete()
+                await ctx.reply('Вы одобрили выдачу роли пользователю.\nДействие добавлено в вашу модерскую статистику `(!imd)`', flags = MessageFlags().EPHEMERAL)
+            await channel.send(f'`[ACCEPT]` {memb.mention} `одобрил запрос от {member.display_name}, c ID: {rolecheck["user_id"]}`')
+            rolef.delete_one({"message_id": message.id})
+            add(memb, "rols")
+
+    @buttons.click
+    async def button_accept_s(ctx):
+        if rolef.count_documents({"message_id": ctx.message.id}) == 0: 
+            await ctx.message.delete()
+            return await ctx.channel.send(f'`[BUGTRAKER]` {ctx.member.mention} `удалил багнутый запрос`')
+        if not ctx.channel.id == 505009452571820032: return
+        if ctx.guild == None: return
+        if not ctx.guild.id == 477547500232769536: return
+        if ctx.member.bot: return
+        channel = ctx.channel
+        message = ctx.message
+        memb = ctx.member
+
+        rolecheck = rolef.find_one({"message_id": ctx.message.id})
+        if rolecheck["is_active"] == 2:
+            member = ctx.guild.get_member(rolecheck["user_id"])  
+            chan = self.bot.get_channel(rolecheck["channel"])
+            membs = ctx.guild.get_member(rolecheck["leader"])
+            if membs.id == memb.id:
+                return
+
+            await message.delete()
+            rol = ctx.guild.get_role(rolecheck["role_id"])
+            await chan.send(f'`[ACCEPT]` {memb.mention} `одобрил снятие роли ({rol.name}) от` {membs.mention}, `пользователю {member.display_name}, с ID: {member.id}`')
+            await channel.send(f'`[ACCEPT]` {memb.mention} `одобрил снятие роли ({rol.name}) от` {membs.mention}, `пользователю {member.display_name}, с ID: {member.id}`')
+            await member.remove_roles(rol)
+            rolef.delete_one({"message_id": message.id})
+            add(memb, "derols")
+            await ctx.reply('Вы одобрили снятие роли пользователю.\nДействие добавлено в вашу модерскую статистику `(!imd)`', flags = MessageFlags().EPHEMERAL)
+    
+    '''
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):
         global meid
@@ -509,6 +749,7 @@ class role(commands.Cog):
                                 await chan.send(f'{member.mention}, `модератор` {memb.mention} `отклонил ваш запрос на снятие роли у пользователя` <@!{i["user_id"]}>`.`')
                                 await channel.send(f'`[DENY]` {memb.mention} `отклонил запрос от {member.display_name}, c ID: {i["user_id"]}`')
                             rolef.delete_one({"message_id": message.id})
+    '''
 
 def setup(bot):
     bot.add_cog(role(bot))
