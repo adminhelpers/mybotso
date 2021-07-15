@@ -125,11 +125,11 @@ async def getrules(ctx):
     e.set_thumbnail(url = ctx.guild.icon_url)
     await ctx.send(embed = e)
 
-cluster = MongoClient("mongodb+srv://dbrbase:YqxZgV1GL8s4CVxX@rodinadb.rhew3.mongodb.net/rodinaname?retryWrites=true&w=majority")
-db = cluster["rodina"]
-report = db["report"]
-moder = db["moder"]
-rolef = db["role"]
+clusterf = MongoClient("mongodb+srv://dbrbase:YqxZgV1GL8s4CVxX@rodinadb.rhew3.mongodb.net/rodinaname?retryWrites=true&w=majority")
+dbf = clusterf["rodina"]
+report = dbf["report"]
+moder = dbf["moder"]
+rolef = dbf["role"]
 
 
 # family.insert_one({"_id": ctx.author.id, "name": "привет"}) -> Запись в базу данных(Коллекция: Family) 
