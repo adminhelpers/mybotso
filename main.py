@@ -420,7 +420,9 @@ async def on_message(ctx):
                 await asyncio.sleep(0.5)
                 message = channel.last_message
                 rolef.insert_one({"user_id": ctx.author.id, "role_id": nad_role.id, "message_id": message.id, "is_active": 1, "channel": ctx.channel.id, "leader": 0, "pruf": 0, "zaproschannel": 0, "prufid": 0, "zapid": 0, "kuda": channel.id, "setn": 0})
-
+            
+            await ctx.add_reaction('📨')
+            
 @buttons.click
 async def button_stats_r(ctx):
     if rolef.count_documents({"message_id": ctx.message.id}) == 0: 
