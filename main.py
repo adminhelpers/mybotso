@@ -64,9 +64,6 @@ buttons = ButtonsClient(bot)
 bot.load_extension('jishaku')
 bot.remove_command('help')
 
-@bot.event
-async def on_message(ctx):
-    print('+')
 
 @bot.event
 async def on_ready():
@@ -451,6 +448,223 @@ async def button_accept_s(ctx):
         add(memb, "derols")
         await ctx.reply('Вы одобрили снятие роли пользователю.\nДействие добавлено в вашу модерскую статистику `(!imd)`', flags = MessageFlags().EPHEMERAL)
             
+@bot.event
+async def on_message(ctx):
+    bot.process_commands(ctx)
+    if ctx.content == f'<@!{bot.user.id}>' or  ctx.content == f'<@{bot.user.id}>':
+        #await ctx.channel.send(f'{ctx.author.mention},', embed = discord.Embed(title = 'Основная информация', description = f'**Привет! Меня зовут Rodina RP бот.\nСоздатель бота: adminhelper#777\n\n> `Префикс установленный на этом сервере:`    /\n> `Ссылка на добавление бота:` https://discord.com/api/oauth2/authorize?client_id=729309765431328799&permissions=8&scope=bot\n\n`Информация о боте -` /botinfo\n`Информация по командам -` /help**', colour = 0xFB9E14), delete_after = 20)
+        return
+
+    global uje
+    role_registr = ['!роль', 'роль', 'Роль', '!Роль']
+    nick_registr = ['Пра-во', 'РОВД', 'Банк', 'ФСБ', 'РУВД', 'ГУВД', 'Армия', 'ТСР', 'МРЭО', 'НГ-А', 'НГ-Л', 'МЗ-А', 'МЗ-Э', 'Судья', 'КМ', 'ФМ', 'СТ', 'СБ', 'РМ', 'УМ', 'ЧК'] # Сюда вообще все теги добавь, если там что-то новое будет, если заменят, удаляй то, чего больше нету и вставляй новое, так же.
+    gos = ['Пра-во', 'РОВД', 'Банк', 'ФСБ', 'РУВД', 'ГУВД', 'МРЭО', 'Армия', 'ТСР', 'НГ-А', 'НГ-Л', 'МЗ-А', 'МЗ-Э', 'Судья'] # Сюда все теги госов, по такому же принципу, если вдруг новые появятся 
+    opg = ['КМ', 'ФМ', 'СТ', 'СБ', 'РМ', 'УМ', 'ЧК'] 
+
+
+    ROLES = {
+        'Пра-во': 478970291444383766,
+        'РОВД': 848630088170078269,
+        'Банк': 848658294759227392,
+        'ФСБ': 848660081222483988,
+        'РУВД': 848661195166842900,
+        'ГУВД': 848663860399046666,
+        'Армия': 848664593524850748,
+        'ТСР': 848971714858844191,
+        'НГ-А': 848973072006512676,
+        'НГ-Л': 862361473988821012,
+        'МЗ-А': 848974272541622362,
+        'МРЭО': 860207024930160680,
+        'МЗ-Э': 848977375093325844,
+        'Судья': 848977843228115024,
+        'ФМ': 479048866704916540,
+        'КМ': 479198132211548161,
+        'СТ': 479049028705976340,
+        'СБ': 479049200768647169,
+        'РМ': 479198415578988554,
+        'УМ': 479198488563810315,
+        'ЧК': 479185785510166567,
+    }
+
+    if not ctx.author.bot:
+        if not ctx.guild and ctx.guild.id == 477547500232769536:
+            for i in rolef.find({"user_id": ctx.author.id}):
+                if not i["zaproschannel"] == 0:
+                    if ctx.attachments == []:
+                        return
+                    else:
+                        chanel = bot.get_channel(i["zaproschannel"])
+                        guild = bot.get_guild(477547500232769536)
+                        member = discord.utils.get(guild.members, id = i["user_id"])
+                        message = await bot.get_channel(i["zaproschannel"]).fetch_message(i["message_id"])
+                        if i["leader"] > 1:
+                            embed = discord.Embed(description = f'`Discord >> Проверка на валидность никнейма`\n`[NOTIFICATION]` `Внимаение, в нике указан старший ранг, обязательно просмотрите его статистику!`', colour = 0xFB9E14, timestamp = message.created_at)
+                        else:
+                            embed = discord.Embed(description = '`Discord >> Проверка на валидность никнейма`', colour = 0xFB9E14, timestamp = message.created_at)
+                        embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
+                        embed.add_field(name = 'Аккаунт', value = f'`Пользователь`: {ctx.author.mention}', inline = True)
+                        embed.add_field(name = 'Никнейм', value = f'`Ник:` {ctx.author.display_name}', inline = True)
+                        if i["leader"] > 1:
+                            embed.add_field(name = 'Роли для выдачи', value = f'`Роли для выдачи`: {discord.utils.get(guild.roles, id = i["role_id"]).mention} `и` {discord.utils.get(guild.roles, id = i["leader"]).mention}', inline = False)
+                        else:
+                            embed.add_field(name = 'Роль для выдачи', value = f'`Роль для выдачи`: {discord.utils.get(guild.roles, id = i["role_id"]).mention}', inline = False)
+                        embed.add_field(name = 'Отправлено с канала', value = f'{bot.get_channel(i["zaproschannel"]).mention}', inline = False)
+                        if i["leader"] > 1:
+                            embed.add_field(name = 'Действия', value = '`[✔️] - выдать роли старшего состава и организации.`\n`[➕] - Выдать роль организации`\n`[❌] - отказать.`\n`[🇩] - удалить сообщение.`\n`[❔] - Запросить скрин-шот статистики`\n`[✏️] - Установить пользователю Nick_Name`')
+                        else:
+                            embed.add_field(name = 'Действия', value = '`[✔️] - выдать роль.`\n`[❌] - отказать.`\n`[🇩] - удалить сообщение.`\n`[❔] - Запросить скрин-шот статистики`\n`[✏️] - Установить пользователю Nick_Name`')
+                        embed.set_image(url = ctx.attachments[0].url)
+                        await message.edit(embed = embed)
+                        embed1 = discord.Embed(description = f'**Скриншот прикреплён к изначальному [сообщению-запросу]({message.jump_url}).**', colour = 0xFB9E14) 
+                        mesg = await chanel.send(f'`[UPDATE]` `Пользователь {member.display_name}`({member.mention}) `отправил доказательства на получение роли!`', embed = embed1)
+                        rolef.update_one({"id": ctx.author.id}, {"$set": {"zaproschannel": 0, "prufid": mesg.id}})
+                        await ctx.author.send('`[SUCCESFULL] Ваши доказательства отправлены в необходимый канал`')
+                        return
+           
+        
+    msg = ctx.content.lower()
+
+    if 'снять роль у' in msg:
+        if not discord.utils.get(ctx.guild.roles, id = 652869023599558656) in ctx.author.roles and not discord.utils.get(ctx.guild.roles, id = 817813676178407425) in ctx.author.roles:
+            return
+        check = ctx.raw_mentions
+        if check == None:
+            return
+        else:
+            member = ctx.guild.get_member(check[0])
+        if not ctx.channel.id == 704050836258422854:
+            await ctx.delete()
+            return await ctx.channel.send(embed = discord.Embed(description = f'**❌ {ctx.author.name}, запросы разрешено отправлять только из канала <#704050836258422854>!**', colour = 0xFB9E14), delete_after = 5)
+        role_checkers = [862361473988821012, 860207024930160680, 479048866704916540, 478970291444383766, 848630088170078269, 848658294759227392, 848660081222483988, 848661195166842900, 848663860399046666, 848664593524850748, 848971714858844191, 848973072006512676, 848974272541622362, 848977375093325844, 848977843228115024, 479198132211548161, 479049028705976340, 479049200768647169, 479198415578988554, 479198488563810315, 479185785510166567]
+        z = 0
+        for i in member.roles:
+            if i.id in role_checkers:
+                z = i.id
+                break
+        if z == 0:
+            return await ctx.channel.send('`[ERROR]` `Данный пользователь не имеет фракционных ролей!`', delete_after = 5)
+
+        if rolef.count_documents({"user_id": member.id}) == 1 and rolef.find_one({"user_id": member.id})["is_active"] == 2:
+            await ctx.add_reaction('❌')
+            return await ctx.channel.send(f'{ctx.author.mention}, `уже создана заявка на снятие роли у этого пользователя.`', delete_after = 5)
+
+        msg1 = await ctx.channel.send('`Введите причину снятия роли в чат`')
+        def checkms(m):
+            return m.author == ctx.author and m.channel == ctx.channel
+        try:
+            msg2 = await bot.wait_for('message', timeout = 30.0, check = checkms)
+        except Exception:
+            await msg1.delete()
+            return
+        await msg1.delete()
+        reas = msg2.content
+        await msg2.delete()
+
+        channel, nad_role = bot.get_channel(505009452571820032), discord.utils.get(ctx.guild.roles, id=z)
+        
+        embed = discord.Embed(description = '`Discord >> Запрос на снятие роли`', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow())
+        embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
+        embed.add_field(name = 'Аккаунт', value = f'`Пользователь`: {member.mention}', inline = True)
+        embed.add_field(name = 'Никнейм', value = f'`Ник:` {member.display_name}', inline = True)
+        embed.add_field(name = 'Отправил', value = f'`Модератор:` {ctx.author.mention}', inline = False)
+        embed.add_field(name = 'По причине', value = f'`По причине:` {reas}', inline = True)
+        embed.add_field(name = 'Роль для снятия', value = f'`Роль для снятия`: {nad_role.mention}', inline = False)
+        embed.add_field(name = 'Отправлено с канала', value = f'{ctx.channel.mention}', inline = False)
+        embed.add_field(name = 'Действия', value = '`[✔️] - снять роль.`\n`[❌] - отказать.`\n`[🇩] - удалить сообщение.`')
+        embed.set_image(url = member.avatar_url)
+        await buttons.send(embed = embed, channel = channel.id, components = [ActionRow([Button(emoji = {"id": None,"name": "✔️","animated": False}, style = ButtonType().Success, custom_id = "button_accept_s"), Button(emoji = {"id": None,"name": "❌","animated": False}, style = ButtonType().Danger, custom_id = "button_remove_s"), Button(emoji = {"id": None,"name": "🇩","animated": False}, style = ButtonType().Primary, custom_id = "button_deny_s")])])
+        await asyncio.sleep(0.5)
+        message = channel.last_message
+        rolef.insert_one({"user_id": member.id, "role_id": nad_role.id, "message_id": message.id, "is_active": 2, "channel": ctx.channel.id, "leader": ctx.author.id, "kuda": channel.id})
+
+        add(ctx.author, "dezaprols")
+        return await ctx.add_reaction('📨')
+
+    if msg in role_registr:
+        ak = ctx.author.display_name.replace('[', '')
+        ak1 = ak.replace(']', '')
+        ak2 = ak1.split()
+        if not ctx.channel.id == 815924842984898590:
+            await ctx.delete()
+            return await ctx.channel.send(embed = discord.Embed(description = f'**❌ {ctx.author.name}, получать роли нужно только в канале <#815924842984898590>!**', colour = 0xFB9E14), delete_after = 5)
+
+        ath = ctx.author.display_name.split(' ')
+        for z in ath:
+            if z.replace('[', '').replace(']', '') in nick_registr:
+                z = z.replace('[', '').replace(']', '')
+                break
+
+        if not z in nick_registr:
+            await ctx.delete()
+            if ctx.author.id in uje:
+                return
+
+            embed = discord.Embed(title = 'Получение ролей', description = f'**В Вашем ник-нэйме указан не верный тэг!\n`Discord >> Список всех фракционных тэгов`**', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow())
+            embed.add_field(name = f'**Тэги Государственных Организаций:**', value = f'> `Пра-во, РОВД, Банк, ФСБ, РУВД, ГУВД, Армия, ТСР, НГ-А, МЗ-А, МЗ-Э, Судья`')
+            embed.add_field(name = f'**Дополнительные тэги Нелегальных Организаций**', value = f'> `ФМ, СТ, СБ, ЧК, УМ, КМ, РМ`')
+            embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
+            embed.set_thumbnail(url = ctx.guild.icon_url)
+            await ctx.channel.send(embed = embed, delete_after = 25)
+            await asyncio.sleep(60)
+
+        if z in nick_registr:
+            if rolef.count_documents({"user_id": ctx.author.id}) == 1 and rolef.find_one({"user_id": ctx.author.id})["is_active"] == 1:
+                await ctx.add_reaction('🕐')
+                return await ctx.channel.send(f'{ctx.author.mention}, `Вы уже отправили своё заявление на получение роли, дождитесь его одобрения.`', delete_after = 5)
+
+            channel = bot.get_channel(505009452571820032)
+            lidrole = 1
+            if ROLES[z] == 1703:
+                return await ctx.channel.send(embed = discord.Embed(title = 'Замороженная организация', description = f'**Организация указанная в вашем ним-нэйме заморожена.**', colour = 0xFB9E14), delete_after = 5) 
+
+            nad_role = discord.utils.get(ctx.guild.roles, id=ROLES[z])
+            if '10/10' in ak2:
+                if z in gos:
+                    lidrole = discord.utils.get(ctx.guild.roles, id = 800640188807118858)
+                elif z in opg:
+                    lidrole = discord.utils.get(ctx.guild.roles, id = 800640178800295946)
+            elif '9/10' in ak2:
+                if z in gos:
+                    lidrole = discord.utils.get(ctx.guild.roles, id = 800639571003179068)
+                elif z in opg:
+                    lidrole = discord.utils.get(ctx.guild.roles, id = 800639550186979338)
+            
+            if '9/10' in ak2:
+                embed = discord.Embed(description = '`Discord >> Проверка на валидность никнейма`\n`[NOTIFICATION]` `Внимаение, в нике указан 9-й ранг, обязательно просмотрите его статистику!`', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow())
+            if '10/10' in ak2:
+                embed = discord.Embed(description = '`Discord >> Проверка на валидность никнейма`\n`[NOTIFICATION]` `Внимаение, в нике указан 10-й ранг, обязательно просмотрите его статистику!`', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow())
+            else:
+                embed = discord.Embed(description = '`Discord >> Проверка на валидность никнейма`', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow())
+            embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
+            embed.add_field(name = 'Аккаунт', value = f'`Пользователь`: {ctx.author.mention}', inline = True)
+            embed.add_field(name = 'Никнейм', value = f'`Ник:` {ctx.author.display_name}', inline = True)
+            if not lidrole == 1:
+                embed.add_field(name = 'Роли для выдачи', value = f'`Роли для выдачи`: {nad_role.mention} `и` {lidrole.mention}', inline = False)
+            else:
+                embed.add_field(name = 'Роль для выдачи', value = f'`Роль для выдачи`: {nad_role.mention}', inline = False)
+            embed.add_field(name = 'Отправлено с канала', value = f'{ctx.channel.mention}', inline = False)
+            if not lidrole == 1:
+                embed.add_field(name = 'Действия', value = '`[✔️] - выдать роли старшего состава и организации.`\n`[➕] - Выдать роль организации`\n`[❌] - отказать.`\n`[🇩] - удалить сообщение.`\n`[❔] - Запросить скрин-шот статистики`')
+            else:
+                embed.add_field(name = 'Действия', value = '`[✔️] - выдать роль.`\n`[❌] - отказать.`\n`[🇩] - удалить сообщение.`\n`[❔] - Запросить скрин-шот статистики`')
+            embed.set_image(url = ctx.author.avatar_url)
+
+            if nad_role in ctx.author.roles:
+                await ctx.channel.send(f'{ctx.author.mention}, `у вас уже есть роль` {nad_role.mention}', delete_after = 5)
+                return await ctx.add_reaction('❌')
+
+            if not lidrole == 1:
+                await buttons.send(embed = embed, channel = channel.id, components = [ActionRow([Button(emoji = {"id": None,"name": "✔️","animated": False}, style = ButtonType().Success, custom_id = "button_accept_r"), Button(emoji = {"id": None,"name": "➕","animated": False}, style = ButtonType().Success, custom_id = "button_lider_r"), Button(emoji = {"id": None,"name": "❌","animated": False}, style = ButtonType().Danger, custom_id = "button_remove_r"), Button(emoji = {"id": None,"name": "🇩","animated": False}, style = ButtonType().Primary, custom_id = "button_deny_r"), Button(emoji = {"id": None,"name": "❔","animated": False}, style = ButtonType().Success, custom_id = "button_stats_r")])])
+                await asyncio.sleep(0.5)
+                message = channel.last_message
+                rolef.insert_one({"user_id": ctx.author.id, "role_id": nad_role.id, "message_id": message.id, "is_active": 1, "channel": ctx.channel.id, "leader": lidrole.id, "pruf": 0, "zaproschannel": 0, "prufid": 0, "zapid": 0, "kuda": channel.id, "setn": 0})
+            else:
+                await buttons.send(embed = embed, channel = channel.id, components = [ActionRow([Button(emoji = {"id": None,"name": "✔️","animated": False}, style = ButtonType().Success, custom_id = "button_accept_r"), Button(emoji = {"id": None,"name": "❌","animated": False}, style = ButtonType().Danger, custom_id = "button_remove_r"), Button(emoji = {"id": None,"name": "🇩","animated": False}, style = ButtonType().Primary, custom_id = "button_deny_r"), Button(emoji = {"id": None,"name": "❔","animated": False}, style = ButtonType().Success, custom_id = "button_stats_r"), ])])
+                await asyncio.sleep(0.5)
+                message = channel.last_message
+                rolef.insert_one({"user_id": ctx.author.id, "role_id": nad_role.id, "message_id": message.id, "is_active": 1, "channel": ctx.channel.id, "leader": 0, "pruf": 0, "zaproschannel": 0, "prufid": 0, "zapid": 0, "kuda": channel.id, "setn": 0})
+            
+            await ctx.add_reaction('📨')
 
 '''
 #global stavka
