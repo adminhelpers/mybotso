@@ -15,6 +15,7 @@ import json
 import requests
 import jishaku
 from pymongo import MongoClient
+from discord_buttons_plugin import *
 
 cluster = MongoClient("mongodb+srv://dbrbase:YqxZgV1GL8s4CVxX@rodinadb.rhew3.mongodb.net/rodinaname?retryWrites=true&w=majority")
 db = cluster["RodinaBD"]
@@ -35,6 +36,7 @@ async def get_prefix(bot, message):
 intents = discord.Intents.default()
 intents.members = True
 bot = commands.Bot(command_prefix = get_prefix, intents=intents)
+buttons = ButtonsClient(bot)
 bot.load_extension('jishaku')
 bot.remove_command('help')
 
