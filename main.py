@@ -65,6 +65,10 @@ bot.load_extension('jishaku')
 bot.remove_command('help')
 
 @bot.event
+async def on_message(ctx):
+    print('+')
+
+@bot.event
 async def on_ready():
     print('Основа бота включена.')
 
@@ -446,10 +450,6 @@ async def button_accept_s(ctx):
         rolef.delete_one({"message_id": message.id})
         add(memb, "derols")
         await ctx.reply('Вы одобрили снятие роли пользователю.\nДействие добавлено в вашу модерскую статистику `(!imd)`', flags = MessageFlags().EPHEMERAL)
-
-@bot.event
-async def on_message(ctx):
-    print('+')
             
 
 '''
