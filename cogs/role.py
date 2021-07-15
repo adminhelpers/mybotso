@@ -51,6 +51,8 @@ class role(commands.Cog):
 
     def __init__(self, bot: commands.Bot):
         self.bot = bot 
+     
+    buttons = ButtonsClient(self.bot)
 
     @commands.Cog.listener()
     async def on_ready(self):
