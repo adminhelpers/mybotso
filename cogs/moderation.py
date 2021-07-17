@@ -135,6 +135,8 @@ class moderation(commands.Cog):
 
     @commands.command()
     async def clear(self, ctx, member: typing.Optional[discord.Member] = None, amount : int = None):
+      
+        if not ctx.guild.id == 664111470782578708: return 
         global log
 
         if not discord.utils.get(ctx.guild.roles, id = 652869023599558656) in ctx.author.roles and not discord.utils.get(ctx.guild.roles, id = 817813676178407425) in ctx.author.roles:
@@ -206,6 +208,7 @@ class moderation(commands.Cog):
 
     @commands.command()
     async def vmute(self, ctx, member: discord.Member = None):
+        if not ctx.guild.id == 664111470782578708: return 
         global log
 
         if not discord.utils.get(ctx.guild.roles, id = 652869023599558656) in ctx.author.roles and not discord.utils.get(ctx.guild.roles, id = 817813676178407425) in ctx.author.roles:
@@ -232,6 +235,7 @@ class moderation(commands.Cog):
 
     @commands.command()
     async def vunmute(self, ctx, member: discord.Member = None):
+        if not ctx.guild.id == 664111470782578708: return 
         global log
 
         if not discord.utils.get(ctx.guild.roles, id = 652869023599558656) in ctx.author.roles and not discord.utils.get(ctx.guild.roles, id = 817813676178407425) in ctx.author.roles:
