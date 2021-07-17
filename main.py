@@ -487,7 +487,7 @@ async def on_message(ctx):
     }
 
     if not ctx.author.bot:
-        if not ctx.guild and ctx.guild.id == 477547500232769536:
+        if not ctx.guild:
             for i in rolef.find({"user_id": ctx.author.id}):
                 if not i["zaproschannel"] == 0:
                     if ctx.attachments == []:
@@ -520,7 +520,8 @@ async def on_message(ctx):
                         rolef.update_one({"id": ctx.author.id}, {"$set": {"zaproschannel": 0, "prufid": mesg.id}})
                         await ctx.author.send('`[SUCCESFULL] Ваши доказательства отправлены в необходимый канал`')
                         return
-           
+                      
+        elif ctx.guild.id != 477547500232769536: return
         
     msg = ctx.content.lower()
 
