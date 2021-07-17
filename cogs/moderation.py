@@ -136,7 +136,7 @@ class moderation(commands.Cog):
     @commands.command()
     async def clear(self, ctx, member: typing.Optional[discord.Member] = None, amount : int = None):
       
-        if not ctx.guild.id == 664111470782578708: return 
+        if not ctx.guild.id == 477547500232769536: return 
         global log
 
         if not discord.utils.get(ctx.guild.roles, id = 652869023599558656) in ctx.author.roles and not discord.utils.get(ctx.guild.roles, id = 817813676178407425) in ctx.author.roles:
@@ -204,11 +204,11 @@ class moderation(commands.Cog):
             # await ctx.send(embed = discord.Embed(title = f'Discord Helper', description = f'''**Единая ссылка на приглашения пользователей --\n https://discord.gg/TmTCP9S**''', colour = 0xFB9E14))
             return
         else:
-            await ctx.send(embed = discord.Embed(title = f'Discord Helper', description = f'''**Единая ссылка на приглашения пользователей --\n https://discord.gg/rodina03**''', colour = 0xFB9E14))
+            if ctx.guild.id == 477547500232769536: return await ctx.send(embed = discord.Embed(title = f'Discord Helper', description = f'''**Единая ссылка на приглашения пользователей --\n https://discord.gg/rodina03**''', colour = 0xFB9E14))
 
     @commands.command()
     async def vmute(self, ctx, member: discord.Member = None):
-        if not ctx.guild.id == 664111470782578708: return 
+        if not ctx.guild.id == 477547500232769536: return 
         global log
 
         if not discord.utils.get(ctx.guild.roles, id = 652869023599558656) in ctx.author.roles and not discord.utils.get(ctx.guild.roles, id = 817813676178407425) in ctx.author.roles:
