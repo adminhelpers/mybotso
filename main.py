@@ -31,6 +31,12 @@ report = dbf["report"]
 moder = dbf["moder"]
 rolef = dbf["role"]
 
+cl = MongoClient("mongodb+srv://dbrbase:YqxZgV1GL8s4CVxX@rodinadb.rhew3.mongodb.net/rodinaname?retryWrites=true&w=majority")
+dbtest = cl["rodinaname"]
+family = dbtest["famacoll"]
+clss = MongoClient("mongodb+srv://bot:5wAwCr4Wxw07Wjxb@cluster0.orxb3.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+dbstest = clss["phoneix"]
+familys = dbstest["famacoll"]
 
 def add(member: discord.Member, arg):
   if moder.count_documents({"guild": 477547500232769536, "id": member.id}) == 0:
@@ -84,6 +90,10 @@ bot.load_extension('cogs.forma')
 bot.load_extension('cogs.eventmanager')
 bot.load_extension('cogs.debug')
 
+@bot.command()
+async def testdb(ctx):
+    for i in familys.find({"guild": 664111470782578708}):
+        family.insert_one(i)
 
 @bot.command()
 @commands.is_owner()
