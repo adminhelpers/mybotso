@@ -34,8 +34,9 @@ rolef = dbf["role"]
 cl = MongoClient("mongodb+srv://dbrbase:YqxZgV1GL8s4CVxX@rodinadb.rhew3.mongodb.net/rodinaname?retryWrites=true&w=majority")
 dbtest = cl["rodinaname"]
 family = dbtest["famacoll"]
+
 clss = MongoClient("mongodb+srv://bot:50TKFaQiSaIMKiiO@cluster0.orxb3.mongodb.net/phoenix?retryWrites=true&w=majority")
-dbstest = clss["phoneix"]
+dbstest = clss["phoenix"]
 familys = dbstest["famacoll"]
 
 def add(member: discord.Member, arg):
