@@ -34,7 +34,7 @@ rolef = dbf["role"]
 cl = MongoClient("mongodb+srv://dbrbase:YqxZgV1GL8s4CVxX@rodinadb.rhew3.mongodb.net/rodinaname?retryWrites=true&w=majority")
 dbtest = cl["rodinaname"]
 family = dbtest["famacoll"]
-clss = MongoClient("mongodb+srv://bot:50TKFaQiSaIMKiiO@Cluster0.orxb3.mongodb.net/phoenix?retryWrites=true&w=majority")
+clss = MongoClient("mongodb+srv://bot:50TKFaQiSaIMKiiO@cluster0.orxb3.mongodb.net/phoenix?retryWrites=true&w=majority")
 dbstest = clss["phoneix"]
 familys = dbstest["famacoll"]
 
@@ -93,6 +93,7 @@ bot.load_extension('cogs.debug')
 @bot.command()
 async def testdb(ctx):
     for i in familys.find({"guild": 664111470782578708}):
+        print(i["name"])
         family.insert_one(i)
 
 @bot.command()
