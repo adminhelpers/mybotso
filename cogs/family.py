@@ -36,6 +36,7 @@ class family(commands.Cog):
 	
 	@commands.command(aliases = ['fhelp'])
 	async def famhelp(self, ctx):
+		if not ctx.guild.id == 477547500232769536: return
 		await ctx.message.delete()
 		embed = discord.Embed(title = 'Arizona Phoneix | Команды семей', description = '🔹 **| Список моих команд:**\n> `1.` **!createfam`(создать|fc)`** @Пользователь#1234 - Создать семью`[Указать пользователя который будет лидером семьи].`\n> `2.` **!removefam`(удалить|fr)`** [название семьи] - Удалить семью по названию.\n> `3.` **!faminvite`(пригласить|finvite)`** @Пользователь#1234 - Пригласить пользователя в семью.\n> `4.` **!famuninvite`(исключить|funinvite)`** @Пользователь#1234 - Исключить пользователя из семьи.\n> `5.` **!addfamzam`(назначить|afz)`** @Пользователь#1234 - Назначить пользователя заместителем семьи.\n> `6.` **!removefamzam`(разжаловать|rfz)`** @Пользователь#1234 - Снять пользователя с ранга `"Заместитель"`\n> `7.` **!faminfo`(осемье|finfo)`** [название семьи] - Узнать информацию о семье`[Если название не указано, информация о вашей семье].`\n> `8.` **!fammenu`(fmenu)`** - Открыть меню управления семьёй.\n> `9.` **!famlist`(семьи|flist)`** - Список всех семей сервера.', color = 0xFB9E14)
 		embed.set_thumbnail(url = ctx.guild.icon_url)
@@ -45,6 +46,7 @@ class family(commands.Cog):
 	@commands.command(aliases = ["создать", "fc"])
 	@commands.has_permissions(administrator = True)
 	async def createfam(self, ctx, member: discord.Member = None):
+		if not ctx.guild.id == 477547500232769536: return
 		await ctx.message.delete()
 		if member is None:
 			return await ctx.send(embed = discord.Embed(description = f'❗ {ctx.author.name}, `вы не указали пользователя, которому будет принадлежать создаваемая семья!`\n\n**Пример использования команды:**\n> `{reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]}createfam(создать|fc) [@user#1234]`\n-- Я буду знать, что владельцем будущей семьи станет указанный вами пользователь.', color = 0xFB0E14), delete_after = 7)
@@ -146,6 +148,7 @@ class family(commands.Cog):
 
 	@commands.command(aliases = ['пригласить', 'finvite'])
 	async def faminvite(self, ctx, member: discord.Member = None):
+		if not ctx.guild.id == 477547500232769536: return
 		if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id}):
 			a = fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id})["roleID"]
 			rolepr = discord.utils.get(ctx.guild.roles, id = a)
@@ -196,6 +199,7 @@ class family(commands.Cog):
 
 	@commands.command(aliases = ['исключить', 'funinvite'])
 	async def famuninvite(self , ctx, member: discord.Member = None):
+		if not ctx.guild.id == 477547500232769536: return
 		if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id}):
 			if member is None:
 				await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #59**\n**> Причины возникновения:**\n**- Вы не указали пользователя**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
@@ -240,6 +244,7 @@ class family(commands.Cog):
 
 	@commands.command(aliases = ['осемье', 'finfo'])
 	async def faminfo(self, ctx, *, amount: str = None):
+		if not ctx.guild.id == 477547500232769536: return
 		if amount is None:
 			for i in ctx.author.roles:
 				if i.id in [i["roleID"] for i in fam.find({"guild": 477547500232769536})]:
@@ -306,6 +311,7 @@ class family(commands.Cog):
 
 	@commands.command(aliases = ['разжаловать', 'rfz'])
 	async def removefamzam(self, ctx, member: discord.Member = None):
+		if not ctx.guild.id == 477547500232769536: return
 		if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id}):
 			if member is None:
 				await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #59**\n**> Причины возникновения:**\n**- Вы не указали пользователя**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
@@ -346,6 +352,7 @@ class family(commands.Cog):
 			
 	@commands.command(aliases = ['назначить', 'afz'])
 	async def addfamzam(self, ctx, member: discord.Member = None):
+		if not ctx.guild.id == 477547500232769536: return
 		if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id}):
 			if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id}):
 				if not fam.count_documents({"guild": ctx.guild.id, "leaderID": ctx.author.id}) == 0:
@@ -441,6 +448,7 @@ class family(commands.Cog):
 
 	@commands.command(aliases = ['fmenu'])
 	async def fammenu(self, ctx):
+		if not ctx.guild.id == 477547500232769536: return
 		await ctx.message.delete()
 		if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id}):
 			embed = discord.Embed(description = f"**Привет, {ctx.author.mention}**, ты попал в меню управления семьёй!\n\nВот список доступных для вас действий:**\n\n> 🔋 - `Изменить название семьи, внимание снимется 30 репутации.`\n> 🔖 - `Изменить роль семьи, внимание снимется 30 репутации.`\n> 💘 - `Получить галочку для семьи, внимание снимется 250 репутации.`\n\n> 📛 - **Закрыть**", colour = discord.Colour.blue())
@@ -523,6 +531,7 @@ class family(commands.Cog):
 
 	@commands.command(aliases = ["семьи", "flist"])
 	async def famlist(self, ctx):
+		if not ctx.guild.id == 477547500232769536: return
 		await ctx.message.delete()
 		mas = [ ]
 		index = 0
@@ -538,6 +547,7 @@ class family(commands.Cog):
 	@commands.command(aliases = ["удалить", "fr"])
 	@commands.has_permissions(administrator = True)
 	async def removefam(self, ctx, *, amount: str = None):
+		if not ctx.guild.id == 477547500232769536: return
 		await ctx.message.delete()
 		if amount is None:
 			return await ctx.send(embed = discord.Embed(description = f'❗ {ctx.author.name}, `вы не указали название семьи, которую хотите удалить!`\n\n**Пример использования команды:**\n> `{reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]}removefam(удалить|fr) [название]`\n-- Я предложу Вам удалить семью с максимально приближенным названием к вашему.', color = 0xFB0E14), delete_after = 7)
@@ -589,23 +599,6 @@ class family(commands.Cog):
 		else:
 			await ctx.send("**`[Err]` Я не нашел семью с таким названием!**", delete_after = 10.0)
 
-	'''
-	@commands.command()
-	@commands.has_permissions(administrator = True)
-	async def нов(self, ctx):
-		await ctx.channel.purge( limit = 1 )
-		a = "Доброго времени суток уважаемые пользователи нашего Discord-Сервера, я бы хотел рассказать Вам о нескольких важных моментах, которые вступают в силу уже с завтрашнего дня!"
-		b = "**в данный момент в канале <#673194313466904607> прописан перечень правил обязательных к выполнению для всех участников. Но данные правила в скоре времени изменятся,** [в данной теме](https://forum.robo-hamster.ru/threads/8693/) **приведен полный список всех правил!**"
-		c = "**Если же вы все́ же стали жертвой или свидетелем какого-нибудь нарушения, вы всегда сможете оставить жалобу на одного из модераторов в** [данной теме](https://forum.robo-hamster.ru/forums/139/)**, но для начала не забудьте ознакомиться с правилами подачи самой жалобы!**"
-		embed = discord.Embed(title = "Информация по Дискорду", description = f":white_check_mark: | **`Новые правила Discord`**\n{b}\n> **Примичание: Данные правила обязательны к ознакомлению и каждый кто находится в этом дискорде, автоматически обязуется их соблюдать.**\n:grey_question: | **`Но что же делать если модератор сам нарушает правила или пользуется своим положением?`**\n**Мы набрали состав модераторов, основываясь на свое́м доверии к ним, но нельзя сказать, что у нас точно не будет ошибок и нарушений.**\n{c}\n**Но если же данный человек не является модератором, а простым игроком можете подать жалобу в** [данной теме](https://forum.robo-hamster.ru/forums/141/)\n**Наконец-то, мы реализовали для вас, систему предложений по улучшению дискорд-бота и самого дискорда в целом.**\n**Мы с огромным предвкушением жде́м от гениев этого мира, самые лучшие предложения, которые наша команда реализует!**\n**Вы один из тех кто давно хотел нам что-то предложить? -** [Данная тема](https://forum.robo-hamster.ru/forums/140/)**, ждет ваших предложений с нетерпением!**\n | **`Ивенты | Мероприятия`**\n**Ну а тем людям которые любят различного рода мероприятия добро пожаловать в** [данную тему](https://forum.robo-hamster.ru/forums/142/)\n**Именно в ней, Вы сможете ознакомиться с правилами каждой игры и каждого мероприятия, а так же, написать заявку на участие в ней!**\n**На последок хотим вам сказать пару слов**", colour = discord.Colour.blue())
-		embed.set_author(name = f"{a}", icon_url = "https://images-ext-1.discordapp.net/external/hmqeDdENG0Qm1r_ZxRPlnQxUKVmFmO1XwYkOj0IEOYQ/%3Fsize%3D1024/https/cdn.discordapp.com/icons/577511138032484360/1bfb5a0216766649e6fe9d9be2a3312f.webp")
-		embed.set_thumbnail(url = "https://images-ext-1.discordapp.net/external/hmqeDdENG0Qm1r_ZxRPlnQxUKVmFmO1XwYkOj0IEOYQ/%3Fsize%3D1024/https/cdn.discordapp.com/icons/577511138032484360/1bfb5a0216766649e6fe9d9be2a3312f.webp")
-		embed.set_footer(text = "Ну и на последок хотим сказать вам пару теплых слов, мы любим и ценим каждого участника нашего Discord сервера, ваша любимая команда поддержки Support Team | Восточный Округ", icon_url = "https://psv4.userapi.com/c856436/u150505070/docs/d11/1e36edb0217e/22222.png?extra=Vy7ei_5Ef4KCSIfxY3VJipBDWuB81v4xaQQADlsR2bVcE1WjgWYUFfcCkW9JB4kEyY4V3AKUsZfSyCnr8bgoYUTtp-8mAiv_8Aleloo7IaALYv3g3SZVsPWMO_NcVb8iLUoTvoQWf9-uTkK0rj-mZQ")
-		m = await ctx.send("@everyone", embed = embed)
-		await m.add_reaction("✅")
-		await m.add_reaction("💖")
-		await m.add_reaction("👍")
-	'''
 
 def setup(bot):
 	bot.add_cog(family(bot))
