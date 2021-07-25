@@ -13,6 +13,7 @@ import asyncio
 import json
 import requests
 from pymongo import MongoClient
+import difflib
 
 cluster = MongoClient("mongodb+srv://dbrbase:YqxZgV1GL8s4CVxX@rodinadb.rhew3.mongodb.net/rodinaname?retryWrites=true&w=majority")
 db = cluster["rodinaname"]
@@ -32,24 +33,14 @@ class family(commands.Cog):
 	@commands.Cog.listener()
 	async def on_ready(self):
 		print("Rodina 04 | System of Family by kodiknarkotik#5187 - Запущен")
-
-	@commands.Cog.listener()
-	async def on_message(self, ctx):
-		if ctx.guild == None:
-			return
-
-		if not ctx.guild.id == 577511138032484360:
-			return
-
-		ath2 = re.findall(r'\w*', ctx.content.lower())
-
-		rekl = ['http', 'https', 'www', '.ru', '.com', '.xxx']
-		for i in ath2:
-			if i in rekl:
-				if not 'rodina' in ath2 and not 'hxa7jmt' in ath2:
-					await ctx.delete()
-					return await ctx.channel.send(embed = discord.Embed(description = f"**{ctx.author.mention}, ваше сообщение было удалено по подозрению в рекламе.**", colour = discord.Colour.blue()), delete_after = 20)
-
+	
+	@commands.command(aliases = ['fhelp'])
+	async def famhelp(self, ctx):
+		await ctx.message.delete()
+		embed = discord.Embed(title = 'Arizona Phoneix | Команды семей', description = '🔹 **| Список моих команд:**\n> `1.` **!createfam`(создать|fc)`** @Пользователь#1234 - Создать семью`[Указать пользователя который будет лидером семьи].`\n> `2.` **!removefam`(удалить|fr)`** [название семьи] - Удалить семью по названию.\n> `3.` **!faminvite`(пригласить|finvite)`** @Пользователь#1234 - Пригласить пользователя в семью.\n> `4.` **!famuninvite`(исключить|funinvite)`** @Пользователь#1234 - Исключить пользователя из семьи.\n> `5.` **!addfamzam`(назначить|afz)`** @Пользователь#1234 - Назначить пользователя заместителем семьи.\n> `6.` **!removefamzam`(разжаловать|rfz)`** @Пользователь#1234 - Снять пользователя с ранга `"Заместитель"`\n> `7.` **!faminfo`(осемье|finfo)`** [название семьи] - Узнать информацию о семье`[Если название не указано, информация о вашей семье].`\n> `8.` **!fammenu`(fmenu)`** - Открыть меню управления семьёй.\n> `9.` **!famlist`(семьи|flist)`** - Список всех семей сервера.', color = 0xFB9E14)
+		embed.set_thumbnail(url = ctx.guild.icon_url)
+		embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
+		await ctx.send(embed = embed, delete_after = 60)
 
 	@commands.command(aliases = ["создать", "fc"])
 	@commands.has_permissions(administrator = True)
@@ -153,7 +144,7 @@ class family(commands.Cog):
 								await msg4.delete()
 								await m4.edit(embed = discord.Embed(description = f'Вы успешно отказались от создания семьи!'), delete_after = 5)
 
-	@commands.command()
+	@commands.command(aliases = ['пригласить', 'finvite'])
 	async def faminvite(self, ctx, member: discord.Member = None):
 		if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id}):
 			a = fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id})["roleID"]
@@ -203,7 +194,7 @@ class family(commands.Cog):
 		else:
 			await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #403**\n> **Причины возникновения:**\n**- У вас не достаточно прав**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 
-	@commands.command()
+	@commands.command(aliases = ['исключить', 'funinvite'])
 	async def famuninvite(self , ctx, member: discord.Member = None):
 		if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id}):
 			if member is None:
@@ -247,13 +238,17 @@ class family(commands.Cog):
 		else:
 			await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #403**\n> ** Причины возникновения:**\n**- У вас не достаточно прав**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 
-	@commands.command()
+	@commands.command(aliases = ['осемье', 'finfo'])
 	async def faminfo(self, ctx, *, amount: str = None):
 		if amount is None:
 			for i in ctx.author.roles:
 				if i.id in [i["roleID"] for i in fam.find({"guild": 477547500232769536})]:
 					amount = fam.find_one({"guild": 477547500232769536, "roleID": i.id})["name"]
 					break
+		if amount == None:
+    			return await ctx.send(embed = discord.Embed(description = f'Не удалось найти указатель семьи.\n**Используйте команду:** !faminfo `[название семьи]`', color = 0xFB9E14), delete_after = 7)
+
+		amount = difflib.get_close_matches(amount, [i["name"] for i in fam.find({"guild": 477547500232769536})])
 
 		if not fam.count_documents({"guild": 477547500232769536, "name": amount}) == 0:
 			fname = fam.find_one({"name": amount, "guild": ctx.guild.id})["name"]
@@ -304,12 +299,12 @@ class family(commands.Cog):
 			embed.add_field(name = "**🔷 Общее количество участников семьи:**", value = f"{len(role.members)}", inline=False)
 			embed.add_field(name = "**🔺 Последний участник которому было отправлено приглашение:**", value = f"<@{member}>", inline=False)
 			embed.add_field(name = "**🏆 Репутация семьи:**", value = f"{rep}", inline=False)
-			embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
+			embed.set_footer(text = f'Команды семьи: !famhelp | Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
 			await ctx.send(embed = embed)
 		else:
-			return await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #59**\n**> Причины возникновения:**\n**- Вы не указали название семьи**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", colour = 0xFB9E14), delete_after = 20.0)
+			return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(description = "Я не смог найти семью с таким названием.", colour = 0xFB9E14), delete_after = 20.0)
 
-	@commands.command()
+	@commands.command(aliases = ['разжаловать', 'rfz'])
 	async def removefamzam(self, ctx, member: discord.Member = None):
 		if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id}):
 			if member is None:
@@ -348,10 +343,8 @@ class family(commands.Cog):
 
 			fam.update_one({"guild": ctx.guild.id, "leaderID": ctx.author.id}, {"$set": {p: 1}})
 			return await ctx.send( f'**`[ACCEPT]` {ctx.author.mention}`Вы успешно сняли права заместителя семьи с пользователя` {member.mention}**')
-
 			
-
-	@commands.command()
+	@commands.command(aliases = ['назначить', 'afz'])
 	async def addfamzam(self, ctx, member: discord.Member = None):
 		if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id}):
 			if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id}):
@@ -446,7 +439,7 @@ class family(commands.Cog):
 		else:
 			await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #403**\n> ** Причины возникновения:**\n**- У вас не достаточно прав**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 
-	@commands.command()
+	@commands.command(aliases = ['fmenu'])
 	async def fammenu(self, ctx):
 		await ctx.message.delete()
 		if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id}):
@@ -528,7 +521,7 @@ class family(commands.Cog):
 		else:
 			await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #403**\n**- Причины возникновения:**\n**- У вас не достаточно прав**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)				
 
-	@commands.command(aliases = ["семьи"])
+	@commands.command(aliases = ["семьи", "flist"])
 	async def famlist(self, ctx):
 		await ctx.message.delete()
 		mas = [ ]
@@ -537,7 +530,10 @@ class family(commands.Cog):
 			index += 1
 			mas.append(f'**`{index}.` Название:** {i["name"]}\n> `Лидер:` <@!{i["leaderID"]}>\n> `Семейная роль:` <@&{i["roleID"]}>\n> `Репутация:` {i["mem"]}\n')
 		a = ''.join(mas)
-		return await ctx.channel.send(f'{ctx.author.mention}, список семей зарегистрированых на {ctx.guild.name}:', embed = discord.Embed(description = f'{a}', colour = 0xFB9E14))
+		if len(a) == 0:
+			return await ctx.channel.send(embed = discord.Embed(description = f'В данный момент, нет зарегистрированных семей.', colour = 0xFB9E14))
+		else:
+			return await ctx.channel.send(f'{ctx.author.mention}, список семей зарегистрированых на {ctx.guild.name}:', embed = discord.Embed(description = f'{a}', colour = 0xFB9E14))
         
 	@commands.command(aliases = ["удалить", "fr"])
 	@commands.has_permissions(administrator = True)
