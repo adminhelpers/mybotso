@@ -991,7 +991,7 @@ class moderation(commands.Cog):
           embed = discord.Embed(title = 'Выдача предупреждения', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow())
           embed.add_field(name = 'Пользователь', value = f'**{member.display_name}`({member})`**', inline = False)
           embed.add_field(name = 'Модератор', value = f'**{ctx.author.display_name}({ctx.author})**', inline = False)
-          embed.add_field(name = 'Количество предупреждений', value = f'**{s}/3**', inline = False)
+          embed.add_field(name = 'Количество предупреждений', value = f'**{s + 1}/3**', inline = False)
           embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = self.bot.user.avatar_url)
           embed.set_thumbnail(url = ctx.guild.icon_url)
           await chan.send(embed = embed)
