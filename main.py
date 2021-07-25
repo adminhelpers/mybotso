@@ -91,12 +91,6 @@ bot.load_extension('cogs.forma')
 bot.load_extension('cogs.eventmanager')
 bot.load_extension('cogs.debug')
 
-@bot.command()
-async def testdb(ctx):
-    print('+')
-    for i in familys.find({"guild": 664111470782578708}):
-        print(i["name"])
-        family.insert_one(i)
 
 @bot.command()
 @commands.is_owner()
