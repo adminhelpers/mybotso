@@ -328,7 +328,7 @@ class econom(commands.Cog):
         ctx.command.reset_cooldown(ctx)
         return await ctx.send(embed = discord.Embed(title = 'Северный Округ | Семечки', description = f'**{ctx.author.mention}, Вы не можете сделать такую ставку!**', colour = 0x09F2C8))
       else:
-        await ctx.send(embed = discord.Embed(title = f'Северный Округ | Семечки', description = f'**{ctx.author.mention}, Отдохни минутку и получешь результат!**', colour = 0x09F2C8))
+        await ctx.send(embed = discord.Embed(title = f'Северный Округ | Семечки', description = f'**{ctx.author.mention}, Отдохни минутку и получишь результат!**', colour = 0x09F2C8))
         a = random.randint(1, 2)
         if a == 1:
         	await asyncio.sleep(5)
