@@ -321,7 +321,7 @@ class family(commands.Cog):
 			if member is None:
 				await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #59**\n**> Причины возникновения:**\n**- Вы не указали пользователя**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 				return
-			a = fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id})["roleID"]
+			a = fam.find_one({"leaderID": ctx.author.id, "guild": ctx.guild.id})["roleID"]
 			rolepr = discord.utils.get(ctx.guild.roles, id = a)
 			if member.id == ctx.author.id:
 				print('2')
