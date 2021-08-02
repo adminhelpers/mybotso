@@ -164,7 +164,11 @@ class family(commands.Cog):
 					mas = [i for i in fam.find_one({"guild": ctx.guild.id, "id": member.id})["id"]]
 					mas.remove(member.id)
 					mas.append(1)
-					fam.update_one({"guild": ctx.guild.id, "id": member.id}, {"$set": {"id": mas}})
+					if fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["zam1"] == member.id: p = "zam1"
+					elif fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["zam2"] == member.id: p = "zam2"
+					elif fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["zam3"] == member.id: p = "zam3"
+					elif fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["zam4"] == member.id: p = "zam4"
+					fam.update_one({"guild": ctx.guild.id, "leaderID": ctx.author.id}, {"$set": {p: 1, "id": mas}})
 				else:
 					return await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #58**\n**> Причины возникновения:**\n**- Вы указали пользователем себя**\n**- Пользователь является лидером другой семьи**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 			if rolepr in member.roles:
@@ -242,6 +246,15 @@ class family(commands.Cog):
 						embed = discord.Embed(title = "Исключение члена семьи", description = f"{ctx.author.mention}**, вы успешно выгнали пользователя {member.mention} из вашей семьи!**", colour = discord.Colour.blue())
 						embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
 						await ctx.send(embed = embed)
+						if member.id in fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["id"]:
+							mas = fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["id"]
+							mas.remove(member.id)
+							mas.append(1)
+							if fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["zam1"] == member.id: p = "zam1"
+							elif fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["zam2"] == member.id: p = "zam2"
+							elif fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["zam3"] == member.id: p = "zam3"
+							elif fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["zam4"] == member.id: p = "zam4"
+							fam.update_one({"guild": ctx.guild.id, "leaderID": ctx.author.id}, {"$set": {p: 1, "id": mas}})
 						return
 					if str(react.emoji) == '✖':
 						await ctx.send(f"**{ctx.author.mention} вы отменили ваше действие!**", delete_after = 10.0)
@@ -328,7 +341,6 @@ class family(commands.Cog):
 				await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #59**\n**> Причины возникновения:**\n**- Вы не указали пользователя**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 				return
 			a = fam.find_one({"leaderID": ctx.author.id, "guild": ctx.guild.id})["roleID"]
-			print(fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["id"])
 			rolepr = discord.utils.get(ctx.guild.roles, id = a)
 			if member.id == ctx.author.id:
 				print('1')
@@ -338,7 +350,7 @@ class family(commands.Cog):
 				print('2')
 				return await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #58**\n**> Причины возникновения:\n**- Вы указали пользователем себя**\n**- Пользователь не находится в вашей семье**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 
-			if fam.count_documents({"guild": ctx.guild.id, "id": member.id}) == 0:
+			if not member.id in fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["id"]:
 				print('3')
 				return await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #58**\n**> Причины возникновения:\n**- Вы указали пользователем себя**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 
@@ -348,20 +360,17 @@ class family(commands.Cog):
 			if not member.id in [i for i in fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["id"]]:
 				return await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #58**\n**> Причины возникновения:\n**- Пользователь не является заместителем семьи****- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 
-			mas = [i for i in fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["id"]]
-			mas.remove(member.id)
-			mas.append(1)
-			fam.update_one({"guild": ctx.guild.id, "leaderID": ctx.author.id}, {"$set": {"id": mas}})
-			if fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["zam1"] == member.id:
-				p = "zam1"
-			elif fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["zam2"] == member.id:
-				p = "zam2"
-			elif fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["zam3"] == member.id:
-				p = "zam3"
-			elif fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["zam4"] == member.id:
-				p = "zam4"
+			mas = fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["id"]
+			try: 
+				mas.remove(member.id)
+				mas.append(1)
+			except: pass
+			if fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["zam1"] == member.id: p = "zam1"
+			elif fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["zam2"] == member.id: p = "zam2"
+			elif fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["zam3"] == member.id: p = "zam3"
+			elif fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["zam4"] == member.id: p = "zam4"
 
-			fam.update_one({"guild": ctx.guild.id, "leaderID": ctx.author.id}, {"$set": {p: 1}})
+			fam.update_one({"guild": ctx.guild.id, "leaderID": ctx.author.id}, {"$set": {p: 1, "id": mas}})
 			return await ctx.send( f'**`[ACCEPT]` {ctx.author.mention}`Вы успешно сняли права заместителя семьи с пользователя` {member.mention}**')
 			
 	@commands.command(aliases = ['назначить', 'afz'])
