@@ -317,20 +317,22 @@ class family(commands.Cog):
 	@commands.command(aliases = ['разжаловать', 'rfz'])
 	async def removefamzam(self, ctx, member: discord.Member = None):
 		if not ctx.guild.id == 477547500232769536: return
-		if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id}):
+		if fam.find_one({"leaderID": ctx.author.id, "guild": ctx.guild.id}):
 			if member is None:
 				await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #59**\n**> Причины возникновения:**\n**- Вы не указали пользователя**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 				return
 			a = fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id})["roleID"]
 			rolepr = discord.utils.get(ctx.guild.roles, id = a)
 			if member.id == ctx.author.id:
-				await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #58**\n**> Причины возникновения:\n**- Вы указали пользователем себя**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
-				return
+				print('2')
+				return await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #58**\n**> Причины возникновения:\n**- Вы указали пользователем себя**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 
 			if not rolepr in member.roles:
+				print('2')
 				return await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #58**\n**> Причины возникновения:\n**- Вы указали пользователем себя**\n**- Пользователь не находится в вашей семье**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 
-			if member.id == fam.find_one({"id": member.id, "guild": ctx.guild.id}):
+			if not member.id in fam.find_one({"leaderID": ctx.author.id, "guild": ctx.guild.id})["id"]:
+				print('3')
 				return await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #58**\n**> Причины возникновения:\n**- Вы указали пользователем себя**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 
 			if not fam.count_documents({"guild": ctx.guild.id, "leaderID": ctx.author.id}) == 0:
@@ -358,9 +360,10 @@ class family(commands.Cog):
 	@commands.command(aliases = ['назначить', 'afz'])
 	async def addfamzam(self, ctx, member: discord.Member = None):
 		if not ctx.guild.id == 477547500232769536: return
-		if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id}):
+		if fam.find_one({"leaderID": ctx.author.id, "guild": ctx.guild.id}):
 			if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id}):
-				if not fam.count_documents({"guild": ctx.guild.id, "leaderID": ctx.author.id}) == 0:
+				if fam.count_documents({"guild": ctx.guild.id, "leaderID": ctx.author.id}) == 0:
+					print('1')
 					return await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #402**\n**- Причины возникновения:**\n**- Вы не вялетесь лидером семьи**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 
 				if member == None:
