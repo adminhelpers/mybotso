@@ -337,7 +337,7 @@ class family(commands.Cog):
 				print('2')
 				return await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #58**\n**> Причины возникновения:\n**- Вы указали пользователем себя**\n**- Пользователь не находится в вашей семье**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 
-			if not member.id in fam.find_one({"leaderID": ctx.author.id, "guild": ctx.guild.id})["id"]:
+			if not member.id in [i for i in fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["id"]]:
 				print('3')
 				return await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #58**\n**> Причины возникновения:\n**- Вы указали пользователем себя**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 
