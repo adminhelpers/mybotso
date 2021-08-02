@@ -336,7 +336,7 @@ class family(commands.Cog):
 			if not fam.count_documents({"guild": ctx.guild.id, "leaderID": ctx.author.id}) == 0:
 				return await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #402**\n**- Причины возникновения:**\n**- Вы не вялетесь лидером семьи**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 
-			if not member.id in [i for i in fam.find_one({"guild": ctx.guild.id})["id"]]:
+			if not member.id in [i for i in fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["id"]]:
 				return await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #58**\n**> Причины возникновения:\n**- Пользователь не является заместителем семьи****- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 
 			mas = [i for i in fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["id"]]
