@@ -160,8 +160,13 @@ class family(commands.Cog):
 				return
 			if fam.find_one({"id": member.id, "guild": ctx.guild.id}):
 				role = discord.utils.get(ctx.guild.roles, id = fam.find_one({"id": member.id, "guild": ctx.guild.id})["roleID"])
-				if not role in member.roles: await member.remove_roles(role)
-				return await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #58**\n**> Причины возникновения:**\n**- Вы указали пользователем себя**\n**- Пользователь является лидером другой семьи**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
+				if not role in member.roles: 
+					mas = [i for i in fam.find_one({"guild": ctx.guild.id, "id": member.id})["id"]]
+					mas.remove(member.id)
+					mas.append(1)
+					fam.update_one({"guild": ctx.guild.id, "id": member.id}, {"$set": {"id": mas}})
+				else:
+					return await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #58**\n**> Причины возникновения:**\n**- Вы указали пользователем себя**\n**- Пользователь является лидером другой семьи**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 			if rolepr in member.roles:
 				await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #58**\n**> Причины возникновения:\n**- Вы указали пользователем себя**\n**- Пользователь является лидером другой семьи**\n**- Пользователь находится в вашей семье**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 				return 
