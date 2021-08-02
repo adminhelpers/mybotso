@@ -38,7 +38,7 @@ class family(commands.Cog):
 	async def famhelp(self, ctx):
 		if not ctx.guild.id == 477547500232769536: return
 		await ctx.message.delete()
-		embed = discord.Embed(title = 'Arizona Phoneix | Команды семей', description = '🔹 **| Список моих команд:**\n> `1.` **!createfam`(создать|fc)`** @Пользователь#1234 - Создать семью`[Указать пользователя который будет лидером семьи].`\n> `2.` **!removefam`(удалить|fr)`** [название семьи] - Удалить семью по названию.\n> `3.` **!faminvite`(пригласить|finvite)`** @Пользователь#1234 - Пригласить пользователя в семью.\n> `4.` **!famuninvite`(исключить|funinvite)`** @Пользователь#1234 - Исключить пользователя из семьи.\n> `5.` **!addfamzam`(назначить|afz)`** @Пользователь#1234 - Назначить пользователя заместителем семьи.\n> `6.` **!removefamzam`(разжаловать|rfz)`** @Пользователь#1234 - Снять пользователя с ранга `"Заместитель"`\n> `7.` **!faminfo`(осемье|finfo)`** [название семьи] - Узнать информацию о семье`[Если название не указано, информация о вашей семье].`\n> `8.` **!fammenu`(fmenu)`** - Открыть меню управления семьёй.\n> `9.` **!famlist`(семьи|flist)`** - Список всех семей сервера.', color = 0xFB9E14)
+		embed = discord.Embed(title = 'Северный Округ | Команды семей', description = '🔹 **| Список моих команд:**\n> `1.` **!createfam`(создать|fc)`** @Пользователь#1234 - Создать семью`[Указать пользователя который будет лидером семьи].`\n> `2.` **!removefam`(удалить|fr)`** [название семьи] - Удалить семью по названию.\n> `3.` **!faminvite`(пригласить|finvite)`** @Пользователь#1234 - Пригласить пользователя в семью.\n> `4.` **!famuninvite`(исключить|funinvite)`** @Пользователь#1234 - Исключить пользователя из семьи.\n> `5.` **!addfamzam`(назначить|afz)`** @Пользователь#1234 - Назначить пользователя заместителем семьи.\n> `6.` **!removefamzam`(разжаловать|rfz)`** @Пользователь#1234 - Снять пользователя с ранга `"Заместитель"`\n> `7.` **!faminfo`(осемье|finfo)`** [название семьи] - Узнать информацию о семье`[Если название не указано, информация о вашей семье].`\n> `8.` **!fammenu`(fmenu)`** - Открыть меню управления семьёй.\n> `9.` **!famlist`(семьи|flist)`** - Список всех семей сервера.', color = 0xFB9E14)
 		embed.set_thumbnail(url = ctx.guild.icon_url)
 		embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
 		await ctx.send(embed = embed, delete_after = 60)
@@ -252,8 +252,13 @@ class family(commands.Cog):
 					break
 		if amount == None:
     			return await ctx.send(embed = discord.Embed(description = f'Не удалось найти указатель семьи.\n**Используйте команду:** !faminfo `[название семьи]`', color = 0xFB9E14), delete_after = 7)
-
-		amount = difflib.get_close_matches(amount, [i["name"] for i in fam.find({"guild": 477547500232769536})])
+		
+		else:
+			mas = [i["name"] for i in fam.find({"guild": 477547500232769536})]
+			b = 0
+			for i in mas:
+				if i.count(amount) > b:
+					amount = i
 
 		if not fam.count_documents({"guild": 477547500232769536, "name": amount}) == 0:
 			fname = fam.find_one({"name": amount, "guild": ctx.guild.id})["name"]
@@ -578,8 +583,10 @@ class family(commands.Cog):
 							owner = f'{own.mention}`({own})`'
 						except:
 							owner = 'Не найден'
-						role = discord.utils.get(ctx.guild.roles, id = nam["roleID"])
-						await discord.utils.get(ctx.guild.roles, id = nam["roleID"]).delete()
+						try:
+							role = discord.utils.get(ctx.guild.roles, id = nam["roleID"])
+							await discord.utils.get(ctx.guild.roles, id = nam["roleID"]).delete()
+						except: pass
 						await discord.utils.get(ctx.guild.channels, id = nam["channel"]).delete()
 						embed = discord.Embed(title = "Удаление семьи", description = f"**{ctx.author.mention}, вы успешно удалили семью {amount}**\n**Вот ее параметры:**\n\n1. `Владелец семьи:` **{owner}**\n2. `Семейная роль:` **{role.name}**", colour = discord.Colour.blue())
 						embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
