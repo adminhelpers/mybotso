@@ -36,9 +36,13 @@ class family(commands.Cog):
 	
 	@commands.command(aliases = ['fhelp'])
 	async def famhelp(self, ctx):
-		if not ctx.guild.id == 477547500232769536: return
+		if not ctx.guild.id == 477547500232769536 or not ctx.guild.id == 577511138032484360: return
 		await ctx.message.delete()
-		embed = discord.Embed(title = 'Северный Округ | Команды семей', description = '🔹 **| Список моих команд:**\n> `1.` **!createfam`(создать|fc)`** @Пользователь#1234 - Создать семью`[Указать пользователя который будет лидером семьи].`\n> `2.` **!removefam`(удалить|fr)`** [название семьи] - Удалить семью по названию.\n> `3.` **!faminvite`(пригласить|finvite)`** @Пользователь#1234 - Пригласить пользователя в семью.\n> `4.` **!famuninvite`(исключить|funinvite)`** @Пользователь#1234 - Исключить пользователя из семьи.\n> `5.` **!addfamzam`(назначить|afz)`** @Пользователь#1234 - Назначить пользователя заместителем семьи.\n> `6.` **!removefamzam`(разжаловать|rfz)`** @Пользователь#1234 - Снять пользователя с ранга `"Заместитель"`\n> `7.` **!faminfo`(осемье|finfo)`** [название семьи] - Узнать информацию о семье`[Если название не указано, информация о вашей семье].`\n> `8.` **!fammenu`(fmenu)`** - Открыть меню управления семьёй.\n> `9.` **!famlist`(семьи|flist)`** - Список всех семей сервера.', color = 0xFB9E14)
+		name = 'Северный Округ' if ctx.guild.id == 477547500232769536 else 'Восточный Округ'
+		if ctx.guild.id == 577511138032484360:
+			embed = discord.Embed(title = f'\⛩️ **__Список моих команд:__**', description = '**__!createfam__** *(создать|fc)* **@user** - Создать семью.\n**__!removefam__** *(удалить|fr)* **[название семьи]** - Удалить семью по названию.\n**__!faminvite__** *(пригласить|finvite)* **@user** - Пригласить пользователя в семью.\n**__!famuninvite__** *(исключить|funinvite)* **@user** - Исключить пользователя из семьи.\n**__!addfamzam__** *(назначить|afz)* **@user** - Назначить пользователя заместителем семьи.\n**__!removefamzam__** *(разжаловать|rfz)* **@user** - Снять пользователя с ранга "Заместитель".\n**__!faminfo__** *(осемье|finfo)* **[название семьи]** - Узнать информацию о семье.\n**__!fammenu__** *(fmenu)* - Открыть меню управления семьей.\n**__!famlist__** *(семьи|flist)* - Список всех семей сервера.', color = 0xFB9E14)
+		else:
+			embed = discord.Embed(title = f'{name} | Команды семей', description = '🔹 **| Список моих команд:**\n> `1.` **!createfam`(создать|fc)`** @Пользователь#1234 - Создать семью`[Указать пользователя который будет лидером семьи].`\n> `2.` **!removefam`(удалить|fr)`** [название семьи] - Удалить семью по названию.\n> `3.` **!faminvite`(пригласить|finvite)`** @Пользователь#1234 - Пригласить пользователя в семью.\n> `4.` **!famuninvite`(исключить|funinvite)`** @Пользователь#1234 - Исключить пользователя из семьи.\n> `5.` **!addfamzam`(назначить|afz)`** @Пользователь#1234 - Назначить пользователя заместителем семьи.\n> `6.` **!removefamzam`(разжаловать|rfz)`** @Пользователь#1234 - Снять пользователя с ранга `"Заместитель"`\n> `7.` **!faminfo`(осемье|finfo)`** [название семьи] - Узнать информацию о семье`[Если название не указано, информация о вашей семье].`\n> `8.` **!fammenu`(fmenu)`** - Открыть меню управления семьёй.\n> `9.` **!famlist`(семьи|flist)`** - Список всех семей сервера.', color = 0xFB9E14)
 		embed.set_thumbnail(url = ctx.guild.icon_url)
 		embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
 		await ctx.send(embed = embed, delete_after = 60)
@@ -46,7 +50,7 @@ class family(commands.Cog):
 	@commands.command(aliases = ["создать", "fc"])
 	@commands.has_permissions(administrator = True)
 	async def createfam(self, ctx, member: discord.Member = None):
-		if not ctx.guild.id == 477547500232769536: return
+		if not ctx.guild.id == 477547500232769536 or not ctx.guild.id == 577511138032484360: return
 		await ctx.message.delete()
 		if member is None:
 			return await ctx.send(embed = discord.Embed(description = f'❗ {ctx.author.name}, `вы не указали пользователя, которому будет принадлежать создаваемая семья!`\n\n**Пример использования команды:**\n> `{reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]}createfam(создать|fc) [@user#1234]`\n-- Я буду знать, что владельцем будущей семьи станет указанный вами пользователь.', color = 0xFB0E14), delete_after = 7)
@@ -54,8 +58,10 @@ class family(commands.Cog):
 		if fam.count_documents({"guild": ctx.guild.id, "leaderID": member.id}) > 0:
 			return await ctx.send(embed = discord.Embed(description = f'❗ {ctx.author.name}, `указанный пользователь является лидером другой семьи.', color = 0xFB0E14), delete_after = 7)
 
-
-		m = await ctx.send(embed = discord.Embed(title = 'Заполнение данных', description = f'Для создания семьи, Вам необходимо заполнить некоторые данные, список которых представлен ниже.\n1. `Владелец семьи`: {member.mention}`({member})`\n2. `Название семьи:` **Не указано**\n3. `Название семейной роли:` **Не указано**\n4. `Цвет семейной роли:` **Не указано**\n5. `Название семейного голосового канала:` **Не указано**\n\n**Для начала укажите название семьи**\n> `Пример:` dollar family\n-- Я установлю семье такое название\n\n`Для того что бы отменить создание семьи введите:` **Отмена**', color = 0xFB9E14))
+		if ctx.guild.id == 577511138032484360: # ТОТЯ 
+			m = await ctx.send(embed = discord.Embed(title = '\⛩️ **__Заполнение данных:__**', description = f'**Заполните данные:**\n**1.** Владелец семьи: {member.mention}`({member})`\n**2.** Название семьи: *__Не указано__*\n**3.** Название семейной роли: *__Не указано__*\n**4.** Цвет семейной роли: *__Не указано__*\n**5.** Название семейного голосового канала: *__Не указано__*\n\n**__Для начала укажите название семьи__**\nПример: dollar family\nЯ установлю семье такое название!\n\n**Для того что бы отменить создание семьи введите:** `Отмена`'))
+		else:
+			m = await ctx.send(embed = discord.Embed(title = 'Заполнение данных', description = f'Для создания семьи, Вам необходимо заполнить некоторые данные, список которых представлен ниже.\n1. `Владелец семьи`: {member.mention}`({member})`\n2. `Название семьи:` **Не указано**\n3. `Название семейной роли:` **Не указано**\n4. `Цвет семейной роли:` **Не указано**\n5. `Название семейного голосового канала:` **Не указано**\n\n**Для начала укажите название семьи**\n> `Пример:` dollar family\n-- Я установлю семье такое название\n\n`Для того что бы отменить создание семьи введите:` **Отмена**', color = 0xFB9E14))
 		def check(m):
 			return m.channel == ctx.channel and m.author == ctx.author
 		try:
@@ -65,9 +71,13 @@ class family(commands.Cog):
 		else:
 			await msg.delete()
 			if msg.content.lower() == 'отмена':
-				return await m.delete()
-			await m.edit(embed = discord.Embed(title = 'Заполнение данных', description = f'Получил Ваш ответ, очень оригинально! Продолжайте заполнять данные!\n1. `Владелец семьи`: {member.mention}`({member})`\n2. `Название семьи:` **{msg.content}**\n3. `Название семейной роли:` **Не указано**\n4. `Цвет семейной роли:` **Не указано**\n5. `Название семейного голосового канала:` **Не указано**\n\n**Теперь установите название семейной роли**\n> **Пример:** `{msg.content} role`\n-- Я установлю `{msg.content} role` названием семейной роли\n\n> `Для установки стандартного названия:` **-**\n-- Я установлю `название семьи` в название роли.\n\n`Для того что бы отменить создание семьи введите:` **Отмена**', color = 0xFB9E14))
-			m1 = await ctx.send("**`Напишите в чат название семейной роли:`**", embed = discord.Embed(description = f'> **Пример:** `{msg.content} role`\n-- Я установлю `{msg.content} role` названием семейной роли\n\n> `Для установки стандартного названия:` **-**\n-- Я установлю `название семьи` в название роли.\n\nЧто бы отменить создание семьи используйте: `Отмена`', color = 0xFB9E14))
+				return await m.delete() 
+			if ctx.guild.id == 577511138032484360: # ТОТЯ 
+				await m.edit(embed = discord.Embed(title = '\⛩️ **__Заполнение данных:__**', description = f'**Заполните данные:**\n**1.** Владелец семьи: {member.mention}`({member})`\n**2.** Название семьи: **{msg.content}**\n**3.** Название семейной роли: *__Не указано__*\n**4.** Цвет семейной роли: *__Не указано__*\n**5.** Название семейного голосового канала: *__Не указано__*\n\n**__Теперь установите название семейной роли__**\nПример: {msg.content}\nЯ установлю семье такое название!\n\n**Для того что бы отменить создание семьи введите:** `Отмена`'))
+				m1 = await ctx.send("**`Напишите в чат название семейной роли:`**", embed = discord.Embed(description = f'> **Пример:** `{msg.content} role`\n-- Я установлю `{msg.content} role` названием семейной роли\n\n> `Для установки стандартного названия:` **-**\n-- Я установлю `название семьи` в название роли.\n\nЧто бы отменить создание семьи используйте: `Отмена`', color = 0xFB9E14))
+			else:
+				await m.edit(embed = discord.Embed(title = 'Заполнение данных', description = f'Получил Ваш ответ, очень оригинально! Продолжайте заполнять данные!\n1. `Владелец семьи`: {member.mention}`({member})`\n2. `Название семьи:` **{msg.content}**\n3. `Название семейной роли:` **Не указано**\n4. `Цвет семейной роли:` **Не указано**\n5. `Название семейного голосового канала:` **Не указано**\n\n**Теперь установите название семейной роли**\n> **Пример:** `{msg.content} role`\n-- Я установлю `{msg.content} role` названием семейной роли\n\n> `Для установки стандартного названия:` **-**\n-- Я установлю `название семьи` в название роли.\n\n`Для того что бы отменить создание семьи введите:` **Отмена**', color = 0xFB9E14))
+				m1 = await ctx.send("**`Напишите в чат название семейной роли:`**", embed = discord.Embed(description = f'> **Пример:** `{msg.content} role`\n-- Я установлю `{msg.content} role` названием семейной роли\n\n> `Для установки стандартного названия:` **-**\n-- Я установлю `название семьи` в название роли.\n\nЧто бы отменить создание семьи используйте: `Отмена`', color = 0xFB9E14))
 			def check(m):
 				return m.channel == ctx.channel and m.author == ctx.author
 			try:
@@ -81,8 +91,12 @@ class family(commands.Cog):
 				if msg1.content.lower() == 'отмена':
 					return await m.delete()
 				frolename = f'{msg.content} role' if msg1.content == '-' else msg.content
-				await m.edit(embed = discord.Embed(title = 'Заполнение данных', description = f'Понял - принял, обработал. Давайте дальше!\n1. `Владелец семьи`: {member.mention}`({member})`\n2. `Название семьи:` **{msg.content}**\n3. `Название семейной роли:` **{frolename}**\n4. `Цвет семейной роли:` **Не указано**\n5. `Название семейного голосового канала:` **Не указано**\n\n**Теперь установите цвет для семейной роли**\n> **Пример:** `Синий`\n-- Я установлю `синий` цвет для семейной роли.\n\n**Доступные цвета:** `Белый, Чёрный, Голубой, Синий, Бирюзовый, Красный, Жёлтый, Оранжевый, Розовый, Фиолетовый, Пурпурный, Зелёный, Лаймовый`\n\n> `Для установки стандартного цвета:`   **-**\n-- Я установлю `белый` цвет для семейной роли.\n\n`Для того что бы отменить создание семьи введите:` **Отмена**', color = 0xFB9E14))
-				m9 = await ctx.send("`Напишите в чат название цвета для семейной роли`", embed = discord.Embed(description = '> **Пример:** `Синий`\n-- Я установлю `синий` цвет для семейной роли.\n\n**Доступные цвета:** `Белый, Чёрный, Голубой, Синий, Бирюзовый, Красный, Жёлтый, Оранжевый, Розовый, Фиолетовый, Пурпурный, Зелёный, Лаймовый`\n\n> `Для установки стандартного цвета:`   **-**\n-- Я установлю `белый` цвет для семейной роли.\n\nЧто бы отменить создание семьи используйте: `Отмена`', color = 0xFB9E14))
+				if ctx.guild.id == 577511138032484360: # ТОТЯ
+					await m.edit(embed = discord.Embed(title = '\⛩️ **__Заполнение данных:__**', description = f'**Заполните данные:**\n**1.** Владелец семьи: {member.mention}`({member})`\n**2.** Название семьи: **__{msg.content}__**\n**3.** Название семейной роли: *__{frolename}__*\n**4.** Цвет семейной роли: *__Не указано__*\n**5.** Название семейного голосового канала: *__Не указано__*\n\n**__Теперь установите цвет для семейной роли__**\nНапример: #2f3236\n\n**Чтобы отменить создание семьи используйте:** `Отмена`'))
+					m9 = await ctx.send(embed = discord.Embed(title = '\⛩️ **__Цвет семейной роли:__**', description = 'Чтобы установить цвет для роли, укажите **hex color**\nНапример: #2f3236\n\n**Чтобы отменить создание семьи используйте:** `Отмена`'))
+				else:
+					await m.edit(embed = discord.Embed(title = 'Заполнение данных', description = f'Понял - принял, обработал. Давайте дальше!\n1. `Владелец семьи`: {member.mention}`({member})`\n2. `Название семьи:` **{msg.content}**\n3. `Название семейной роли:` **{frolename}**\n4. `Цвет семейной роли:` **Не указано**\n5. `Название семейного голосового канала:` **Не указано**\n\n**Теперь установите цвет для семейной роли**\n> **Пример:** `Синий`\n-- Я установлю `синий` цвет для семейной роли.\n\n**Доступные цвета:** `Белый, Чёрный, Голубой, Синий, Бирюзовый, Красный, Жёлтый, Оранжевый, Розовый, Фиолетовый, Пурпурный, Зелёный, Лаймовый`\n\n> `Для установки стандартного цвета:`   **-**\n-- Я установлю `белый` цвет для семейной роли.\n\n`Для того что бы отменить создание семьи введите:` **Отмена**', color = 0xFB9E14))
+					m9 = await ctx.send("`Напишите в чат название цвета для семейной роли`", embed = discord.Embed(description = '> **Пример:** `Синий`\n-- Я установлю `синий` цвет для семейной роли.\n\n**Доступные цвета:** `Белый, Чёрный, Голубой, Синий, Бирюзовый, Красный, Жёлтый, Оранжевый, Розовый, Фиолетовый, Пурпурный, Зелёный, Лаймовый`\n\n> `Для установки стандартного цвета:`   **-**\n-- Я установлю `белый` цвет для семейной роли.\n\nЧто бы отменить создание семьи используйте: `Отмена`', color = 0xFB9E14))
 				def check(m):
 					return m.channel == ctx.channel and m.author == ctx.author
 				try:
@@ -92,30 +106,46 @@ class family(commands.Cog):
 					return await m9.delete()
 				else:
 					await msg9.delete()
-					fcolor = "Белый" if msg9.content == '-' else msg9.content
+					if ctx.guild.id == 577511138032484360: # ТОТЯ 
+						if not '#' in msg9.content.split(''): 
+							await m9.delete()
+							await m.delete()
+							return await ctx.send(embed = discord.Embed(title = '\⛩️ **__Произошла ошибка__**', description = 'Чтобы установить цвет для роли, укажите **hex color**\nНапример: #2f3236\n\n**Начните создание семьи заново.**', color = 0xFB9E14), delete_after = 10)
+						hexc = "#FFFFFF" if msg9.content == '-' else msg9.content
+					else:
+						fcolor = "Белый" if msg9.content == '-' else msg9.content
+						colors = {"белый": 0xFFFFFF, "чёрный": 0x000000, "черный": 0x000000, "голубой": 0x6495ED, "синий": 0x0000FF, "бирюзовый": 0x1df5c3, "красный": 0xFF0000, "жёлтый": 0xFFFF00, "желтный": 0xFFFF00, "розовый": 0xFF00FF, "фиолетовый": 0xEE82EE, "пурпурный": 0xA020F0, "оранжевый": 0xFFA500, "зелёный": 0x00FF00, "зеленый": 0x00FF00, "лаймовый": 0x32CD32}
+						eq = colors.get(fcolor.lower(), None)
+						hexc = 0xFFFFFF if not eq else colors[fcolor.lower()]
 					await m9.delete()
 					if msg9.content.lower() == 'отмена':
 						return await m.delete()
-					colors = {"белый": 0xFFFFFF, "чёрный": 0x000000, "черный": 0x000000, "голубой": 0x6495ED, "синий": 0x0000FF, "бирюзовый": 0x1df5c3, "красный": 0xFF0000, "жёлтый": 0xFFFF00, "желтный": 0xFFFF00, "розовый": 0xFF00FF, "фиолетовый": 0xEE82EE, "пурпурный": 0xA020F0, "оранжевый": 0xFFA500, "зелёный": 0x00FF00, "зеленый": 0x00FF00, "лаймовый": 0x32CD32}
-					eq = colors.get(fcolor.lower(), None)
-					hexc = 0xFFFFFF if not eq else colors[fcolor.lower()]
-					await m.edit(embed = discord.Embed(title = 'Заполнение данных', description = f'Есть контакт! Продолжайте заполнение.\n1. `Владелец семьи`: {member.mention}`({member})`\n2. `Название семьи:` **{msg.content}**\n3. `Название семейной роли:` **{frolename}**\n4. `Цвет семейной роли:` **{fcolor}**\n5. `Название семейного голосового канала:` **Не указано**\n\n**Теперь установите название семейного голосового канала**\n> **Пример:** `{msg.content} Voice`\n-- Я установлю `"{msg.content} Voice"` названием семейного голосового канала\n\n> `Для установки стандартного названия:`   **-**\n-- Я установлю `название семьи` в название семейного голосового канала.\n\n`Для того что бы отменить создание семьи введите:` **Отмена**', color = 0xFB9E14))
-					m2 = await ctx.send("**`Напишите название семейного голосового канала:`**", embed = discord.Embed(description = f'> **Пример:** `{msg.content} Voice`\n-- Я установлю `"{msg.content} Voice"` названием семейного голосового канала\n\n> `Для установки стандартного названия:`   **-**\n-- Я установлю `название семьи` в название семейного голосового канала.\n\nЧто бы отменить создание семьи используйте: `Отмена`', color = 0xFB9E14))
-					def check(m):
-						return m.channel == ctx.channel and m.author == ctx.author
-					try:
-						msg2 = await self.bot.wait_for('message', check = check, timeout= 120.0)
-					except TimeoutError:
-						await m.delete()
-						return await m2.delete()
+					
+					if ctx.guild.id == 577511138032484360: # ТОТЯ 
+						fvoice = f'{msg.content}'
+						pass
 					else:
-						await msg2.delete()
-						fvoice = f'{msg.content} Voice' if msg2.content == '-' else msg2.content
-						await m2.delete()
-						if msg2.content.lower() == 'отмена':
-							return await m.delete()
+						await m.edit(embed = discord.Embed(title = 'Заполнение данных', description = f'Есть контакт! Продолжайте заполнение.\n1. `Владелец семьи`: {member.mention}`({member})`\n2. `Название семьи:` **{msg.content}**\n3. `Название семейной роли:` **{frolename}**\n4. `Цвет семейной роли:` **{fcolor}**\n5. `Название семейного голосового канала:` **Не указано**\n\n**Теперь установите название семейного голосового канала**\n> **Пример:** `{msg.content} Voice`\n-- Я установлю `"{msg.content} Voice"` названием семейного голосового канала\n\n> `Для установки стандартного названия:`   **-**\n-- Я установлю `название семьи` в название семейного голосового канала.\n\n`Для того что бы отменить создание семьи введите:` **Отмена**', color = 0xFB9E14))
+						m2 = await ctx.send("**`Напишите название семейного голосового канала:`**", embed = discord.Embed(description = f'> **Пример:** `{msg.content} Voice`\n-- Я установлю `"{msg.content} Voice"` названием семейного голосового канала\n\n> `Для установки стандартного названия:`   **-**\n-- Я установлю `название семьи` в название семейного голосового канала.\n\nЧто бы отменить создание семьи используйте: `Отмена`', color = 0xFB9E14))
+						def check(m):
+							return m.channel == ctx.channel and m.author == ctx.author
+						try:
+							msg2 = await self.bot.wait_for('message', check = check, timeout= 120.0)
+						except TimeoutError:
+							await m.delete()
+							return await m2.delete()
+						else:
+							await msg2.delete()
+							fvoice = f'{msg.content} Voice' if msg2.content == '-' else msg2.content
+							await m2.delete()
+							if msg2.content.lower() == 'отмена':
+								return await m.delete()
+
 						await m.delete()
-						m4 = await ctx.send(embed = discord.Embed(title = 'Проверка валидности данных', description = f'Отлично! Все данные заполнены!\nПроверьте правильность их заполнения и выберите дальнейшие действия\n\n1. `Владелец семьи`: {member.mention}`({member})`\n2. `Название семьи:` **{msg.content}**\n3. `Название семейной роли:` **{frolename}**\n4. `Цвет семейной роли:` **{fcolor}**\n5. `Название семейного голосового канала:` **{fvoice}**\n\n`Для того что бы отменить создание семьи введите:` **Отмена**/**-**\n`Для подтверждения создания семьи введите:` **Да**/**+**', color = 0xFB9E14))
+						if ctx.guild.id == 577511138032484360: # ТОТЯ 
+							m4 = await ctx.send(embed = discord.Embed(title = '\⛩️ **__Проверка валидности данных__:**', description = f'Отлично! Все данные заполнены!\nПроверьте правильность заполнения и выберите дальнейшие действия\n\n**1.** Владелец семьи: **__{member.mention}`({member})__**\n**2.** Название семьи: **__{msg.content}__**\n**3.** Название семейной роли: **__{frolename}__**\n**4.** Цвет семейной роли: **__{fcolor}__**\n**5.** Название семейного голосового канала: **__{fvoice}__**\n\n**Для того что бы отменить создание семьи введите:** `Отмена/-`\n**Для подтверждения создания семьи введите:** `Да/+`'))
+						else:
+							m4 = await ctx.send(embed = discord.Embed(title = 'Проверка валидности данных', description = f'Отлично! Все данные заполнены!\nПроверьте правильность их заполнения и выберите дальнейшие действия\n\n1. `Владелец семьи`: {member.mention}`({member})`\n2. `Название семьи:` **{msg.content}**\n3. `Название семейной роли:` **{frolename}**\n4. `Цвет семейной роли:` **{fcolor}**\n5. `Название семейного голосового канала:` **{fvoice}**\n\n`Для того что бы отменить создание семьи введите:` **Отмена**/**-**\n`Для подтверждения создания семьи введите:` **Да**/**+**', color = 0xFB9E14))
 						def check(m):
 							return m.channel == ctx.channel and m.author == ctx.author
 						try:
@@ -126,8 +156,12 @@ class family(commands.Cog):
 							if msg4.content == "+" or msg4.content.lower() == 'да':
 								await msg4.delete()
 								await m4.delete()
-								await ctx.send(f'`[CREATEFAM]` `Семья "{msg.content}" успешно зарегистрирована.`', embed = discord.Embed(title = 'Информация о созданой семье', description = f'1. `Владелец семьи`: {member.mention}`({member})`\n2. `Название семьи:` **{msg.content}**\n3. `Название семейной роли:` **{frolename}**\n4. `Цвет семейной роли:` **{fcolor}**\n5. `Название семейного голосового канала:` **{fvoice}**', color = 0xFB9E14), delete_after = 60)
-								emb = discord.Embed(title = 'Создана новая семья', description = f'**Администратор {ctx.author.mention}(`{ctx.author}`) создал новую семью**\n\nИнформация о семье:\n1. `Владелец семьи`: {member.mention}`({member})`\n2. `Название семьи:` **{msg.content}**\n3. `Название семейной роли:` **{frolename}**\n4. `Цвет семейной роли:` **{fcolor}**\n5. `Название семейного голосового канала:` **{fvoice}**', color = 0xFB9E14)
+								if ctx.guild.id == 577511138032484360: # ТОТЯ 
+									await ctx.send(embed = discord.Embed(title = '\⛩️ **__Информация о созданной семье__:**', description = f'**1.** Владелец семьи: **__{member.mention}`({member})__**\n**2.** Название семьи: **__{msg.content}__**\n**3.** Название семейной роли: **__{frolename}__**\n**4.** Цвет семейной роли: **__{fcolor}__**\n**5.** Название семейного голосового канала: **__{fvoice}__**'), delete_after = 60)
+									emb = discord.Embed(title = '\⛩️ **__Информация о созданной семье__:**', description = f'**Администратор {ctx.author.mention}(`{ctx.author}`) создал новую семью**\n\nИнформация о семье:\n**1.** Владелец семьи: **__{member.mention}`({member})__**\n**2.** Название семьи: **__{msg.content}__**\n**3.** Название семейной роли: **__{frolename}__**\n**4.** Цвет семейной роли: **__{fcolor}__**\n**5.** Название семейного голосового канала: **__{fvoice}__**')
+								else:
+									await ctx.send(f'`[CREATEFAM]` `Семья "{msg.content}" успешно зарегистрирована.`', embed = discord.Embed(title = 'Информация о созданой семье', description = f'1. `Владелец семьи`: {member.mention}`({member})`\n2. `Название семьи:` **{msg.content}**\n3. `Название семейной роли:` **{frolename}**\n4. `Цвет семейной роли:` **{fcolor}**\n5. `Название семейного голосового канала:` **{fvoice}**', color = 0xFB9E14), delete_after = 60)
+									emb = discord.Embed(title = 'Создана новая семья', description = f'**Администратор {ctx.author.mention}(`{ctx.author}`) создал новую семью**\n\nИнформация о семье:\n1. `Владелец семьи`: {member.mention}`({member})`\n2. `Название семьи:` **{msg.content}**\n3. `Название семейной роли:` **{frolename}**\n4. `Цвет семейной роли:` **{fcolor}**\n5. `Название семейного голосового канала:` **{fvoice}**', color = 0xFB9E14)
 								emb.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
 								emb.set_thumbnail(url = ctx.guild.icon_url)
 								await self.bot.get_channel(834039427541631016).send(embed = emb)
@@ -135,7 +169,10 @@ class family(commands.Cog):
 								leader = member.name
 								leaderID = member.id
 								role = await ctx.guild.create_role(name = f"{frolename}")
-								await role.edit(colour = hexc)
+								if ctx.guild.id == 577511138032484360: # ТОТЯ 
+									await role.edit(colour = int(hexc, 16))
+								else:
+									await role.edit(colour = hexc)
 								await ctx.guild.edit_role_positions(positions = {role: 18})
 								channel = await ctx.guild.create_voice_channel(name = fvoice, category = discord.utils.get(ctx.guild.categories, id = 591642172349218816))
 								await channel.set_permissions(role, view_channel = True, connect = True, speak = True, use_voice_activation = True)
@@ -145,18 +182,24 @@ class family(commands.Cog):
 							else:
 								await msg4.delete()
 								await m4.edit(embed = discord.Embed(description = f'Вы успешно отказались от создания семьи!'), delete_after = 5)
+'''
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\⛩️**__Форма подачи на заказ:__**
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\⛩️》`1.` № Желаемой роли:
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\⛩️》`2.` hex color:
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\⛩️》`3.` Док-ва __(+/time)__:
+'''
 
 	@commands.command(aliases = ['пригласить', 'finvite'])
 	async def faminvite(self, ctx, member: discord.Member = None):
-		if not ctx.guild.id == 477547500232769536: return
+		if not ctx.guild.id == 477547500232769536 or not ctx.guild.id == 577511138032484360: return
 		if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id}):
 			a = fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id})["roleID"]
 			rolepr = discord.utils.get(ctx.guild.roles, id = a)
 			if member is None:
-				await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #591**\n**> Причины возникновения:**\n**- Вы не указали пользователя**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
+				await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #591**\n> Причины возникновения:\n**- Вы не указали пользователя**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 				return
 			if member == ctx.author:
-				await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #58**\n**> Причины возникновения:**\n**- Вы указали пользователем себя**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
+				await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #58**\n> Причины возникновения:\n**- Вы указали пользователем себя**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 				return
 			if fam.find_one({"id": member.id, "guild": ctx.guild.id}):
 				role = discord.utils.get(ctx.guild.roles, id = fam.find_one({"id": member.id, "guild": ctx.guild.id})["roleID"])
@@ -170,9 +213,9 @@ class family(commands.Cog):
 					elif fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["zam4"] == member.id: p = "zam4"
 					fam.update_one({"guild": ctx.guild.id, "leaderID": ctx.author.id}, {"$set": {p: 1, "id": mas}})
 				else:
-					return await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #58**\n**> Причины возникновения:**\n**- Вы указали пользователем себя**\n**- Пользователь является лидером другой семьи**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
+					return await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #58**\n> Причины возникновения:\n**- Вы указали пользователем себя**\n**- Пользователь является лидером другой семьи**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 			if rolepr in member.roles:
-				await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #58**\n**> Причины возникновения:\n**- Вы указали пользователем себя**\n**- Пользователь является лидером другой семьи**\n**- Пользователь находится в вашей семье**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
+				await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #58**\n> Причины возникновения:\n- Вы указали пользователем себя**\n**- Пользователь является лидером другой семьи**\n**- Пользователь находится в вашей семье**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 				return 
 			else:
 				fname = fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id})["name"]
@@ -209,23 +252,23 @@ class family(commands.Cog):
 
 	@commands.command(aliases = ['исключить', 'funinvite'])
 	async def famuninvite(self , ctx, member: discord.Member = None):
-		if not ctx.guild.id == 477547500232769536: return
+		if not ctx.guild.id == 477547500232769536 or not ctx.guild.id == 577511138032484360: return
 		if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id}):
 			if member is None:
-				await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #59**\n**> Причины возникновения:**\n**- Вы не указали пользователя**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
+				await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #59**\n> Причины возникновения:\n**- Вы не указали пользователя**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 				return
 			a = fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id})["roleID"]
 			rolepr = discord.utils.get(ctx.guild.roles, id = a)
 
 			if member.id == ctx.author.id:
-				await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #58**\n**> Причины возникновения:\n**- Вы указали пользователем себя**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
+				await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #58**\n> Причины возникновения:\n- Вы указали пользователем себя**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 				return
 
 			if not rolepr in member.roles:
-				await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #58**\n**> Причины возникновения:\n**- Вы указали пользователем себя**\n**- Пользователь не находится в вашей семье**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
+				await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #58**\n> Причины возникновения:\n- Вы указали пользователем себя**\n**- Пользователь не находится в вашей семье**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 				return
 			if member.id == fam.find_one({"id": member.id, "guild": ctx.guild.id}):
-				await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #58**\n**> Причины возникновения:\n**- Вы указали пользователем себя**\n**- Пользователь является заместителем семьи****- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
+				await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #58**\n> Причины возникновения:\n- Вы указали пользователем себя**\n**- Пользователь является заместителем семьи****- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 				return
 			else:
 				await member.remove_roles(rolepr)
@@ -263,7 +306,7 @@ class family(commands.Cog):
 
 	@commands.command(aliases = ['осемье', 'finfo'])
 	async def faminfo(self, ctx, *, amount: str = None):
-		if not ctx.guild.id == 477547500232769536: return
+		if not ctx.guild.id == 477547500232769536 or not ctx.guild.id == 577511138032484360: return
 		if amount is None:
 			for i in ctx.author.roles:
 				if i.id in [i["roleID"] for i in fam.find({"guild": 477547500232769536})]:
@@ -335,30 +378,30 @@ class family(commands.Cog):
 
 	@commands.command(aliases = ['разжаловать', 'rfz'])
 	async def removefamzam(self, ctx, member: discord.Member = None):
-		if not ctx.guild.id == 477547500232769536: return
+		if not ctx.guild.id == 477547500232769536 or not ctx.guild.id == 577511138032484360: return
 		if fam.find_one({"leaderID": ctx.author.id, "guild": ctx.guild.id}):
 			if member is None:
-				await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #59**\n**> Причины возникновения:**\n**- Вы не указали пользователя**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
+				await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #59**\n> Причины возникновения:\n**- Вы не указали пользователя**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 				return
 			a = fam.find_one({"leaderID": ctx.author.id, "guild": ctx.guild.id})["roleID"]
 			rolepr = discord.utils.get(ctx.guild.roles, id = a)
 			if member.id == ctx.author.id:
 				print('1')
-				return await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #58**\n**> Причины возникновения:\n**- Вы указали пользователем себя**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
+				return await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #58**\n> Причины возникновения:\n- Вы указали пользователем себя**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 
 			if not rolepr in member.roles:
 				print('2')
-				return await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #58**\n**> Причины возникновения:\n**- Вы указали пользователем себя**\n**- Пользователь не находится в вашей семье**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
+				return await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #58**\n> Причины возникновения:\n- Вы указали пользователем себя**\n**- Пользователь не находится в вашей семье**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 
 			if not member.id in fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["id"]:
 				print('3')
-				return await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #58**\n**> Причины возникновения:\n**- Вы указали пользователем себя**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
+				return await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #58**\n> Причины возникновения:\n- Вы указали пользователем себя**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 
 			if fam.count_documents({"guild": ctx.guild.id, "leaderID": ctx.author.id}) == 0:
-				return await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #402**\n**- Причины возникновения:**\n**- Вы не вялетесь лидером семьи**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
+				return await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #402**\n> Причины возникновения:\n**- Вы не вялетесь лидером семьи**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 
 			if not member.id in [i for i in fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["id"]]:
-				return await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #58**\n**> Причины возникновения:\n**- Пользователь не является заместителем семьи****- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
+				return await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #58**\n> Причины возникновения:\n- Пользователь не является заместителем семьи****- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 
 			mas = fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["id"]
 			try: 
@@ -375,21 +418,21 @@ class family(commands.Cog):
 			
 	@commands.command(aliases = ['назначить', 'afz'])
 	async def addfamzam(self, ctx, member: discord.Member = None):
-		if not ctx.guild.id == 477547500232769536: return
+		if not ctx.guild.id == 477547500232769536 or not ctx.guild.id == 577511138032484360: return
 		if fam.find_one({"leaderID": ctx.author.id, "guild": ctx.guild.id}):
 			if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id}):
 				if fam.count_documents({"guild": ctx.guild.id, "leaderID": ctx.author.id}) == 0:
 					print('1')
-					return await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #402**\n**- Причины возникновения:**\n**- Вы не вялетесь лидером семьи**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
+					return await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #402**\n- Причины возникновения:\n**- Вы не вялетесь лидером семьи**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 
 				if member == None:
-					await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #217**\n**- Причины возникновения:**\n**- Вы не указали пользователя**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
+					await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #217**\n- Причины возникновения:\n**- Вы не указали пользователя**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 					return
 				if member == ctx.author:
-					await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #217**\n**- Причины возникновения:**\n**- Вы не указали пользователем себя**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
+					await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #217**\n- Причины возникновения:\n**- Вы не указали пользователем себя**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 					return
 				elif fam.find_one({"id": member.id, "guild": ctx.guild.id}):
-					await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #88**\n**- Причины возникновения:**\n**- Вы указали пользователя который является лидером другой семьи**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
+					await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #88**\n- Причины возникновения:\n**- Вы указали пользователя который является лидером другой семьи**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 				else:
 					a = fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id})["name"]
 					m = await ctx.send(f"**`Вы действительно хотите назначить` {member.mention} `заместителем своей семьи? (+/-)`**")
@@ -461,21 +504,21 @@ class family(commands.Cog):
 								except:
 									pass
 							else:
-								await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #418**\n**- Причины возникновения:**\n**- У вас уже есть 4  заместителя**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
+								await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #418**\n- Причины возникновения:\n**- У вас уже есть 4  заместителя**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 						else:
 							await msg.delete()
 							await m.edit(content = f'**`[Refused]` `Вы отклонили назначение заместителя`**', delete_after = 10)							
 			else:
-				await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #403**\n**- Причины возникновения:**\n**- У вас не достаточно прав**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
+				await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #403**\n- Причины возникновения:\n**- У вас не достаточно прав**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 		else:
 			await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #403**\n> ** Причины возникновения:**\n**- У вас не достаточно прав**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
 
 	@commands.command(aliases = ['fmenu'])
 	async def fammenu(self, ctx):
-		if not ctx.guild.id == 477547500232769536: return
+		if not ctx.guild.id == 477547500232769536 or not ctx.guild.id == 577511138032484360: return
 		await ctx.message.delete()
 		if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id}):
-			embed = discord.Embed(description = f"**Привет, {ctx.author.mention}**, ты попал в меню управления семьёй!\n\nВот список доступных для вас действий:**\n\n> 🔋 - `Изменить название семьи, внимание снимется 30 репутации.`\n> 🔖 - `Изменить роль семьи, внимание снимется 30 репутации.`\n> 💘 - `Получить галочку для семьи, внимание снимется 250 репутации.`\n\n> 📛 - **Закрыть**", colour = discord.Colour.blue())
+			embed = discord.Embed(description = f"**Привет, {ctx.author.mention}**, ты попал в меню управления семьёй!\n\nВот список доступных для вас действий:\n\n> 🔋 - `Изменить название семьи, внимание снимется 30 репутации.`\n> 🔖 - `Изменить роль семьи, внимание снимется 30 репутации.`\n> 💘 - `Получить галочку для семьи, внимание снимется 250 репутации.`\n\n> 📛 - **Закрыть**", colour = discord.Colour.blue())
 			message = await ctx.send(embed = embed)
 			await message.add_reaction('🔋')
 			await message.add_reaction('🔖')
@@ -551,11 +594,11 @@ class family(commands.Cog):
 				else:
 					return
 		else:
-			await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #403**\n**- Причины возникновения:**\n**- У вас не достаточно прав**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)				
+			await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #403**\n- Причины возникновения:\n**- У вас не достаточно прав**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)				
 
 	@commands.command(aliases = ["семьи", "flist"])
 	async def famlist(self, ctx):
-		if not ctx.guild.id == 477547500232769536: return
+		if not ctx.guild.id == 477547500232769536 or not ctx.guild.id == 577511138032484360: return
 		await ctx.message.delete()
 		mas = [ ]
 		index = 0
@@ -571,7 +614,7 @@ class family(commands.Cog):
 	@commands.command(aliases = ["удалить", "fr"])
 	@commands.has_permissions(administrator = True)
 	async def removefam(self, ctx, *, amount: str = None):
-		if not ctx.guild.id == 477547500232769536: return
+		if not ctx.guild.id == 477547500232769536 or not ctx.guild.id == 577511138032484360: return
 		await ctx.message.delete()
 		if amount is None:
 			return await ctx.send(embed = discord.Embed(description = f'❗ {ctx.author.name}, `вы не указали название семьи, которую хотите удалить!`\n\n**Пример использования команды:**\n> `{reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]}removefam(удалить|fr) [название]`\n-- Я предложу Вам удалить семью с максимально приближенным названием к вашему.', color = 0xFB0E14), delete_after = 7)
