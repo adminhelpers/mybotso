@@ -252,10 +252,10 @@ class econom(commands.Cog):
     async def addcoins(self, ctx, member: discord.Member = None, amount:int = None):
       if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360:
             return
-	  gguild = get_guilds(ctx.guild.id)
-	  gs = get_name(ctx.guild.id)
-	  gb = 'D-Coins' if ctx.guild.id == 477547500232769536 else 'Рисинки'
-	  pb = "`D-Coin's`" if ctx.guild.id == 477547500232769536 else 'рисинок'
+      gguild = get_guilds(ctx.guild.id)
+      gs = get_name(ctx.guild.id)
+      gb = 'D-Coins' if ctx.guild.id == 477547500232769536 else 'Рисинки'
+      pb = "`D-Coin's`" if ctx.guild.id == 477547500232769536 else 'рисинок'
 
       if member == None:
         return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**Укажите пользователя**', colour = 0x09F2C8), delete_after = 5)
