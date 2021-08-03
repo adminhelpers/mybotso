@@ -477,11 +477,11 @@ class econom(commands.Cog):
         gb = 'D-Coins' if ctx.guild.id == 477547500232769536 else 'Рисинки'
         pb = "D-Coin's" if ctx.guild.id == 477547500232769536 else 'рисинок'
 	
-	if ctx.guild.id == 477547500232769536:
+        if ctx.guild.id == 477547500232769536:
             embed = discord.Embed(title = 'Награды за сообщения', description = f"За активность в чате можно не только прокачивать свой уровень, но и зарабатывать Discord-Coins`({gb})` - Валюту нашего дискорд-сервера\n\n**Список наград:**\n✨ 2000 сообщений - **3** `{pb}`\n💸 5000 сообщений - **5** `{pb}`\n🔥 10000 сообщений - **10** `{pb}`\n🎀 20000 сообщений - **15** `{pb}`\n💎 30000 сообщений - **20** `{pb} и уникальная роль` <@&855358889067675649>", color = 0xFB9E14)
         else:
             embed = discord.Embed(title = 'Награды за сообщения', description = f"За активность в чате можно не только прокачивать свой уровень, но и зарабатывать Discord-Coins`({gb})` - Валюту нашего дискорд-сервера\n\n**Список наград:**\n✨ 2000 сообщений - **3** `{pb}`\n💸 5000 сообщений - **5** `{pb}`\n🔥 10000 сообщений - **10** `{pb}`\n🎀 20000 сообщений - **15** `{pb}`\n💎 30000 сообщений - **20** `{pb}`", color = 0xFB9E14)
-	embed.set_thumbnail(url = ctx.guild.icon_url)
+        embed.set_thumbnail(url = ctx.guild.icon_url)
         embed.set_footer(text = 'Support Team by dollar ム baby#3603', icon_url = self.bot.user.avatar_url)
         return await ctx.send(embed = embed)
 
