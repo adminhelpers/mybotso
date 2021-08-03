@@ -250,8 +250,7 @@ class econom(commands.Cog):
     @commands.command()
     @commands.has_permissions(administrator = True)
     async def addcoins(self, ctx, member: discord.Member = None, amount:int = None):
-      if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360:
-            return
+      if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return
       gguild = get_guilds(ctx.guild.id)
       gs = get_name(ctx.guild.id)
       gb = 'D-Coins' if ctx.guild.id == 477547500232769536 else 'Рисинки'
@@ -277,8 +276,7 @@ class econom(commands.Cog):
     @commands.command()
     @commands.has_permissions(administrator = True)
     async def removecoins(self, ctx, member: discord.Member = None, amount:int = None):
-      if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360:
-            return
+      if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return
 	  
       gguild = get_guilds(ctx.guild.id)
       gs = get_name(ctx.guild.id)
@@ -302,8 +300,7 @@ class econom(commands.Cog):
 
     @commands.command()
     async def pay(self, ctx, member: discord.Member = None, amount:int = None):
-      if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360:
-            return
+      if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return
 
       gguild = get_guilds(ctx.guild.id)
       gs = get_name(ctx.guild.id)
@@ -337,8 +334,7 @@ class econom(commands.Cog):
     @commands.command()
     @commands.cooldown(1, 10, commands.BucketType.member)
     async def casino(self, ctx, amount : int = None):
-      if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360:
-            return
+      if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return
 
       gguild = get_guilds(ctx.guild.id)
       gs = get_name(ctx.guild.id)
@@ -347,12 +343,12 @@ class econom(commands.Cog):
 	
       if ctx.guild.id == 477547500232769536:
         if not ctx.channel.id == 818222772215349328:
-        	await ctx.message.delete()
-        	return await ctx.send(embed = discord.Embed(description = f'**Команда `!casino` доступна только в канале <#818222772215349328>**', colour = 0x09F2C8), delete_after = 5)
+            await ctx.message.delete()
+            return await ctx.send(embed = discord.Embed(description = f'**Команда `!casino` доступна только в канале <#818222772215349328>**', colour = 0x09F2C8), delete_after = 5)
       else:
         if not ctx.channel.id == 756183285188788306:
-        	await ctx.message.delete()
-        	return await ctx.send(embed = discord.Embed(description = f'**Команда `!casino` доступна только в канале <#756183285188788306>**', colour = 0x09F2C8), delete_after = 5)
+            await ctx.message.delete()
+            return await ctx.send(embed = discord.Embed(description = f'**Команда `!casino` доступна только в канале <#756183285188788306>**', colour = 0x09F2C8), delete_after = 5)
         
       if amount == None:
         ctx.command.reset_cooldown(ctx)
@@ -370,21 +366,20 @@ class econom(commands.Cog):
         await ctx.send(embed = discord.Embed(title = f'Северный Округ | {gs}', description = f'**{ctx.author.mention}, Отдохни минутку и получишь результат!**', colour = 0x09F2C8))
         a = random.randint(1, 2)
         if a == 1:
-        	await asyncio.sleep(5)
-        	bal = rebt(ctx.guild.id, ctx.author, amount)
-        	await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{ctx.author.mention}, к сожалению, вы проиграли!\nТеперь Ваш баланс составляет: `{bal}` {pb}!**', colour = 0xff0000))
+            await asyncio.sleep(5)
+            bal = rebt(ctx.guild.id, ctx.author, amount)
+            await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{ctx.author.mention}, к сожалению, вы проиграли!\nТеперь Ваш баланс составляет: `{bal}` {pb}!**', colour = 0xff0000))
         if a == 2:
-        	amount *= 1
-        	await asyncio.sleep(5)
-        	f = amount
-        	bal = addbt(ctx.guild.id, ctx.author, f)
-        	return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{ctx.author.mention}, Вам повезло, вы удвоили свою ставку!!\nТеперь Ваш баланс составляет: `{bal}` {pb}!**', colour = 0x25f20a))
+            amount *= 1
+            await asyncio.sleep(5)
+            f = amount
+            bal = addbt(ctx.guild.id, ctx.author, f)
+            return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{ctx.author.mention}, Вам повезло, вы удвоили свою ставку!!\nТеперь Ваш баланс составляет: `{bal}` {pb}!**', colour = 0x25f20a))
 
     @commands.command()
     @commands.has_permissions(administrator = True)
     async def reset_coins(self, ctx, member: discord.Member = None):
-      if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360:
-            return
+      if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return
 	  
       gguild = get_guilds(ctx.guild.id)
       gs = get_name(ctx.guild.id)
@@ -402,7 +397,7 @@ class econom(commands.Cog):
       else:
         pass
 
-	  gf = "`d-coin's`" if ctx.guild.id == 477547500232769536 else 'рисинки'
+      gf = "`d-coin's`" if ctx.guild.id == 477547500232769536 else 'рисинки'
       channel = self.bot.get_channel(841588696334598154) if ctx.guild.id == 477547500232769536 else self.bot.get_channel(872186550715301910)
       await channel.send(embed = discord.Embed(title = 'Обнуление', description = f'**Модератор {ctx.author.mention} обнулил {gs} пользователю {member.mention}!**', colour = 0x25f20a, timestamp = ctx.message.created_at))
       return await ctx.send(embed = discord.Embed(title = 'Обнуление', description = f'**Модератор {ctx.author.mention} обнулил {gs} пользователю {member.mention}!**', colour = 0x25f20a), delete_after = 10)      
@@ -410,8 +405,7 @@ class econom(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, ctx):
 
-        if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360:
-            return
+        if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return
 
       	gguild = get_guilds(ctx.guild.id)
 	gs = get_name(ctx.guild.id)
@@ -442,8 +436,7 @@ class econom(commands.Cog):
     @commands.command(aliases = ["mset"])
     @commands.has_permissions(administrator = True)
     async def setmessages(self, ctx, member: discord.Member = None, count: int = None):
-        if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360:
-            return
+        if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return
 
 
         if member == None or count == None: return await ctx.message.delete()
@@ -468,8 +461,7 @@ class econom(commands.Cog):
 
     @commands.command(aliases = ["награды", "allachive"])
     async def __prizs(self, ctx):
-        if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360:
-            return
+        if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return
 
 	gguild = get_guilds(ctx.guild.id)
 	gs = get_name(ctx.guild.id)
@@ -483,8 +475,7 @@ class econom(commands.Cog):
 
     @commands.command(aliases = ["messages", "сообщения"])
     async def __message(self, ctx, member: discord.Member = None):
-      if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360:
-        return
+      if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return
 
       if member == None:
         member = ctx.author
