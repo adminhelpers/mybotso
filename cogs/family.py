@@ -174,11 +174,12 @@ class family(commands.Cog):
 								await role.edit(colour = int(hexf, 16))
 							else:
 								await role.edit(colour = hexc)
-							await ctx.guild.edit_role_positions(positions = {role: 18})
 							if ctx.guild.id == 577511138032484360: # ТОТЯ 
+							await ctx.guild.edit_role_positions(positions = {role: 28})
 								channel = await ctx.guild.create_voice_channel(name = fvoice, category = discord.utils.get(ctx.guild.categories, id = 872174625168162916))
 								await self.bot.get_channel(872177316070039582).set_permissions(role, view_channel = True, read_message_history = True, read_messages = True)
 							else:
+								await ctx.guild.edit_role_positions(positions = {role: 18})
 								channel = await ctx.guild.create_voice_channel(name = fvoice, category = discord.utils.get(ctx.guild.categories, id = 591642172349218816))
 								await self.bot.get_channel(591642627137339433).set_permissions(role, view_channel = True, read_message_history = True, read_messages = True)
 							await channel.set_permissions(role, view_channel = True, connect = True, speak = True, use_voice_activation = True)
@@ -309,20 +310,20 @@ class family(commands.Cog):
 		if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return
 		if amount is None:
 			for i in ctx.author.roles:
-				if i.id in [i["roleID"] for i in fam.find({"guild": 477547500232769536})]:
-					amount = fam.find_one({"guild": 477547500232769536, "roleID": i.id})["name"]
+				if i.id in [i["roleID"] for i in fam.find({"guild": ctx.guild.id})]:
+					amount = fam.find_one({"guild": ctx.guild.id, "roleID": i.id})["name"]
 					break
 		if amount == None:
     			return await ctx.send(embed = discord.Embed(description = f'Не удалось найти указатель семьи.\n**Используйте команду:** !faminfo `[название семьи]`', color = 0xFB9E14), delete_after = 7)
 		
 		else:
-			mas = [i["name"] for i in fam.find({"guild": 477547500232769536})]
+			mas = [i["name"] for i in fam.find({"guild": ctx.guild.id})]
 			b = 0
 			for i in mas:
 				if i.count(amount) > b:
 					amount = i
 
-		if not fam.count_documents({"guild": 477547500232769536, "name": amount}) == 0:
+		if not fam.count_documents({"guild": ctx.guild.id, "name": amount}) == 0:
 			fname = fam.find_one({"name": amount, "guild": ctx.guild.id})["name"]
 			leader = fam.find_one({"name": amount, "guild": ctx.guild.id})["leaderID"]
 			role1 = fam.find_one({"name": amount, "guild": ctx.guild.id})["roleID"]
