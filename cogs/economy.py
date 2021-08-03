@@ -35,6 +35,13 @@ def get_name(guild):
 		return 'D-Coins'
 	else:
 		return 'Рисинок'
+	
+def get_guilds(guild):
+	if not guild == 477547500232769536 and not guild == 577511138032484360: return
+	if guild == 477547500232769536:
+		return 'Северный Округ'
+	else:
+		return 'Восточный Округ'
 
 def addbt(guild, member: discord.Member, arg : int):
   if coins.count_documents({"guild": guild, "id": member.id}) == 0:
