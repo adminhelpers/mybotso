@@ -417,26 +417,30 @@ class econom(commands.Cog):
         gb = "`D-Coin's`" if ctx.guild.id == 477547500232769536 else 'Рисинки'
         pb = "`D-Coin's`" if ctx.guild.id == 477547500232769536 else 'рисинок'
 
-        if users.count_documents({"id": ctx.author.id}) == 0:
-            users.insert_one({"id": ctx.author.id, "messages": 0})
-            a = users.find_one({"id": ctx.author.id})["messages"]
-            users.update_one({"id": ctx.author.id}, {"$set": {"messages": a + 1}})
+        if users.count_documents({"guild": ctx.guild.id, "id": ctx.author.id}) == 0:
+            users.insert_one({"guild": ctx.guild.id, "id": ctx.author.id, "messages": 0})
+            a = users.find_one({"guild": ctx.guild.id, "id": ctx.author.id})["messages"]
+            users.update_one({"guild": ctx.guild.id, "id": ctx.author.id}, {"$set": {"messages": a + 1}})
         else:
-            a = users.find_one({"id": ctx.author.id})["messages"]
-            users.update_one({"id": ctx.author.id}, {"$set": {"messages": a + 1}})
+            a = users.find_one({"guild": ctx.guild.id, "id": ctx.author.id})["messages"]
+            users.update_one({"guild": ctx.guild.id, "id": ctx.author.id}, {"$set": {"messages": a + 1}})
 
         st = 0
         if len(list(ctx.content)) >= 4:
             msgs = users.find_one({"id": ctx.author.id})["messages"]
             if msgs in [2000, 5000, 10000, 20000, 30000]:
-                give = {2000: f"**3** `{pb}`", 5000: f"**5** `{pb}`", 10000: f"**10** `{pb}`", 20000: f"**15** `{pb}`", 30000: f"**20** `{pb} и уникальная роль` <@&855358889067675649>"}
+				if ctx.guild.id == 477547500232769536:
+                	give = {2000: f"**3** `{pb}`", 5000: f"**5** `{pb}`", 10000: f"**10** `{pb}`", 20000: f"**15** `{pb}`", 30000: f"**20** `{pb} и уникальная роль` <@&855358889067675649>"}
+				else:
+					give = {2000: f"**3** `{pb}`", 5000: f"**5** `{pb}`", 10000: f"**10** `{pb}`", 20000: f"**15** `{pb}`", 30000: f"**20** `{pb}`"}
                 st = {2000: 3, 5000: 5, 10000: 10, 20000: 15, 30000: 20}
                 embed = discord.Embed(title = f'Достижение {ctx.author.name}', description = f'🎉 `Написать` {msgs} `сообщений!`\n✨ Награда за выполнение: {give[msgs]}', colour = 0xFB9E14)
                 embed.set_thumbnail(url = ctx.author.avatar_url)
                 await ctx.channel.send(embed = embed)
                 addbt(ctx.guild.id, ctx.author, st[msgs])
-                if st[msgs] == 20: 
-                    return await ctx.author.add_roles(discord.utils.get(ctx.guild.roles, id = 855358889067675649))
+				if ctx.guild.id == 477547500232769536:
+					if st[msgs] == 20: 
+						return await ctx.author.add_roles(discord.utils.get(ctx.guild.roles, id = 855358889067675649))
 
     @commands.command(aliases = ["mset"])
     @commands.has_permissions(administrator = True)
@@ -461,8 +465,8 @@ class econom(commands.Cog):
         if message.author.bot:
             return
 
-        a = users.find_one({"id": message.author.id})["messages"]
-        users.update_one({"id": message.author.id}, {"$set": {"messages": a - 1}})
+        a = users.find_one({"guild": ctx.guild.id, "id": message.author.id})["messages"]
+        users.update_one({"guild": ctx.guild.id, "id": message.author.id}, {"$set": {"messages": a - 1}})
 
     @commands.command(aliases = ["награды", "allachive"])
     async def __prizs(self, ctx):
@@ -482,14 +486,18 @@ class econom(commands.Cog):
     async def __message(self, ctx, member: discord.Member = None):
       if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return
 
+      gguild = get_guilds(ctx.guild.id)
+      gs = get_name(ctx.guild.id)
+
       if member == None:
         member = ctx.author
 
+	
       if users.count_documents({"guild": ctx.guild.id, "id": member.id}) == 0:
-        return await ctx.send(embed = discord.Embed(title = '🏆Северный Округ | Сообщений', description = f'Никнейм: {member.mention}\nСообщений: `0`', colour = 0x09F2C8))
+        return await ctx.send(embed = discord.Embed(title = f'🏆 {gguild} | Сообщений', description = f'Никнейм: {member.mention}\nСообщений: `0`', colour = 0x09F2C8))
 
       else:
-        return await ctx.send(embed = discord.Embed(title = f'🏆 Северный Округ | Сообщений', description = f'Никнейм: {member.mention}\nСообщений: `{users.find_one({"guild": ctx.guild.id, "id": member.id})["messages"]}`', colour = 0x09F2C8))
+        return await ctx.send(embed = discord.Embed(title = f'🏆 {gguild} | Сообщений', description = f'Никнейм: {member.mention}\nСообщений: `{users.find_one({"guild": ctx.guild.id, "id": member.id})["messages"]}`', colour = 0x09F2C8))
 
     @commands.command()
     async def achive(self, ctx):
