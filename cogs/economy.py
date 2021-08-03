@@ -417,13 +417,13 @@ class econom(commands.Cog):
         gb = "`D-Coin's`" if ctx.guild.id == 477547500232769536 else 'Рисинки'
         pb = "`D-Coin's`" if ctx.guild.id == 477547500232769536 else 'рисинок'
 
-        if users.count_documents({"guild": ctx.guild.id, "id": ctx.author.id}) == 0:
-            users.insert_one({"guild": ctx.guild.id, "id": ctx.author.id, "messages": 0})
-            a = users.find_one({"guild": ctx.guild.id, "id": ctx.author.id})["messages"]
-            users.update_one({"guild": ctx.guild.id, "id": ctx.author.id}, {"$set": {"messages": a + 1}})
+        if users.count_documents({"id": ctx.author.id}) == 0:
+            users.insert_one({"id": ctx.author.id, "messages": 0})
+            a = users.find_one({"id": ctx.author.id})["messages"]
+            users.update_one({"id": ctx.author.id}, {"$set": {"messages": a + 1}})
         else:
-            a = users.find_one({"guild": ctx.guild.id, "id": ctx.author.id})["messages"]
-            users.update_one({"guild": ctx.guild.id, "id": ctx.author.id}, {"$set": {"messages": a + 1}})
+            a = users.find_one({"id": ctx.author.id})["messages"]
+            users.update_one({"id": ctx.author.id}, {"$set": {"messages": a + 1}})
 
         st = 0
         if len(list(ctx.content)) >= 4:
@@ -500,7 +500,7 @@ class econom(commands.Cog):
         return await ctx.send(embed = discord.Embed(title = f'🏆 {gguild} | Сообщений', description = f'Никнейм: {member.mention}\nСообщений: `0`', colour = 0x09F2C8))
 
       else:
-        return await ctx.send(embed = discord.Embed(title = f'🏆 {gguild} | Сообщений', description = f'Никнейм: {member.mention}\nСообщений: `{users.find_one({"guild": ctx.guild.id, "id": member.id})["messages"]}`', colour = 0x09F2C8))
+        return await ctx.send(embed = discord.Embed(title = f'🏆 {gguild} | Сообщений', description = f'Никнейм: {member.mention}\nСообщений: `{users.find_one({"id": member.id})["messages"]}`', colour = 0x09F2C8))
 
     @commands.command()
     async def achive(self, ctx):
