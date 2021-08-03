@@ -29,26 +29,33 @@ users = db["users"]
 global tens
 tens = [ ]
 
-def addbt(member: discord.Member, arg : int):
-  if coins.count_documents({"id": member.id}) == 0:
-    coins.insert_one({"guild": member.guild.id, "id": member.id, "coins": arg})
+def get_name(guild):
+	if not guild == 477547500232769536 and not guild == 577511138032484360: return
+	if guild == 477547500232769536:
+		return 'D-Coins'
+	else:
+		return 'Рисинок'
+
+def addbt(guild, member: discord.Member, arg : int):
+  if coins.count_documents({"guild": guild, "id": member.id}) == 0:
+    coins.insert_one({"guild": guild, "id": member.id, "coins": arg})
     return arg
   else:
-    bal = arg + coins.find_one({"id": member.id})["coins"]
-    coins.update_one({"id": member.id}, {"$set": {"coins": bal}})
+    bal = arg + coins.find_one({"guild": guild, "id": member.id})["coins"]
+    coins.update_one({"guild": guild, "id": member.id}, {"$set": {"coins": bal}})
     return bal
 
-def rebt(member: discord.Member, arg : int):
-  bal = coins.find_one({"id": member.id})["coins"] - arg
-  coins.update_one({"id": member.id}, {"$set": {"coins": bal}})
+def rebt(guild, member: discord.Member, arg : int):
+  bal = coins.find_one({"guild": guild, "id": member.id})["coins"] - arg
+  coins.update_one({"guild": guild, "id": member.id}, {"$set": {"coins": bal}})
   return bal
 
-def proverka(member, stv : int):
-  if coins.count_documents({"id": member.id}) == 0:
+def proverka(guild, member, stv : int):
+  if coins.count_documents({"guild": guild, "id": member.id}) == 0:
     return 0
 
   else:
-    if coins.find_one({"id": member.id})["coins"] < stv:
+    if coins.find_one({"guild": guild, "id": member.id})["coins"] < stv:
       return 0
     else:
       return 1
@@ -78,7 +85,7 @@ class econom(commands.Cog):
 
     @commands.command()
     async def topcoins(self, ctx):
-      if not ctx.guild.id == 477547500232769536: return 
+      if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return 
       coins = db["coins"]
       zb = 0
 
@@ -100,7 +107,8 @@ class econom(commands.Cog):
 
         coins = i["coins"]
 
-        c.append(f'**Семечек:** `{coins}`')
+		gs = get_name(ctx.guild.id)
+        c.append(f'**{gs}** `{coins}`')
         fr += 1
         if fr >= 50:
           break
@@ -142,7 +150,7 @@ class econom(commands.Cog):
 
     @commands.command()
     async def mtest(self, ctx):
-      if not ctx.guild.id == 477547500232769536:
+      if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360:
         return
       m = [ ]
       for i in users.find():
@@ -153,7 +161,7 @@ class econom(commands.Cog):
 
     @commands.command(aliases = ["mtop"])
     async def topmessages(self, ctx):
-      if not ctx.guild.id == 477547500232769536:
+      if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360:
         return
       zb = 0
 
@@ -220,133 +228,168 @@ class econom(commands.Cog):
 		
     @commands.command()
     async def coins(self, ctx, member: discord.Member = None):
-      if not ctx.guild.id == 477547500232769536:
+      if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360:
             return
 
       if member == None:
         member = ctx.author
 
-      if coins.count_documents({"id": member.id}) == 0:
-        return await ctx.send(embed = discord.Embed(title = 'Северный Округ | Семечки', description = f'Никнейм: {member.mention}\nСемечки: `0`', colour = 0x09F2C8))
+	  gguild = get_guilds(ctx.guild.id)
+	  gs = get_name(ctx.guild.id)
+	  gb = 'D-Coins' if ctx.guild.id == 477547500232769536 else 'Рисинки'
+	  pb = 'D-Coins' if ctx.guild.id == 477547500232769536 else 'Рисинок'
+
+      if coins.count_documents({"guild": ctx.guild.id, "id": member.id}) == 0:
+        return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gb}', description = f'Никнейм: {member.mention}\n{pb}: `0`', colour = 0x09F2C8))
 
       else:
-        return await ctx.send(embed = discord.Embed(title = 'Северный Округ | Семечки', description = f'Никнейм: {member.mention}\nСемечки: `{coins.find_one({"id": member.id})["coins"]}`', colour = 0x09F2C8))
+		if ctx.guild.id == 477547500232769536:
+        	return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'Никнейм: {member.mention}\n{pb}: `{coins.find_one({"guild": ctx.guild.id, "id": member.id})["coins"]}`', colour = 0x09F2C8))
 
     
     @commands.command()
-    @commands.has_any_role(661284961428701209, id, id, '★ Продавец ★', id, id, id, '★ Technical Administrator Discord ★', id, id, id, '☆ Developer Discord ☆', id, id, id, '☆ Глав. Модерация Discord ☆')
+    @commands.has_permissions(administrator = True)
     async def addcoins(self, ctx, member: discord.Member = None, amount:int = None):
-      if not ctx.guild.id == 477547500232769536:
+      if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360:
             return
+	  gguild = get_guilds(ctx.guild.id)
+	  gs = get_name(ctx.guild.id)
+	  gb = 'D-Coins' if ctx.guild.id == 477547500232769536 else 'Рисинки'
+	  pb = "`D-Coin's`" if ctx.guild.id == 477547500232769536 else 'рисинок'
 
       if member == None:
-        return await ctx.send(embed = discord.Embed(title = 'Северный Округ | Семечки', description = f'**Укажите пользователя**', colour = 0x09F2C8), delete_after = 5)
+        return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**Укажите пользователя**', colour = 0x09F2C8), delete_after = 5)
       if amount == None:
-        return await ctx.send(embed = discord.Embed(title = 'Северный Округ | Семечки', description = f'**{member.mention}, укажите кол-во добавляемых семечек**', colour = 0x09F2C8), delete_after = 5)
+        return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{member.mention}, укажите кол-во добавляемых {pb}**', colour = 0x09F2C8), delete_after = 5)
 
-      if coins.count_documents({"id": member.id}) == 0:
-        a = addbt(member, amount)
-        await ctx.send(embed = discord.Embed(title = 'Северный Округ | Семечки', description = f'**{ctx.author.mention}, вы добавили пользователю {member.mention} `{amount}` семечек.\nЕго баланс: `{a}` семечек**', colour = 0x09F2C8))
+      if coins.count_documents({"guild": ctx.guild.id, "id": member.id}) == 0:
+        a = addbt(ctx.guild.id, member, amount)
+        await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{ctx.author.mention}, вы добавили пользователю {member.mention} `{amount}` {pb}.\nЕго баланс: `{a}` {pb}**', colour = 0x09F2C8))
       else:
-        a = addbt(member, amount)
-        channel = self.bot.get_channel(841588696334598154)
+        a = addbt(ctx.guild.id, member, amount)
+        channel = self.bot.get_channel(841588696334598154) if ctx.guild.id == 477547500232769536 else self.bot.get_channel(872186550715301910)
         try:
-          await channel.send(embed = discord.Embed(title = 'Выдача', description = f'**Модератор {ctx.author.mention} выдал семечек пользователю {member.mention} в размере `{amount}`**', colour = 0x25f20a, timestamp = ctx.message.created_at))
+          await channel.send(embed = discord.Embed(title = 'Выдача', description = f'**Модератор {ctx.author.mention} выдал {pb} пользователю {member.mention} в размере `{amount}`**', colour = 0x25f20a, timestamp = ctx.message.created_at))
         except:
           pass
-        await ctx.send(embed = discord.Embed(title = 'Северный Округ | Семечки', description = f'**{ctx.author.mention}, вы добавили пользователю {member.mention} `{amount}` семечек.\nЕго баланс: `{a}` семечек**', colour = 0x09F2C8), delete_after = 10)
+        await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{ctx.author.mention}, вы добавили пользователю {member.mention} `{amount}` {pb}.\nЕго баланс: `{a}` {pb}**', colour = 0x09F2C8), delete_after = 10)
 
     @commands.command()
-    @commands.has_any_role(661284961428701209, id, id, '★ Продавец ★', id, id, id, '★ Technical Administrator Discord ★', id, id, id, '☆ Developer Discord ☆', id, id, id, '☆ Глав. Модерация Discord ☆')
+    @commands.has_permissions(administrator = True)
     async def removecoins(self, ctx, member: discord.Member = None, amount:int = None):
-      if not ctx.guild.id == 477547500232769536:
+      if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360:
             return
+	  
+	  gguild = get_guilds(ctx.guild.id)
+	  gs = get_name(ctx.guild.id)
+	  gb = 'D-Coins' if ctx.guild.id == 477547500232769536 else 'Рисинки'
+	  pb = "`D-Coin's`" if ctx.guild.id == 477547500232769536 else 'рисинок'
 
       await ctx.message.delete()
       if member == None:
-        return await ctx.send(embed = discord.Embed(title = 'Северный Округ | Семечки', description = f'**{ctx.author.mention}, укажите пользователя**', colour = 0x09F2C8), delete_after = 5)
+        return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{ctx.author.mention}, укажите пользователя**', colour = 0x09F2C8), delete_after = 5)
       if amount == None:
-        return await ctx.send(embed = discord.Embed(title = 'Северный Округ | Семечки', description = f'**{ctx.author.mention}, укажите кол-во убираемых cемечек**', colour = 0x09F2C8), delete_after = 5)
+        return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{ctx.author.mention}, укажите кол-во убираемых {pb}**', colour = 0x09F2C8), delete_after = 5)
       
-      a = proverka(member, amount)
+      a = proverka(ctx.guild.id, member, amount)
       if a == 0:
-        await ctx.send(embed = discord.Embed(title = 'Северный Округ | Семечки', description = f'**{ctx.author.mention}, пользователь не имеет такого кол-ва cемечек!**', colour = 0x09F2C8))
+        await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{ctx.author.mention}, пользователь не имеет такого кол-ва {pb}!**', colour = 0x09F2C8))
       else:
-        bal = rebt(member, amount)
-        channel = self.bot.get_channel(841588696334598154)
-        await channel.send(embed = discord.Embed(title = 'Снятие', description = f'**Модератор {ctx.author.mention} снял семечек пользователю {member.mention} в размере `{amount}`**', colour = 0x25f20a, timestamp = ctx.message.created_at))
-        await ctx.send(embed = discord.Embed(title = 'Северный Округ | Семечки', description = f'**{ctx.author.mention}, вы удалили у пользователя {member.mention} `{amount}` монет.\nЕго баланс: `{bal}` cемечек**', colour = 0x09F2C8), delete_after = 10)    
+        bal = rebt(ctx.guild.id, member, amount)
+        channel = self.bot.get_channel(841588696334598154) if ctx.guild.id == 477547500232769536 else self.bot.get_channel(872186550715301910)
+        await channel.send(embed = discord.Embed(title = 'Снятие', description = f'**Модератор {ctx.author.mention} снял {pb} пользователю {member.mention} в размере `{amount}`**', colour = 0x25f20a, timestamp = ctx.message.created_at))
+        await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{ctx.author.mention}, вы удалили у пользователя {member.mention} `{amount}` {pb}.\nЕго баланс: `{bal}` {pb}**', colour = 0x09F2C8), delete_after = 10)    
 
     @commands.command()
     async def pay(self, ctx, member: discord.Member = None, amount:int = None):
-      if not ctx.guild.id == 477547500232769536:
+      if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360:
             return
 
+	  gguild = get_guilds(ctx.guild.id)
+	  gs = get_name(ctx.guild.id)
+	  gb = 'D-Coins' if ctx.guild.id == 477547500232769536 else 'Рисинки'
+	  pb = "`D-Coin's`" if ctx.guild.id == 477547500232769536 else 'рисинок'
+
       if member == None:
-        return await ctx.send(embed = discord.Embed(title = 'Северный Округ | Семечки', description = f'**{ctx.author.mention}, укажите пользователя**', colour = 0x09F2C8), delete_after = 5)
+        return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{ctx.author.mention}, укажите пользователя**', colour = 0x09F2C8), delete_after = 5)
       
       if member == ctx.author or member.bot:
         return
 
       if amount == None:
-        return await ctx.send(embed = discord.Embed(title = 'Северный Округ | Семечки', description = f'**{ctx.author.mention}, укажите сумму монет которую нужно передать!**', colour = 0x09F2C8), delete_after = 5)
+        return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{ctx.author.mention}, укажите сумму {pb} которую нужно передать!**', colour = 0x09F2C8), delete_after = 5)
 
       if amount <= 0:
-        return await ctx.send(embed = discord.Embed(title = 'Северный Округ | Семечки', description = f'**{ctx.author.mention}, указан неверный аргумент!**', colour = 0x09F2C8), delete_after = 5)
+        return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{ctx.author.mention}, указан неверный аргумент!**', colour = 0x09F2C8), delete_after = 5)
 
 
-      a = proverka(ctx.author, amount)
+      a = proverka(ctx.guild.id, ctx.author, amount)
       if a == 0:
-        await ctx.send(embed = discord.Embed(title = 'Северный Округ | Семечки', description = f'**{ctx.author.mention}, Вы не можете передать такую сумму!**', colour = 0x09F2C8))
+        await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{ctx.author.mention}, Вы не можете передать такую сумму!**', colour = 0x09F2C8))
 
       else:
-        bal = addbt(member, amount)
-        bal2 = rebt(ctx.author, amount)
-        channel = self.bot.get_channel(841588696334598154)
-        await channel.send(embed = discord.Embed(title = 'Перевод', description = f'**Пользователь {ctx.author.mention}, передал семечки пользователю {member.mention} в размере `{amount}`**', colour = 0x25f20a, timestamp = ctx.message.created_at))
-        await ctx.send(embed = discord.Embed(title = 'Северный Округ | Семечки', description = f'**{ctx.author.mention}, Вы передали пользователю {member.mention} `{amount}` семечек.\nЕго баланс: `{bal}` cемечек\nВаш баланс: `{bal2}` cемечек**', colour = 0x09F2C8))
+        bal = addbt(ctx.guild.id, member, amount)
+        bal2 = rebt(ctx.guild.id, ctx.author, amount)
+        channel = self.bot.get_channel(841588696334598154) if ctx.guild.id == 477547500232769536 else self.bot.get_channel(872186550715301910)
+        await channel.send(embed = discord.Embed(title = 'Перевод', description = f'**Пользователь {ctx.author.mention}, передал {gs} пользователю {member.mention} в размере `{amount}`**', colour = 0x25f20a, timestamp = ctx.message.created_at))
+        await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{ctx.author.mention}, Вы передали пользователю {member.mention} `{amount}` {pb}.\nЕго баланс: `{bal}` {pb}\nВаш баланс: `{bal2}` {pb}**', colour = 0x09F2C8))
         
     @commands.command()
     @commands.cooldown(1, 10, commands.BucketType.member)
     async def casino(self, ctx, amount : int = None):
-      if not ctx.guild.id == 477547500232769536:
+      if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360:
             return
 
-      if not ctx.channel.id == 818222772215349328:
-        await ctx.message.delete()
-        return await ctx.send(embed = discord.Embed(description = f'**Команда `!casino` доступна только в канале <#818222772215349328>**', colour = 0x09F2C8), delete_after = 5)
+	  gguild = get_guilds(ctx.guild.id)
+	  gs = get_name(ctx.guild.id)
+	  gb = 'D-Coins' if ctx.guild.id == 477547500232769536 else 'Рисинки'
+	  pb = "`D-Coin's`" if ctx.guild.id == 477547500232769536 else 'рисинок'
+	  
+	  if ctx.guild.id == 477547500232769536:
+		if not ctx.channel.id == 818222772215349328:
+			await ctx.message.delete()
+			return await ctx.send(embed = discord.Embed(description = f'**Команда `!casino` доступна только в канале <#818222772215349328>**', colour = 0x09F2C8), delete_after = 5)
+	  else:
+		if not ctx.channel.id == 756183285188788306:
+			await ctx.message.delete()
+			return await ctx.send(embed = discord.Embed(description = f'**Команда `!casino` доступна только в канале <#756183285188788306>**', colour = 0x09F2C8), delete_after = 5)
         
       if amount == None:
         ctx.command.reset_cooldown(ctx)
-        return await ctx.send(embed = discord.Embed(title = 'Северный Округ | Семечки', description = f'**{ctx.author.mention}, укажите кол-во семечек которое необходимо поставить!**', colour = 0x09F2C8))
+        return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{ctx.author.mention}, укажите кол-во {pb} которое необходимо поставить!**', colour = 0x09F2C8))
 
       if amount <= 0:
         ctx.command.reset_cooldown(ctx)
-        return await ctx.send(embed = discord.Embed(title = 'Северный Округ | Семечки', description = f'**{ctx.author.mention}, неверный аргумент!**', colour = 0x09F2C8))
+        return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{ctx.author.mention}, неверный аргумент!**', colour = 0x09F2C8))
 
-      a = proverka(ctx.author, amount)
+      a = proverka(ctx.guild.id, ctx.author, amount)
       if a == 0:
         ctx.command.reset_cooldown(ctx)
-        return await ctx.send(embed = discord.Embed(title = 'Северный Округ | Семечки', description = f'**{ctx.author.mention}, Вы не можете сделать такую ставку!**', colour = 0x09F2C8))
+        return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{ctx.author.mention}, Вы не можете сделать такую ставку!**', colour = 0x09F2C8))
       else:
-        await ctx.send(embed = discord.Embed(title = f'Северный Округ | Семечки', description = f'**{ctx.author.mention}, Отдохни минутку и получишь результат!**', colour = 0x09F2C8))
+        await ctx.send(embed = discord.Embed(title = f'Северный Округ | {gs}', description = f'**{ctx.author.mention}, Отдохни минутку и получишь результат!**', colour = 0x09F2C8))
         a = random.randint(1, 2)
         if a == 1:
         	await asyncio.sleep(5)
-        	bal = rebt(ctx.author, amount)
-        	await ctx.send(embed = discord.Embed(title = 'Северный Округ | Семечки', description = f'**{ctx.author.mention}, к сожалению, вы проиграли!\nТеперь Ваш баланс составляет: `{bal}` семечек!**', colour = 0xff0000))
+        	bal = rebt(ctx.guild.id, ctx.author, amount)
+        	await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{ctx.author.mention}, к сожалению, вы проиграли!\nТеперь Ваш баланс составляет: `{bal}` {pb}!**', colour = 0xff0000))
         if a == 2:
         	amount *= 1
         	await asyncio.sleep(5)
         	f = amount
-        	bal = addbt(ctx.author, f)
-        	return await ctx.send(embed = discord.Embed(title = 'Северный Округ | Семечки', description = f'**{ctx.author.mention}, Вам повезло, вы удвоили свою ставку!!\nТеперь Ваш баланс составляет: `{bal}` семечек!**', colour = 0x25f20a))
+        	bal = addbt(ctx.guild.id, ctx.author, f)
+        	return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{ctx.author.mention}, Вам повезло, вы удвоили свою ставку!!\nТеперь Ваш баланс составляет: `{bal}` {pb}!**', colour = 0x25f20a))
 
     @commands.command()
-    @commands.has_any_role(661284961428701209, id, id, '★ Продавец ★', id, id, id, '★ Technical Administrator Discord ★', id, id, id, '☆ Developer Discord ☆', id, id, id, '☆ Глав. Модерация Discord ☆')
+    @commands.has_permissions(administrator = True)
     async def reset_coins(self, ctx, member: discord.Member = None):
-      if not ctx.guild.id == 477547500232769536:
+      if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360:
             return
+	  
+	  gguild = get_guilds(ctx.guild.id)
+	  gs = get_name(ctx.guild.id)
+	  gb = 'D-Coins' if ctx.guild.id == 477547500232769536 else 'Рисинки'
+	  pb = "`D-Coin's`" if ctx.guild.id == 477547500232769536 else 'рисинок'
 
       if not member:
         return await ctx.send(f'{ctx.author.mention}, ```Укажите пользователя!```', delete_after = 5)
@@ -354,18 +397,26 @@ class econom(commands.Cog):
       if ctx.author.top_role.position <= member.top_role.position:
         return
 
-      if coins.count_documents({"id": member.id}) != 0:
-        coins.update_one({"id": member.id}, {"$set": {"coins": 0}})
+      if coins.count_documents({"guild": ctx.guild.id, "id": member.id}) != 0:
+        coins.update_one({"guild": ctx.guild.id, "id": member.id}, {"$set": {"coins": 0}})
       else:
         pass
-      channel = self.bot.get_channel(841588696334598154)
-      await channel.send(embed = discord.Embed(title = 'Обнуление', description = f'**Модератор {ctx.author.mention} обнулил семечки пользователю {member.mention}!**', colour = 0x25f20a, timestamp = ctx.message.created_at))
-      return await ctx.send(embed = discord.Embed(title = 'Обнуление', description = f'**Модератор {ctx.author.mention} обнулил семечки пользователю {member.mention}!**', colour = 0x25f20a), delete_after = 10)      
+
+	  gf = "`d-coin's`" if ctx.guild.id == 477547500232769536 else 'рисинки'
+      channel = self.bot.get_channel(841588696334598154) if ctx.guild.id == 477547500232769536 else self.bot.get_channel(872186550715301910)
+      await channel.send(embed = discord.Embed(title = 'Обнуление', description = f'**Модератор {ctx.author.mention} обнулил {gs} пользователю {member.mention}!**', colour = 0x25f20a, timestamp = ctx.message.created_at))
+      return await ctx.send(embed = discord.Embed(title = 'Обнуление', description = f'**Модератор {ctx.author.mention} обнулил {gs} пользователю {member.mention}!**', colour = 0x25f20a), delete_after = 10)      
             
     @commands.Cog.listener()
     async def on_message(self, ctx):
-        if not ctx.guild.id == 477547500232769536:
+
+        if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360:
             return
+
+		gguild = get_guilds(ctx.guild.id)
+	  	gs = get_name(ctx.guild.id)
+	  	gb = "`D-Coin's`" if ctx.guild.id == 477547500232769536 else 'Рисинки'
+		pb = "`D-Coin's`" if ctx.guild.id == 477547500232769536 else 'рисинок'
 
         if users.count_documents({"id": ctx.author.id}) == 0:
             users.insert_one({"id": ctx.author.id, "messages": 0})
@@ -379,25 +430,26 @@ class econom(commands.Cog):
         if len(list(ctx.content)) >= 4:
             msgs = users.find_one({"id": ctx.author.id})["messages"]
             if msgs in [2000, 5000, 10000, 20000, 30000]:
-                give = {2000: "**3** `D-Coin's`", 5000: "**5** `D-Coin's`", 10000: "**10** `D-Coin's`", 20000: "**15** `D-Coin's`", 30000: "**20** `D-Coin's и уникальная роль` <@&855358889067675649>"}
+                give = {2000: f"**3** `{pb}`", 5000: f"**5** `{pb}`", 10000: f"**10** `{pb}`", 20000: f"**15** `{pb}`", 30000: f"**20** `{pb} и уникальная роль` <@&855358889067675649>"}
                 st = {2000: 3, 5000: 5, 10000: 10, 20000: 15, 30000: 20}
                 embed = discord.Embed(title = f'Достижение {ctx.author.name}', description = f'🎉 `Написать` {msgs} `сообщений!`\n✨ Награда за выполнение: {give[msgs]}', colour = 0xFB9E14)
                 embed.set_thumbnail(url = ctx.author.avatar_url)
                 await ctx.channel.send(embed = embed)
-                addbt(ctx.author, st[msgs])
+                addbt(ctx.guild.id, ctx.author, st[msgs])
                 if st[msgs] == 20: 
                     return await ctx.author.add_roles(discord.utils.get(ctx.guild.roles, id = 855358889067675649))
 
     @commands.command(aliases = ["mset"])
     @commands.has_permissions(administrator = True)
     async def setmessages(self, ctx, member: discord.Member = None, count: int = None):
-        if not ctx.guild.id == 477547500232769536:
+        if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360:
             return
+
 
         if member == None or count == None: return await ctx.message.delete()
    
-        if users.count_documents({"id": member.id}) == 0: users.insert_one({"id": member.id, "messages": count})
-        else: users.update_one({"id": member.id}, {"$set": {"messages": count}})
+        if users.count_documents({"guild": ctx.guild.id, "id": member.id}) == 0: users.insert_one({"id": member.id, "messages": count})
+        else: users.update_one({"guild": ctx.guild.id, "id": member.id}, {"$set": {"messages": count}})
         return await ctx.send('Выполнено!', delete_after = 3)
 
     @commands.Cog.listener()
@@ -416,30 +468,36 @@ class econom(commands.Cog):
 
     @commands.command(aliases = ["награды", "allachive"])
     async def __prizs(self, ctx):
-        if not ctx.guild.id == 477547500232769536:
+        if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360:
             return
-        embed = discord.Embed(title = 'Награды за сообщения', description = f"За активность в чате можно не только прокачивать свой уровень, но и зарабатывать Discord-Coin's`(D-Coin's)` - Валюту нашего дискорд-сервера\n\n**Список наград:**\n✨ 2000 сообщений - **3** `D-Coin's`\n💸 5000 сообщений - **5** `D-Coin's`\n🔥 10000 сообщений - **10** `D-Coin's`\n🎀 20000 сообщений - **15** `D-Coin's`\n💎 30000 сообщений - **20** `D-Coin's и уникальная роль` <@&855358889067675649>", color = 0xFB9E14)
+
+		gguild = get_guilds(ctx.guild.id)
+	  	gs = get_name(ctx.guild.id)
+	  	gb = 'D-Coins' if ctx.guild.id == 477547500232769536 else 'Рисинки'
+		pb = "D-Coin's" if ctx.guild.id == 477547500232769536 else 'рисинок'
+
+        embed = discord.Embed(title = 'Награды за сообщения', description = f"За активность в чате можно не только прокачивать свой уровень, но и зарабатывать Discord-Coins`({gb})` - Валюту нашего дискорд-сервера\n\n**Список наград:**\n✨ 2000 сообщений - **3** `{pb}`\n💸 5000 сообщений - **5** `{pb}`\n🔥 10000 сообщений - **10** `{pb}`\n🎀 20000 сообщений - **15** `{pb}`\n💎 30000 сообщений - **20** `{pb} и уникальная роль` <@&855358889067675649>", color = 0xFB9E14)
         embed.set_thumbnail(url = ctx.guild.icon_url)
         embed.set_footer(text = 'Support Team by dollar ム baby#3603', icon_url = self.bot.user.avatar_url)
         return await ctx.send(embed = embed)
 
     @commands.command(aliases = ["messages", "сообщения"])
     async def __message(self, ctx, member: discord.Member = None):
-      if not ctx.guild.id == 477547500232769536:
+      if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360:
         return
 
       if member == None:
         member = ctx.author
 
-      if users.count_documents({"id": member.id}) == 0:
+      if users.count_documents({"guild": ctx.guild.id, "id": member.id}) == 0:
         return await ctx.send(embed = discord.Embed(title = '🏆Северный Округ | Сообщений', description = f'Никнейм: {member.mention}\nСообщений: `0`', colour = 0x09F2C8))
 
       else:
-        return await ctx.send(embed = discord.Embed(title = f'🏆 Северный Округ | Сообщений', description = f'Никнейм: {member.mention}\nСообщений: `{users.find_one({"id": member.id})["messages"]}`', colour = 0x09F2C8))
+        return await ctx.send(embed = discord.Embed(title = f'🏆 Северный Округ | Сообщений', description = f'Никнейм: {member.mention}\nСообщений: `{users.find_one({"guild": ctx.guild.id, "id": member.id})["messages"]}`', colour = 0x09F2C8))
 
     @commands.command()
     async def achive(self, ctx):
-    	if not ctx.guild.id == 477547500232769536:
+    	if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360:
             return
             
     	achive = []
@@ -511,25 +569,25 @@ global tens
 tens = [ ]
 
 def addbt(member: discord.Member, arg : int):
-  if coins.count_documents({"id": member.id}) == 0:
+  if coins.count_documents({"guild": ctx.guild.id, "id": member.id}) == 0:
     coins.insert_one({"guild": member.guild.id, "id": member.id, "coins": arg})
     return arg
   else:
-    bal = arg + coins.find_one({"id": member.id})["coins"]
-    coins.update_one({"id": member.id}, {"$set": {"coins": bal}})
+    bal = arg + coins.find_one({"guild": ctx.guild.id, "id": member.id})["coins"]
+    coins.update_one({"guild": ctx.guild.id, "id": member.id}, {"$set": {"coins": bal}})
     return bal
 
 def rebt(member: discord.Member, arg : int):
-  bal = coins.find_one({"id": member.id})["coins"] - arg
-  coins.update_one({"id": member.id}, {"$set": {"coins": bal}})
+  bal = coins.find_one({"guild": ctx.guild.id, "id": member.id})["coins"] - arg
+  coins.update_one({"guild": ctx.guild.id, "id": member.id}, {"$set": {"coins": bal}})
   return bal
 
 def proverka(member, stv : int):
-  if coins.count_documents({"id": member.id}) == 0:
+  if coins.count_documents({"guild": ctx.guild.id, "id": member.id}) == 0:
     return 0
 
   else:
-    if coins.find_one({"id": member.id})["coins"] < stv:
+    if coins.find_one({"guild": ctx.guild.id, "id": member.id})["coins"] < stv:
       return 0
     else:
       return 1
@@ -830,11 +888,11 @@ class econom(commands.Cog):
       if member == None:
         member = ctx.author
 
-      if coins.count_documents({"id": member.id}) == 0:
-        return await ctx.send(embed = discord.Embed(title = 'Система монет', description = f'**{member.mention}, на вашем счету `0` коинов**', colour = 0xFB9E14))
+      if coins.count_documents({"guild": ctx.guild.id, "id": member.id}) == 0:
+        return await ctx.send(embed = discord.Embed(title = 'Система {pb}', description = f'**{member.mention}, на вашем счету `0` коинов**', colour = 0xFB9E14))
 
       else:
-        return await ctx.send(embed = discord.Embed(title = 'Система монет', description = f'**{member.mention}, на вашем счету `{coins.find_one({"id": member.id})["coins"]}` коинов**', colour = 0xFB9E14))
+        return await ctx.send(embed = discord.Embed(title = 'Система {pb}', description = f'**{member.mention}, на вашем счету `{coins.find_one({"guild": ctx.guild.id, "id": member.id})["coins"]}` коинов**', colour = 0xFB9E14))
 
     @commands.command()
     @commands.has_permissions(administrator = True)
@@ -845,14 +903,14 @@ class econom(commands.Cog):
       if member == None:
         return await ctx.send(embed = discord.Embed(title = 'Ошибка', description = f'**{ctx.author.name}, укажите пользователя**', colour = 0xFB9E14), delete_after = 5)
       if amount == None:
-        return await ctx.send(embed = discord.Embed(title = 'Ошибка', description = f'**{ctx.author.name}, укажите кол-во добавляемых монет**', colour = 0xFB9E14), delete_after = 5)
+        return await ctx.send(embed = discord.Embed(title = 'Ошибка', description = f'**{ctx.author.name}, укажите кол-во добавляемых {pb}**', colour = 0xFB9E14), delete_after = 5)
 
-      if coins.count_documents({"id": member.id}) == 0:
-        a = addbt(member, amount)
-        await ctx.send(embed = discord.Embed(title = 'Система монет', description = f'**{ctx.author.name}, вы добавили пользователю {member.mention} `{amount}` монет.\nЕго баланс: `{a}` коинов**', colour = 0xFB9E14))
+      if coins.count_documents({"guild": ctx.guild.id, "id": member.id}) == 0:
+        a = addbt(ctx.guild.id, member, amount)
+        await ctx.send(embed = discord.Embed(title = 'Система {pb}', description = f'**{ctx.author.name}, вы добавили пользователю {member.mention} `{amount}` {pb}.\nЕго баланс: `{a}` коинов**', colour = 0xFB9E14))
       else:
-        a = addbt(member, amount)
-        await ctx.send(embed = discord.Embed(title = 'Система монет', description = f'**{ctx.author.name}, вы добавили пользователю {member.mention} `{amount}` монет.\nЕго баланс: `{a}` коинов**', colour = 0xFB9E14))
+        a = addbt(ctx.guild.id, member, amount)
+        await ctx.send(embed = discord.Embed(title = 'Система {pb}', description = f'**{ctx.author.name}, вы добавили пользователю {member.mention} `{amount}` {pb}.\nЕго баланс: `{a}` коинов**', colour = 0xFB9E14))
 
     @commands.command()
     @commands.has_permissions(administrator = True)
@@ -863,14 +921,14 @@ class econom(commands.Cog):
       if member == None:
         return await ctx.send(embed = discord.Embed(title = 'Ошибка', description = f'**{ctx.author.name}, укажите пользователя**', colour = 0xFB9E14), delete_after = 5)
       if amount == None:
-        return await ctx.send(embed = discord.Embed(title = 'Ошибка', description = f'**{ctx.author.name}, укажите кол-во убираемых монет**', colour = 0xFB9E14), delete_after = 5)
+        return await ctx.send(embed = discord.Embed(title = 'Ошибка', description = f'**{ctx.author.name}, укажите кол-во убираемых {pb}**', colour = 0xFB9E14), delete_after = 5)
       
-      a = proverka(member, amount)
+      a = proverka(ctx.guild.id, member, amount)
       if a == 0:
-        await ctx.send(embed = discord.Embed(title = 'Система монет', description = f'**{ctx.author.name}, пользователь не имеет такого кол-ва монет!**', colour = 0xFB9E14))
+        await ctx.send(embed = discord.Embed(title = 'Система {pb}', description = f'**{ctx.author.name}, пользователь не имеет такого кол-ва {pb}!**', colour = 0xFB9E14))
       else:
-        bal = rebt(member, amount)
-        await ctx.send(embed = discord.Embed(title = 'Система монет', description = f'**{ctx.author.name}, вы удалили у пользователя {member.mention} `{amount}` монет.\nЕго баланс: `{bal}` коинов**', colour = 0xFB9E14))    
+        bal = rebt(ctx.guild.id, member, amount)
+        await ctx.send(embed = discord.Embed(title = 'Система {pb}', description = f'**{ctx.author.name}, вы удалили у пользователя {member.mention} `{amount}` {pb}.\nЕго баланс: `{bal}` коинов**', colour = 0xFB9E14))    
 
     @commands.command()
     async def pay(self, ctx, member: discord.Member = None, amount:int = None):
@@ -888,20 +946,20 @@ class econom(commands.Cog):
         return
 
       if amount == None:
-        return await ctx.send(embed = discord.Embed(title = 'Ошибка', description = f'**{ctx.author.name}, укажите сумму монет которую нужно передать!**', colour = 0xFB9E14), delete_after = 5)
+        return await ctx.send(embed = discord.Embed(title = 'Ошибка', description = f'**{ctx.author.name}, укажите сумму {pb} которую нужно передать!**', colour = 0xFB9E14), delete_after = 5)
 
       if amount <= 0:
         return await ctx.send(embed = discord.Embed(title = 'Ошибка', description = f'**{ctx.author.name}, указан неверный аргумент!**', colour = 0xFB9E14), delete_after = 5)
 
 
-      a = proverka(ctx.author, amount)
+      a = proverka(ctx.guild.id, ctx.author, amount)
       if a == 0:
-        await ctx.send(embed = discord.Embed(title = 'Система монет', description = f'**{ctx.author.mention}, Вы не можете передать такую сумму!**', colour = 0xFB9E14))
+        await ctx.send(embed = discord.Embed(title = 'Система {pb}', description = f'**{ctx.author.mention}, Вы не можете передать такую сумму!**', colour = 0xFB9E14))
 
       else:
-        bal = addbt(member, amount)
-        bal2 = rebt(ctx.author, amount)
-        await ctx.send(embed = discord.Embed(title = 'Система монет', description = f'**{ctx.author.name}, Вы передали пользователю {member.mention} `{amount}` монет.\nЕго баланс: `{bal}` коинов\nВаш баланс: `{bal2}` коинов**', colour = 0xFB9E14))
+        bal = addbt(ctx.guild.id, member, amount)
+        bal2 = rebt(ctx.guild.id, ctx.author, amount)
+        await ctx.send(embed = discord.Embed(title = 'Система {pb}', description = f'**{ctx.author.name}, Вы передали пользователю {member.mention} `{amount}` {pb}.\nЕго баланс: `{bal}` коинов\nВаш баланс: `{bal2}` коинов**', colour = 0xFB9E14))
         
     @commands.command()
     @commands.cooldown(1, 10, commands.BucketType.member)
@@ -915,23 +973,23 @@ class econom(commands.Cog):
         
       if amount == None:
         ctx.command.reset_cooldown(ctx)
-        return await ctx.send(embed = discord.Embed(title = 'Ошибка', description = f'**{ctx.author.name}, укажите кол-во монет которое необходимо поставить!**', colour = 0xFB9E14), delete_after = 5)
+        return await ctx.send(embed = discord.Embed(title = 'Ошибка', description = f'**{ctx.author.name}, укажите кол-во {pb} которое необходимо поставить!**', colour = 0xFB9E14), delete_after = 5)
 
       if amount <= 0:
         ctx.command.reset_cooldown(ctx)
         return await ctx.send(embed = discord.Embed(title = 'Ошибка', description = f'**{ctx.author.name}, неверный аргумент!**', colour = 0xFB9E14), delete_after = 5)
 
-      a = proverka(ctx.author, amount)
+      a = proverka(ctx.guild.id, ctx.author, amount)
       if a == 0:
         ctx.command.reset_cooldown(ctx)
-        return await ctx.send(embed = discord.Embed(title = 'Система монет', description = f'**{ctx.author.mention}, Вы не можете сделать такую ставку!**', colour = 0xFB9E14))
+        return await ctx.send(embed = discord.Embed(title = 'Система {pb}', description = f'**{ctx.author.mention}, Вы не можете сделать такую ставку!**', colour = 0xFB9E14))
       else:
-        await ctx.send(embed = discord.Embed(title = 'Система монет', description = f'**{ctx.author.name}, что же нам выпадет...**', colour = 0xFB9E14), delete_after = 5)
+        await ctx.send(embed = discord.Embed(title = 'Система {pb}', description = f'**{ctx.author.name}, что же нам выпадет...**', colour = 0xFB9E14), delete_after = 5)
         a = random.randint(1, 2)
         if a == 1:
           await asyncio.sleep(5)
-          bal = rebt(ctx.author, amount)
-          await ctx.send(embed = discord.Embed(title = 'Система монет', description = f'**{ctx.author.mention}, к сожалению, вы проиграли!\nТеперь Ваш баланс составляет: `{bal}` коинов!**', colour = 0xFB9E14))
+          bal = rebt(ctx.guild.id, ctx.author, amount)
+          await ctx.send(embed = discord.Embed(title = 'Система {pb}', description = f'**{ctx.author.mention}, к сожалению, вы проиграли!\nТеперь Ваш баланс составляет: `{bal}` коинов!**', colour = 0xFB9E14))
         if a == 2:
           af = random.choices([1, 2, 3, 4], weights=[80, 15, 5, 0.1])[0]
           if af == 1:
@@ -947,8 +1005,8 @@ class econom(commands.Cog):
             text = f'Я просто промолчу.... Этот счастливчик сорвал СУПЕР КУШ и умножил свою ставку В СТО РАЗ!!! Он получил целых `{amount}` коинов!'
           await asyncio.sleep(5)
           f = amount
-          bal = addbt(ctx.author, f)
-          return await ctx.send(embed = discord.Embed(title = 'Система монет', description = f'**{ctx.author.mention}, {text}\nТеперь Ваш баланс составляет: `{bal}` коинов!**', colour = 0xFB9E14))
+          bal = addbt(ctx.guild.id, ctx.author, f)
+          return await ctx.send(embed = discord.Embed(title = 'Система {pb}', description = f'**{ctx.author.mention}, {text}\nТеперь Ваш баланс составляет: `{bal}` коинов!**', colour = 0xFB9E14))
             
     @commands.Cog.listener()
     async def on_message(self, ctx):
@@ -997,7 +1055,7 @@ class econom(commands.Cog):
         
 
         if st > 0:
-          addbt(ctx.author, st)
+          addbt(ctx.guild.id, ctx.author, st)
 
 
         
@@ -1007,7 +1065,7 @@ class econom(commands.Cog):
           return await ctx.delete()
 
       a = proc(len(list(ctx.content)))
-      addbt(ctx.author, a)
+      addbt(ctx.guild.id, ctx.author, a)
 
     @commands.command()
     async def user(self, ctx, member: discord.Member = None):
@@ -1093,16 +1151,16 @@ class econom(commands.Cog):
       embed.add_field(name = "⌚ `Вошел на сервер`", value = f'{ath[2]} {FCH[int(ath[1])]} {ath[0]} года в {fo[0]} {fo[1]} {fo[2]}', inline = False)
 
       if ctx.guild.id == 577511138032484360:
-        if users.count_documents({"id": member.id}) == 1:
-          if users.find_one({"id": member.id})["messages"] < 0:
+        if users.count_documents({"guild": ctx.guild.id, "id": member.id}) == 1:
+          if users.find_one({"guild": ctx.guild.id, "id": member.id})["messages"] < 0:
             msgs = 0
           else:
-            msgs = users.find_one({"id": member.id})["messages"]
+            msgs = users.find_one({"guild": ctx.guild.id, "id": member.id})["messages"]
           
-          if users.find_one({"id": member.id})["vsv"] < 0:
+          if users.find_one({"guild": ctx.guild.id, "id": member.id})["vsv"] < 0:
             voices = f'00:00:00'
           else:
-            seconds = users.find_one({"id": member.id})["vsv"]
+            seconds = users.find_one({"guild": ctx.guild.id, "id": member.id})["vsv"]
             seconds = seconds % (24 * 3600)
             days = seconds // (60 * 60 * 24)
             hours = seconds // 3600
@@ -1241,7 +1299,7 @@ class econom(commands.Cog):
             tens.remove(member.id)
             tens.remove(ctx.author.id)
             rebt(member, stavka)
-            addbt(ctx.author, stavka)
+            addbt(ctx.guild.id, ctx.author, stavka)
             return await ctx.send(f'{ctx.author.mention}, ```Игра закончена, кто-то закрыл личные сообщения...```', delete_after = 15)
           try:
             await ctx.author.send(embed = embed, delete_after = 20)
@@ -1284,7 +1342,7 @@ class econom(commands.Cog):
                 tens.remove(member.id)
                 tens.remove(ctx.author.id)
                 rebt(member, stavka)
-                addbt(ctx.author, stavka)
+                addbt(ctx.guild.id, ctx.author, stavka)
                 try:
                   await member.send(f'{member.mention}, ```Вы проиграли эту битву.\nПричина: Отсутствие действий.```', delete_after = 15)
                 except:
@@ -1322,7 +1380,7 @@ class econom(commands.Cog):
                     tens.remove(member.id)
                     tens.remove(ctx.author.id)
                     rebt(member, stavka)
-                    addbt(ctx.author, stavka)
+                    addbt(ctx.guild.id, ctx.author, stavka)
                     try:
                       await member.send(f'{member.mention}, ```Вы проиграли эту битву.\nПричина: Отсутствие действий.```', delete_after = 15)
                     except:
@@ -1387,7 +1445,7 @@ class econom(commands.Cog):
                       data[str(ctx.guild.id)][str(member.id)] = 0
                       data[str(ctx.guild.id)][str(ctx.author.id)] = 0
                       rebt(member, stavka)
-                      addbt(ctx.author, stavka)
+                      addbt(ctx.guild.id, ctx.author, stavka)
                       with open("cogs/tennis.json", "w") as file:
                         json.dump(data, file, indent = 4)
                       try:
@@ -1452,7 +1510,7 @@ class econom(commands.Cog):
                             tens.remove(member.id)
                             tens.remove(ctx.author.id)
                             rebt(member, stavka)
-                            addbt(ctx.author, stavka)
+                            addbt(ctx.guild.id, ctx.author, stavka)
                             with open("cogs/tennis.json", "w") as file:
                                 json.dump(data, file, indent = 4)
                             try:
@@ -1517,7 +1575,7 @@ class econom(commands.Cog):
                               tens.remove(member.id)
                               tens.remove(ctx.author.id)
                               rebt(member, stavka)
-                              addbt(ctx.author, stavka)
+                              addbt(ctx.guild.id, ctx.author, stavka)
                               data[str(ctx.guild.id)][str(member.id)] = 0
                               data[str(ctx.guild.id)][str(ctx.author.id)] = 0
                               with open("cogs/tennis.json", "w") as file:
@@ -1594,8 +1652,8 @@ class econom(commands.Cog):
       if ctx.author.top_role.position <= member.top_role.position:
         return
 
-      if coins.count_documents({"id": member.id}) != 0:
-        coins.update_one({"id": member.id}, {"$set": {"coins": 0}})
+      if coins.count_documents({"guild": ctx.guild.id, "id": member.id}) != 0:
+        coins.update_one({"guild": ctx.guild.id, "id": member.id}, {"$set": {"coins": 0}})
       else:
         pass
       channel = self.bot.get_channel(736200220311945256)
