@@ -429,18 +429,18 @@ class econom(commands.Cog):
         if len(list(ctx.content)) >= 4:
             msgs = users.find_one({"id": ctx.author.id})["messages"]
             if msgs in [2000, 5000, 10000, 20000, 30000]:
-				if ctx.guild.id == 477547500232769536:
-                	give = {2000: f"**3** `{pb}`", 5000: f"**5** `{pb}`", 10000: f"**10** `{pb}`", 20000: f"**15** `{pb}`", 30000: f"**20** `{pb} и уникальная роль` <@&855358889067675649>"}
-				else:
-					give = {2000: f"**3** `{pb}`", 5000: f"**5** `{pb}`", 10000: f"**10** `{pb}`", 20000: f"**15** `{pb}`", 30000: f"**20** `{pb}`"}
+                if ctx.guild.id == 477547500232769536:
+                    give = {2000: f"**3** `{pb}`", 5000: f"**5** `{pb}`", 10000: f"**10** `{pb}`", 20000: f"**15** `{pb}`", 30000: f"**20** `{pb} и уникальная роль` <@&855358889067675649>"}
+                else:
+                    give = {2000: f"**3** `{pb}`", 5000: f"**5** `{pb}`", 10000: f"**10** `{pb}`", 20000: f"**15** `{pb}`", 30000: f"**20** `{pb}`"}
                 st = {2000: 3, 5000: 5, 10000: 10, 20000: 15, 30000: 20}
                 embed = discord.Embed(title = f'Достижение {ctx.author.name}', description = f'🎉 `Написать` {msgs} `сообщений!`\n✨ Награда за выполнение: {give[msgs]}', colour = 0xFB9E14)
                 embed.set_thumbnail(url = ctx.author.avatar_url)
                 await ctx.channel.send(embed = embed)
                 addbt(ctx.guild.id, ctx.author, st[msgs])
-				if ctx.guild.id == 477547500232769536:
-					if st[msgs] == 20: 
-						return await ctx.author.add_roles(discord.utils.get(ctx.guild.roles, id = 855358889067675649))
+                if ctx.guild.id == 477547500232769536:
+                    if st[msgs] == 20: 
+                        return await ctx.author.add_roles(discord.utils.get(ctx.guild.roles, id = 855358889067675649))
 
     @commands.command(aliases = ["mset"])
     @commands.has_permissions(administrator = True)
@@ -476,9 +476,12 @@ class econom(commands.Cog):
         gs = get_name(ctx.guild.id)
         gb = 'D-Coins' if ctx.guild.id == 477547500232769536 else 'Рисинки'
         pb = "D-Coin's" if ctx.guild.id == 477547500232769536 else 'рисинок'
-
-        embed = discord.Embed(title = 'Награды за сообщения', description = f"За активность в чате можно не только прокачивать свой уровень, но и зарабатывать Discord-Coins`({gb})` - Валюту нашего дискорд-сервера\n\n**Список наград:**\n✨ 2000 сообщений - **3** `{pb}`\n💸 5000 сообщений - **5** `{pb}`\n🔥 10000 сообщений - **10** `{pb}`\n🎀 20000 сообщений - **15** `{pb}`\n💎 30000 сообщений - **20** `{pb} и уникальная роль` <@&855358889067675649>", color = 0xFB9E14)
-        embed.set_thumbnail(url = ctx.guild.icon_url)
+	
+	if ctx.guild.id == 477547500232769536:
+            embed = discord.Embed(title = 'Награды за сообщения', description = f"За активность в чате можно не только прокачивать свой уровень, но и зарабатывать Discord-Coins`({gb})` - Валюту нашего дискорд-сервера\n\n**Список наград:**\n✨ 2000 сообщений - **3** `{pb}`\n💸 5000 сообщений - **5** `{pb}`\n🔥 10000 сообщений - **10** `{pb}`\n🎀 20000 сообщений - **15** `{pb}`\n💎 30000 сообщений - **20** `{pb} и уникальная роль` <@&855358889067675649>", color = 0xFB9E14)
+        else:
+            embed = discord.Embed(title = 'Награды за сообщения', description = f"За активность в чате можно не только прокачивать свой уровень, но и зарабатывать Discord-Coins`({gb})` - Валюту нашего дискорд-сервера\n\n**Список наград:**\n✨ 2000 сообщений - **3** `{pb}`\n💸 5000 сообщений - **5** `{pb}`\n🔥 10000 сообщений - **10** `{pb}`\n🎀 20000 сообщений - **15** `{pb}`\n💎 30000 сообщений - **20** `{pb}`", color = 0xFB9E14)
+	embed.set_thumbnail(url = ctx.guild.icon_url)
         embed.set_footer(text = 'Support Team by dollar ム baby#3603', icon_url = self.bot.user.avatar_url)
         return await ctx.send(embed = embed)
 
