@@ -105,9 +105,8 @@ class family(commands.Cog):
 					await m.delete()
 					return await m9.delete()
 				else:
-					await msg9.delete()
 					if ctx.guild.id == 577511138032484360: # ТОТЯ 
-						if not '#' in msg9.content.split(''): 
+						if not '#' in msg9.content: 
 							await m9.delete()
 							await m.delete()
 							return await ctx.send(embed = discord.Embed(title = '\⛩️ **__Произошла ошибка__**', description = 'Чтобы установить цвет для роли, укажите **hex color**\nНапример: #2f3236\n\n**Начните создание семьи заново.**', color = 0xFB9E14), delete_after = 10)
@@ -117,6 +116,7 @@ class family(commands.Cog):
 						colors = {"белый": 0xFFFFFF, "чёрный": 0x000000, "черный": 0x000000, "голубой": 0x6495ED, "синий": 0x0000FF, "бирюзовый": 0x1df5c3, "красный": 0xFF0000, "жёлтый": 0xFFFF00, "желтный": 0xFFFF00, "розовый": 0xFF00FF, "фиолетовый": 0xEE82EE, "пурпурный": 0xA020F0, "оранжевый": 0xFFA500, "зелёный": 0x00FF00, "зеленый": 0x00FF00, "лаймовый": 0x32CD32}
 						eq = colors.get(fcolor.lower(), None)
 						hexc = 0xFFFFFF if not eq else colors[fcolor.lower()]
+					await msg9.delete()
 					await m9.delete()
 					if msg9.content.lower() == 'отмена':
 						return await m.delete()
