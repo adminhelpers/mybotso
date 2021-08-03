@@ -78,6 +78,7 @@ class econom(commands.Cog):
 
     @commands.command()
     async def topcoins(self, ctx):
+      if not ctx.guild.id == 477547500232769536: return 
       coins = db["coins"]
       zb = 0
 
