@@ -243,8 +243,8 @@ class econom(commands.Cog):
         return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gb}', description = f'Никнейм: {member.mention}\n{pb}: `0`', colour = 0x09F2C8))
 
       else:
-		if ctx.guild.id == 477547500232769536:
-        	return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'Никнейм: {member.mention}\n{pb}: `{coins.find_one({"guild": ctx.guild.id, "id": member.id})["coins"]}`', colour = 0x09F2C8))
+        if ctx.guild.id == 477547500232769536:
+        return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'Никнейм: {member.mention}\n{pb}: `{coins.find_one({"guild": ctx.guild.id, "id": member.id})["coins"]}`', colour = 0x09F2C8))
 
     
     @commands.command()
