@@ -404,13 +404,12 @@ class econom(commands.Cog):
             
     @commands.Cog.listener()
     async def on_message(self, ctx):
-
         if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return
 
-      	gguild = get_guilds(ctx.guild.id)
-	gs = get_name(ctx.guild.id)
-	gb = "`D-Coin's`" if ctx.guild.id == 477547500232769536 else 'Рисинки'
-	pb = "`D-Coin's`" if ctx.guild.id == 477547500232769536 else 'рисинок'
+        gguild = get_guilds(ctx.guild.id)
+        gs = get_name(ctx.guild.id)
+        gb = "`D-Coin's`" if ctx.guild.id == 477547500232769536 else 'Рисинки'
+        pb = "`D-Coin's`" if ctx.guild.id == 477547500232769536 else 'рисинок'
 
         if users.count_documents({"id": ctx.author.id}) == 0:
             users.insert_one({"id": ctx.author.id, "messages": 0})
@@ -463,10 +462,10 @@ class econom(commands.Cog):
     async def __prizs(self, ctx):
         if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return
 
-	gguild = get_guilds(ctx.guild.id)
-	gs = get_name(ctx.guild.id)
-	gb = 'D-Coins' if ctx.guild.id == 477547500232769536 else 'Рисинки'
-	pb = "D-Coin's" if ctx.guild.id == 477547500232769536 else 'рисинок'
+        gguild = get_guilds(ctx.guild.id)
+        gs = get_name(ctx.guild.id)
+        gb = 'D-Coins' if ctx.guild.id == 477547500232769536 else 'Рисинки'
+        pb = "D-Coin's" if ctx.guild.id == 477547500232769536 else 'рисинок'
 
         embed = discord.Embed(title = 'Награды за сообщения', description = f"За активность в чате можно не только прокачивать свой уровень, но и зарабатывать Discord-Coins`({gb})` - Валюту нашего дискорд-сервера\n\n**Список наград:**\n✨ 2000 сообщений - **3** `{pb}`\n💸 5000 сообщений - **5** `{pb}`\n🔥 10000 сообщений - **10** `{pb}`\n🎀 20000 сообщений - **15** `{pb}`\n💎 30000 сообщений - **20** `{pb} и уникальная роль` <@&855358889067675649>", color = 0xFB9E14)
         embed.set_thumbnail(url = ctx.guild.icon_url)
