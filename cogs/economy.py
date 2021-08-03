@@ -314,7 +314,7 @@ class econom(commands.Cog):
 
       if not ctx.channel.id == 818222772215349328:
         await ctx.message.delete()
-        return await ctx.send(embed = discord.Embed(description = f'**Команда `/casino` доступна только в канале <#818222772215349328>**', colour = 0x09F2C8), delete_after = 5)
+        return await ctx.send(embed = discord.Embed(description = f'**Команда `!casino` доступна только в канале <#818222772215349328>**', colour = 0x09F2C8), delete_after = 5)
         
       if amount == None:
         ctx.command.reset_cooldown(ctx)
