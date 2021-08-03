@@ -182,12 +182,7 @@ class family(commands.Cog):
 							else:
 								await msg4.delete()
 								await m4.edit(embed = discord.Embed(description = f'Вы успешно отказались от создания семьи!'), delete_after = 5)
-'''
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\⛩️**__Форма подачи на заказ:__**
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\⛩️》`1.` № Желаемой роли:
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\⛩️》`2.` hex color:
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\⛩️》`3.` Док-ва __(+/time)__:
-'''
+								
 
 	@commands.command(aliases = ['пригласить', 'finvite'])
 	async def faminvite(self, ctx, member: discord.Member = None):
