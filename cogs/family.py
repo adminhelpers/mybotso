@@ -175,7 +175,12 @@ class family(commands.Cog):
 							else:
 								await role.edit(colour = hexc)
 							await ctx.guild.edit_role_positions(positions = {role: 18})
-							channel = await ctx.guild.create_voice_channel(name = fvoice, category = discord.utils.get(ctx.guild.categories, id = 591642172349218816))
+							if ctx.guild.id == 577511138032484360: # ТОТЯ 
+								channel = await ctx.guild.create_voice_channel(name = fvoice, category = discord.utils.get(ctx.guild.categories, id = 872174625168162916))
+								await self.bot.get_channel(872175023484452885).set_permissions(role, view_channel = True, read_message_history = True, read_messages = True)
+							else:
+								channel = await ctx.guild.create_voice_channel(name = fvoice, category = discord.utils.get(ctx.guild.categories, id = 591642172349218816))
+								await self.bot.get_channel(591642627137339433).set_permissions(role, view_channel = True, read_message_history = True, read_messages = True)
 							await channel.set_permissions(role, view_channel = True, connect = True, speak = True, use_voice_activation = True)
 							await self.bot.get_channel(591642627137339433).set_permissions(role, view_channel = True, read_message_history = True, read_messages = True)
 							fam.insert_one({"id": [member.id, 1, 1], "guild": ctx.guild.id, "name": name, "channel": channel.id, "leader": leader, "leaderID": leaderID,"mem": 5, "zam1": 1, "zam2": 1, "zam3": 1, "zam4": 1, "verf": 0, "rolename": frolename, "roleID": role.id, "memberid": 1, "mesID": 1})
