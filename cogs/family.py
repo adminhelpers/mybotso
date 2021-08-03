@@ -175,7 +175,7 @@ class family(commands.Cog):
 							else:
 								await role.edit(colour = hexc)
 							if ctx.guild.id == 577511138032484360: # ТОТЯ 
-							await ctx.guild.edit_role_positions(positions = {role: 28})
+								await ctx.guild.edit_role_positions(positions = {role: 28})
 								channel = await ctx.guild.create_voice_channel(name = fvoice, category = discord.utils.get(ctx.guild.categories, id = 872174625168162916))
 								await self.bot.get_channel(872177316070039582).set_permissions(role, view_channel = True, read_message_history = True, read_messages = True)
 							else:
