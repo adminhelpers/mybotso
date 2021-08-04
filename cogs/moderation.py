@@ -561,6 +561,7 @@ class moderation(commands.Cog):
     async def on_message(self, ctx):
 
         if ctx.guild == None: return
+        
         if not ctx.guild.id == 477547500232769536: return
 
         mute_role = discord.utils.get(ctx.guild.roles, id = 800085900435652678)
