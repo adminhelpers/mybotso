@@ -491,8 +491,8 @@ class econom(commands.Cog):
         if message.author.bot:
             return
 
-        a = users.find_one({"guild": ctx.guild.id, "ids": message.author.id})["messages"]
-        users.update_one({"guild": ctx.guild.id, "ids": message.author.id}, {"$set": {"messages": a - 1}})
+        a = users.find_one({"guild": message.guild.id, "ids": message.author.id})["messages"]
+        users.update_one({"guild": message.guild.id, "ids": message.author.id}, {"$set": {"messages": a - 1}})
 
     @commands.command(aliases = ["награды", "allachive"])
     async def __prizs(self, ctx):
