@@ -560,6 +560,19 @@ class moderation(commands.Cog):
             pass
         else:
           muted.insert_one({"guild": ctx.guild.id, "id": member.id, "time": sleep})
+          
+    @commands.Cog.listener()
+    async def on_message(self, ctx):
+
+        if ctx.guild == None: return
+        if not ctx.guild.id == 477547500232769536: return
+
+        mute_role = discord.utils.get(ctx.guild.roles, id = 800085900435652678)
+        if mute_role in ctx.author.roles: 
+            if ctx.channel.id == 817815183094448130 or ctx.channel.id == 805487247692005417: return
+            await asyncio.sleep(0.1)
+            try: return await ctx.delete()
+            except: return
 
     @commands.command()
     async def unmute(self, ctx, member: discord.Member = None, reason = None):
