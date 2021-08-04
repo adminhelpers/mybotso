@@ -99,9 +99,10 @@ class econom(commands.Cog):
         if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return 
         for i in userf.find(): userf.delete_one({"_id": i["_id"]})
         nf = 0
+        nsf = 0
         for i in users.find():
-            print(i["id"])
-            if i["messages"] < 1000:
+            nsf += 1
+            if i["messages"] < 300:
                 if coins.count_documents({"guild": ctx.guild.id, "id": i["id"]}) == 0 or coins.find_one({"guild": ctx.guild.id, "id": i["id"]})["coins"] == 0: pass
                 else:
                     nf += 1
@@ -115,7 +116,7 @@ class econom(commands.Cog):
                     nf += 1
                     c = coins.find_one({"guild": ctx.guild.id, "id": i["id"]})["coins"]
                     userf.insert_one({"guild": ctx.guild.id, "ids": i["id"], "coins": c, "messages": i["messages"]})
-        return await ctx.send(embed = discord.Embed(description = f'Было перенесено {nf} записей', color = 0xFB9E14))
+        return await ctx.send(embed = discord.Embed(description = f'`Было перенесено валидных записей:` {nf}\n`Всего записей было:` {nsf}', color = 0xFB9E14))
                 
             
 
