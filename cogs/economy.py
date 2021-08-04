@@ -523,7 +523,7 @@ class econom(commands.Cog):
         member = ctx.author
 
 	
-      if users.count_documents({"guild": ctx.guild.id, "id": member.id}) == 0:
+      if users.count_documents({"guild": ctx.guild.id, "ids": member.id}) == 0:
         return await ctx.send(embed = discord.Embed(title = f'🏆 {gguild} | Сообщений', description = f'Никнейм: {member.mention}\nСообщений: `0`', colour = 0x09F2C8))
 
       else:
