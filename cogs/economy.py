@@ -15,14 +15,9 @@ import jishaku
 import wikipedia
 from pymongo import MongoClient
 
-cluster = MongoClient("mongodb+srv://rodinadb:nbsGK02riO3PkygA@cluster0.cdvgc.mongodb.net/rodina?retryWrites=true&w=majority")
-db = cluster["rodina"]
-coins = db["coins"]
-users = db["users"]
-
-clusterf = MongoClient("mongodb+srv://dbrbase:YqxZgV1GL8s4CVxX@rodinadb.rhew3.mongodb.net/rodinaname?retryWrites=true&w=majority")
-dbf = clusterf["rodina"]
-userf = dbf["users"]
+cluster = MongoClient("mongodb+srv://dbrbase:YqxZgV1GL8s4CVxX@rodinadb.rhew3.mongodb.net/rodinaname?retryWrites=true&w=majority")
+db = clusterf["rodina"]
+users = dbf["users"]
 
 # family.insert_one({"_id": ctx.author.id, "name": "привет"}) -> Запись в базу данных(Коллекция: 
 # if family.count_documents({"_id": ctx.author.id}) -> Проверка, есть значение или нет в базе данных(Коллекция: Family | Поиск по графе: _iFamily) d) 
@@ -48,25 +43,25 @@ def get_guilds(guild):
 		return 'Восточный Округ'
 
 def addbt(guild, member: discord.Member, arg : int):
-  if coins.count_documents({"guild": guild, "id": member.id}) == 0:
-    coins.insert_one({"guild": guild, "id": member.id, "coins": arg})
+  if users.count_documents({"guild": guild, "ids": member.id}) == 0:
+    users.insert_one({"guild": guild, "ids": member.id, "coins": arg})
     return arg
   else:
-    bal = arg + coins.find_one({"guild": guild, "id": member.id})["coins"]
-    coins.update_one({"guild": guild, "id": member.id}, {"$set": {"coins": bal}})
+    bal = arg + users.find_one({"guild": guild, "ids": member.id})["coins"]
+    users.update_one({"guild": guild, "ids": member.id}, {"$set": {"coins": bal}})
     return bal
 
 def rebt(guild, member: discord.Member, arg : int):
-  bal = coins.find_one({"guild": guild, "id": member.id})["coins"] - arg
-  coins.update_one({"guild": guild, "id": member.id}, {"$set": {"coins": bal}})
+  bal = users.find_one({"guild": guild, "ids": member.id})["coins"] - arg
+  users.update_one({"guild": guild, "ids": member.id}, {"$set": {"coins": bal}})
   return bal
 
 def proverka(guild, member, stv : int):
-  if coins.count_documents({"guild": guild, "id": member.id}) == 0:
+  if users.count_documents({"guild": guild, "ids": member.id}) == 0:
     return 0
 
   else:
-    if coins.find_one({"guild": guild, "id": member.id})["coins"] < stv:
+    if users.find_one({"guild": guild, "ids": member.id})["coins"] < stv:
       return 0
     else:
       return 1
@@ -95,6 +90,7 @@ class econom(commands.Cog):
         self.prev = []
 	
     @commands.command()
+    @commands.is_owner()
     async def perenos(self, ctx):
         if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return 
         for i in userf.find(): userf.delete_one({"_id": i["_id"]})
@@ -123,7 +119,6 @@ class econom(commands.Cog):
     @commands.command()
     async def topcoins(self, ctx):
       if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return 
-      coins = db["coins"]
       zb = 0
 
       m = [ ]
@@ -136,18 +131,19 @@ class econom(commands.Cog):
       fr = 0
       zb = 50
       for i in coins.find({"guild": ctx.guild.id}):
-        if not i["id"] in [user.id for user in ctx.guild.members]: continue
-        mname = discord.utils.get(ctx.guild.members, id = i["id"])
-        if mname.bot: continue 
-        m.append(i["coins"])
-        cz.append(mname.name)
+        try:
+            mname = discord.utils.get(ctx.guild.members, id = i["ids"])
+            if mname.bot: continue 
+            m.append(i["coins"])
+            cz.append(mname.name)
 
-        coins = i["coins"]
+            coins = i["coins"]
 
-        gs = get_name(ctx.guild.id)
-        c.append(f'**{gs}** `{coins}`')
-        fr += 1
-        if fr >= 50:
+            gs = get_name(ctx.guild.id)
+            c.append(f'**{gs}** `{coins}`')
+            fr += 1
+        except: pass
+        if fr >= 10:
           break
       
       m2 = m
@@ -192,8 +188,8 @@ class econom(commands.Cog):
       m = [ ]
       for i in users.find():
         if i["messages"] > 20000: 
-          try: m.append(f'{discord.utils.get(ctx.guild.members, id = i["id"]).name} - {i["messages"]} coins')
-          except: m.append(f'Неизвестный тип с ID: {i["id"]} - {i["messages"]} coins')
+          try: m.append(f'{discord.utils.get(ctx.guild.members, id = i["ids"]).name} - {i["messages"]} coins')
+          except: m.append(f'Неизвестный тип с ID: {i["ids"]} - {i["messages"]} coins')
       print(m)
 
     @commands.command(aliases = ["mtop"])
@@ -214,7 +210,7 @@ class econom(commands.Cog):
       for i in users.find():
         if i["messages"] < 5000: continue 
         try:
-          mname = discord.utils.get(ctx.guild.members, id = i["id"])
+          mname = discord.utils.get(ctx.guild.members, id = i["ids"])
           if mname.bot: continue
           m.append(i["messages"])
           cz.append(mname.name)
@@ -276,11 +272,11 @@ class econom(commands.Cog):
       gb = 'D-Coins' if ctx.guild.id == 477547500232769536 else 'Рисинки'
       pb = 'D-Coins' if ctx.guild.id == 477547500232769536 else 'Рисинок'
 
-      if coins.count_documents({"guild": ctx.guild.id, "id": member.id}) == 0:
+      if users.count_documents({"guild": ctx.guild.id, "ids": member.id}) == 0:
         return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gb}', description = f'Никнейм: {member.mention}\n{pb}: `0`', colour = 0x09F2C8))
 
       else:
-        return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'Никнейм: {member.mention}\n{pb}: `{coins.find_one({"guild": ctx.guild.id, "id": member.id})["coins"]}`', colour = 0x09F2C8))
+        return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'Никнейм: {member.mention}\n{pb}: `{users.find_one({"guild": ctx.guild.id, "ids": member.id})["coins"]}`', colour = 0x09F2C8))
 
     
     @commands.command()
@@ -429,7 +425,7 @@ class econom(commands.Cog):
         return
 
       if coins.count_documents({"guild": ctx.guild.id, "id": member.id}) != 0:
-        coins.update_one({"guild": ctx.guild.id, "id": member.id}, {"$set": {"coins": 0}})
+        users.update_one({"guild": ctx.guild.id, "ids": member.id}, {"$set": {"coins": 0}})
       else:
         pass
 
@@ -447,17 +443,17 @@ class econom(commands.Cog):
         gb = "`D-Coin's`" if ctx.guild.id == 477547500232769536 else 'Рисинки'
         pb = "`D-Coin's`" if ctx.guild.id == 477547500232769536 else 'рисинок'
 
-        if users.count_documents({"id": ctx.author.id}) == 0:
-            users.insert_one({"id": ctx.author.id, "messages": 0})
-            a = users.find_one({"id": ctx.author.id})["messages"]
-            users.update_one({"id": ctx.author.id}, {"$set": {"messages": a + 1}})
+        if users.count_documents({"guild": ctx.guild.id, "ids": ctx.author.id}) == 0:
+            users.insert_one({"guild": ctx.guild.id, "ids": ctx.author.id, "messages": 0})
+            a = users.find_one({"guild": ctx.guild.id, "ids": ctx.author.id})["messages"]
+            users.update_one({"guild": ctx.guild.id, "ids": ctx.author.id}, {"$set": {"messages": a + 1}})
         else:
-            a = users.find_one({"id": ctx.author.id})["messages"]
-            users.update_one({"id": ctx.author.id}, {"$set": {"messages": a + 1}})
+            a = users.find_one({"guild": ctx.guild.id, "ids": ctx.author.id})["messages"]
+            users.update_one({"guild": ctx.guild.id, "ids": ctx.author.id}, {"$set": {"messages": a + 1}})
 
         st = 0
         if len(list(ctx.content)) >= 4:
-            msgs = users.find_one({"id": ctx.author.id})["messages"]
+            msgs = users.find_one({"guild": ctx.guild.id, "ids": ctx.author.id})["messages"]
             if msgs in [2000, 5000, 10000, 20000, 30000]:
                 if ctx.guild.id == 477547500232769536:
                     give = {2000: f"**3** `{pb}`", 5000: f"**5** `{pb}`", 10000: f"**10** `{pb}`", 20000: f"**15** `{pb}`", 30000: f"**20** `{pb} и уникальная роль` <@&855358889067675649>"}
@@ -480,8 +476,8 @@ class econom(commands.Cog):
 
         if member == None or count == None: return await ctx.message.delete()
    
-        if users.count_documents({"guild": ctx.guild.id, "id": member.id}) == 0: users.insert_one({"id": member.id, "messages": count})
-        else: users.update_one({"guild": ctx.guild.id, "id": member.id}, {"$set": {"messages": count}})
+        if users.count_documents({"guild": ctx.guild.id, "ids": member.id}) == 0: users.insert_one({"ids": member.id, "messages": count})
+        else: users.update_one({"guild": ctx.guild.id, "ids": member.id}, {"$set": {"messages": count}})
         return await ctx.send('Выполнено!', delete_after = 3)
 
     @commands.Cog.listener()
@@ -495,8 +491,8 @@ class econom(commands.Cog):
         if message.author.bot:
             return
 
-        a = users.find_one({"guild": ctx.guild.id, "id": message.author.id})["messages"]
-        users.update_one({"guild": ctx.guild.id, "id": message.author.id}, {"$set": {"messages": a - 1}})
+        a = users.find_one({"guild": ctx.guild.id, "ids": message.author.id})["messages"]
+        users.update_one({"guild": ctx.guild.id, "ids": message.author.id}, {"$set": {"messages": a - 1}})
 
     @commands.command(aliases = ["награды", "allachive"])
     async def __prizs(self, ctx):
@@ -530,7 +526,7 @@ class econom(commands.Cog):
         return await ctx.send(embed = discord.Embed(title = f'🏆 {gguild} | Сообщений', description = f'Никнейм: {member.mention}\nСообщений: `0`', colour = 0x09F2C8))
 
       else:
-        return await ctx.send(embed = discord.Embed(title = f'🏆 {gguild} | Сообщений', description = f'Никнейм: {member.mention}\nСообщений: `{users.find_one({"id": member.id})["messages"]}`', colour = 0x09F2C8))
+        return await ctx.send(embed = discord.Embed(title = f'🏆 {gguild} | Сообщений', description = f'Никнейм: {member.mention}\nСообщений: `{users.find_one({"guild": ctx.guild.id, "ids": member.id})["messages"]}`', colour = 0x09F2C8))
 
     @commands.command()
     async def achive(self, ctx):
