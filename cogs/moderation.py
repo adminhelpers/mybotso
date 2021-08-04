@@ -156,7 +156,7 @@ class moderation(commands.Cog):
             except:
                 amount += 1
                 await ctx.channel.purge(limit = int(amount))
-            await ctx.send(embed = discord.Embed(description = f'** :white_check_mark: Удаленно {amount} сообщений**', colour = 0xFB9E14), delete_after = 5)
+            await ctx.send(embed = discord.Embed(description = f'** :white_check_mark: Удалено {amount} сообщений**', colour = 0xFB9E14), delete_after = 5)
             logs = self.bot.get_channel(log)
             e = discord.Embed(colour = 0xFB9E14, timestamp = datetime.datetime.utcnow())
             e.set_author(name = 'Удаление сообщений в канале', icon_url = ctx.author.avatar_url)
@@ -182,7 +182,7 @@ class moderation(commands.Cog):
                     await elem.delete()
                     number += 1
                     if number >= amount:
-                        await ctx.send(embed = discord.Embed(description = f'** :white_check_mark: Удаленно {amount} сообщений от пользователя {member.mention}**', colour = 0xFB9E14), delete_after = 5)   
+                        await ctx.send(embed = discord.Embed(description = f'** :white_check_mark: Удалено {amount} сообщений от пользователя {member.mention}**', colour = 0xFB9E14), delete_after = 5)   
                         break              
 
             logs = self.bot.get_channel(log)
@@ -200,11 +200,7 @@ class moderation(commands.Cog):
 
     @commands.command(aliases = ['ссылка', 'инвайт'])
     async def invite(self, ctx):
-        if ctx.guild.id == 325607843547840522:
-            # await ctx.send(embed = discord.Embed(title = f'Discord Helper', description = f'''**Единая ссылка на приглашения пользователей --\n https://discord.gg/TmTCP9S**''', colour = 0xFB9E14))
-            return
-        else:
-            if ctx.guild.id == 477547500232769536: return await ctx.send(embed = discord.Embed(title = f'Discord Helper', description = f'''**Единая ссылка на приглашения пользователей --\n https://discord.gg/rodina03**''', colour = 0xFB9E14))
+        if ctx.guild.id == 477547500232769536: return await ctx.send(embed = discord.Embed(title = f'Discord Helper', description = f'''**Единая ссылка на приглашения пользователей --\n https://discord.gg/rodina03**''', colour = 0xFB9E14))
 
     @commands.command()
     async def vmute(self, ctx, member: discord.Member = None):
