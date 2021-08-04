@@ -95,9 +95,10 @@ class econom(commands.Cog):
         self.prev = []
 	
     @commands.command()
-    async def izbdvbd(self, ctx):
+    async def perenos(self, ctx):
         if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return 
         for i in users.find():
+            print(i["id"])
             if i["messages"] < 1000:
                 if coins.count_documents({"guild": ctx.guild.id, "id": i["id"]}) == 0 or coins.find_one({"guild": ctx.guild.id, "id": i["id"]})["coins"] == 0: pass
                 else:
