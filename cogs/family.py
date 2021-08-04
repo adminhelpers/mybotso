@@ -533,7 +533,7 @@ class family(commands.Cog):
 				await message.delete()
 				if str(react.emoji) == '🔋':
 					if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id})["mem"] < 30:
-						await ctx.send(embed = discord.Embed(title = '\⛩️ **__Ошибка выполнения:__**', description = 'У Вас недостаточно очков семейной репутации, для совершения данного действия.\n`Необходимо:` 30'), delete_after = 7)
+						await ctx.send(embed = discord.Embed(title = '\⛩️ **__Ошибка выполнения:__**', description = 'У Вас недостаточно очков семейной репутации для совершения данного действия.\n`Необходимо:` 30'), delete_after = 7)
 					else:
 						ctx.command.reset_cooldown(ctx)
 						m = await ctx.send("**`Напишите в чат название котрое хотите установить семье:`**")
@@ -554,7 +554,7 @@ class family(commands.Cog):
 				elif str(react.emoji) == '🔖':
 					ctx.command.reset_cooldown(ctx)
 					if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id})["mem"] < 30:
-						await ctx.send(embed = discord.Embed(title = '\⛩️ **__Ошибка выполнения:__**', description = 'У Вас недостаточно очков семейной репутации, для совершения данного действия.\n`Необходимо:` 30'), delete_after = 7)
+						await ctx.send(embed = discord.Embed(title = '\⛩️ **__Ошибка выполнения:__**', description = 'У Вас недостаточно очков семейной репутации для совершения данного действия.\n`Необходимо:` 30'), delete_after = 7)
 					else:
 						m = await ctx.send("**`Напишите в чат название котрое хотите установить роли семье:`**")
 						def check(m):
@@ -576,7 +576,7 @@ class family(commands.Cog):
 				elif str(react.emoji) == '💘':
 					ctx.command.reset_cooldown(ctx)
 					if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id})["mem"] < 250:
-						await ctx.send(embed = discord.Embed(title = '\⛩️ **__Ошибка выполнения:__**', description = 'У Вас недостаточно очков семейной репутации, для совершения данного действия.\n`Необходимо:` 30'), delete_after = 7)
+						await ctx.send(embed = discord.Embed(title = '\⛩️ **__Ошибка выполнения:__**', description = 'У Вас недостаточно очков семейной репутации для совершения данного действия.\n`Необходимо:` 250'), delete_after = 7)
 						return
 					if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id})["verf"] == 1:
 						await ctx.send(embed = discord.Embed(description = f"{ctx.author.mention}** ошибка, у вас уже куплена галочка**", colour = discord.Colour.blue()), delete_after = 15.0)
