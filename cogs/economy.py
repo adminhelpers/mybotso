@@ -97,6 +97,7 @@ class econom(commands.Cog):
     @commands.command()
     async def perenos(self, ctx):
         if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return 
+        for i in userf.find(): userf.delete_one({"_id": i["_id"]})
         for i in users.find():
             print(i["id"])
             if i["messages"] < 1000:
