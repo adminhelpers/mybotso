@@ -130,7 +130,7 @@ class econom(commands.Cog):
       cz2 = [ ]
       fr = 0
       zb = 50
-      for i in coins.find({"guild": ctx.guild.id}):
+      for i in users.find({"guild": ctx.guild.id}):
         try:
             mname = discord.utils.get(ctx.guild.members, id = i["ids"])
             if mname.bot: continue 
