@@ -16,8 +16,8 @@ import wikipedia
 from pymongo import MongoClient
 
 cluster = MongoClient("mongodb+srv://dbrbase:YqxZgV1GL8s4CVxX@rodinadb.rhew3.mongodb.net/rodinaname?retryWrites=true&w=majority")
-db = clusterf["rodina"]
-users = dbf["users"]
+db = cluster["rodina"]
+users = db["users"]
 
 # family.insert_one({"_id": ctx.author.id, "name": "привет"}) -> Запись в базу данных(Коллекция: 
 # if family.count_documents({"_id": ctx.author.id}) -> Проверка, есть значение или нет в базе данных(Коллекция: Family | Поиск по графе: _iFamily) d) 
