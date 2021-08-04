@@ -299,8 +299,7 @@ class family(commands.Cog):
 							elif fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["zam3"] == member.id: p = "zam3"
 							elif fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["zam4"] == member.id: p = "zam4"
 							fam.update_one({"guild": ctx.guild.id, "leaderID": ctx.author.id}, {"$set": {p: 1, "id": mas}})
-						return
-					if str(react.emoji) == '✖':
+					elif str(react.emoji) == '✖':
 						await ctx.send(f"**{ctx.author.mention} вы отменили ваше действие!**", delete_after = 10.0)
 		else:
 			await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #403**\n> ** Причины возникновения:**\n**- У вас не достаточно прав**\n**- Ошибка системы, обратитесь к разработчику для ее устранения** [[В]Контакте](https://vk.com/dollarbabys)", color = 0xFB9E14), delete_after = 20.0)
@@ -534,7 +533,7 @@ class family(commands.Cog):
 				await message.delete()
 				if str(react.emoji) == '🔋':
 					if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id})["mem"] < 30:
-						await ctx.send(embed = discord.Embed(description = f"{ctx.author.mention}** ошибка, у вас не достаточно репутации для совершени	данной опирации!**", colour = discord.Colour.blue()), delete_after = 15.0)
+						await ctx.send(embed = discord.Embed(title = '\⛩️ **__Ошибка выполнения:__**', description = 'У Вас недостаточно очков семейной репутации, для совершения данного действия.\n`Необходимо:` 30'), delete_after = 7)
 					else:
 						ctx.command.reset_cooldown(ctx)
 						m = await ctx.send("**`Напишите в чат название котрое хотите установить семье:`**")
@@ -555,7 +554,7 @@ class family(commands.Cog):
 				elif str(react.emoji) == '🔖':
 					ctx.command.reset_cooldown(ctx)
 					if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id})["mem"] < 30:
-						await ctx.send(embed = discord.Embed(description = f"{ctx.author.mention}** ошибка, у вас не достаточно репутации для совершени	данной опирации!**", colour = discord.Colour.blue()), delete_after = 15.0)
+						await ctx.send(embed = discord.Embed(title = '\⛩️ **__Ошибка выполнения:__**', description = 'У Вас недостаточно очков семейной репутации, для совершения данного действия.\n`Необходимо:` 30'), delete_after = 7)
 					else:
 						m = await ctx.send("**`Напишите в чат название котрое хотите установить роли семье:`**")
 						def check(m):
@@ -577,7 +576,7 @@ class family(commands.Cog):
 				elif str(react.emoji) == '💘':
 					ctx.command.reset_cooldown(ctx)
 					if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id})["mem"] < 250:
-						await ctx.send(embed = discord.Embed(description = f"{ctx.author.mention}** ошибка, у вас не достаточно репутации для совершени	данной опирации!**", colour = discord.Colour.blue()), delete_after = 15.0)
+						await ctx.send(embed = discord.Embed(title = '\⛩️ **__Ошибка выполнения:__**', description = 'У Вас недостаточно очков семейной репутации, для совершения данного действия.\n`Необходимо:` 30'), delete_after = 7)
 						return
 					if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id})["verf"] == 1:
 						await ctx.send(embed = discord.Embed(description = f"{ctx.author.mention}** ошибка, у вас уже куплена галочка**", colour = discord.Colour.blue()), delete_after = 15.0)
