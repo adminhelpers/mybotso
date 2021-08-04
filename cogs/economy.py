@@ -436,6 +436,7 @@ class econom(commands.Cog):
             
     @commands.Cog.listener()
     async def on_message(self, ctx):
+        if ctx.guild == None: return
         if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return
 
         gguild = get_guilds(ctx.guild.id)
