@@ -98,19 +98,24 @@ class econom(commands.Cog):
     async def perenos(self, ctx):
         if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return 
         for i in userf.find(): userf.delete_one({"_id": i["_id"]})
+        nf = 0
         for i in users.find():
             print(i["id"])
             if i["messages"] < 1000:
                 if coins.count_documents({"guild": ctx.guild.id, "id": i["id"]}) == 0 or coins.find_one({"guild": ctx.guild.id, "id": i["id"]})["coins"] == 0: pass
                 else:
+                    nf += 1
                     c = coins.find_one({"guild": ctx.guild.id, "id": i["id"]})["coins"]
                     userf.insert_one({"guild": ctx.guild.id, "ids": i["id"], "coins": c, "messages": i["messages"]})
             else: 
                 if coins.count_documents({"guild": ctx.guild.id, "id": i["id"]}) == 0 or coins.find_one({"guild": ctx.guild.id, "id": i["id"]})["coins"] == 0: 
+                    nf += 1
                     userf.insert_one({"guild": ctx.guild.id, "ids": i["id"], "coins": 0, "messages": i["messages"]})
                 else:
+                    nf += 1
                     c = coins.find_one({"guild": ctx.guild.id, "id": i["id"]})["coins"]
                     userf.insert_one({"guild": ctx.guild.id, "ids": i["id"], "coins": c, "messages": i["messages"]})
+        return await ctx.send(embed = discord.Embed(description = f'Было перенесено {nf} записей', color = 0xFB9E14))
                 
             
 
