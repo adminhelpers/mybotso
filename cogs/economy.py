@@ -20,6 +20,10 @@ db = cluster["rodina"]
 coins = db["coins"]
 users = db["users"]
 
+clusterf = MongoClient("mongodb+srv://dbrbase:YqxZgV1GL8s4CVxX@rodinadb.rhew3.mongodb.net/rodinaname?retryWrites=true&w=majority")
+dbf = clusterf["rodina"]
+userf = dbf["users"]
+
 # family.insert_one({"_id": ctx.author.id, "name": "привет"}) -> Запись в базу данных(Коллекция: 
 # if family.count_documents({"_id": ctx.author.id}) -> Проверка, есть значение или нет в базе данных(Коллекция: Family | Поиск по графе: _iFamily) d) 
 # family.find_one({"_id": ctx.author.id}) -> Получение значения из базы(Коллекция: Family | Поиск по графе: _id) 
@@ -89,6 +93,23 @@ class econom(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.prev = []
+	
+    @commands.command()
+    async def izbdvbd(self, ctx):
+        if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return 
+        for i in users.find():
+            if i["messages"] < 1000:
+                if coins.count_documents({"guild": ctx.guild.id, "id": i["id"]}) == 0 or coins.find_one({"guild": ctx.guild.id, "id": i["id"]})["coins"] == 0: pass
+                c = coins.find_one({"guild": ctx.guild.id, "id": i["id"]})["coins"]
+                else: userf.insert_one({"guild": ctx.guild.id, "ids": i["id"], "coins": c, "messages": i["messages"]})
+            else: 
+                if coins.count_documents({"guild": ctx.guild.id, "id": i["id"]}) == 0 or coins.find_one({"guild": ctx.guild.id, "id": i["id"]})["coins"] == 0: 
+                    userf.insert_one({"guild": ctx.guild.id, "ids": i["id"], "coins": 0, "messages": i["messages"]})
+                else:
+                    c = coins.find_one({"guild": ctx.guild.id, "id": i["id"]})["coins"]
+                    userf.insert_one({"guild": ctx.guild.id, "ids": i["id"], "coins": c, "messages": i["messages"]})
+                
+            
 
     @commands.command()
     async def topcoins(self, ctx):
