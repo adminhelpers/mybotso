@@ -100,8 +100,9 @@ class econom(commands.Cog):
         for i in users.find():
             if i["messages"] < 1000:
                 if coins.count_documents({"guild": ctx.guild.id, "id": i["id"]}) == 0 or coins.find_one({"guild": ctx.guild.id, "id": i["id"]})["coins"] == 0: pass
-                c = coins.find_one({"guild": ctx.guild.id, "id": i["id"]})["coins"]
-                else: userf.insert_one({"guild": ctx.guild.id, "ids": i["id"], "coins": c, "messages": i["messages"]})
+                else:
+                    c = coins.find_one({"guild": ctx.guild.id, "id": i["id"]})["coins"]
+                    userf.insert_one({"guild": ctx.guild.id, "ids": i["id"], "coins": c, "messages": i["messages"]})
             else: 
                 if coins.count_documents({"guild": ctx.guild.id, "id": i["id"]}) == 0 or coins.find_one({"guild": ctx.guild.id, "id": i["id"]})["coins"] == 0: 
                     userf.insert_one({"guild": ctx.guild.id, "ids": i["id"], "coins": 0, "messages": i["messages"]})
