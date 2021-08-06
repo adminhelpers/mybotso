@@ -565,8 +565,7 @@ async def on_message(ctx):
                         rolef.update_one({"id": ctx.author.id}, {"$set": {"zaproschannel": 0, "prufid": mesg.id}})
                         await ctx.author.send('`[SUCCESFULL] Ваши доказательства отправлены в необходимый канал`')
                         return
-
-            await bot.process_commands(ctx)                      
+                      
         elif ctx.guild.id != 477547500232769536: return
     
     await bot.process_commands(ctx)        
