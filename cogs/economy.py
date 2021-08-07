@@ -198,7 +198,8 @@ class econom(commands.Cog):
       fr = 0
       zb = 50
       for i in users.find({"guild": ctx.guild.id}):
-        if i["messages"] < 5000: continue 
+        if ctx.guild.id == 477547500232769536:
+          if i["messages"] < 5000: continue 
         try:
           mname = discord.utils.get(ctx.guild.members, id = i["ids"])
           if mname.bot: continue
