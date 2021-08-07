@@ -283,7 +283,7 @@ class econom(commands.Cog):
       if amount == None:
         return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{member.mention}, укажите кол-во добавляемых {pb}**', colour = 0x09F2C8), delete_after = 5)
 
-      if coins.count_documents({"guild": ctx.guild.id, "id": member.id}) == 0:
+      if users.count_documents({"guild": ctx.guild.id, "id": member.id}) == 0:
         a = addbt(ctx.guild.id, member, amount)
         await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{ctx.author.mention}, вы добавили пользователю {member.mention} `{amount}` {pb}.\nЕго баланс: `{a}` {pb}**', colour = 0x09F2C8))
       else:
