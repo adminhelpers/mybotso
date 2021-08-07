@@ -92,29 +92,16 @@ class econom(commands.Cog):
     @commands.command()
     @commands.is_owner()
     async def perenos(self, ctx):
-        if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return 
-        for i in userf.find(): userf.delete_one({"_id": i["_id"]})
-        nf = 0
-        nsf = 0
-        for i in users.find():
-            nsf += 1
-            if i["messages"] < 300:
-                if coins.count_documents({"guild": ctx.guild.id, "id": i["id"]}) == 0 or coins.find_one({"guild": ctx.guild.id, "id": i["id"]})["coins"] == 0: pass
-                else:
-                    nf += 1
-                    c = coins.find_one({"guild": ctx.guild.id, "id": i["id"]})["coins"]
-                    userf.insert_one({"guild": ctx.guild.id, "ids": i["id"], "coins": c, "messages": i["messages"]})
-            else: 
-                if coins.count_documents({"guild": ctx.guild.id, "id": i["id"]}) == 0 or coins.find_one({"guild": ctx.guild.id, "id": i["id"]})["coins"] == 0: 
-                    nf += 1
-                    userf.insert_one({"guild": ctx.guild.id, "ids": i["id"], "coins": 0, "messages": i["messages"]})
-                else:
-                    nf += 1
-                    c = coins.find_one({"guild": ctx.guild.id, "id": i["id"]})["coins"]
-                    userf.insert_one({"guild": ctx.guild.id, "ids": i["id"], "coins": c, "messages": i["messages"]})
-        return await ctx.send(embed = discord.Embed(description = f'`Было перенесено валидных записей:` {nf}\n`Всего записей было:` {nsf}', color = 0xFB9E14))
-                
-            
+        if not ctx.guild.id == 577511138032484360: return 
+        response = [i for i in users.find({"guild": 577511138032484360})["_id"]]
+        for i in response:
+            id = users.find_one({"_id": i})["ids"]
+            messages = sers.find_one({"_id": i})["messages"]
+            users.insert_one({"guild": ctx.guild.id, "ids": id, "messages": messages, "coins": 0})
+            users.delete_one({"_id": i})
+        await ctx.send('Готово.')
+	
+
 
     @commands.command()
     async def topcoins(self, ctx):
