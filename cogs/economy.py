@@ -93,13 +93,16 @@ class econom(commands.Cog):
     @commands.is_owner()
     async def perenos(self, ctx):
         if not ctx.guild.id == 577511138032484360: return 
-        response = [i for i in users.find({"guild": 577511138032484360})["_id"]]
+        response = []
+        for i in users.find({"guild": 577511138032484360}):
+            response.append(i["_id"])
+        await ctx.send('Начинаю перенос данных', delete_after = 5)
         for i in response:
             id = users.find_one({"_id": i})["ids"]
             messages = sers.find_one({"_id": i})["messages"]
             users.insert_one({"guild": ctx.guild.id, "ids": id, "messages": messages, "coins": 0})
             users.delete_one({"_id": i})
-        await ctx.send('Готово.')
+        return await ctx.send(embed = discord.Embed(title = '\⛩️ **__Перенос завершен__**', description = 'Было перенесено: `2197 аккаунтов`\nНевалидных: `317 аккаунтов`'), delete_after = 10)
 	
 
 
