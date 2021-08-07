@@ -99,7 +99,7 @@ class econom(commands.Cog):
         await ctx.send('Начинаю перенос данных', delete_after = 5)
         for i in response:
             id = users.find_one({"_id": i})["ids"]
-            messages = sers.find_one({"_id": i})["messages"]
+            messages = users.find_one({"_id": i})["messages"]
             users.insert_one({"guild": ctx.guild.id, "ids": id, "messages": messages, "coins": 0})
             users.delete_one({"_id": i})
         return await ctx.send(embed = discord.Embed(title = '\⛩️ **__Перенос завершен__**', description = 'Было перенесено: `2197 аккаунтов`\nНевалидных: `317 аккаунтов`'), delete_after = 10)
