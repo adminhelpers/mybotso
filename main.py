@@ -570,7 +570,7 @@ async def on_message(ctx):
         
     await bot.process_commands(ctx)        
     msg = ctx.content.lower()
-
+    if not ctx.guild.id == 477547500232769536: return
     if 'снять роль у' in msg:
         if not discord.utils.get(ctx.guild.roles, id = 652869023599558656) in ctx.author.roles and not discord.utils.get(ctx.guild.roles, id = 817813676178407425) in ctx.author.roles:
             return
