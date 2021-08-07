@@ -566,8 +566,8 @@ async def on_message(ctx):
                         await ctx.author.send('`[SUCCESFULL] Ваши доказательства отправлены в необходимый канал`')
                         return
                       
-        elif ctx.guild.id != 477547500232769536: return
-    
+        elif ctx.guild.id != 477547500232769536 and ctx.guild.id != 577511138032484360: return 
+        
     await bot.process_commands(ctx)        
     msg = ctx.content.lower()
 
