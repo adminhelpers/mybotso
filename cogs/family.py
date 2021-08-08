@@ -512,14 +512,14 @@ class family(commands.Cog):
 								except:
 									pass
 							else:
-								await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #418**\n- Причины возникновения:\n**- У вас уже есть 4  заместителя**\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 20.0)
+								await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка__**", description = f'Причины возникновения:\n**- У вас уже есть 4  заместителя**\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 20.0)
 						else:
 							await msg.delete()
 							await m.edit(content = f'**`[Refused]` `Вы отклонили назначение заместителя`**', delete_after = 10)							
 			else:
-				await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка__**\n-", description = f'Причины возникновения:\n**- У вас не достаточно прав**\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 20.0)
+				await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка__**", description = f'Причины возникновения:\n**- У вас не достаточно прав**\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 20.0)
 		else:
-			await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка__**\n>", description = f"* Причины возникновения:**\n**- У вас не достаточно прав**\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 20.0)
+			await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка__**", description = f'Причины возникновения:\n**- У вас не достаточно прав**\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 20.0)
 
 	@commands.command(aliases = ['fmenu'])
 	async def fammenu(self, ctx):
