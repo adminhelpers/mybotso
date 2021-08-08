@@ -389,13 +389,13 @@ class family(commands.Cog):
 		if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return
 		if fam.find_one({"leaderID": ctx.author.id, "guild": ctx.guild.id}):
 			if member is None:
-				await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #59**\'Возможные причины её возникновения:\n`•` Вы не указали пользователя, к которому должна применяться команда.\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 20.0)
+				await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка__**", description = f'Возможные причины её возникновения:\n`•` Вы не указали пользователя, к которому должна применяться команда.\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 20.0)
 				return
 			a = fam.find_one({"leaderID": ctx.author.id, "guild": ctx.guild.id})["roleID"]
 			rolepr = discord.utils.get(ctx.guild.roles, id = a)
 			if member.id == ctx.author.id:
 				print('1')
-				return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка__**\n>", description = f'Причины возникновения:\n`•` Вы указали пользователем самого себя.\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 20.0)
+				return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка__**\n", description = f'Причины возникновения:\n`•` Вы указали пользователем самого себя.\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 20.0)
 
 			if not rolepr in member.roles:
 				print('2')
