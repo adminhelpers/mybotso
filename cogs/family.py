@@ -406,10 +406,10 @@ class family(commands.Cog):
 				return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка__**\n>", description = f'Причины возникновения:\n`•` Вы указали пользователем самого себя.\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 20.0)
 
 			if fam.count_documents({"guild": ctx.guild.id, "leaderID": ctx.author.id}) == 0:
-				return await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #402**\'Возможные причины её возникновения:\n**- Вы не вялетесь лидером семьи**\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 20.0)
+				return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка__**\n", description = f'Возможные причины её возникновения:\n**- Вы не вялетесь лидером семьи**\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 20.0)
 
 			if not member.id in [i for i in fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["id"]]:
-				return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка__**\n>", description = f'Причины возникновения:\n- Пользователь не является заместителем семьи**\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 20.0)
+				return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка__**\n", description = f'Причины возникновения:\n- Пользователь не является заместителем семьи**\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 20.0)
 
 			mas = fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["id"]
 			try: 
@@ -431,16 +431,16 @@ class family(commands.Cog):
 			if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id}):
 				if fam.count_documents({"guild": ctx.guild.id, "leaderID": ctx.author.id}) == 0:
 					print('1')
-					return await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #402**\n- Причины возникновения:\n**- Вы не вялетесь лидером семьи**\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 20.0)
+					return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка__**", description = f'\n- Причины возникновения:\n**- Вы не вялетесь лидером семьи**\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 20.0)
 
 				if member == None:
-					await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #217**\n- Причины возникновения:\n`•` Вы не указали пользователя, к которому должна применяться команда.\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 20.0)
+					await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка__**", description = f'- Причины возникновения:\n`•` Вы не указали пользователя, к которому должна применяться команда.\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 20.0)
 					return
 				if member == ctx.author:
-					await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #217**\n- Причины возникновения:\n**- Вы не указали пользователем себя**\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 20.0)
+					await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка__**\n", description = f'- Причины возникновения:\n**- Вы не указали пользователем себя**\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 20.0)
 					return
 				elif fam.find_one({"id": member.id, "guild": ctx.guild.id}):
-					await ctx.send(embed = discord.Embed(description = "**Произошла ошибка #88**\n- Причины возникновения:\n**- Вы указали пользователя который является лидером другой семьи**\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 20.0)
+					await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка__**\n", description = f'- Причины возникновения:\n**- Вы указали пользователя который является лидером другой семьи**\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 20.0)
 				else:
 					a = fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id})["name"]
 					m = await ctx.send(f"**`Вы действительно хотите назначить` {member.mention} `заместителем своей семьи? (+/-)`**")
