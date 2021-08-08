@@ -43,12 +43,12 @@ def get_guilds(guild):
 		return 'Восточный Округ'
 
 def addbt(guild, member: discord.Member, arg : int):
-  if users.count_documents({"guild": guild, "ids": member.id}) == 0:
-    users.insert_one({"guild": guild, "ids": member.id, "coins": arg})
+  if users.count_documents({"guild": member.guild.id, "ids": member.id}) == 0:
+    users.insert_one({"guild": member.guild.id, "ids": member.id, "coins": arg})
     return arg
   else:
-    bal = arg + users.find_one({"guild": guild, "ids": member.id})["coins"]
-    users.update_one({"guild": guild, "ids": member.id}, {"$set": {"coins": bal}})
+    bal = arg + users.find_one({"guild": member.guild.id, "ids": member.id})["coins"]
+    users.update_one({"guild": member.guild.id, "ids": member.id}, {"$set": {"coins": bal}})
     return bal
 
 def rebt(guild, member: discord.Member, arg : int):
