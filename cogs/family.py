@@ -604,7 +604,7 @@ class family(commands.Cog):
 		else:
 			await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка__**\n-", description = f'Причины возникновения:\n**- У вас не достаточно прав**\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 20.0)				
 
-  @commands.command(aliases = ["семьи", "flist"])
+	@commands.command(aliases = ["семьи", "flist"])
 	async def famlist(self, ctx):
 		if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return
 		await ctx.message.delete()
