@@ -388,6 +388,7 @@ class family(commands.Cog):
 	async def removefamzam(self, ctx, member: discord.Member = None):
 		global errout
 		global errmessage
+		prefix = reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]
 		if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return
 		if fam.find_one({"leaderID": ctx.author.id, "guild": ctx.guild.id}):
 			if member is None:
@@ -426,6 +427,7 @@ class family(commands.Cog):
 	async def addfamzam(self, ctx, member: discord.Member = None):
 		global errout
 		global errmessage
+		prefix = reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]
 		if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return
 		if fam.find_one({"leaderID": ctx.author.id, "guild": ctx.guild.id}):
 			if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id}):
