@@ -51,7 +51,7 @@ def addbt(guild, member: discord.Member, arg : int):
 			bal = arg + users.find_one({"guild": member.guild.id, "ids": member.id})["coins"]
 			users.update_one({"guild": member.guild.id, "ids": member.id}, {"$set": {"coins": bal}})
 			return bal
-	except: 
+		except: 
 			a = users.find_one({"guild": member.guild.id, "ids": member.id})
 			messages = a["messages"]
 			users.delete_one({"_id": a["_id"]})
