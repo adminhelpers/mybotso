@@ -144,8 +144,6 @@ class econom(commands.Cog):
             c.append(f'**{gs}** `{coins}`')
             fr += 1
         except: pass
-        if fr >= 10:
-          break
       
       m2 = m
       m3 = m
