@@ -43,35 +43,39 @@ def get_guilds(guild):
 		return 'Восточный Округ'
 
 def addbt(guild, member: discord.Member, arg : int):
-  if users.count_documents({"guild": member.guild.id, "ids": member.id}) == 0:
-    users.insert_one({"guild": member.guild.id, "ids": member.id, "messages": 0, "coins": arg})
-    return arg
-  else:
-    try: 
-        bal = arg + users.find_one({"guild": member.guild.id, "ids": member.id})["coins"]
-        users.update_one({"guild": member.guild.id, "ids": member.id}, {"$set": {"coins": bal}})
-        return bal
-    except: 
-        a = users.find_one({"guild": member.guild.id, "ids": member.id})
-        messages = a["messages"]
-        users.delete_one({"_id": a["_id"]})
-        users.insert_one({"guild": member.guild.id, "ids": member.id, "messages": messages, "coins": arg})
-        return arg
+	if users.count_documents({"guild": member.guild.id, "ids": member.id}) == 0:
+		users.insert_one({"guild": member.guild.id, "ids": member.id, "messages": 0, "coins": arg})
+		return arg
+	else:
+		try: 
+			bal = arg + users.find_one({"guild": member.guild.id, "ids": member.id})["coins"]
+			users.update_one({"guild": member.guild.id, "ids": member.id}, {"$set": {"coins": bal}})
+			return bal
+	except: 
+			a = users.find_one({"guild": member.guild.id, "ids": member.id})
+			messages = a["messages"]
+			users.delete_one({"_id": a["_id"]})
+			users.insert_one({"guild": member.guild.id, "ids": member.id, "messages": messages, "coins": arg})
+			return arg
 
 def rebt(guild, member: discord.Member, arg : int):
-  bal = users.find_one({"guild": guild, "ids": member.id})["coins"] - arg
-  users.update_one({"guild": guild, "ids": member.id}, {"$set": {"coins": bal}})
-  return bal
+	bal = users.find_one({"guild": guild, "ids": member.id})["coins"] - arg
+	users.update_one({"guild": guild, "ids": member.id}, {"$set": {"coins": bal}})
+	return bal
 
 def proverka(guild, member, stv : int):
-  if users.count_documents({"guild": guild, "ids": member.id}) == 0:
-    return 0
+	if users.count_documents({"guild": guild, "ids": member.id}) == 0:
+		a = users.find_one({"guild": member.guild.id, "ids": member.id})
+		messages = a["messages"]
+		users.delete_one({"_id": a["_id"]})
+		users.insert_one({"guild": member.guild.id, "ids": member.id, "messages": messages, "coins": arg})
+		return 0
 
-  else:
-    if users.find_one({"guild": guild, "ids": member.id})["coins"] < stv:
-      return 0
-    else:
-      return 1
+	else:
+		if users.find_one({"guild": guild, "ids": member.id})["coins"] < stv:
+			return 0
+		else:
+			return 1
 
 def proc(args):
   s = 0
