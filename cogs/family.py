@@ -464,7 +464,7 @@ class family(commands.Cog):
 							elif len(mas) == 2: pf = [mas[0], mas[1], member.id, 1, 1]
 							elif len(mas) == 3: pf = [mas[0], mas[1], mas[2], member.id, 1]
 							elif len(mas) == 4: pf = [mas[0], mas[1], mas[2], mas[3], member.id]
-							fam.update_one({"leaderID": ctx.author.id, "guild": ctx.guild.id}, {"$set": {"p": member.id, "id": pf}})
+							fam.update_one({"leaderID": ctx.author.id, "guild": ctx.guild.id}, {"$set": {p: member.id, "id": pf}})
 							role = fam.find_one({"id": ctx.author.id})["roleID"]
 							try:
 								await member.add_roles(discord.utils.get(ctx.guild.roles, id = role.id))
