@@ -488,8 +488,8 @@ class family(commands.Cog):
 		if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return
 		await ctx.message.delete()
 		if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id}):
-			embed = discord.Embed(title = '\⛩️ **__Управление семьей__**', description = f'Привет, {ctx.author}, ты попал в меню управления своей семьей!\n\n`Вот список доступных для вас действий:`\n\n`•` 🔋 - Изменить название семьи. `[Цена: 30 репутации]`\n`•` 🔖 - Изменить роль семьи. `[Цена: 30 репутации]`\n`•` 💘 - Получить галочку для семьи. `[Цена: 250 репутации]`n\n`•` 📛 - **Закрыть меню**')
-			message = await ctx.send(embed = embed)
+			embed = discord.Embed(title = '\⛩️ **__Управление семьей__**', description = f'Привет, {ctx.author}, ты попал в меню управления своей семьей!\n\n`Вот список доступных для вас действий:`\n\n`•` 🔋 - Изменить название семьи. `[Цена: 30 репутации]`\n`•` 🔖 - Изменить роль семьи. `[Цена: 30 репутации]`\n`•` 💘 - Получить галочку для семьи. `[Цена: 250 репутации]`\n\n> 📛 - **Закрыть меню**')
+			message = await ctx.send(f'{ctx.author.mention}', embed = embed)
 			await message.add_reaction('🔋')
 			await message.add_reaction('🔖')
 			await message.add_reaction('💘')
