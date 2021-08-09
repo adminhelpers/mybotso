@@ -351,7 +351,7 @@ class family(commands.Cog):
 			except: embed = discord.Embed(title = f"\⛩️ **__Информация о семье__**", description = f"🔥 Название: **__{fname}__**\n\n**💎__Владелец:__** `Отсутствует`")
 			zam = []
 			for i in fam.find_one({"guild": ctx.guild.id, "name": amount, "leaderID": leader})["id"]:
-				if not i in [b.id for b in ctx.guild.members] or not role in discord.utils.get(ctx.guild.members, id = i):
+				if not i in [b.id for b in ctx.guild.members] or not role in discord.utils.get(ctx.guild.members, id = i).roles:
 					mas = fam.find_one({"guild": ctx.guild.id, "name": amount, "leaderID": leader})["id"]
 					mas.remove(i)
 					mas.append(1)
