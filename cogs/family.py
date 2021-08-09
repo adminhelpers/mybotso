@@ -421,6 +421,7 @@ class family(commands.Cog):
 			elif fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["zam4"] == member.id: p = "zam4"
 
 			fam.update_one({"guild": ctx.guild.id, "leaderID": ctx.author.id}, {"$set": {p: 1, "id": mas}})
+			fname = fam.find_one({"leaderID": ctx.author.id, "guild": ctx.guild.id})["name"]
 			embed = discord.Embed(title = '\⛩️ **__Снятие заместителя семьи__**', description = f'✅ {ctx.author}, Вы успешно разжаловали пользователя {member.mention}`({member})` с должности заместителя семьи **__{fname}__**')
 			embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
 			await ctx.send(f'{ctx.author.mention}', embed = embed)
