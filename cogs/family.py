@@ -24,6 +24,12 @@ famuser = db["famuser"]
 users = db["users"]
 reports = dbs["reports"]
 
+global errmessage
+errmessage = '`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'
+
+global errout
+errout = '❌ {errout}'
+
 
 class family(commands.Cog):
 
@@ -51,6 +57,9 @@ class family(commands.Cog):
 	@commands.command(aliases = ["создать", "fc"])
 	@commands.has_permissions(administrator = True)
 	async def createfam(self, ctx, member: discord.Member = None):
+		global errmessage
+		global errout
+		prefix = reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]
 		if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return
 		await ctx.message.delete()
 		if member is None:
@@ -190,17 +199,19 @@ class family(commands.Cog):
 							await msg4.delete()
 							await m4.edit(embed = discord.Embed(description = f'Вы успешно отказались от создания семьи!'), delete_after = 5)
 								
-
-	@commands.command(aliases = ['пригласить', 'finvite'])
+	@commands.command(aliases = ['пригласить', 'finvite', 'finv'])
 	async def faminvite(self, ctx, member: discord.Member = None):
+		global errmessage
+		global errout
+		prefix = reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]
 		if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return
 		if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id}):
 			a = fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id})["roleID"]
 			rolepr = discord.utils.get(ctx.guild.roles, id = a)
 			if member is None:
-				return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка(1)__**", description = f'❌ Возможные причины её возникновения:\n`•` Вы не указали пользовател которому хотите отправить приглашение\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 10.0)
+				return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка(1)__**", description = f'{errout}\n`•` Вы не указали пользовател которому хотите отправить приглашение\n`Правильное использование команды:` **__{prefix}faminvite`(finv|пригласить)` @Пользователь#1234__**\n\n{errmessage}'), delete_after = 10.0)
 			if member == ctx.author:
-				return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка(2)__**", description = f'❌ Возможные причины её возникновения:\n`•` Вы указали пользователем самого себя.\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 10.0)
+				return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка(2)__**", description = f'{errout}\n`•` Вы указали пользователем самого себя.\n\n{errmessage}'), delete_after = 10.0)
 			if fam.find_one({"id": member.id, "guild": ctx.guild.id}):
 				role = discord.utils.get(ctx.guild.roles, id = fam.find_one({"id": member.id, "guild": ctx.guild.id})["roleID"])
 				if not role in member.roles: 
@@ -213,14 +224,14 @@ class family(commands.Cog):
 					elif fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["zam4"] == member.id: p = "zam4"
 					fam.update_one({"guild": ctx.guild.id, "leaderID": ctx.author.id}, {"$set": {p: 1, "id": mas}})
 				else:
-					return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка(3)__**", description = f'❌ Возможные причины её возникновения:\n`•` Вы указали пользователем самого себя.\n`•` Выбранный пользователь является `лидером/заместителем` одной из семей.\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 10.0)
+					return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка(3)__**", description = f'{errout}n`•` Выбранный пользователь является `лидером/заместителем` одной из семей данного сервера.\n\n{errmessage}'), delete_after = 10.0)
 			if rolepr in member.roles:
-				return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка(4)__**", description = f'❌ Возможные причины её возникновения:\n`•` Вы указали пользователем самого себя.\n`•` Выбранный пользователь является участником данной семьи.\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 10.0)
+				return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка(4)__**", description = f'{errout}\n`•` Выбранный пользователь является участником данной семьи.\n\n{errmessage}'), delete_after = 10.0)
 			else:
 				fname = fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id})["name"]
 				embed = discord.Embed(title = "\⛩️ **__Приглашение в семью__**", description = f"Пользователь {ctx.author.mention}`({ctx.author})` отправил Вам запрос на вступление семью **__{fname}__**\nДля того что бы выбрать один из предложенных вариантов Вам даётся 30 секунд.\n\n\✅ - **__Принять приглашение и вступить в семью__**\n\❌ - **__Отказаться от вступления в семью__**")
 				embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
-				message = await ctx.send(f'{member.mention}', embed = embed, delete_after = 30.0) 
+				message = await ctx.send(f'{member.mention}', embed = embed, delete_after = 30) 
 				await message.add_reaction("✅")
 				await message.add_reaction("❌")
 				try:
@@ -257,31 +268,33 @@ class family(commands.Cog):
 						embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
 						return await ctx.send(f'{ctx.author.mention}', embed = embed)
 		else:
-			await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка(5)__**", description = f'❌ Возможные причины её возникновения:\n`•` У вас не достаточно прав для выполнения данного действия.\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 10.0)
+			await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка(5)__**", description = f'{errout}\n`•` У вас не достаточно прав для выполнения данного действия.\n\n{errmessage}'), delete_after = 10.0)
 
-	@commands.command(aliases = ['исключить', 'funinvite'])
+	@commands.command(aliases = ['исключить', 'funinvite', 'funinv'])
 	async def famuninvite(self , ctx, member: discord.Member = None):
+		global errmessage
+		global errout
+		prefix = reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]
 		if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return
 		if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id}):
 			if member is None:
-				await ctx.send(embed = discord.Embed(title = '\⛩️ **__Произошла ошибка(1)__**', description = '❌ Возможные причины её возникновения:\n`•` Вы не указали пользователя, к которому должна применяться команда.\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 10.0)
+				await ctx.send(embed = discord.Embed(title = '\⛩️ **__Произошла ошибка(1)__**', description = f'{errout}\n`•` Вы не указали пользователя, к которому должна применяться команда.\n`Правильное использование команды:` **__{prefix}famuninvite`(funinv|исключить)` @Пользователь#1234__**\n\n{errmessage}'), delete_after = 10.0)
 				return
 			a = fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id})["roleID"]
 			rolepr = discord.utils.get(ctx.guild.roles, id = a)
 
 			if member.id == ctx.author.id:
-				return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка(2)__**\n>", description = f'❌ Возможные причины её возникновения:\n`•` Вы указали пользователем самого себя.\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 10.0)
+				return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка(2)__**", description = f'{errout}\n`•` Вы указали пользователем самого себя.\n\n{errmessage}'), delete_after = 10.0)
 
 			if not rolepr in member.roles:
-				return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка__(3)**\n>", description = f'❌ Возможные причины её возникновения:\n`•` Выбранный пользователь не является участников Вашей семьи.\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 10.0)
+				return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка__(3)**", description = f'{errout}\n`•` Выбранный пользователь не является участников Вашей семьи.\n\n{errmessage}'), delete_after = 10.0)
 			if member.id == fam.find_one({"id": member.id, "guild": ctx.guild.id}):
-				await ctx.send(embed = discord.Embed(title = '\⛩️ **__Произошла ошибка__(4)**', description = f'❌ Возможные причины её возникновения:\n`•` Вы указали пользователем самого себя.\n`•` Выбранный пользователь является `лидером/заместителем` Вашей семьи\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 10.0)
-				return
+				return await ctx.send(embed = discord.Embed(title = '\⛩️ **__Произошла ошибка__(4)**', description = f'{errout}\n`•` Выбранный пользователь является `лидером/заместителем` Вашей семьи\n\n{errmessage}'), delete_after = 10.0)
 			else:
 				fname = fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id})["name"]
 				embed = discord.Embed(title = '\⛩️ **__Исключение члена семьи__**', description = f'{ctx.author}, Вы действительно хотите выгнать пользователя {member.mention}`({member})` из вашей семьи **__{fname}__**?\n\n✅ - **Исключить**\n❌ - **Отменить действие**')
 				embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
-				message = await ctx.send(f'{ctx.author.mention}', embed = embed, delete_after = 30.0)
+				message = await ctx.send(f'{ctx.author.mention}', embed = embed, delete_after = 30)
 				await message.add_reaction('✅')
 				await message.add_reaction('❌')
 				try:
@@ -310,10 +323,11 @@ class family(commands.Cog):
 						embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
 						await ctx.send(f'{ctx.author.mention}', embed = embed, delete_after = 5)
 		else:
-			await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка__(6)**\n>", description = f'❌ Возможные причины её возникновения:\n`•` Вам не доступно использование данной команды.\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 10.0)
+			await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка__(6)**\n>", description = f'{errout}\n`•` Вам не доступно использование данной команды.\n\n{errmessage}'), delete_after = 10.0)
 
 	@commands.command(aliases = ['осемье', 'finfo'])
 	async def faminfo(self, ctx, *, amount: str = None):
+		prefix = reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]
 		if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return
 		if amount is None:
 			for i in ctx.author.roles:
@@ -321,7 +335,7 @@ class family(commands.Cog):
 					amount = fam.find_one({"guild": ctx.guild.id, "roleID": i.id})["name"]
 					break
 		if amount == None:
-    			return await ctx.send(embed = discord.Embed(description = f'Не удалось найти указатель семьи.\n**Используйте команду:** !faminfo `[название семьи]`'), delete_after = 7)
+    			return await ctx.send(embed = discord.Embed(title = '\⛩️ **__Не удалось найти указатель семьи__**', description = f'❌ Используйте команду: `{prefix}faminfo(finfo|осемье) [название семьи]`\n**Для того что бы узнать информацию о своей семье используйте:** `{prefix}finfo`\n\nСписок всех семей сервера **__{ctx.guild.name}__**: `{prefix}famlist(flist)`'), delete_after = 7)
 		
 		else:
 			mas = [i["name"] for i in fam.find({"guild": ctx.guild.id})]
@@ -331,41 +345,28 @@ class family(commands.Cog):
 					amount = i
 
 		if not fam.count_documents({"guild": ctx.guild.id, "name": amount}) == 0:
-			fname = fam.find_one({"name": amount, "guild": ctx.guild.id})["name"]
-			leader = fam.find_one({"name": amount, "guild": ctx.guild.id})["leaderID"]
-			role1 = fam.find_one({"name": amount, "guild": ctx.guild.id})["roleID"]
-			member = fam.find_one({"name": amount, "guild": ctx.guild.id})["memberid"]
-			rep = fam.find_one({"name": amount, "guild": ctx.guild.id})["mem"]
-			role = discord.utils.get(ctx.guild.roles, id = fam.find_one({"name": amount, "guild": ctx.guild.id})["roleID"])
-			embed = discord.Embed(title = "**📢 Информация о семьях Discord'a:**", description = f"**🔥Название семьи:↔ {fname}**")
-			embed.add_field(name = f'**👑 Лидер семьи:**', value = f'<@{leader}>', inline=False)
+			fname, leader, rep, role = fam.find_one({"name": amount, "guild": ctx.guild.id})["name"], fam.find_one({"name": amount, "guild": ctx.guild.id})["leaderID"], fam.find_one({"name": amount, "guild": ctx.guild.id})["mem"], discord.utils.get(ctx.guild.roles, id = fam.find_one({"name": amount, "guild": ctx.guild.id})["roleID"])
+			embed = discord.Embed(title = f"\⛩️ **__Информация о семье__**", description = f"🔥 Название: **__{fname}__**\n\n**💎__Владелец:__** {leader.mention}`({leader})`")
 			zam = []
-			if fam.find_one({"name": amount, "guild": ctx.guild.id})["zam1"] == 1:
-				zam.append(f'1. Не имеется\n')
-			else:
-				a = fam.find_one({"name": amount, "guild": ctx.guild.id})["zam1"]
-				zam.append(f'1. <@{a}>\n')
+			for i in fam.find_one({"guild": ctx.guild.id, "name": amount, "leaderID": leader})["id"]:
+				if not i in [b.id for b in ctx.guild.members] or not role in discord.utils.get(ctx.guild.members, id = i):
+					mas = fam.find_one({"guild": ctx.guild.id, "name": amount, "leaderID": leader})["id"]
+					mas.remove(i)
+					mas.append(1)
+					if fam.find_one({"guild": ctx.guild.id, "name": amount, "leaderID": leader})["zam1"] == i: p = "zam1"
+					elif fam.find_one({"guild": ctx.guild.id, "name": amount, "leaderID": leader})["zam2"] == i: p = "zam2"
+					elif fam.find_one({"guild": ctx.guild.id, "name": amount, "leaderID": leader})["zam3"] == i: p = "zam3"
+					elif fam.find_one({"guild": ctx.guild.id, "name": amount, "leaderID": leader})["zam4"] == i: p = "zam4"
+					fam.update_one({"guild": ctx.guild.id, "name": amount, "leaderID": leader}, {"$set": {p: 1, "id": mas}})
+				else: 
+					if i == leader: pass
+					member = discord.utils.get(ctx.guild.members, id = i)
+					zam.append(f'`•` {member.mention}`({member} | {member.id})`\n')
 
-			if fam.find_one({"name": amount, "guild": ctx.guild.id})["zam2"] == 1:
-				zam.append(f'2. Не имеется\n')
-			else:
-				b = fam.find_one({"name": amount, "guild": ctx.guild.id})["zam2"]
-				zam.append(f'2. <@{b}>\n')
-
-			if fam.find_one({"name": amount, "guild": ctx.guild.id})["zam3"] == 1:
-				zam.append(f'3. Не имеется\n')
-			else:
-				c = fam.find_one({"name": amount, "guild": ctx.guild.id})["zam3"]
-				zam.append(f'3. <@{c}>\n')
-
-			if fam.find_one({"name": amount, "guild": ctx.guild.id})["zam4"] == 1:
-				zam.append(f'4. Не имеется\n')
-			else:
-				n = fam.find_one({"name": amount, "guild": ctx.guild.id})["zam4"]
-				zam.append(f'4. <@{n}>\n')
-
-			str_a = ''.join(zam)
-			embed.add_field(name = "**🔱 Заместители:**", value = f"**{str_a}**", inline=False)
+			if len(zam) == 0: embed.add_field(name = f"**__🔱 Заместители (0/4):__**", value = '`Отсутствуют.`', inline=False)
+			else: 
+				str_a = ''.join(zam)
+				embed.add_field(name = f"**__🔱 Заместители `({len(zams)}/4)`:__**", value = str_a, inline=False)
 
 			var = []
 			if fam.find_one({"name": amount, "guild": ctx.guild.id})["verf"] == 1:
@@ -374,42 +375,37 @@ class family(commands.Cog):
 				var.append('Не имеется')
 
 			str_b = ''.join(var)
-			embed.add_field(name = "**✔ Галочка семьи**", value = f"**{str_b}**", inline = False)
-			embed.add_field(name = "**🔶 Семейная роль:**", value = f"<@&{role1}>", inline=False)
-			embed.add_field(name = "**🔷 Общее количество участников семьи:**", value = f"{len(role.members)}", inline=False)
-			embed.add_field(name = "**🔺 Последний участник которому было отправлено приглашение:**", value = f"<@{member}>", inline=False)
-			embed.add_field(name = "**🏆 Репутация семьи:**", value = f"{rep}", inline=False)
+			embed.add_field(name = "**__✔ Галочка семьи__**", value = f"**{str_b}**", inline = False)
+			embed.add_field(name = "**__🔶 Семейная роль:__**", value = f"{role.mention}", inline=False)
+			embed.add_field(name = "**__🔷 Общее количество участников семьи:__**", value = f"**{len(role.members)}** человек", inline=False)
+			embed.add_field(name = "**__🏆 Репутация семьи:__**", value = f"**{rep}** очков репутации", inline=False)
 			embed.set_footer(text = f'Команды семьи: !famhelp | Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
 			await ctx.send(embed = embed)
 		else:
-			return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(description = "Я не смог найти семью с таким названием.", colour = 0xFB9E14), delete_after = 20.0)
+			return await ctx.send(embed = discord.Embed(title = '\⛩️ **__Не удалось найти семью с таким названием__**', description = f'❌ Для того что бы узнать информацию о своей семье используйте: `{prefix}finfo`\nСписок всех семей сервера **__{ctx.guild.name}__**: `{prefix}famlist(flist)`'), delete_after = 7)
 
 	@commands.command(aliases = ['разжаловать', 'rfz'])
 	async def removefamzam(self, ctx, member: discord.Member = None):
+		global errout
+		global errmessage
 		if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return
 		if fam.find_one({"leaderID": ctx.author.id, "guild": ctx.guild.id}):
 			if member is None:
-				await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка__**", description = f'Возможные причины её возникновения:\n`•` Вы не указали пользователя, к которому должна применяться команда.\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 20.0)
-				return
+				return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка(1)__**", description = f'{errout}\n`•` Вы не указали пользователя, к которому должна применяться команда.\n`Правильное использование команды:` **__{prefix}removefamzam`(rfz|разжаловать)` @Пользователь#1234__**\n\n{errmessage}'), delete_after = 10.0)
 			a = fam.find_one({"leaderID": ctx.author.id, "guild": ctx.guild.id})["roleID"]
 			rolepr = discord.utils.get(ctx.guild.roles, id = a)
-			if member.id == ctx.author.id:
-				print('1')
-				return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка__**\n", description = f'Причины возникновения:\n`•` Вы указали пользователем самого себя.\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 20.0)
-
-			if not rolepr in member.roles:
-				print('2')
-				return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка__**\n>", description = f'Причины возникновения:\n`•` Вы указали пользователем самого себя.\n`•` Выбранный пользователь не является участников Вашей семьи.\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 20.0)
-
-			if not member.id in fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["id"]:
-				print('3')
-				return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка__**\n>", description = f'Причины возникновения:\n`•` Вы указали пользователем самого себя.\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 20.0)
 
 			if fam.count_documents({"guild": ctx.guild.id, "leaderID": ctx.author.id}) == 0:
-				return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка__**\n", description = f'Возможные причины её возникновения:\n**- Вы не вялетесь лидером семьи**\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 20.0)
+				return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка(2)__**\n", description = f'{errout}\n`•` Вы не можете использовать данную команду так как не являетесь лидером ни одной из семей.\n\n{errmessage}'), delete_after = 10.0)
+
+			if member.id == ctx.author.id:
+				return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка(3)__**\n", description = f'{errout}\n`•` Вы указали пользователем самого себя.\n\n{errmessage}'), delete_after = 10.0)
+
+			if not rolepr in member.roles:
+				return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка(4)__**", description = f'{errout}\n`•` Выбранный пользователь не является участников Вашей семьи.\n\n{errmessage}'), delete_after = 10.0)
 
 			if not member.id in [i for i in fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["id"]]:
-				return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка__**\n", description = f'Причины возникновения:\n- Пользователь не является заместителем семьи**\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 20.0)
+				return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка(5)__**\n", description = f'{errout}\n`•` Выбранный пользователь не является заместителем Вашей семьи.\n{errmessage}'), delete_after = 10.0)
 
 			mas = fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["id"]
 			try: 
@@ -422,107 +418,70 @@ class family(commands.Cog):
 			elif fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["zam4"] == member.id: p = "zam4"
 
 			fam.update_one({"guild": ctx.guild.id, "leaderID": ctx.author.id}, {"$set": {p: 1, "id": mas}})
-			return await ctx.send( f'**`[ACCEPT]` {ctx.author.mention}`Вы успешно сняли права заместителя семьи с пользователя` {member.mention}**')
+			embed = discord.Embed(title = '\⛩️ **__Снятие заместителя семьи__**', description = f'✅ {ctx.author}, Вы успешно разжаловали пользователя {member.mention}`({member})` с должности заместителя семьи **__{fname}__**')
+			embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
+			await ctx.send(f'{ctx.author.mention}', embed = embed)
 			
 	@commands.command(aliases = ['назначить', 'afz'])
 	async def addfamzam(self, ctx, member: discord.Member = None):
+		global errout
+		global errmessage
 		if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return
 		if fam.find_one({"leaderID": ctx.author.id, "guild": ctx.guild.id}):
 			if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id}):
-				if fam.count_documents({"guild": ctx.guild.id, "leaderID": ctx.author.id}) == 0:
-					print('1')
-					return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка__**", description = f'\n- Причины возникновения:\n**- Вы не вялетесь лидером семьи**\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 20.0)
+				if fam.count_documents({"guild": ctx.guild.id, "leaderID": ctx.author.id}) == 0: return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка(1)__**", description = f'\n{errout}\n`•` Вы не можете использовать данную команду, так как не являетесь лидером ни одной из семей.\n\n{errmessage}'), delete_after = 10.0)
 
-				if member == None:
-					await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка__**", description = f'- Причины возникновения:\n`•` Вы не указали пользователя, к которому должна применяться команда.\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 20.0)
-					return
-				if member == ctx.author:
-					await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка__**\n", description = f'- Причины возникновения:\n**- Вы не указали пользователем себя**\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 20.0)
-					return
-				elif fam.find_one({"id": member.id, "guild": ctx.guild.id}):
-					await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка__**\n", description = f'- Причины возникновения:\n**- Вы указали пользователя который является лидером другой семьи**\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 20.0)
+				if member == None: return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка(2)__**", description = f'{errout}\n`•` Вы не указали пользователя, к которому должна применяться команда.\n`Правильное использование команды:` **__{prefix}addfamzam`(afz|назначить)` @Пользователь#1234__**\n\n{errmessage}'), delete_after = 10.0)
+
+				if member == ctx.author: return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка(3)__**\n", description = f'{errout}\n`•` Вы указали пользователем самого себя.\n\n{errmessage}'), delete_after = 10.0)
+
+				if member.id in fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["id"]: return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка(4)__**\n", description = f'{errout}\n`•` Выбранный пользователь уже является заместителем Вашей семьи\n\n{errmessage}'), delete_after = 10.0)
+				
+				mas = fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["id"]
+				if len(mas) >= 5: return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка(5)__**\n", description = f'{errout}\n`•` Количество заместителей уже равно 4.\n\n{errmessage}'), delete_after = 10.0)
+
 				else:
-					a = fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id})["name"]
-					m = await ctx.send(f"**`Вы действительно хотите назначить` {member.mention} `заместителем своей семьи? (+/-)`**")
-					def check(m):
-						return m.channel == ctx.channel and m.author == ctx.author
+					a = fam.find_one({"leaderID": ctx.author.id, "guild": ctx.guild.id})["name"]
+					message = await ctx.send(f'{member.mention}', embed = discord.Embed(title = "\⛩️ **__Подтвердите ваше действие(6)__**\n", description = f'{ctx.author}, Вы действительно хотите назначить пользователя {member.mention}(`{member}`) на должность `заместителя` семьи **__{a}__**?\nДля того что бы выбрать один из предложенных вариантов Вам даётся 30 секунд.\n\n\✅ - **__Принять приглашение и вступить в семью__**\n\❌ - **__Отказаться от вступления в семью__**'), delete_after = 30)
+					await message.add_reaction("✅")
+					await message.add_reaction("❌")
 					try:
-						msg = await self.bot.wait_for('message', check = check, timeout= 120.0)
-					except TimeoutError:
-						await ctx.message.delete()
-						return await m.delete()
+						react, user = await self.bot.wait_for('reaction_add', timeout= 30.0, check= lambda react, user: user == ctx.author and react.emoji in ['✅', '❌'])
+					except Exception:
+						return await message.delete()
 					else:
-						if msg.content == "+":
-							await msg.delete()
-							if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id})["zam1"] == 1:
-								await m.edit(content = f'**`[ACCEPT]` {ctx.author.mention}`Вы успешно назначили` {member.mention} `заместителем своей семьи!`**')
-								fam.update_one({"id": ctx.author.id, "guild": ctx.guild.id}, {"$set": {"zam1": member.id}})
-								fam.update_one({"id": ctx.author.id, "guild": ctx.guild.id}, {"$set": {"id": [ctx.author.id, member.id, 1]}})
-								role = fam.find_one({"id": ctx.author.id})["roleID"]
-								try:
-									await member.add_roles(discord.utils.get(ctx.guild.roles, id = role.id))
-								except:
-									pass
-								try:
-									return await member.send(f"**Привет {member.display_name} тебя назначили заместителем семьи {a}:\n`Тебе доступны комманды:`\n> /faminvite @пользователь#1234 `- Пригласить в семью человека`\n> /fammenu `- Управление семьей`**")
-								except:
-									pass
-							if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id})["zam2"] == 1:
-								await m.edit(content = f'**`[ACCEPT]` {ctx.author.mention}`Вы успешно назначили` {member.mention} `заместителем своей семьи!`**')
-								fam.update_one({"id": ctx.author.id, "guild": ctx.guild.id}, {"$set": {"zam2": member.id}})
-								za = fam.find_one({"id": ctx.author.id})["zam1"]
-								fam.update_one({"id": ctx.author.id, "guild": ctx.guild.id}, {"$set": {"id": [ctx.author.id, za, member.id]}})
-								role = fam.find_one({"id": ctx.author.id})["roleID"]
-								try:
-									await member.add_roles(discord.utils.get(ctx.guild.roles, id = role.id))
-								except:
-									pass
-								try:
-									return await member.send(f"**Привет {member.display_name} тебя назначили заместителем семьи {a}:\n`Тебе доступны комманды:`\n> /faminvite @пользователь#1234 `- Пригласить в семью человека`\n> /fammenu `- Управление семьей`**")
-								except:
-									pass
-							if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id})["zam3"] == 1:
-								await m.edit(content = f'**`[ACCEPT]` {ctx.author.mention}`Вы успешно назначили` {member.mention} `заместителем своей семьи!`**')
-								fam.update_one({"id": ctx.author.id, "guild": ctx.guild.id}, {"$set": {"zam3": member.id}})
-								z = fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id})["zam1"]
-								za = fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id})["zam2"]
-								fam.update_one({"id": ctx.author.id, "guild": ctx.guild.id}, {"$set": {"id": [ctx.author.id, z, za, member.id, 1]}})
-								role = fam.find_one({"id": ctx.author.id})["roleID"]
-								try:
-									await member.add_roles(discord.utils.get(ctx.guild.roles, id = role.id))
-								except:
-									pass
-								try:
-									return await member.send(f"**Привет {member.display_name} тебя назначили заместителем семьи {a}:\n`Тебе доступны комманды:`\n> /faminvite @пользователь#1234 `- Пригласить в семью человека`\n> /fammenu `- Управление семьей`**")
-								except:
-									pass
-							if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id})["zam4"] == 1:
-								await m.edit(content = f'**`[ACCEPT]` {ctx.author.mention}`Вы успешно назначили` {member.mention} `заместителем своей семьи!`**')
-								fam.update_one({"id": ctx.author.id, "guild": ctx.guild.id}, {"$set": {"zam4": member.id}})
-								z = fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id})["zam1"]
-								za = fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id})["zam2"]
-								role = fam.find_one({"id": ctx.author.id})["roleID"]
-								try:
-									await member.add_roles(discord.utils.get(ctx.guild.roles, id = role.id))
-								except:
-									pass
-								fam.update_one({"id": ctx.author.id, "guild": ctx.guild.id}, {"$set": {"id": [ctx.author.id, z, za, za, member.id]}})
-								try:
-									return await member.send(f"**Привет {member.display_name} тебя назначили заместителем семьи {a}:\n`Тебе доступны комманды:`\n> /faminvite @пользователь#1234 `- Пригласить в семью человека`\n> /fammenu `- Управление семьей`**")
-								except:
-									pass
-							else:
-								await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка__**", description = f'Причины возникновения:\n**- У вас уже есть 4  заместителя**\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 20.0)
+						await message.delete()
+						if str(react.emoji) == '✅':
+							if fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["zam1"] == 1: p = "zam1"
+							elif fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["zam2"] == 1: p = "zam2"
+							elif fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["zam3"] == 1: p = "zam3"
+							elif fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["zam4"] == 1: p = "zam4"
+							if len(mas) == 1: pf = [mas[0], member.id, 1, 1, 1]
+							elif len(mas) == 2: pf = [mas[0], mas[1], member.id, 1, 1]
+							elif len(mas) == 3: pf = [mas[0], mas[1], mas[2], member.id, 1]
+							elif len(mas) == 4: pf = [mas[0], mas[1], mas[2], mas[3], member.id]
+							fam.update_one({"leaderID": ctx.author.id, "guild": ctx.guild.id}, {"$set": {"p": member.id, "id": pf}})
+							role = fam.find_one({"id": ctx.author.id})["roleID"]
+							try:
+								await member.add_roles(discord.utils.get(ctx.guild.roles, id = role.id))
+							except:
+								pass
+							await ctx.send(f'{member.mention}', embed = discord.Embed(title = "\⛩️ **__Успешно_**\n", description = f'✅ {ctx.author}, Вы успешно назначили пользователя {member.mention}(`{member}`) на должность `заместителя` семьи **__{a}__**.'), delete_after = 30)
+							try:
+								return await member.send(f"**Привет {member.display_name} тебя назначили заместителем семьи {a}:\n`Тебе доступны комманды:`\n> /faminvite @пользователь#1234 `- Пригласить в семью человека`\n> /fammenu `- Управление семьей`**")
+							except:
+								pass
 						else:
-							await msg.delete()
-							await m.edit(content = f'**`[Refused]` `Вы отклонили назначение заместителя`**', delete_after = 10)							
+							return await ctx.send(f'{member.mention}', embed = discord.Embed(title = "\⛩️ **__Действие отменено__**\n", description = f'❌ {ctx.author}, Вы отменили действие..'), delete_after = 30)						
 			else:
-				await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка__**", description = f'Причины возникновения:\n**- У вас не достаточно прав**\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 20.0)
+				return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка(7)__**", description = f'\n{errout}\n`•` Вы не можете использовать данную команду, так как не являетесь лидером ни одной из семей.\n\n{errmessage}'), delete_after = 10.0)
 		else:
-			await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка__**", description = f'Причины возникновения:\n**- У вас не достаточно прав**\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 20.0)
+			return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка(8)__**", description = f'\n{errout}\n`•` Вы не можете использовать данную команду, так как не являетесь лидером ни одной из семей.\n\n{errmessage}'), delete_after = 10.0)
 
 	@commands.command(aliases = ['fmenu'])
 	async def fammenu(self, ctx):
+		global errmessage
+		global errout
 		if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return
 		await ctx.message.delete()
 		if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id}):
@@ -602,7 +561,7 @@ class family(commands.Cog):
 				else:
 					return
 		else:
-			await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка__**\n-", description = f'Причины возникновения:\n**- У вас не достаточно прав**\n\n`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'), delete_after = 20.0)				
+			await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка__**\n-", description = f'{errout}\n**- У вас не достаточно прав**\n\n{errmessage}'), delete_after = 20.0)				
 
 	@commands.command(aliases = ["семьи", "flist"])
 	async def famlist(self, ctx):
