@@ -442,6 +442,7 @@ class family(commands.Cog):
 				if member.id in fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["id"]: return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка(4)__**\n", description = f'{errout}\n`•` Выбранный пользователь уже является заместителем Вашей семьи\n\n{errmessage}'), delete_after = 10.0)
 				
 				mas = fam.find_one({"guild": ctx.guild.id, "leaderID": ctx.author.id})["id"]
+				mas.remove(1)
 				if len(mas) >= 5: return await ctx.send(embed = discord.Embed(title = "\⛩️ **__Произошла ошибка(5)__**\n", description = f'{errout}\n`•` Количество заместителей уже равно 4.\n\n{errmessage}'), delete_after = 10.0)
 
 				else:
