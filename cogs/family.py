@@ -348,7 +348,7 @@ class family(commands.Cog):
 			fname, leader, rep, role = fam.find_one({"name": amount, "guild": ctx.guild.id})["name"], fam.find_one({"name": amount, "guild": ctx.guild.id})["leaderID"], fam.find_one({"name": amount, "guild": ctx.guild.id})["mem"], discord.utils.get(ctx.guild.roles, id = fam.find_one({"name": amount, "guild": ctx.guild.id})["roleID"])
 			leaderf = discord.utils.get(ctx.guild.members, id = leader)
 			try: embed = discord.Embed(title = f"\⛩️ **__Информация о семье__**", description = f"🔥 Название: **__{fname}__**\n\n**💎__Владелец:__** {leaderf.mention}`({leaderf})`")
-			try: embed = discord.Embed(title = f"\⛩️ **__Информация о семье__**", description = f"🔥 Название: **__{fname}__**\n\n**💎__Владелец:__** `Отсутствует`")
+			except: embed = discord.Embed(title = f"\⛩️ **__Информация о семье__**", description = f"🔥 Название: **__{fname}__**\n\n**💎__Владелец:__** `Отсутствует`")
 			zam = []
 			for i in fam.find_one({"guild": ctx.guild.id, "name": amount, "leaderID": leader})["id"]:
 				if not i in [b.id for b in ctx.guild.members] or not role in discord.utils.get(ctx.guild.members, id = i):
