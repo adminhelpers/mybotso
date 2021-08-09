@@ -28,7 +28,7 @@ global errmessage
 errmessage = '`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'
 
 global errout
-errout = '❌ {errout}'
+errout = '❌ Возможные причины возникновения этой ошибки:'
 
 
 class family(commands.Cog):
