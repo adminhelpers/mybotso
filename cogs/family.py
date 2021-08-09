@@ -488,7 +488,7 @@ class family(commands.Cog):
 		if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return
 		await ctx.message.delete()
 		if fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id}):
-			embed = discord.Embed(description = f"**Привет, {ctx.author.mention}**, ты попал в меню управления семьёй!\n\nВот список доступных для вас действий:\n\n> 🔋 - `Изменить название семьи, внимание снимется 30 репутации.`\n> 🔖 - `Изменить роль семьи, внимание снимется 30 репутации.`\n> 💘 - `Получить галочку для семьи, внимание снимется 250 репутации.`\n\n> 📛 - **Закрыть**")
+			embed = discord.Embed(title = '\⛩️ **__Управление семьей__**', description = f'Привет, {ctx.author}, ты попал в меню управления своей семьей!\n\n`Вот список доступных для вас действий:`\n\n`•` 🔋 - Изменить название семьи, внимание снимется 30 репутации.\n`•` 🔖 - Изменить роль семьи, внимание снимется 30 репутации.\n`•` 💘 - Получить галочку для семьи, внимание снимется 250 репутации.\n\n`•` 📛 - **Закрыть меню**')
 			message = await ctx.send(embed = embed)
 			await message.add_reaction('🔋')
 			await message.add_reaction('🔖')
@@ -516,7 +516,7 @@ class family(commands.Cog):
 							return await m.delete()
 						else:
 							await msg.delete()
-							await m.edit(content = f'`[UPDATE]` `Название семьи было изменено!`\n1.`Новое название:` {msg.content}')
+							await m.edit(content = f'`[UPDATE]` `Название семьи было изменено!`\n1.`Новое название:` {msg.content}', delete_after = 10)
 							fam.update_one({"id": ctx.author.id, "guild": ctx.guild.id}, {"$set": {"name": msg.content}})
 							mem = fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id})["mem"]
 							fam.update_one({"id": ctx.author.id, "guild": ctx.guild.id}, {"$set": {"mem": mem - 30}})
@@ -536,7 +536,7 @@ class family(commands.Cog):
 							return await m.delete()
 						else:
 							await msg.delete()
-							await m.edit(content = f'`[UPDATE]` `Название роли семьи было изменено!`\n1.`Новое название:` {msg.content}')
+							await m.edit(content = f'`[UPDATE]` `Название роли семьи было изменено!`\n1.`Новое название:` {msg.content}', delete_after = 10)
 							role = discord.utils.get(ctx.guild.roles, id = fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id})["roleID"])
 							await role.edit(name = msg.content)
 							mem = fam.find_one({"id": ctx.author.id, "guild": ctx.guild.id})["mem"]
