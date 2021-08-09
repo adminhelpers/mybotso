@@ -290,7 +290,7 @@ async def button_stats_r(ctx):
         rolef.update_one({"message_id": message.id}, {"$set": {"pruf": 1, "zaproschannel": channel.id, "zapid": serf.id}})
         await member.send(f'{member.mention}, `модератор {memb.display_name} запрашивает у вас статистику игрового аккаунта, отправьте в личные сообщения боту скриншот [/stats + /time]`')
     else:
-        await ctx.reply(discord.Embed(title = '\⛩️ **__Ошибочка__**', description = 'Статистику уже запросил другой модератор.'), flags = MessageFlags().EPHEMERAL)
+        await ctx.reply(embed = discord.Embed(title = '\⛩️ **__Ошибочка__**', description = 'Статистику уже запросил другой модератор.'), flags = MessageFlags().EPHEMERAL)
 
 @buttons.click
 async def button_lider_r(ctx):
@@ -328,7 +328,7 @@ async def button_lider_r(ctx):
     await channel.send(f'`[ACCEPT]` {memb.mention} `одобрил запрос от {member.display_name}, c ID: {rolecheck["user_id"]}`')
     rolef.delete_one({"message_id": message.id})
     add(memb, "rols")
-    await ctx.reply(discord.Embed(title = '\⛩️ **__Юхууу, новое действие__**', description = f'Вы одобрили выдачу роли {role.mention} пользователю {member.mention}`({member})`\n\n**Действие добавлено в вашу модерскую статистику** `(!imd)`.'), flags = MessageFlags().EPHEMERAL)
+    await ctx.reply(embed = discord.Embed(title = '\⛩️ **__Юхууу, новое действие__**', description = f'Вы одобрили выдачу роли {role.mention} пользователю {member.mention}`({member})`\n\n**Действие добавлено в вашу модерскую статистику** `(!imd)`.'), flags = MessageFlags().EPHEMERAL)
     return await message.delete()
 
 @buttons.click
@@ -359,7 +359,7 @@ async def button_deny_r(ctx):
         await channel.send(f'`[DENY]` {memb.mention} `отклонил запрос от {member.display_name}, c ID: {rolecheck["user_id"]}`')
         rolef.delete_one({"message_id": message.id})
         await message.delete()
-        await ctx.reply(discord.Embed(title = '\⛩️ **__У вас получилось__**', description = f'Вы удалили запрос на выдачу роли пользователю {member.mention}`({member})`'), flags = MessageFlags().EPHEMERAL)
+        await ctx.reply(embed = discord.Embed(title = '\⛩️ **__У вас получилось__**', description = f'Вы удалили запрос на выдачу роли пользователю {member.mention}`({member})`'), flags = MessageFlags().EPHEMERAL)
 
 @buttons.click
 async def button_deny_s(ctx):
@@ -384,7 +384,7 @@ async def button_deny_s(ctx):
             await channel.send(f'`[DENY]` {memb.mention} `отклонил запрос от {member.display_name}, c ID: {rolecheck["user_id"]}`')
         rolef.delete_one({"message_id": message.id})
         await message.delete()
-        await ctx.reply(discord.Embed(title = '\⛩️ **__У вас получилось__**', description = f'Вы удалили запрос на выдачу роли пользователю {memb.mention}`({memb})`'), flags = MessageFlags().EPHEMERAL)
+        await ctx.reply(embed = discord.Embed(title = '\⛩️ **__У вас получилось__**', description = f'Вы удалили запрос на выдачу роли пользователю {memb.mention}`({memb})`'), flags = MessageFlags().EPHEMERAL)
 
 @buttons.click
 async def button_remove_r(ctx):
@@ -414,7 +414,7 @@ async def button_remove_r(ctx):
         await chan.send(f'{member.mention}, `модератор` {memb.mention} `отклонил ваш запрос на выдачу роли.`\n`Ваш ник при отправке: {member.display_name}`\n`Установите ник на: [Фракция Ранг/10] Имя_Фамилия`')
         await channel.send(f'`[DENY]` {memb.mention} `отклонил запрос от {member.display_name}, c ID: {rolecheck["user_id"]}`')
         rolef.delete_one({"message_id": message.id})
-        await ctx.reply(discord.Embed(title = '\⛩️ **__Юхууу, почти новое действие__**', description = f'Вы отклонили выдачу роли пользователю {member.mention}`({member})`\n\n**Данное действие пока что не добавляется в вашу модерскую статистику** `(!imd)`.'), flags = MessageFlags().EPHEMERAL)
+        await ctx.reply(embed = discord.Embed(title = '\⛩️ **__Юхууу, почти новое действие__**', description = f'Вы отклонили выдачу роли пользователю {member.mention}`({member})`\n\n**Данное действие пока что не добавляется в вашу модерскую статистику** `(!imd)`.'), flags = MessageFlags().EPHEMERAL)
 
 @buttons.click
 async def button_remove_s(ctx):
@@ -439,7 +439,7 @@ async def button_remove_s(ctx):
         await chan.send(f'{member.mention}, `модератор` {memb.mention} `отклонил ваш запрос на снятие роли у пользователя` {member.mention}')
         await channel.send(f'`[DENY]` {memb.mention} `отклонил запрос от {member.display_name}, c ID: {rolecheck["user_id"]}`')
         rolef.delete_one({"message_id": message.id})
-        await ctx.reply(discord.Embed(title = '\⛩️ **__Юхууу, почти новое действие__**', description = f'Вы отклонили снятие роли пользователю {member.mention}`({member})`\n\n**Данное действие пока что не добавляется в вашу модерскую статистику** `(!imd)`.'), flags = MessageFlags().EPHEMERAL)
+        await ctx.reply(embed = discord.Embed(title = '\⛩️ **__Юхууу, почти новое действие__**', description = f'Вы отклонили снятие роли пользователю {member.mention}`({member})`\n\n**Данное действие пока что не добавляется в вашу модерскую статистику** `(!imd)`.'), flags = MessageFlags().EPHEMERAL)
 
 @buttons.click
 async def button_accept_r(ctx):
@@ -480,13 +480,13 @@ async def button_accept_r(ctx):
             await member.add_roles(ctx.guild.get_role(rolecheck["leader"]))
             await chan.send(f'{member.mention}, `модератор` {memb.mention} `одобрил ваш запрос на выдачу фракционных ролей.`\n`Роли ({role.name}) и ({role2.name}) были выданы!`')
             await ctx.message.delete()
-            await ctx.reply(discord.Embed(title = '\⛩️ **__Юхууу, новое действие__**', description = f'Вы одобрили выдачу ролей {role.mention} и {role2.mention} пользователю {member.mention}`({member})`\n\n**Действие добавлено в вашу модерскую статистику** `(!imd)`.'), flags = MessageFlags().EPHEMERAL)
+            await ctx.reply(embed = discord.Embed(title = '\⛩️ **__Юхууу, новое действие__**', description = f'Вы одобрили выдачу ролей {role.mention} и {role2.mention} пользователю {member.mention}`({member})`\n\n**Действие добавлено в вашу модерскую статистику** `(!imd)`.'), flags = MessageFlags().EPHEMERAL)
         else:
             role = ctx.guild.get_role(rolecheck["role_id"])
             await member.add_roles(ctx.guild.get_role(rolecheck["role_id"]))
             await chan.send(f'{member.mention}, `модератор` {memb.mention} `одобрил ваш запрос на выдачу роли.`\n`Роль ({role.name}) была выдана!`')
             await ctx.message.delete()
-            await ctx.reply(discord.Embed(title = '\⛩️ **__Юхууу, новое действие__**', description = f'Вы одобрили выдачу роли {role.mention} пользователю {member.mention}`({member})`\n\n**Действие добавлено в вашу модерскую статистику** `(!imd)`.'), flags = MessageFlags().EPHEMERAL)
+            await ctx.reply(embed = discord.Embed(title = '\⛩️ **__Юхууу, новое действие__**', description = f'Вы одобрили выдачу роли {role.mention} пользователю {member.mention}`({member})`\n\n**Действие добавлено в вашу модерскую статистику** `(!imd)`.'), flags = MessageFlags().EPHEMERAL)
         await channel.send(f'`[ACCEPT]` {memb.mention} `одобрил запрос от {member.display_name}, c ID: {rolecheck["user_id"]}`')
         rolef.delete_one({"message_id": message.id})
         add(memb, "rols")
@@ -519,7 +519,7 @@ async def button_accept_s(ctx):
         await member.remove_roles(rol)
         rolef.delete_one({"message_id": message.id})
         add(memb, "derols")
-        await ctx.reply(discord.Embed(title = '\⛩️ **__Юхууу, новое действие__**', description = f'Вы одобрили снятие роли пользователю {rol.mention} пользователю {member.mention}`({member})`\n\n**Действие добавлено в вашу модерскую статистику** `(!imd)`.'), flags = MessageFlags().EPHEMERAL)
+        await ctx.reply(embed = discord.Embed(title = '\⛩️ **__Юхууу, новое действие__**', description = f'Вы одобрили снятие роли пользователю {rol.mention} пользователю {member.mention}`({member})`\n\n**Действие добавлено в вашу модерскую статистику** `(!imd)`.'), flags = MessageFlags().EPHEMERAL)
             
 @bot.event
 async def on_message(ctx):
