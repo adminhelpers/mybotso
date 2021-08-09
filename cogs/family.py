@@ -368,7 +368,7 @@ class family(commands.Cog):
 			if len(zam) == 0: embed.add_field(name = f"**__🔱 Заместители (0/4):__**", value = '`Отсутствуют.`', inline=False)
 			else: 
 				str_a = ''.join(zam)
-				embed.add_field(name = f"**__🔱 Заместители `({len(zams)}/4)`:__**", value = str_a, inline=False)
+				embed.add_field(name = f"**__🔱 Заместители `({len(zam)}/4)`:__**", value = str_a, inline=False)
 
 			var = []
 			if fam.find_one({"name": amount, "guild": ctx.guild.id})["verf"] == 1:
