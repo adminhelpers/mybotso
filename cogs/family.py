@@ -358,9 +358,9 @@ class family(commands.Cog):
 					elif fam.find_one({"guild": ctx.guild.id, "name": amount, "leaderID": leader})["zam4"] == i: p = "zam4"
 					fam.update_one({"guild": ctx.guild.id, "name": amount, "leaderID": leader}, {"$set": {p: 1, "id": mas}})
 				else: 
-					if i == leader: pass
 					member = discord.utils.get(ctx.guild.members, id = i)
-					zam.append(f'`•` {member.mention}`({member} | {member.id})`\n')
+					if not member.id == leader:
+						zam.append(f'`•` {member.mention}`({member} | {member.id})`\n')
 
 			if len(zam) == 0: embed.add_field(name = f"**__🔱 Заместители (0/4):__**", value = '`Отсутствуют.`', inline=False)
 			else: 
