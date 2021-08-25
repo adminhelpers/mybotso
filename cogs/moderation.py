@@ -961,7 +961,7 @@ class moderation(commands.Cog):
 
         if int(s) == 2:
           await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, вы выдали пользователю {member.mention} предупреждение.\nКол-во предупреждений: 3/6 | Пользователь забанен на 10 дней.**', colour = 0xFB9E14))
-          try: await member.send(embed = discord.Embed(title = '\⛩️ **_Выдача предупреждения__**', description = 'Вы получили предупреждение на сервере `Rodina Role Play • Северный округ`\nВы получили блокировку на 10 дней за `3/6` предупреждений.\n\n**Наказание выдал:** {ctx.author.mention}`({ctx.author})`\n**Причина:** {reason}\n\n❗ Пожалуйста, ознакомьтесь с правилами сервера и постарайтесь больше не получать предупреждений, иначе вы можете быть наказаны более серьезно.\n❗ `[P.S]:` Если Вы не согласны с выданным, за Вами остаётся право написать жалобу на форум модераторов `"Робохомячок"`'))
+          try: await member.send(embed = discord.Embed(title = '\⛩️ **_Выдача предупреждения__**', description = f'Вы получили предупреждение на сервере `Rodina Role Play • Северный округ`\nВы получили блокировку на 10 дней за `3/6` предупреждений.\n\n**Наказание выдал:** {ctx.author.mention}`({ctx.author})`\n**Причина:** {reason}\n\n❗ Пожалуйста, ознакомьтесь с правилами сервера и постарайтесь больше не получать предупреждений, иначе вы можете быть наказаны более серьезно.\n❗ `[P.S]:` Если Вы не согласны с выданным, за Вами остаётся право написать жалобу на форум модераторов `"Робохомячок"`'))
           except: pass
           banlist.insert_one({"guild": ctx.guild.id, "type": "bands", "id": member.id, "time": 480, "name": f'{member.name}#{member.discriminator}'})
           await ctx.guild.ban(member, reason = f'3/6 warns | Выдал: {ctx.author.display_name} | Причина: {reason}')
@@ -982,7 +982,7 @@ class moderation(commands.Cog):
         elif int(s) == 5:
           reason = f'[{ctx.message.created_at.strftime("%m.%d - %H:%M:%S")}]: {reason}'
           await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, вы выдали пользователю {member.mention} предупреждение.\nКол-во предупреждений: 6/6 | Пользователь забанен.**', colour = 0xFB9E14))
-          try: await member.send(embed = discord.Embed(title = '\⛩️ **_Выдача предупреждения__**', description = 'Вы получили предупреждение на сервере `Rodina Role Play • Северный округ`\nВы получили блокировку на неопределённый срок за `6/6` предупреждений.\n\n**Наказание выдал:** {ctx.author.mention}`({ctx.author})`\n**Причина:** {reason}\n\n❗ Пожалуйста, ознакомьтесь с правилами сервера и постарайтесь больше не получать предупреждений, иначе вы можете быть наказаны более серьезно.\n❗ `[P.S]:` Если Вы не согласны с выданным, за Вами остаётся право написать жалобу на форум модераторов `"Робохомячок"`'))
+          try: await member.send(embed = discord.Embed(title = '\⛩️ **_Выдача предупреждения__**', description = f'Вы получили предупреждение на сервере `Rodina Role Play • Северный округ`\nВы получили блокировку на неопределённый срок за `6/6` предупреждений.\n\n**Наказание выдал:** {ctx.author.mention}`({ctx.author})`\n**Причина:** {reason}\n\n❗ Пожалуйста, ознакомьтесь с правилами сервера и постарайтесь больше не получать предупреждений, иначе вы можете быть наказаны более серьезно.\n❗ `[P.S]:` Если Вы не согласны с выданным, за Вами остаётся право написать жалобу на форум модераторов `"Робохомячок"`'))
           except: pass
           await ctx.guild.ban(member, reason = f'6/6 warns | Выдал: {ctx.author.display_name} | Причина: {reason}')
           chan = self.bot.get_channel(834039427541631016)
@@ -1012,7 +1012,7 @@ class moderation(commands.Cog):
           embed.set_thumbnail(url = ctx.guild.icon_url)
           await chan.send(embed = embed)
           await logsuser.send(embed = embed)
-          try: await member.send(embed = discord.Embed(title = '\⛩️ **_Выдача предупреждения__**', description = 'Вы получили предупреждение на сервере `Rodina Role Play • Северный округ`\nПроверить свои предупреждения можно командой `!warnlog`.\n\n**Наказание выдал:** {ctx.author.mention}`({ctx.author})`\n**Причина:** {reason}\n\n❗ Пожалуйста, ознакомьтесь с правилами сервера и постарайтесь больше не получать предупреждений, иначе вы можете быть наказаны более серьезно.\n❗ `[P.S]:` Если Вы не согласны с выданным, за Вами остаётся право написать жалобу на форум модераторов `"Робохомячок"`'))
+          try: await member.send(embed = discord.Embed(title = '\⛩️ **_Выдача предупреждения__**', description = f'Вы получили предупреждение на сервере `Rodina Role Play • Северный округ`\nПроверить свои предупреждения можно командой `!warnlog`.\n\n**Наказание выдал:** {ctx.author.mention}`({ctx.author})`\n**Причина:** {reason}\n\n❗ Пожалуйста, ознакомьтесь с правилами сервера и постарайтесь больше не получать предупреждений, иначе вы можете быть наказаны более серьезно.\n❗ `[P.S]:` Если Вы не согласны с выданным, за Вами остаётся право написать жалобу на форум модераторов `"Робохомячок"`'))
           except: pass
         add(ctx.author, "warn")
 
