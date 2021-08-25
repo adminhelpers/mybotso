@@ -258,7 +258,7 @@ class moderation(commands.Cog):
 
     @commands.command()
     @commands.cooldown(1, 300, commands.BucketType.member)
-    async def ban(self, ctx, member: discord.Member = None, reason = None):
+    async def ban(self, ctx, member: discord.Member = None, *, reason = None):
         global log
 
         if not ctx.guild.id == 477547500232769536:
@@ -960,14 +960,18 @@ class moderation(commands.Cog):
           s += 1           
 
         if int(s) == 2:
-          await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, вы выдали пользователю {member.mention} предупреждение.\nКол-во предупреждений: 3/6 | Пользователь кикнут.**', colour = 0xFB9E14))
-          await ctx.guild.kick(member, reason = f'3/6 warns | Force by {ctx.author.display_name} => Reason: {reason}')
+          await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, вы выдали пользователю {member.mention} предупреждение.\nКол-во предупреждений: 3/6 | Пользователь забанен на 10 дней.**', colour = 0xFB9E14))
+          try: await member.send(embed = discord.Embed(title = '\⛩️ **_Выдача предупреждения__**', description = 'Вы получили предупреждение на сервере `Rodina Role Play • Северный округ`\nВы получили блокировку на 10 дней за `3/6` предупреждений.\n\n**Наказание выдал:** {ctx.author.mention}`({ctx.author})`\n**Причина:** {reason}\n\n❗ Пожалуйста, ознакомьтесь с правилами сервера и постарайтесь больше не получать предупреждений, иначе вы можете быть наказаны более серьезно.\n❗ `[P.S]:` Если Вы не согласны с выданным, за Вами остаётся право написать жалобу на форум модераторов `"Робохомячок"`'))
+          except: pass
+          banlist.insert_one({"guild": ctx.guild.id, "type": "bands", "id": member.id, "time": 480, "name": f'{member.name}#{member.discriminator}'})
+          await ctx.guild.ban(member, reason = f'3/6 warns | Выдал: {ctx.author.display_name} | Причина: {reason}')
           chan = self.bot.get_channel(834039427541631016)
           logsuser = self.bot.get_channel(850605849343819836)
-          embed = discord.Embed(title = 'Выдача предупреждения', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow())
-          embed.add_field(name = 'Пользователь', value = f'**{member.display_name}`({member})`**', inline = False)
-          embed.add_field(name = 'Модератор', value = f'**{ctx.author.display_name}({ctx.author})**', inline = False)
-          embed.add_field(name = 'Количество предупреждений', value = f'**3/3(`KICK USER`)**', inline = False)
+          embed = discord.Embed(title = '\⛩️ **__Временный бан__**', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow())
+          embed.add_field(name = '**__Пользователь__**', value = f'{member.display_name}`({member})`', inline = False)
+          embed.add_field(name = '**__Модератор__**', value = f'{ctx.author.display_name}({ctx.author})', inline = False)
+          embed.add_field(name = '**__Время__**', value = f'10 дней', inline = False)
+          embed.add_field(name = '**__Причина__**', value = f'3/6 предупреждений', inline = False)
           embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = self.bot.user.avatar_url)
           embed.set_thumbnail(url = ctx.guild.icon_url)
           await chan.send(embed = embed)
@@ -978,13 +982,15 @@ class moderation(commands.Cog):
         elif int(s) == 5:
           reason = f'[{ctx.message.created_at.strftime("%m.%d - %H:%M:%S")}]: {reason}'
           await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, вы выдали пользователю {member.mention} предупреждение.\nКол-во предупреждений: 6/6 | Пользователь забанен.**', colour = 0xFB9E14))
-          await ctx.guild.ban(member, reason = f'6/6 warns | Force by {ctx.author.display_name} => Reason: {reason}')
+          try: await member.send(embed = discord.Embed(title = '\⛩️ **_Выдача предупреждения__**', description = 'Вы получили предупреждение на сервере `Rodina Role Play • Северный округ`\nВы получили блокировку на неопределённый срок за `6/6` предупреждений.\n\n**Наказание выдал:** {ctx.author.mention}`({ctx.author})`\n**Причина:** {reason}\n\n❗ Пожалуйста, ознакомьтесь с правилами сервера и постарайтесь больше не получать предупреждений, иначе вы можете быть наказаны более серьезно.\n❗ `[P.S]:` Если Вы не согласны с выданным, за Вами остаётся право написать жалобу на форум модераторов `"Робохомячок"`'))
+          except: pass
+          await ctx.guild.ban(member, reason = f'6/6 warns | Выдал: {ctx.author.display_name} | Причина: {reason}')
           chan = self.bot.get_channel(834039427541631016)
           logsuser = self.bot.get_channel(850605849343819836)
-          embed = discord.Embed(title = 'Выдача предупреждения', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow())
-          embed.add_field(name = 'Пользователь', value = f'**{member.display_name}`({member})`**', inline = False)
-          embed.add_field(name = 'Модератор', value = f'**{ctx.author.display_name}({ctx.author})**', inline = False)
-          embed.add_field(name = 'Количество предупреждений', value = f'**6/6(`BAN USERS`)**', inline = False)
+          embed = discord.Embed(title = '\⛩️ **__Вечный бан__**', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow())
+          embed.add_field(name = '**__Пользователь__**', value = f'{member.display_name}`({member})`', inline = False)
+          embed.add_field(name = '**__Модератор__**', value = f'{ctx.author.display_name}({ctx.author})', inline = False)
+          embed.add_field(name = '**__Причина__**', value = f'6/6 предупреждений', inline = False)
           embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = self.bot.user.avatar_url)
           embed.set_thumbnail(url = ctx.guild.icon_url)
           await chan.send(embed = embed)
@@ -998,14 +1004,16 @@ class moderation(commands.Cog):
           await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, вы выдали пользователю {member.mention} предупреждение.\nКол-во предупреждений: {s + 1}/3**', colour = 0xFB9E14))  
           chan = self.bot.get_channel(834039427541631016)
           logsuser = self.bot.get_channel(850605849343819836)
-          embed = discord.Embed(title = 'Выдача предупреждения', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow())
-          embed.add_field(name = 'Пользователь', value = f'**{member.display_name}`({member})`**', inline = False)
-          embed.add_field(name = 'Модератор', value = f'**{ctx.author.display_name}({ctx.author})**', inline = False)
-          embed.add_field(name = 'Количество предупреждений', value = f'**{s + 1}/3**', inline = False)
+          embed = discord.Embed(title = '\⛩️ **_Выдача предупреждения__**', timestamp = datetime.datetime.utcnow())
+          embed.add_field(name = '**__Пользователь__**', value = f'{member.display_name}`({member})`', inline = False)
+          embed.add_field(name = '**__Модератор__**', value = f'{ctx.author.display_name}({ctx.author})', inline = False)
+          embed.add_field(name = '**__Количество предупреждений__**', value = f'{s + 1}/3', inline = False)
           embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = self.bot.user.avatar_url)
           embed.set_thumbnail(url = ctx.guild.icon_url)
           await chan.send(embed = embed)
           await logsuser.send(embed = embed)
+          try: await member.send(embed = discord.Embed(title = '\⛩️ **_Выдача предупреждения__**', description = 'Вы получили предупреждение на сервере `Rodina Role Play • Северный округ`\nПроверить свои предупреждения можно командой `!warnlog`.\n\n**Наказание выдал:** {ctx.author.mention}`({ctx.author})`\n**Причина:** {reason}\n\n❗ Пожалуйста, ознакомьтесь с правилами сервера и постарайтесь больше не получать предупреждений, иначе вы можете быть наказаны более серьезно.\n❗ `[P.S]:` Если Вы не согласны с выданным, за Вами остаётся право написать жалобу на форум модераторов `"Робохомячок"`'))
+          except: pass
         add(ctx.author, "warn")
 
     @commands.command()
