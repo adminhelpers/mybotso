@@ -1067,8 +1067,10 @@ class moderation(commands.Cog):
               await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, вы сняли пользователю {memb.mention} 1 предупреждение.**', colour = 0xFB9E14))
               chan = self.bot.get_channel(834039427541631016)
               logsuser = self.bot.get_channel(850605849343819836)
-              await logsuser.send(embed = discord.Embed(description = f'**{ctx.author.mention}`({ctx.author})`, снял пользователю {memb.mention}`({member})` 1 предупреждение.**', colour = 0xFB9E14))
-              await chan.send(embed = discord.Embed(description = f'**{ctx.author.mention}, снял пользователю {memb.mention} 1 предупреждение.**', colour = 0xFB9E14))
+              try: await logsuser.send(embed = discord.Embed(description = f'**{ctx.author.mention}`({ctx.author})`, снял пользователю {memb.mention}`({member})` 1 предупреждение.**', colour = 0xFB9E14))
+              except: pass              
+              try: await chan.send(embed = discord.Embed(description = f'**{ctx.author.mention}, снял пользователю {memb.mention} 1 предупреждение.**', colour = 0xFB9E14))
+              except: pass              
               warns.delete_one({"numbed": numbed})
               add(ctx.author, "unwarn")
             else:
