@@ -31,7 +31,7 @@ tens = [ ]
 def get_name(guild):
 	if not guild == 477547500232769536 and not guild == 577511138032484360: return
 	if guild == 477547500232769536:
-		return 'D-Coins'
+		return '\❄️Снежинок'
 	else:
 		return 'Рисинок'
 	
@@ -269,8 +269,8 @@ class econom(commands.Cog):
 
       gguild = get_guilds(ctx.guild.id)
       gs = get_name(ctx.guild.id)
-      gb = 'D-Coins' if ctx.guild.id == 477547500232769536 else 'Рисинки'
-      pb = 'D-Coins' if ctx.guild.id == 477547500232769536 else 'Рисинок'
+      gb = '\❄️Снежинки' if ctx.guild.id == 477547500232769536 else 'Рисинки'
+      pb = '\❄️Снежинок' if ctx.guild.id == 477547500232769536 else 'Рисинок'
 
       if users.count_documents({"guild": ctx.guild.id, "ids": member.id}) == 0:
         return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gb}', description = f'Никнейм: {member.mention}\n{pb}: `0`', colour = 0x09F2C8))
@@ -285,8 +285,8 @@ class econom(commands.Cog):
       if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return
       gguild = get_guilds(ctx.guild.id)
       gs = get_name(ctx.guild.id)
-      gb = 'D-Coins' if ctx.guild.id == 477547500232769536 else 'Рисинки'
-      pb = "`D-Coin's`" if ctx.guild.id == 477547500232769536 else 'рисинок'
+      gb = '\❄️Снежинки' if ctx.guild.id == 477547500232769536 else 'Рисинки'
+      pb = "`\❄️Снежинок`" if ctx.guild.id == 477547500232769536 else 'рисинок'
 
       if member == None:
         return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**Укажите пользователя**', colour = 0x09F2C8), delete_after = 5)
@@ -312,8 +312,8 @@ class econom(commands.Cog):
 	  
       gguild = get_guilds(ctx.guild.id)
       gs = get_name(ctx.guild.id)
-      gb = 'D-Coins' if ctx.guild.id == 477547500232769536 else 'Рисинки'
-      pb = "`D-Coin's`" if ctx.guild.id == 477547500232769536 else 'рисинок'
+      gb = '\❄️Снежинки' if ctx.guild.id == 477547500232769536 else 'Рисинки'
+      pb = "`\❄️Снежинок`" if ctx.guild.id == 477547500232769536 else 'рисинок'
 
       await ctx.message.delete()
       if member == None:
@@ -336,8 +336,8 @@ class econom(commands.Cog):
 
       gguild = get_guilds(ctx.guild.id)
       gs = get_name(ctx.guild.id)
-      gb = 'D-Coins' if ctx.guild.id == 477547500232769536 else 'Рисинки'
-      pb = "`D-Coin's`" if ctx.guild.id == 477547500232769536 else 'рисинок'
+      gb = '\❄️Снежинки' if ctx.guild.id == 477547500232769536 else 'Рисинки'
+      pb = "`\❄️Снежинок`" if ctx.guild.id == 477547500232769536 else 'рисинок'
 
       if member == None:
         return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{ctx.author.mention}, укажите пользователя**', colour = 0x09F2C8), delete_after = 5)
@@ -370,8 +370,8 @@ class econom(commands.Cog):
 
       gguild = get_guilds(ctx.guild.id)
       gs = get_name(ctx.guild.id)
-      gb = 'D-Coins' if ctx.guild.id == 477547500232769536 else 'Рисинки'
-      pb = "`D-Coin's`" if ctx.guild.id == 477547500232769536 else 'рисинок'
+      gb = '\❄️Снежинки' if ctx.guild.id == 477547500232769536 else 'Рисинки'
+      pb = "`\❄️Снежинок`" if ctx.guild.id == 477547500232769536 else 'рисинок'
 	
       if ctx.guild.id == 477547500232769536:
         if not ctx.channel.id == 818222772215349328:
@@ -415,8 +415,8 @@ class econom(commands.Cog):
 	  
       gguild = get_guilds(ctx.guild.id)
       gs = get_name(ctx.guild.id)
-      gb = 'D-Coins' if ctx.guild.id == 477547500232769536 else 'Рисинки'
-      pb = "`D-Coin's`" if ctx.guild.id == 477547500232769536 else 'рисинок'
+      gb = '\❄️Снежинки' if ctx.guild.id == 477547500232769536 else 'Рисинки'
+      pb = "`\❄️Снежинок`" if ctx.guild.id == 477547500232769536 else 'рисинок'
 
       if not member:
         return await ctx.send(f'{ctx.author.mention}, ```Укажите пользователя!```', delete_after = 5)
@@ -441,8 +441,8 @@ class econom(commands.Cog):
 
         gguild = get_guilds(ctx.guild.id)
         gs = get_name(ctx.guild.id)
-        gb = "`D-Coin's`" if ctx.guild.id == 477547500232769536 else 'Рисинки'
-        pb = "`D-Coin's`" if ctx.guild.id == 477547500232769536 else 'рисинок'
+        gb = "`\❄️Снежинки`" if ctx.guild.id == 477547500232769536 else 'Рисинки'
+        pb = "`\❄️Снежинок`" if ctx.guild.id == 477547500232769536 else 'рисинок'
 
         if users.count_documents({"guild": ctx.guild.id, "ids": ctx.author.id}) == 0:
             users.insert_one({"guild": ctx.guild.id, "ids": ctx.author.id, "messages": 0})
@@ -501,13 +501,13 @@ class econom(commands.Cog):
 
         gguild = get_guilds(ctx.guild.id)
         gs = get_name(ctx.guild.id)
-        gb = 'D-Coins' if ctx.guild.id == 477547500232769536 else 'Рисинки'
-        pb = "D-Coin's" if ctx.guild.id == 477547500232769536 else 'рисинок'
+        gb = '\❄️Снежинки' if ctx.guild.id == 477547500232769536 else 'Рисинки'
+        pb = '\❄️Снежинок' if ctx.guild.id == 477547500232769536 else 'рисинок'
 	
         if ctx.guild.id == 477547500232769536:
-            embed = discord.Embed(title = 'Награды за сообщения', description = f"За активность в чате можно не только прокачивать свой уровень, но и зарабатывать Discord-Coins`({gb})` - Валюту нашего дискорд-сервера\n\n**Список наград:**\n✨ 2000 сообщений - **3** `{pb}`\n💸 5000 сообщений - **5** `{pb}`\n🔥 10000 сообщений - **10** `{pb}`\n🎀 20000 сообщений - **15** `{pb}`\n💎 30000 сообщений - **20** `{pb} и уникальная роль` <@&855358889067675649>", color = 0xFB9E14)
+            embed = discord.Embed(title = 'Награды за сообщения', description = f"За активность в чате можно не только прокачивать свой уровень, но и зарабатывать Discord-Coins \❄️`({gb})` – Валюту нашего дискорд-сервера\n\n**Список наград:**\n✨ 2000 сообщений - **3** `{pb}`\n💸 5000 сообщений - **5** `{pb}`\n🔥 10000 сообщений - **10** `{pb}`\n🎀 20000 сообщений - **15** `{pb}`\n💎 30000 сообщений - **20** `{pb} и уникальная роль` <@&855358889067675649>", color = 0xFB9E14)
         else:
-            embed = discord.Embed(title = 'Награды за сообщения', description = f"За активность в чате можно не только прокачивать свой уровень, но и зарабатывать Discord-Coins`({gb})` - Валюту нашего дискорд-сервера\n\n**Список наград:**\n✨ 2000 сообщений - **3** `{pb}`\n💸 5000 сообщений - **5** `{pb}`\n🔥 10000 сообщений - **10** `{pb}`\n🎀 20000 сообщений - **15** `{pb}`\n💎 30000 сообщений - **20** `{pb}`", color = 0xFB9E14)
+            embed = discord.Embed(title = 'Награды за сообщения', description = f"За активность в чате можно не только прокачивать свой уровень, но и зарабатывать Discord-Coins`({gb})` – Валюту нашего дискорд-сервера\n\n**Список наград:**\n✨ 2000 сообщений - **3** `{pb}`\n💸 5000 сообщений - **5** `{pb}`\n🔥 10000 сообщений - **10** `{pb}`\n🎀 20000 сообщений - **15** `{pb}`\n💎 30000 сообщений - **20** `{pb}`", color = 0xFB9E14)
         embed.set_thumbnail(url = ctx.guild.icon_url)
         embed.set_footer(text = 'Support Team by dollar ム baby#3603', icon_url = self.bot.user.avatar_url)
         return await ctx.send(embed = embed)
