@@ -46,6 +46,34 @@ log = 736200220311945256
 global message_id
 message_id = 0
 
+global mfull
+moderfull = [743887697327816705, # Заместитель Гл. Модератора
+            661284961428701209, # Глав. Модерация Discord
+            714504039072661545, # Supervisor Moderation
+            789910831868543027, # Discord Guard
+            817813676178407425, # Support Team
+            652869023599558656] # Srectator
+             
+             
+
+global mone
+moderone  = [743887697327816705, # Заместитель Гл. Модератора
+            661284961428701209, # Глав. Модерация Discord
+            714504039072661545, # Supervisor Moderation
+            789910831868543027, # Discord Guard
+            817813676178407425] # Support Team
+
+global mtwo
+modertwo = [743887697327816705, # Заместитель Гл. Модератора
+            661284961428701209, # Глав. Модерация Discord
+            714504039072661545, # Supervisor Moderation
+            789910831868543027] # Discord Guard
+
+def is_accept(member: discord.Member, accept_roles):
+  for i in member.roles:
+    if i.id in accept_roles: return 1
+  return 0
+
 class moderation(commands.Cog):
     """MODERATION Cog."""
 
@@ -133,14 +161,14 @@ class moderation(commands.Cog):
 
       '''
 
-    @commands.command()
+    @commands.command() #mfull 
     async def clear(self, ctx, member: typing.Optional[discord.Member] = None, amount : int = None):
       
         if not ctx.guild.id == 477547500232769536: return 
         global log
+        global mfull
 
-        if not discord.utils.get(ctx.guild.roles, id = 652869023599558656) in ctx.author.roles and not discord.utils.get(ctx.guild.roles, id = 817813676178407425) in ctx.author.roles:
-            return await ctx.send(f'`[ERR]` {ctx.author.mention}, `вам не доступна данная команда!`', delete_after = 5)
+        if is_accept(ctx.author, mfull) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
 
         if amount == None and member == None:
             return await ctx.send(embed = discord.Embed(description = f'''Пожалуйста, используйте команду правильно, одним из двумя способов\n\n**1) После команды укажите кол-во удаляемых сообщений.**\n`Форма:` **{reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]}clear `Кол-во Сообщений`**\n```{reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]}clear 10\n-- я удалю 10 первых сообщений.\n{reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]}clear 0\n-- я не удалю ни одного сообщения.```• Область допустимых значений: От `1` до `300`\n\n**2) После команды `@упомяните` участника чьи сообщения удалить, опционально укажите кол-во сообщений.**\n`Форма:` **{reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]}clear [Нарушитель] [Кол-во Сообщений]**\n```{reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]}clear @Провокатор 10\n-- я удалю 10 последних сообщений от пользователя.\n{reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]}clear @провокатор\n-- я не удалю ни одного сообщения от указанного пользователя.```• Область допустимых значений: От `1` до `50`''', colour = 0xFB9E14), delete_after = 60)  
@@ -202,13 +230,13 @@ class moderation(commands.Cog):
     async def invite(self, ctx):
         if ctx.guild.id == 477547500232769536: return await ctx.send(embed = discord.Embed(title = f'Discord Helper', description = f'''**Единая ссылка на приглашения пользователей --\n https://discord.gg/rodina03**''', colour = 0xFB9E14))
 
-    @commands.command()
+    @commands.command() #mfull
     async def vmute(self, ctx, member: discord.Member = None):
         if not ctx.guild.id == 477547500232769536: return 
         global log
+        global mfull
 
-        if not discord.utils.get(ctx.guild.roles, id = 652869023599558656) in ctx.author.roles and not discord.utils.get(ctx.guild.roles, id = 817813676178407425) in ctx.author.roles:
-            return await ctx.send(f'`[ERR]` {ctx.author.mention}, `вам не доступна данная команда!`', delete_after = 5)
+        if is_accept(ctx.author, mfull) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
 
         if member == ctx.message.author:
             return await ctx.send(embed = discord.Embed(title = f'Система наказаний', description = f'''**:shield: {ctx.author.mention}, Вы не можете выдать голосовой мут самому себе.**''', colour = 0xFB9E14), delete_after = 5)
@@ -229,13 +257,13 @@ class moderation(commands.Cog):
         await logsuser.send(embed = e)
         add(ctx.author, "vmute")
 
-    @commands.command()
+    @commands.command() #mfull
     async def vunmute(self, ctx, member: discord.Member = None):
         if not ctx.guild.id == 664111470782578708: return 
         global log
+        global mfull
 
-        if not discord.utils.get(ctx.guild.roles, id = 652869023599558656) in ctx.author.roles and not discord.utils.get(ctx.guild.roles, id = 817813676178407425) in ctx.author.roles:
-            return await ctx.send(f'`[ERR]` {ctx.author.mention}, `вам не доступна данная команда!`', delete_after = 5)
+        if is_accept(ctx.author, mfull) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
 
         if member == ctx.message.author:
             return await ctx.send(embed = discord.Embed(title = f'Система наказаний', description = f'''**:shield: {ctx.author.mention}, вы не можете снять голосовой мут самому себе.**''', colour = 0xFB9E14), delete_after = 5)
@@ -257,15 +285,15 @@ class moderation(commands.Cog):
         add(ctx.author, "vunmute")
 
     @commands.command()
-    @commands.cooldown(1, 300, commands.BucketType.member)
+    @commands.cooldown(1, 300, commands.BucketType.member) # mtwo
     async def ban(self, ctx, member: discord.Member = None, *, reason = None):
         global log
+        global mtwo
 
         if not ctx.guild.id == 477547500232769536:
             return
 
-        if ctx.author.top_role.position < discord.utils.get(ctx.guild.roles, id = 789910831868543027).position:
-            return await ctx.send(f'`[ERR]` {ctx.author.mention}, `вам не доступна данная команда!`', delete_after = 5)
+        if is_accept(ctx.author, mtwo) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
 
         if member == None:
             await ctx.send(f'`[ERR]` {ctx.author.mention}, `обязательно укажите пользователя!`', delete_after = 5)
@@ -301,17 +329,17 @@ class moderation(commands.Cog):
         add(ctx.author, "ban")
         await ctx.message.add_reaction('✅')
 
-    @commands.command(aliases = ['bt'])
+    @commands.command(aliases = ['bt']) # mtwo
     @commands.cooldown(1, 300, commands.BucketType.member)
     async def bantime(self, ctx, member: discord.Member = None, arg = None, *, reason = None):
 
-        global log 
+        global log
+        global mtwo
 
         if not ctx.guild.id == 477547500232769536:
             return
 
-        if ctx.author.top_role.position < discord.utils.get(ctx.guild.roles, id = 789910831868543027).position:
-            return await ctx.send(f'`[ERR]` {ctx.author.mention}, `вам не доступна данная команда!`', delete_after = 5)
+        if is_accept(ctx.author, mtwo) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
 
         if arg == None:
             return await ctx.send(embed = discord.Embed(description = f'Пожалуйста, `@упомяните` участника для ограничения, опционально укажите срок и/или причину.\n`Форма:` **{reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]}bantime @упоминание [длительность] [причина]**\n\n`{reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]}bantime @Провокатор#1234 3h`\n-- я забаню пользователя на 3 часа\n`{reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]}bantime @Провокатор#1234 5d реклама`\n-- я забаню пользователя на 5 дней с указанием причины\n\n• Допустимые значения: `h, d`\n• Вместо упоминания можно использовать `ID `участника.', colour = 0xFB9E14), delete_after = 30)  
@@ -391,15 +419,16 @@ class moderation(commands.Cog):
         except:
           await ctx.send(embed = discord.Embed(description = f'**Произошла неизвестная ошибка.**', color = 0xFB9E14), delete_after = 5)
 
-    @commands.command()
+    @commands.command() # mtwo
     @commands.cooldown(1, 300, commands.BucketType.member)
     async def kick(self, ctx, member: discord.Member = None, *, reason = None):
 
         if not ctx.guild.id == 477547500232769536:
             return
+          
+        global mtwo
 
-        if not discord.utils.get(ctx.guild.roles, id = 817813676178407425) in ctx.author.roles:
-            return await ctx.send(f'`[ERR]` {ctx.author.mention}, `вам не доступна данная команда!`', delete_after = 5)
+        if is_accept(ctx.author, mtwo) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
 
         if member == None:
             await ctx.send(f'`[ERR]` {ctx.author.mention}, `обязательно укажите пользователя!`', delete_after = 5)
@@ -436,16 +465,16 @@ class moderation(commands.Cog):
         add(ctx.author, "kick")
         await ctx.message.add_reaction('✅')
 
-    @commands.command()
+    @commands.command() #mfull
     async def mute(self, ctx, member: discord.Member = None, arg = None, *, reason = None):
 
         global log 
-
+        global mfull
+        
         if not ctx.guild.id == 477547500232769536:
             return
 
-        if not discord.utils.get(ctx.guild.roles, id = 652869023599558656) in ctx.author.roles and not discord.utils.get(ctx.guild.roles, id = 817813676178407425) in ctx.author.roles:
-            return await ctx.send(f'`[ERR]` {ctx.author.mention}, `вам не доступна данная команда!`', delete_after = 5)
+        if is_accept(ctx.author, mfull) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
 
         if arg == None:
             return await ctx.send(embed = discord.Embed(description = f'Пожалуйста, `@упомяните` участника для ограничения, опционально укажите срок и/или причину.\nДля выдачи голосового мута в конце ставьте `voice` или `v`\n`Форма:` **{reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]}mute @упоминание [длительность] [причина]**\n\n`{reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]}mute @Провокатор#1234 10s`\n-- я выдам роль мута на 10 минут\n`{reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]}mute @Провокатор#1234 10m за провокацию`\n-- я выдам роль мута на 10 минут с указанием причины\n`{reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]}mute @Провокатор#1234 10m voice`\n-- я выдам голосовой мут на 10 минут\n\n• Допустимые значения: `s, m, h, d`\n• Вместо упоминания можно использовать `ID `участника.', colour = 0xFB9E14), delete_after = 30)  
@@ -571,15 +600,15 @@ class moderation(commands.Cog):
             try: return await ctx.delete()
             except: return
 
-    @commands.command()
+    @commands.command() # mfull
     async def unmute(self, ctx, member: discord.Member = None, reason = None):
         global log 
+        global mfull
 
         if not ctx.guild.id == 477547500232769536:
             return
 
-        if not discord.utils.get(ctx.guild.roles, id = 652869023599558656) in ctx.author.roles and not discord.utils.get(ctx.guild.roles, id = 817813676178407425) in ctx.author.roles:
-            return await ctx.send(f'`[ERR]` {ctx.author.mention}, `вам не доступна данная команда!`', delete_after = 5)
+        if is_accept(ctx.author, mfull) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
 
         if member == None:
             return await ctx.send(f'`[ERR]` {ctx.author.mention}, `укажите пользователя`', delete_after = 5)
@@ -932,15 +961,13 @@ class moderation(commands.Cog):
       else:
         return ctx.message.delete()
 
-    @commands.command()
+    @commands.command() #mone
     async def warn(self, ctx, member: discord.Member = None, *, reason = None):
         if not ctx.guild.id == 477547500232769536:
             return
+        global mone
 
-        role = discord.utils.get(ctx.guild.roles, id = 817813676178407425)
-
-        if not role in ctx.author.roles:
-            return await ctx.send(f'`[ERR]` {ctx.author.mention}, `вам не доступна данная команда!`', delete_after = 5)
+        if is_accept(ctx.author, mone) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
 
         if member == None:
             return await ctx.send(f'`[ERR]` {ctx.author.mention}, `обязательно укажите пользователя!`', delete_after = 5)
@@ -1049,14 +1076,13 @@ class moderation(commands.Cog):
         embed.set_thumbnail(url = ctx.guild.icon_url)
         return await ctx.send(embed = embed)
 
-    @commands.command()
+    @commands.command() # mone
     async def unwarn(self, ctx, numbed : int = None):
         if not ctx.guild.id == 477547500232769536:
             return
-
-        role = discord.utils.get(ctx.guild.roles, id = 817813676178407425)
-        if not role in ctx.author.roles:
-            return await ctx.send(f'`[ERR]` {ctx.author.mention}, `вам не доступна данная команда!`', delete_after = 5) 
+        global mone
+        
+        if is_accept(ctx.author, mone) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5) 
 
         if int(numbed) > 0:
             if warns.count_documents({"numbed": numbed}) == 1:               
@@ -1079,14 +1105,13 @@ class moderation(commands.Cog):
         else:
             return await ctx.send(f'`[ERR]` {ctx.author.mention}, `укажите номер случая, его можно узнать прописав команду /warnlog @пользователь#1234`', delete_after = 5)
 
-    @commands.command()
+    @commands.command() # mone
     async def unwarns(self, ctx, member: discord.Member):
         if not ctx.guild.id == 477547500232769536:
             return
+        global mone
 
-        role = discord.utils.get(ctx.guild.roles, id = 817813676178407425)
-        if not role in ctx.author.roles:
-            return await ctx.send(f'`[ERR]` {ctx.author.mention}, `вам не доступна данная команда!`', delete_after = 5) 
+        if is_accept(ctx.author, mone) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
 
         if member is None:
           return await ctx.send(f'`[ERR]` {ctx.author.mention}, `укажите пользователя!`', delete_after = 5)
