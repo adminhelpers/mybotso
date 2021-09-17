@@ -24,8 +24,6 @@ famuser = db["famuser"]
 users = db["users"]
 reports = dbs["reports"]
 
-ahajbd = 'fd'
-
 global errmessage
 errmessage = '`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'
 
@@ -33,7 +31,7 @@ global errout
 errout = '❌ Возможные причины возникновения этой ошибки:'
 
 def guild_accept(id):
-	if id in [477547500232769536, 577511138032484360, 465086262383083520]: return 1 
+	if int(id) in [477547500232769536, 577511138032484360, 465086262383083520]: return 1 
 	else: return 0
 	
 def guild_name(id):
@@ -51,6 +49,7 @@ class family(commands.Cog):
 	
 	@commands.command(aliases = ['fhelp'])
 	async def famhelp(self, ctx):
+		print('+')
 		if guild_accept(ctx.guild.id) == 0: return 
 		await ctx.message.delete()
 		name = guild_name(ctx.guild.id)
