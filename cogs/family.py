@@ -185,7 +185,7 @@ class family(commands.Cog):
 							leader = member.name
 							leaderID = member.id
 							role = await ctx.guild.create_role(name = f"{frolename}")
-							if ctx.guild.id == 577511138032484360: # ТОТЯ 
+							if ctx.guild.id == 577511138032484360 or ctx.guild.id == 465086262383083520: # ТОТЯ 
 								hexf = hexc.replace('#', '0x')
 								await role.edit(colour = int(hexf, 16))
 							else:
