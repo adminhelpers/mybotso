@@ -24,6 +24,8 @@ famuser = db["famuser"]
 users = db["users"]
 reports = dbs["reports"]
 
+ahajbd = 'fd'
+
 global errmessage
 errmessage = '`[Ps]:` Если вы не нашли в списке свою ошибку, обратитель к разработчику через [[В]Контакте](https://vk.com/dollarbabys)'
 
