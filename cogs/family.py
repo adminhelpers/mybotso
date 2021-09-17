@@ -45,6 +45,7 @@ class family(commands.Cog):
 
 	@commands.Cog.listener()
 	async def on_ready(self):
+		print('+')
 		print("Rodina 04 | System of Family by kodiknarkotik#5187 - Запущен")
 	
 	@commands.command(aliases = ['fhelp'])
