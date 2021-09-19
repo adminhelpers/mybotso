@@ -88,31 +88,81 @@ class family(commands.Cog):
 			await msg.delete()
 			if msg.content.lower() == 'отмена':
 				return await m.delete() 
-			if ctx.guild.id == 577511138032484360 or ctx.guild.id == 465086262383083520: # ТОТЯ 
-				await m.edit(embed = discord.Embed(title = '\⛩️ **__Заполнение данных:__**', description = f'**Заполните данные:**\n**1.** Владелец семьи: {member.mention}`({member})`\n**2.** Название семьи: **{msg.content}**\n**3.** Название семейной роли: *__Не указано__*\n**4.** Цвет семейной роли: *__Не указано__*\n**5.** Название семейного голосового канала: *__Не указано__*\n\n**__Теперь установите название семейной роли__**\nПример: {msg.content}\nЯ установлю семье такое название!\n\n**Для того что бы отменить создание семьи введите:** `Отмена`'))
-				m1 = await ctx.send("**`Напишите в чат название семейной роли:`**", embed = discord.Embed(description = f'> **Пример:** `{msg.content} role`\n-- Я установлю `{msg.content} role` названием семейной роли\n\n> `Для установки стандартного названия:` **-**\n-- Я установлю `название семьи` в название роли.\n\nЧто бы отменить создание семьи используйте: `Отмена`'))
-			else:
-				await m.edit(embed = discord.Embed(title = 'Заполнение данных', description = f'Получил Ваш ответ, очень оригинально! Продолжайте заполнять данные!\n1. `Владелец семьи`: {member.mention}`({member})`\n2. `Название семьи:` **{msg.content}**\n3. `Название семейной роли:` **Не указано**\n4. `Цвет семейной роли:` **Не указано**\n5. `Название семейного голосового канала:` **Не указано**\n\n**Теперь установите название семейной роли**\n> **Пример:** `{msg.content} role`\n-- Я установлю `{msg.content} role` названием семейной роли\n\n> `Для установки стандартного названия:` **-**\n-- Я установлю `название семьи` в название роли.\n\n`Для того что бы отменить создание семьи введите:` **Отмена**'))
-				m1 = await ctx.send("**`Напишите в чат название семейной роли:`**", embed = discord.Embed(description = f'> **Пример:** `{msg.content} role`\n-- Я установлю `{msg.content} role` названием семейной роли\n\n> `Для установки стандартного названия:` **-**\n-- Я установлю `название семьи` в название роли.\n\nЧто бы отменить создание семьи используйте: `Отмена`'))
-			def check(m):
-				return m.channel == ctx.channel and m.author == ctx.author
-			try:
-				msg1 = await self.bot.wait_for('message', check = check, timeout= 120.0)
-			except TimeoutError:
-				await m.delete()
-				return await m1.delete()
-			else:
-				await msg1.delete()
-				await m1.delete()
-				if msg1.content.lower() == 'отмена':
-					return await m.delete()
-				frolename = f'{msg.content} role' if msg1.content == '-' else msg.content
-				if ctx.guild.id == 577511138032484360 or ctx.guild.id == 465086262383083520: # ТОТЯ 
-					await m.edit(embed = discord.Embed(title = '\⛩️ **__Заполнение данных:__**', description = f'**Заполните данные:**\n**1.** Владелец семьи: {member.mention}`({member})`\n**2.** Название семьи: **__{msg.content}__**\n**3.** Название семейной роли: *__{frolename}__*\n**4.** Цвет семейной роли: *__Не указано__*\n**5.** Название семейного голосового канала: *__Не указано__*\n\n**__Теперь установите цвет для семейной роли__**\nНапример: #2f3236\n\n**Чтобы отменить создание семьи используйте:** `Отмена`'))
-					m9 = await ctx.send(embed = discord.Embed(title = '\⛩️ **__Цвет семейной роли:__**', description = 'Чтобы установить цвет для роли, укажите **hex color**\nНапример: #2f3236\n\n**Чтобы отменить создание семьи используйте:** `Отмена`'))
+			if ctx.guild.id != 465086262383083520: # ТОТЯ ЮО
+				if ctx.guild.id == 577511138032484360: # ТОТЯ 
+					await m.edit(embed = discord.Embed(title = '\⛩️ **__Заполнение данных:__**', description = f'**Заполните данные:**\n**1.** Владелец семьи: {member.mention}`({member})`\n**2.** Название семьи: **{msg.content}**\n**3.** Название семейной роли: *__Не указано__*\n**4.** Цвет семейной роли: *__Не указано__*\n**5.** Название семейного голосового канала: *__Не указано__*\n\n**__Теперь установите название семейной роли__**\nПример: {msg.content}\nЯ установлю семье такое название!\n\n**Для того что бы отменить создание семьи введите:** `Отмена`'))
+					m1 = await ctx.send("**`Напишите в чат название семейной роли:`**", embed = discord.Embed(description = f'> **Пример:** `{msg.content} role`\n-- Я установлю `{msg.content} role` названием семейной роли\n\n> `Для установки стандартного названия:` **-**\n-- Я установлю `название семьи` в название роли.\n\nЧто бы отменить создание семьи используйте: `Отмена`'))
 				else:
-					await m.edit(embed = discord.Embed(title = 'Заполнение данных', description = f'Понял - принял, обработал. Давайте дальше!\n1. `Владелец семьи`: {member.mention}`({member})`\n2. `Название семьи:` **{msg.content}**\n3. `Название семейной роли:` **{frolename}**\n4. `Цвет семейной роли:` **Не указано**\n5. `Название семейного голосового канала:` **Не указано**\n\n**Теперь установите цвет для семейной роли**\n> **Пример:** `Синий`\n-- Я установлю `синий` цвет для семейной роли.\n\n**Доступные цвета:** `Белый, Чёрный, Голубой, Синий, Бирюзовый, Красный, Жёлтый, Оранжевый, Розовый, Фиолетовый, Пурпурный, Зелёный, Лаймовый`\n\n> `Для установки стандартного цвета:`   **-**\n-- Я установлю `белый` цвет для семейной роли.\n\n`Для того что бы отменить создание семьи введите:` **Отмена**'))
-					m9 = await ctx.send("`Напишите в чат название цвета для семейной роли`", embed = discord.Embed(description = '> **Пример:** `Синий`\n-- Я установлю `синий` цвет для семейной роли.\n\n**Доступные цвета:** `Белый, Чёрный, Голубой, Синий, Бирюзовый, Красный, Жёлтый, Оранжевый, Розовый, Фиолетовый, Пурпурный, Зелёный, Лаймовый`\n\n> `Для установки стандартного цвета:`   **-**\n-- Я установлю `белый` цвет для семейной роли.\n\nЧто бы отменить создание семьи используйте: `Отмена`'))
+					await m.edit(embed = discord.Embed(title = 'Заполнение данных', description = f'Получил Ваш ответ, очень оригинально! Продолжайте заполнять данные!\n1. `Владелец семьи`: {member.mention}`({member})`\n2. `Название семьи:` **{msg.content}**\n3. `Название семейной роли:` **Не указано**\n4. `Цвет семейной роли:` **Не указано**\n5. `Название семейного голосового канала:` **Не указано**\n\n**Теперь установите название семейной роли**\n> **Пример:** `{msg.content} role`\n-- Я установлю `{msg.content} role` названием семейной роли\n\n> `Для установки стандартного названия:` **-**\n-- Я установлю `название семьи` в название роли.\n\n`Для того что бы отменить создание семьи введите:` **Отмена**'))
+					m1 = await ctx.send("**`Напишите в чат название семейной роли:`**", embed = discord.Embed(description = f'> **Пример:** `{msg.content} role`\n-- Я установлю `{msg.content} role` названием семейной роли\n\n> `Для установки стандартного названия:` **-**\n-- Я установлю `название семьи` в название роли.\n\nЧто бы отменить создание семьи используйте: `Отмена`'))
+
+				def check(m):
+					return m.channel == ctx.channel and m.author == ctx.author
+				try:
+					msg1 = await self.bot.wait_for('message', check = check, timeout= 120.0)
+				except TimeoutError:
+					await m.delete()
+					return await m1.delete()
+				else:
+					await msg1.delete()
+					await m1.delete()
+					if msg1.content.lower() == 'отмена':
+						return await m.delete()
+					frolename = f'{msg.content} role' if msg1.content == '-' else msg.content
+					if ctx.guild.id == 577511138032484360 or ctx.guild.id == 465086262383083520: # ТОТЯ 
+						await m.edit(embed = discord.Embed(title = '\⛩️ **__Заполнение данных:__**', description = f'**Заполните данные:**\n**1.** Владелец семьи: {member.mention}`({member})`\n**2.** Название семьи: **__{msg.content}__**\n**3.** Название семейной роли: *__{frolename}__*\n**4.** Цвет семейной роли: *__Не указано__*\n**5.** Название семейного голосового канала: *__Не указано__*\n\n**__Теперь установите цвет для семейной роли__**\nНапример: #2f3236\n\n**Чтобы отменить создание семьи используйте:** `Отмена`'))
+						m9 = await ctx.send(embed = discord.Embed(title = '\⛩️ **__Цвет семейной роли:__**', description = 'Чтобы установить цвет для роли, укажите **hex color**\nНапример: #2f3236\n\n**Чтобы отменить создание семьи используйте:** `Отмена`'))
+					else:
+						await m.edit(embed = discord.Embed(title = 'Заполнение данных', description = f'Понял - принял, обработал. Давайте дальше!\n1. `Владелец семьи`: {member.mention}`({member})`\n2. `Название семьи:` **{msg.content}**\n3. `Название семейной роли:` **{frolename}**\n4. `Цвет семейной роли:` **Не указано**\n5. `Название семейного голосового канала:` **Не указано**\n\n**Теперь установите цвет для семейной роли**\n> **Пример:** `Синий`\n-- Я установлю `синий` цвет для семейной роли.\n\n**Доступные цвета:** `Белый, Чёрный, Голубой, Синий, Бирюзовый, Красный, Жёлтый, Оранжевый, Розовый, Фиолетовый, Пурпурный, Зелёный, Лаймовый`\n\n> `Для установки стандартного цвета:`   **-**\n-- Я установлю `белый` цвет для семейной роли.\n\n`Для того что бы отменить создание семьи введите:` **Отмена**'))
+						m9 = await ctx.send("`Напишите в чат название цвета для семейной роли`", embed = discord.Embed(description = '> **Пример:** `Синий`\n-- Я установлю `синий` цвет для семейной роли.\n\n**Доступные цвета:** `Белый, Чёрный, Голубой, Синий, Бирюзовый, Красный, Жёлтый, Оранжевый, Розовый, Фиолетовый, Пурпурный, Зелёный, Лаймовый`\n\n> `Для установки стандартного цвета:`   **-**\n-- Я установлю `белый` цвет для семейной роли.\n\nЧто бы отменить создание семьи используйте: `Отмена`'))
+					def check(m):
+						return m.channel == ctx.channel and m.author == ctx.author
+					try:
+						msg9 = await self.bot.wait_for('message', check = check, timeout= 120.0)
+					except TimeoutError:
+						await m.delete()
+						return await m9.delete()
+					else:
+						if ctx.guild.id == 577511138032484360 or ctx.guild.id == 465086262383083520: # ТОТЯ  
+							if not '#' in msg9.content: 
+								await m9.delete()
+								await m.delete()
+								return await ctx.send(embed = discord.Embed(title = '\⛩️ **__Произошла ошибка__**', description = 'Чтобы установить цвет для роли, укажите **hex color**\nНапример: #2f3236\n\n**Начните создание семьи заново.**'), delete_after = 10)
+							hexc = "#FFFFFF" if msg9.content == '-' else msg9.content
+							fcolor = hexc
+						else:
+							fcolor = "Белый" if msg9.content == '-' else msg9.content
+							colors = {"белый": 0xFFFFFF, "чёрный": 0x000000, "черный": 0x000000, "голубой": 0x6495ED, "синий": 0x0000FF, "бирюзовый": 0x1df5c3, "красный": 0xFF0000, "жёлтый": 0xFFFF00, "желтный": 0xFFFF00, "розовый": 0xFF00FF, "фиолетовый": 0xEE82EE, "пурпурный": 0xA020F0, "оранжевый": 0xFFA500, "зелёный": 0x00FF00, "зеленый": 0x00FF00, "лаймовый": 0x32CD32}
+							eq = colors.get(fcolor.lower(), None)
+							hexc = 0xFFFFFF if not eq else colors[fcolor.lower()]
+						await msg9.delete()
+						await m9.delete()
+						if msg9.content.lower() == 'отмена':
+							return await m.delete()
+
+						if ctx.guild.id == 577511138032484360: # ТОТЯ 
+							fvoice = f'{msg.content}'
+						else:
+							await m.edit(embed = discord.Embed(title = '\⛩️ **__Заполнение данных__**', description = f'Есть контакт! Продолжайте заполнение.\n\n**1.** Владелец семьи: **__{member.mention}`({member})__**\n**2.** Название семьи: **__{msg.content}__**\n**3.** Название семейной роли: **__{frolename}__**\n**4.** Цвет семейной роли: **__{fcolor}__**\n**5.** `Название семейного голосового канала:` **__Не указано__**\n\n**Теперь установите название семейного голосового канала**\n> **Пример:** `{msg.content} Voice`\n-- Я установлю `"{msg.content} Voice"` названием семейного голосового канала\n\n> `Для установки стандартного названия:`   **-**\n-- Я установлю `название семьи` в название семейного голосового канала.\n\n`Для того что бы отменить создание семьи введите:` **Отмена**'))
+							m2 = await ctx.send("**`Напишите название семейного голосового канала:`**", embed = discord.Embed(description = f'> **Пример:** `{msg.content} Voice`\n-- Я установлю `"{msg.content} Voice"` названием семейного голосового канала\n\n> `Для установки стандартного названия:`   **-**\n-- Я установлю `название семьи` в название семейного голосового канала.\n\nЧто бы отменить создание семьи используйте: `Отмена`'))
+							def check(m):
+								return m.channel == ctx.channel and m.author == ctx.author
+							try:
+								msg2 = await self.bot.wait_for('message', check = check, timeout= 120.0)
+							except TimeoutError:
+								await m.delete()
+								return await m2.delete()
+							else:
+								await msg2.delete()
+								fvoice = f'{msg.content} Voice' if msg2.content == '-' else msg2.content
+								await m2.delete()
+								if msg2.content.lower() == 'отмена':
+									return await m.delete()
+			else:
+				frolename = msg.content
+				fvoice = msg.content
+				await m.edit(embed = discord.Embed(title = '\⛩️ **__Заполнение данных:__**', description = f'**Заполните данные:**\n**1.** Владелец семьи: {member.mention}`({member})`\n**2.** Название семьи: **__{msg.content}__**\n**3.** Название семейной роли: *__{frolename}__*\n**4.** Название семейного голосового канала: *__{fvoice}__*\n**5.** Цвет семейной роли: *__Не указано__*\n\n**__Теперь установите цвет для семейной роли__**\nНапример: #2f3236\n\n**Чтобы отменить создание семьи используйте:** `Отмена`'))
+				m9 = await ctx.send(embed = discord.Embed(title = '\⛩️ **__Цвет семейной роли:__**', description = 'Чтобы установить цвет для роли, укажите **hex color**\nНапример: #2f3236\n\n**Чтобы отменить создание семьи используйте:** `Отмена`'))
 				def check(m):
 					return m.channel == ctx.channel and m.author == ctx.author
 				try:
@@ -120,94 +170,65 @@ class family(commands.Cog):
 				except TimeoutError:
 					await m.delete()
 					return await m9.delete()
-				else:
-					if ctx.guild.id == 577511138032484360 or ctx.guild.id == 465086262383083520: # ТОТЯ  
-						if not '#' in msg9.content: 
-							await m9.delete()
-							await m.delete()
-							return await ctx.send(embed = discord.Embed(title = '\⛩️ **__Произошла ошибка__**', description = 'Чтобы установить цвет для роли, укажите **hex color**\nНапример: #2f3236\n\n**Начните создание семьи заново.**'), delete_after = 10)
-						hexc = "#FFFFFF" if msg9.content == '-' else msg9.content
-						fcolor = hexc
-					else:
-						fcolor = "Белый" if msg9.content == '-' else msg9.content
-						colors = {"белый": 0xFFFFFF, "чёрный": 0x000000, "черный": 0x000000, "голубой": 0x6495ED, "синий": 0x0000FF, "бирюзовый": 0x1df5c3, "красный": 0xFF0000, "жёлтый": 0xFFFF00, "желтный": 0xFFFF00, "розовый": 0xFF00FF, "фиолетовый": 0xEE82EE, "пурпурный": 0xA020F0, "оранжевый": 0xFFA500, "зелёный": 0x00FF00, "зеленый": 0x00FF00, "лаймовый": 0x32CD32}
-						eq = colors.get(fcolor.lower(), None)
-						hexc = 0xFFFFFF if not eq else colors[fcolor.lower()]
-					await msg9.delete()
-					await m9.delete()
-					if msg9.content.lower() == 'отмена':
-						return await m.delete()
-					
-					if ctx.guild.id == 577511138032484360: # ТОТЯ 
-						fvoice = f'{msg.content}'
-					else:
-						await m.edit(embed = discord.Embed(title = '\⛩️ **__Заполнение данных__**', description = f'Есть контакт! Продолжайте заполнение.\n\n**1.** Владелец семьи: **__{member.mention}`({member})__**\n**2.** Название семьи: **__{msg.content}__**\n**3.** Название семейной роли: **__{frolename}__**\n**4.** Цвет семейной роли: **__{fcolor}__**\n**5.** `Название семейного голосового канала:` **__Не указано__**\n\n**Теперь установите название семейного голосового канала**\n> **Пример:** `{msg.content} Voice`\n-- Я установлю `"{msg.content} Voice"` названием семейного голосового канала\n\n> `Для установки стандартного названия:`   **-**\n-- Я установлю `название семьи` в название семейного голосового канала.\n\n`Для того что бы отменить создание семьи введите:` **Отмена**'))
-						m2 = await ctx.send("**`Напишите название семейного голосового канала:`**", embed = discord.Embed(description = f'> **Пример:** `{msg.content} Voice`\n-- Я установлю `"{msg.content} Voice"` названием семейного голосового канала\n\n> `Для установки стандартного названия:`   **-**\n-- Я установлю `название семьи` в название семейного голосового канала.\n\nЧто бы отменить создание семьи используйте: `Отмена`'))
-						def check(m):
-							return m.channel == ctx.channel and m.author == ctx.author
-						try:
-							msg2 = await self.bot.wait_for('message', check = check, timeout= 120.0)
-						except TimeoutError:
-							await m.delete()
-							return await m2.delete()
-						else:
-							await msg2.delete()
-							fvoice = f'{msg.content} Voice' if msg2.content == '-' else msg2.content
-							await m2.delete()
-							if msg2.content.lower() == 'отмена':
-								return await m.delete()
+				else: 
+					if not '#' in msg9.content: 
+						await m9.delete()
+						await m.delete()
+						return await ctx.send(embed = discord.Embed(title = '\⛩️ **__Произошла ошибка__**', description = 'Чтобы установить цвет для роли, укажите **hex color**\nНапример: #2f3236\n\n**Начните создание семьи заново.**'), delete_after = 10)
+					hexc = "#FFFFFF" if msg9.content == '-' else msg9.content
+					fcolor = hexc
+			await m.delete()
 
-					await m.delete()
+			if ctx.guild.id == 577511138032484360:
+				m4 = await ctx.send(embed = discord.Embed(title = '\⛩️ **__Проверка валидности данных__:**', description = f'Отлично! Все данные заполнены!\nПроверьте правильность заполнения и выберите дальнейшие действия\n\n**1.** Владелец семьи: **__{member.mention}`({member})__**\n**2.** Название семьи: **__{msg.content}__**\n**3.** Название семейной роли: **__{frolename}__**\n**4.** Цвет семейной роли: **__{fcolor}__**\n**5.** Название семейного голосового канала: **__{fvoice}__**\n\n**Для того что бы отменить создание семьи введите:** `Отмена/-`\n**Для подтверждения создания семьи введите:** `Да/+`'))
+			else:
+				m4 = await ctx.send(embed = discord.Embed(title = 'Проверка валидности данных', description = f'Отлично! Все данные заполнены!\nПроверьте правильность их заполнения и выберите дальнейшие действия\n\n1. `Владелец семьи`: {member.mention}`({member})`\n2. `Название семьи:` **{msg.content}**\n3. `Название семейной роли:` **{frolename}**\n4. `Цвет семейной роли:` **{fcolor}**\n5. `Название семейного голосового канала:` **{fvoice}**\n\n`Для того что бы отменить создание семьи введите:` **Отмена**/**-**\n`Для подтверждения создания семьи введите:` **Да**/**+**'))
+			def check(m):
+				return m.channel == ctx.channel and m.author == ctx.author
+			try:
+				msg4 = await self.bot.wait_for('message', check = check, timeout= 120.0)
+			except TimeoutError:
+				return await m4.delete()
+			else:
+				if msg4.content == "+" or msg4.content.lower() == 'да':
+					await msg4.delete()
+					await m4.delete()
 					if ctx.guild.id == 577511138032484360 or ctx.guild.id == 465086262383083520: # ТОТЯ 
-						m4 = await ctx.send(embed = discord.Embed(title = '\⛩️ **__Проверка валидности данных__:**', description = f'Отлично! Все данные заполнены!\nПроверьте правильность заполнения и выберите дальнейшие действия\n\n**1.** Владелец семьи: **__{member.mention}`({member})__**\n**2.** Название семьи: **__{msg.content}__**\n**3.** Название семейной роли: **__{frolename}__**\n**4.** Цвет семейной роли: **__{fcolor}__**\n**5.** Название семейного голосового канала: **__{fvoice}__**\n\n**Для того что бы отменить создание семьи введите:** `Отмена/-`\n**Для подтверждения создания семьи введите:** `Да/+`'))
+						await ctx.send(embed = discord.Embed(title = '\⛩️ **__Информация о созданной семье__:**', description = f'**1.** Владелец семьи: **__{member.mention}`({member})__**\n**2.** Название семьи: **__{msg.content}__**\n**3.** Название семейной роли: **__{frolename}__**\n**4.** Цвет семейной роли: **__{fcolor}__**\n**5.** Название семейного голосового канала: **__{fvoice}__**'), delete_after = 60)
+						emb = discord.Embed(title = '\⛩️ **__Информация о созданной семье__:**', description = f'**Администратор {ctx.author.mention}(`{ctx.author}`) создал новую семью**\n\nИнформация о семье:\n**1.** Владелец семьи: **__{member.mention}`({member})__**\n**2.** Название семьи: **__{msg.content}__**\n**3.** Название семейной роли: **__{frolename}__**\n**4.** Цвет семейной роли: **__{fcolor}__**\n**5.** Название семейного голосового канала: **__{fvoice}__**')
 					else:
-						m4 = await ctx.send(embed = discord.Embed(title = 'Проверка валидности данных', description = f'Отлично! Все данные заполнены!\nПроверьте правильность их заполнения и выберите дальнейшие действия\n\n1. `Владелец семьи`: {member.mention}`({member})`\n2. `Название семьи:` **{msg.content}**\n3. `Название семейной роли:` **{frolename}**\n4. `Цвет семейной роли:` **{fcolor}**\n5. `Название семейного голосового канала:` **{fvoice}**\n\n`Для того что бы отменить создание семьи введите:` **Отмена**/**-**\n`Для подтверждения создания семьи введите:` **Да**/**+**'))
-					def check(m):
-						return m.channel == ctx.channel and m.author == ctx.author
-					try:
-						msg4 = await self.bot.wait_for('message', check = check, timeout= 120.0)
-					except TimeoutError:
-						return await m4.delete()
+						await ctx.send(f'`[CREATEFAM]` `Семья "{msg.content}" успешно зарегистрирована.`', embed = discord.Embed(title = 'Информация о созданой семье', description = f'1. `Владелец семьи`: {member.mention}`({member})`\n2. `Название семьи:` **{msg.content}**\n3. `Название семейной роли:` **{frolename}**\n4. `Цвет семейной роли:` **{fcolor}**\n5. `Название семейного голосового канала:` **{fvoice}**'), delete_after = 60)
+						emb = discord.Embed(title = 'Создана новая семья', description = f'**Администратор {ctx.author.mention}(`{ctx.author}`) создал новую семью**\n\nИнформация о семье:\n1. `Владелец семьи`: {member.mention}`({member})`\n2. `Название семьи:` **{msg.content}**\n3. `Название семейной роли:` **{frolename}**\n4. `Цвет семейной роли:` **{fcolor}**\n5. `Название семейного голосового канала:` **{fvoice}**')
+					emb.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
+					emb.set_thumbnail(url = ctx.guild.icon_url)
+					await self.bot.get_channel(834039427541631016).send(embed = emb)
+					name = msg.content
+					leader = member.name
+					leaderID = member.id
+					role = await ctx.guild.create_role(name = f"{frolename}")
+					if ctx.guild.id == 577511138032484360 or ctx.guild.id == 465086262383083520: # ТОТЯ 
+						hexf = hexc.replace('#', '0x')
+						await role.edit(colour = int(hexf, 16))
 					else:
-						if msg4.content == "+" or msg4.content.lower() == 'да':
-							await msg4.delete()
-							await m4.delete()
-							if ctx.guild.id == 577511138032484360 or ctx.guild.id == 465086262383083520: # ТОТЯ 
-								await ctx.send(embed = discord.Embed(title = '\⛩️ **__Информация о созданной семье__:**', description = f'**1.** Владелец семьи: **__{member.mention}`({member})__**\n**2.** Название семьи: **__{msg.content}__**\n**3.** Название семейной роли: **__{frolename}__**\n**4.** Цвет семейной роли: **__{fcolor}__**\n**5.** Название семейного голосового канала: **__{fvoice}__**'), delete_after = 60)
-								emb = discord.Embed(title = '\⛩️ **__Информация о созданной семье__:**', description = f'**Администратор {ctx.author.mention}(`{ctx.author}`) создал новую семью**\n\nИнформация о семье:\n**1.** Владелец семьи: **__{member.mention}`({member})__**\n**2.** Название семьи: **__{msg.content}__**\n**3.** Название семейной роли: **__{frolename}__**\n**4.** Цвет семейной роли: **__{fcolor}__**\n**5.** Название семейного голосового канала: **__{fvoice}__**')
-							else:
-								await ctx.send(f'`[CREATEFAM]` `Семья "{msg.content}" успешно зарегистрирована.`', embed = discord.Embed(title = 'Информация о созданой семье', description = f'1. `Владелец семьи`: {member.mention}`({member})`\n2. `Название семьи:` **{msg.content}**\n3. `Название семейной роли:` **{frolename}**\n4. `Цвет семейной роли:` **{fcolor}**\n5. `Название семейного голосового канала:` **{fvoice}**'), delete_after = 60)
-								emb = discord.Embed(title = 'Создана новая семья', description = f'**Администратор {ctx.author.mention}(`{ctx.author}`) создал новую семью**\n\nИнформация о семье:\n1. `Владелец семьи`: {member.mention}`({member})`\n2. `Название семьи:` **{msg.content}**\n3. `Название семейной роли:` **{frolename}**\n4. `Цвет семейной роли:` **{fcolor}**\n5. `Название семейного голосового канала:` **{fvoice}**')
-							emb.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
-							emb.set_thumbnail(url = ctx.guild.icon_url)
-							await self.bot.get_channel(834039427541631016).send(embed = emb)
-							name = msg.content
-							leader = member.name
-							leaderID = member.id
-							role = await ctx.guild.create_role(name = f"{frolename}")
-							if ctx.guild.id == 577511138032484360 or ctx.guild.id == 465086262383083520: # ТОТЯ 
-								hexf = hexc.replace('#', '0x')
-								await role.edit(colour = int(hexf, 16))
-							else:
-								await role.edit(colour = hexc)
-							if ctx.guild.id == 465086262383083520: # ТОТЯ 
-								await ctx.guild.edit_role_positions(positions = {role: 47})
-								channel = await ctx.guild.create_voice_channel(name = fvoice, category = discord.utils.get(ctx.guild.categories, id = 885955640386813952))
-								await self.bot.get_channel(887804656590389288).set_permissions(role, view_channel = True, read_message_history = True, read_messages = True)
-							elif ctx.guild.id == 577511138032484360: # ТОТЯ 
-								await ctx.guild.edit_role_positions(positions = {role: 28})
-								channel = await ctx.guild.create_voice_channel(name = fvoice, category = discord.utils.get(ctx.guild.categories, id = 872174625168162916))
-								await self.bot.get_channel(872177316070039582).set_permissions(role, view_channel = True, read_message_history = True, read_messages = True)
-							else:
-								await ctx.guild.edit_role_positions(positions = {role: 18})
-								channel = await ctx.guild.create_voice_channel(name = fvoice, category = discord.utils.get(ctx.guild.categories, id = 591642172349218816))
-								await self.bot.get_channel(591642627137339433).set_permissions(role, view_channel = True, read_message_history = True, read_messages = True)
-							await channel.set_permissions(role, view_channel = True, connect = True, speak = True, use_voice_activation = True)
-							fam.insert_one({"id": [member.id, 1, 1], "guild": ctx.guild.id, "name": name, "channel": channel.id, "leader": leader, "leaderID": leaderID,"mem": 5, "zam1": 1, "zam2": 1, "zam3": 1, "zam4": 1, "verf": 0, "rolename": frolename, "roleID": role.id, "memberid": 1, "mesID": 1})
-							await member.add_roles(discord.utils.get(ctx.guild.roles, id = role.id))
-						else:
-							await msg4.delete()
-							await m4.edit(embed = discord.Embed(description = f'Вы успешно отказались от создания семьи!'), delete_after = 5)
+						await role.edit(colour = hexc)
+					if ctx.guild.id == 465086262383083520: # ТОТЯ ЮО
+						await ctx.guild.edit_role_positions(positions = {role: 47})
+						channel = await ctx.guild.create_voice_channel(name = fvoice, category = discord.utils.get(ctx.guild.categories, id = 885955640386813952))
+						await self.bot.get_channel(887804656590389288).set_permissions(role, view_channel = True, read_message_history = True, read_messages = True)
+					elif ctx.guild.id == 577511138032484360: # ТОТЯ 
+						await ctx.guild.edit_role_positions(positions = {role: 28})
+						channel = await ctx.guild.create_voice_channel(name = fvoice, category = discord.utils.get(ctx.guild.categories, id = 872174625168162916))
+						await self.bot.get_channel(872177316070039582).set_permissions(role, view_channel = True, read_message_history = True, read_messages = True)
+					else:
+						await ctx.guild.edit_role_positions(positions = {role: 18})
+						channel = await ctx.guild.create_voice_channel(name = fvoice, category = discord.utils.get(ctx.guild.categories, id = 591642172349218816))
+						await self.bot.get_channel(591642627137339433).set_permissions(role, view_channel = True, read_message_history = True, read_messages = True)
+					await channel.set_permissions(role, view_channel = True, connect = True, speak = True, use_voice_activation = True)
+					fam.insert_one({"id": [member.id, 1, 1], "guild": ctx.guild.id, "name": name, "channel": channel.id, "leader": leader, "leaderID": leaderID,"mem": 5, "zam1": 1, "zam2": 1, "zam3": 1, "zam4": 1, "verf": 0, "rolename": frolename, "roleID": role.id, "memberid": 1, "mesID": 1})
+					await member.add_roles(discord.utils.get(ctx.guild.roles, id = role.id))
+				else:
+					await msg4.delete()
+					await m4.edit(embed = discord.Embed(description = f'Вы успешно отказались от создания семьи!'), delete_after = 5)
 								
 	@commands.command(aliases = ['пригласить', 'finvite', 'finv'])
 	async def faminvite(self, ctx, member: discord.Member = None):
