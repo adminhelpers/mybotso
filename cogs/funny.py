@@ -190,18 +190,6 @@ class funny(commands.Cog):
             await msg.edit(embed=embed)
 
     @commands.command()
-    async def avatar(self, ctx, member: discord.Member = None):
-        await ctx.channel.purge(limit=1)
-        author = ctx.message.author
-
-        user = ctx.message.author if (member == None) else member
-        embed = discord.Embed( description = f'''{author.mention}, вот аватар пользователя {user.mention}:''', color= 0xFB9E14)
-        embed.set_image(url=user.avatar_url_as(format = None, size = 4096))
-        embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
-        embed.set_thumbnail(url = 'https://psv4.userapi.com/c856336/u264775111/docs/d16/361841bb57ae/256kh256.png?extra=CdKRlvHHzIZQ2Sf6EZDC7xGxJeEQ7Bc_MpJF93mGTmr6OIFQK5pMldN12vqn-ofHpk_bG45rl6dqVI51r9a8Akxia5lebPhRg78DQLL9syvyA-UE70_u0VXyqUM-eQeohjgTg4YqGfov-YzS-5PMK8JxkXI')
-        await ctx.send(embed=embed)
-
-    @commands.command()
     async def га(self, ctx):
 
         if not ctx.guild.id == 577511138032484360:
