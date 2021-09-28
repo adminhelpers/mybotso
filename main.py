@@ -215,6 +215,19 @@ async def getruless(ctx):
     e.set_footer(text = f'Support Team by dollar ム baby#3603 & lalalalal#1125', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
     e.set_thumbnail(url = ctx.guild.icon_url)
     await ctx.send(embed = e)
+    
+@bot.command()
+async def avatar(ctx, member: discord.Member = None):
+    await ctx.channel.purge(limit=1)
+    author = ctx.message.author
+
+    user = ctx.message.author if (member == None) else member
+    embed = discord.Embed( description = f'''{author.mention}, вот аватар пользователя {user.mention}:''', color= 0xFB9E14)
+    embed.set_image(url=user.avatar_url_as(format = None, size = 4096))
+    embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
+    embed.set_thumbnail(url = ctx.guild.icon_url)
+    await ctx.send(embed=embed)
+
 
 @bot.command()
 @commands.has_permissions(administrator = True)
