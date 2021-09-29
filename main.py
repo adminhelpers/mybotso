@@ -218,6 +218,7 @@ async def getruless(ctx):
     
 @bot.command()
 async def avatar(ctx, member: discord.Member = None):
+    if ctx.guild.id != 477547500232769536: return
     await ctx.channel.purge(limit=1)
     author = ctx.message.author
 
