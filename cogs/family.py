@@ -418,7 +418,7 @@ class family(commands.Cog):
 			return await ctx.send(embed = discord.Embed(title = '\⛩️ **__Не удалось найти семью с таким названием__**', description = f'❌ Для того что бы узнать информацию о своей семье используйте: `{prefix}finfo`\nСписок всех семей сервера **__{ctx.guild.name}__**: `{prefix}famlist(flist)`'), delete_after = 7)
 
 	@commands.command(aliases = ['fleave', 'flv'])
-	async def famleave(self, ctx, *, amount: str = None):
+	async def famleave(self, ctx):
 		prefix = reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]
 		if guild_accept(ctx.guild.id) == 0: return
 		for i in ctx.author.roles:
