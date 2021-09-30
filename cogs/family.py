@@ -52,11 +52,13 @@ class family(commands.Cog):
 	async def famleave(self, ctx):
 		prefix = reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]
 		if guild_accept(ctx.guild.id) == 0: return
+		amount = '-'
 		for i in ctx.author.roles:
 			if i.id in [i["roleID"] for i in fam.find({"guild": ctx.guild.id})]:
 				amount, role = fam.find_one({"guild": ctx.guild.id, "roleID": i.id})["name"], discord.utilgs.get(ctx.guild.roles, id = i.id)
 				break
-		if amount == None:
+
+		if amount == '-':
     			return await ctx.send(embed = discord.Embed(title = '\⛩️ **__Не удалось найти указатель семьи__**', description = f'❌ `Использование этой команды доступно только участникам одной из семей.`', delete_after = 7)
 					      	      
 		embed = discord.Embed(title = '\⛩️ **__Подтвердите ваши действия__**', description = f'{ctx.author}, Вы действительно хотите покинуть семью **__{amount}__** по собственному желанию?\n\n✅ - **Подтвердить**\n❌ - **Отменитить действие**')
