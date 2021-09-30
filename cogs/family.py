@@ -459,6 +459,7 @@ class family(commands.Cog):
 				embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
 				return await ctx.send(f'{ctx.author.mention}', embed = embed, delete_after = 5)
 
+
 	@commands.command(aliases = ['разжаловать', 'rfz'])
 	async def removefamzam(self, ctx, member: discord.Member = None):
 		global errout
