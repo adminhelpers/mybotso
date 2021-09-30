@@ -48,6 +48,50 @@ class family(commands.Cog):
 		print('+')
 		print("Rodina 04 | System of Family by kodiknarkotik#5187 - Запущен")
 	
+	@commands.command(aliases = ['fleave', 'flv'])
+	async def famleave(self, ctx):
+		prefix = reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]
+		if guild_accept(ctx.guild.id) == 0: return
+		for i in ctx.author.roles:
+			if i.id in [i["roleID"] for i in fam.find({"guild": ctx.guild.id})]:
+				amount, role = fam.find_one({"guild": ctx.guild.id, "roleID": i.id})["name"], discord.utilgs.get(ctx.guild.roles, id = i.id)
+				break
+		if amount == None:
+    			return await ctx.send(embed = discord.Embed(title = '\⛩️ **__Не удалось найти указатель семьи__**', description = f'❌ `Использование этой команды доступно только участникам одной из семей.`', delete_after = 7)
+					      	      
+		embed = discord.Embed(title = '\⛩️ **__Подтвердите ваши действия__**', description = f'{ctx.author}, Вы действительно хотите покинуть семью **__{amount}__** по собственному желанию?\n\n✅ - **Подтвердить**\n❌ - **Отменитить действие**')
+		embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
+		message = await ctx.send(f'{ctx.author.mention}', embed = embed, delete_after = 30)
+		await message.add_reaction('✅')
+		await message.add_reaction('❌')
+		try:
+			react, user = await self.bot.wait_for('reaction_add', timeout= 30.0, check= lambda react, user: user == ctx.author and react.emoji in ['✅', '❌'])
+		except Exception:
+			ctx.command.reset_cooldown(ctx)
+			return await message.delete()
+		else:
+			await message.delete()
+			if str(react.emoji) == '✅':
+				await ctx.author.remove_roles(role)
+				embed = discord.Embed(title = '\⛩️ **__Успешно__**', description = f'✅ {ctx.author}, Вы покинули семью **__{amount}__** по собственному желанию.')
+				embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
+				await ctx.send(embed = embed)
+				if ctx.author.id in fam.find_one({"guild": ctx.guild.id, "name": amount})["id"]:
+					mas = fam.find_one({"guild": ctx.guild.id, "name": amount})["id"]
+					mas.remove(ctx.author.id)
+					mas.append(1)
+					if fam.find_one({"guild": ctx.guild.id, "name": amount})["zam1"] == ctx.author.id: p = "zam1"
+					elif fam.find_one({"guild": ctx.guild.id, "name": amount})["zam2"] == ctx.author.id: p = "zam2"
+					elif fam.find_one({"guild": ctx.guild.id, "name": amount})["zam3"] == ctx.author.id: p = "zam3"
+					elif fam.find_one({"guild": ctx.guild.id, "name": amount})["zam4"] == ctx.author.id: p = "zam4"
+					fam.update_one({"guild": ctx.guild.id, "name": amount}, {"$set": {p: 1, "id": mas}})
+			elif str(react.emoji) == '❌':
+				embed = discord.Embed(title = '❌ {ctx.author}, Вы отменили действие.')
+				embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
+				return await ctx.send(f'{ctx.author.mention}', embed = embed, delete_after = 5)
+
+
+
 	@commands.command(aliases = ['fhelp'])
 	async def famhelp(self, ctx):
 		print('+')
