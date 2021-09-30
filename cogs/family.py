@@ -61,7 +61,7 @@ class family(commands.Cog):
 		if amount == '-':
     			return await ctx.send(embed = discord.Embed(title = '\⛩️ **__Не удалось найти указатель семьи__**', description = f'❌ `Использование этой команды доступно только участникам одной из семей.`', delete_after = 7)
 					      	      
-		embed = discord.Embed(title = '\⛩️ **__Подтвердите ваши действия__**', description = f'{ctx.author}, Вы действительно хотите покинуть семью **__{amount}__** по собственному желанию?\n\n✅ - **Подтвердить**\n❌ - **Отменитить действие**')
+		embed = discord.Embed(title = 'hhh')
 		embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
 		message = await ctx.send(f'{ctx.author.mention}', embed = embed, delete_after = 30)
 		await message.add_reaction('✅')
