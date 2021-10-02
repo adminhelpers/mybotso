@@ -74,6 +74,12 @@ def get_promo(guild, promocode):
 	if users.count_documents({"guild_id": guild, "promocode": promocode}) == 0: return 0
 	return 1
 
+def user_promo(guild, member: discord.Member, promocode):
+	promo = users.find_one({"guild_id": guild, "promocode": promocode})
+	users = promo["users"]
+	if member.id in users: return 1
+	return 0
+
 def use_promo(guild, member: discord.Member, promocode):
 	promo = users.find_one({"guild_id": guild, "promocode": promocode})
 	users = promo["users"]
@@ -127,7 +133,7 @@ class econom(commands.Cog):
         prefix = reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]
         if not ctx.guild.id == 577511138032484360: return 
 
-        if amount == None or lent == None or setad == None: return await ctx.send(ctx.author.mention, embed = emb(title = 'Ошибка использования команды', text = f'❌ {ctx.author}, используйте команду правильно\n\n`Пример:` **__{prefix}createpromo [name] [coin] [lent]__**\n> `name` - Название промокода\n`coin` - Вознаграждение\n> `lent` - Количество его использований'), delete_after = 7)
+        if amount == None or lent == None or setad == None: return await ctx.send(ctx.author.mention, embed = emb(title = 'Ошибка использования команды', text = f'❌ {ctx.author}, используйте команду правильно\n\n`Пример:` **__{prefix}createpromo [name] [coin] [lent]__**\n> `name` - Название промокода\n> `coin` - Вознаграждение\n> `lent` - Количество его использований'), delete_after = 7)
         if get_promo(ctx.guild.id, amount.lower()) == 1: return await ctx.send(ctx.author.mention, embed = emb(title = 'Ошибка создания промокода', text = f'❌ {ctx.author}, такой промокд уже существует.\n`Введите другое название или добавьте что-нибудь в данное, например:` **__{amount.lower()}123__**'), delete_after = 7)
         embed = discord.Embed(title = '\⛩️ **__Подтвердите ваши действия__**', description = f'{ctx.author}, Вы действительно создать промокод со следующими параметрами:\n> `Название:` **__{amount}__**\n> `Вознаграждение за использование:` **__{setad} снежинок__**\n> `Количество использований:` **__{lent} раз__**\n\n✅ - **Подтвердить**\n❌ - **Отменитить действие**')
         embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
@@ -150,7 +156,7 @@ class econom(commands.Cog):
         prefix = reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]
         if not ctx.guild.id == 577511138032484360: return 
 	
-        return await ctx.send(ctx.author.mention, embed = emb(title = 'Список команд промокодов', text = f'**__{prefix}createpromo [name] [coin] [lent]__** `- Создать промокод`\n> `name` - Название промокода\n`coin` - Вознаграждение\n> `lent` - Количество его использований\n\n**__{prefix}promo [name]__** `- Использовать промокод`\n> `[name]` - Название промокода'))
+        return await ctx.send(ctx.author.mention, embed = emb(title = 'Список команд промокодов', text = f'**__{prefix}createpromo [name] [coin] [lent]__** `- Создать промокод`\n> `name` - Название промокода\n> `coin` - Вознаграждение\n> `lent` - Количество его использований\n\n**__{prefix}promo [name]__** `- Использовать промокод`\n> `[name]` - Название промокода'))
 
 		
     @commands.command()
