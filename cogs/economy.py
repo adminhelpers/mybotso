@@ -30,9 +30,6 @@ reports = dbs["reports"]
 global tens
 tens = [ ]
 
-global prefix
-prefix = reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]
-
 def get_name(guild):
 	if not guild == 477547500232769536 and not guild == 577511138032484360: return
 	if guild == 477547500232769536:
@@ -127,7 +124,7 @@ class econom(commands.Cog):
     @commands.command()
     @commands.has_permissions(administraor = True)
     async def createpromo(self, ctx, amount = None, setad: int = None, lent: int = None):
-        global prefix
+        prefix = reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]
         if not ctx.guild.id == 577511138032484360: return 
 
         if amount == None or lent == None or setad == None: return await ctx.send(ctx.author.mention, embed = emb(title = 'Ошибка использования команды', text = f'❌ {ctx.author}, используйте команду правильно\n\n`Пример:` **__{prefix}createpromo [name] [coin] [lent]__**\n> `name` - Название промокода\n`coin` - Вознаграждение\n> `lent` - Количество его использований'), delete_after = 7)
@@ -150,7 +147,7 @@ class econom(commands.Cog):
 		
     @commands.command()
     async def phelp(self, ctx):
-        global prefix
+        prefix = reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]
         if not ctx.guild.id == 577511138032484360: return 
 	
         return await ctx.send(ctx.author.mention, embed = emb(title = 'Список команд промокодов', text = f'**__{prefix}createpromo [name] [coin] [lent]__** `- Создать промокод`\n> `name` - Название промокода\n`coin` - Вознаграждение\n> `lent` - Количество его использований\n\n**__{prefix}promo [name]__** `- Использовать промокод`\n> `[name]` - Название промокода'))
@@ -158,7 +155,7 @@ class econom(commands.Cog):
 		
     @commands.command()
     async def promo(self, ctx, amount = None):
-        global prefix
+        prefix = reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]
         if not ctx.guild.id == 577511138032484360: return 
 
         if amount == None: return await ctx.send(ctx.author.mention, embed = emb(title = 'Ошибка использования команды', text = f'❌ {ctx.author}, используйте команду правильно\n\n`Пример:` **__{prefix}promo [name]__**\n> `name` - Название промокода'), delete_after = 7)
