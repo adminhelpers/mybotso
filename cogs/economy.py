@@ -163,9 +163,9 @@ class econom(commands.Cog):
 
         if amount == None: return await ctx.send(ctx.author.mention, embed = emb(title = 'Ошибка использования команды', text = f'❌ {ctx.author}, используйте команду правильно\n\n`Пример:` **__{prefix}promo [name]__**\n> `name` - Название промокода'), delete_after = 7)
         if get_promo(ctx.guild.id, amount.lower()) == 0: return await ctx.send(ctx.author.mention, embed = emb(title = 'Ошибка использования промокода промокода', text = f'❌ {ctx.author}, такого промокда не существует.\n`Проверьте правильность написания промокода, его валидность или используйте другой.`'), delete_after = 7)
-        if user_promo(ctx.guild.id, ctx.author.id, amount.lower()) == 1: return await ctx.send(ctx.author.mention, embed = emb(title = 'Ошибка использования промокода промокода', text = f'❌ {ctx.author}, Вы уже использовали данный промокод'), delete_after = 5)
-        head = use_promo(ctx.guild.id, ctx.author.id, amount.lower())
-        addbt(ctx.author, head)
+        if user_promo(ctx.guild.id, ctx.author, amount.lower()) == 1: return await ctx.send(ctx.author.mention, embed = emb(title = 'Ошибка использования промокода промокода', text = f'❌ {ctx.author}, Вы уже использовали данный промокод'), delete_after = 5)
+        head = use_promo(ctx.guild.id, ctx.author, amount.lower())
+        addbt(ctx.guild.id, ctx.author, head)
         return await ctx.send(ctx.author.mention, embed = emb(title = 'Успешно', text = f'✅ {ctx.author}, Вы упешно активировали промокод **__{amount}__**.\n`На Ваш баланс зачислено:` **{head}** снежинок.), delete_after = 10)
 		
     @commands.command()
