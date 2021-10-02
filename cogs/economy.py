@@ -166,7 +166,7 @@ class econom(commands.Cog):
         if user_promo(ctx.guild.id, ctx.author, amount.lower()) == 1: return await ctx.send(ctx.author.mention, embed = emb(title = 'Ошибка использования промокода промокода', text = f'❌ {ctx.author}, Вы уже использовали данный промокод'), delete_after = 5)
         head = use_promo(ctx.guild.id, ctx.author, amount.lower())
         addbt(ctx.guild.id, ctx.author, head)
-        return await ctx.send(ctx.author.mention, embed = emb(title = 'Успешно', text = f'✅ {ctx.author}, Вы упешно активировали промокод **__{amount}__**.\n`На Ваш баланс зачислено:` **{head}** снежинок.), delete_after = 10)
+        return await ctx.send(ctx.author.mention, embed = emb(title = 'Успешно', text = f'✅ {ctx.author}, Вы упешно активировали промокод **__{amount}__**.\n`На Ваш баланс зачислено:` **{head}** снежинок.'), delete_after = 10)
 		
     @commands.command()
     async def topcoins(self, ctx):
