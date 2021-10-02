@@ -17,7 +17,9 @@ from pymongo import MongoClient
 
 cluster = MongoClient("mongodb+srv://dbrbase:YqxZgV1GL8s4CVxX@rodinadb.rhew3.mongodb.net/rodinaname?retryWrites=true&w=majority")
 db = cluster["rodina"]
+dbs = cluster["RodinaBD"]
 users = db["users"]
+reports = dbs["reports"]
 
 # family.insert_one({"_id": ctx.author.id, "name": "привет"}) -> Запись в базу данных(Коллекция: 
 # if family.count_documents({"_id": ctx.author.id}) -> Проверка, есть значение или нет в базе данных(Коллекция: Family | Поиск по графе: _iFamily) d) 
@@ -27,6 +29,9 @@ users = db["users"]
 
 global tens
 tens = [ ]
+
+global prefix
+prefix = reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]
 
 def get_name(guild):
 	if not guild == 477547500232769536 and not guild == 577511138032484360: return
@@ -41,6 +46,11 @@ def get_guilds(guild):
 		return 'Северный Округ'
 	else:
 		return 'Восточный Округ'
+	
+def emb(title, text):
+	embed = discord.Embed(title = f'\⛩️ **__{title}__**', description = text)
+	embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
+	return embed
 
 def addbt(guild, member: discord.Member, arg : int):
 	if users.count_documents({"guild": member.guild.id, "ids": member.id}) == 0:
@@ -62,6 +72,20 @@ def rebt(guild, member: discord.Member, arg : int):
 	bal = users.find_one({"guild": guild, "ids": member.id})["coins"] - arg
 	users.update_one({"guild": guild, "ids": member.id}, {"$set": {"coins": bal}})
 	return bal
+
+def get_promo(guild, promocode):
+	if users.count_documents({"guild_id": guild, "promocode": promocode}) == 0: return 0
+	return 1
+
+def use_promo(guild, member: discord.Member, promocode):
+	promo = users.find_one({"guild_id": guild, "promocode": promocode})
+	users = promo["users"]
+	users.append(member.id)
+	if promo["lent"] == 1: 
+		users.delete_one({"_id": promo["_id"]})
+		return promo["amount"]
+	users.update_one({"_id": promo["_id"]}, {"$set": {"lent": promo["lent"] - 1, "users": users}})
+	return promo["amount"]
 
 def proverka(guild, member, stv : int):
 	if users.count_documents({"guild": guild, "ids": member.id}) == 0:
@@ -101,22 +125,49 @@ class econom(commands.Cog):
         self.prev = []
 	
     @commands.command()
-    @commands.is_owner()
-    async def perenos(self, ctx):
+    @commands.has_permissions(administraor = True)
+    async def createpromo(self, ctx, amount = None, setad: int = None, lent: int = None):
+        global prefix
         if not ctx.guild.id == 577511138032484360: return 
-        response = []
-        for i in users.find({"guild": 577511138032484360}):
-            response.append(i["_id"])
-        await ctx.send('Начинаю перенос данных', delete_after = 5)
-        for i in response:
-            id = users.find_one({"_id": i})["ids"]
-            messages = users.find_one({"_id": i})["messages"]
-            users.insert_one({"guild": ctx.guild.id, "ids": id, "messages": messages, "coins": 0})
-            users.delete_one({"_id": i})
-        return await ctx.send(embed = discord.Embed(title = '\⛩️ **__Перенос завершен__**', description = 'Было перенесено: `2197 аккаунтов`\nНевалидных: `317 аккаунтов`'), delete_after = 10)
+
+        if amount == None or lent == None or setad == None: return await ctx.send(ctx.author.mention, embed = emb(title = 'Ошибка использования команды', text = f'❌ {ctx.author}, используйте команду правильно\n\n`Пример:` **__{prefix}createpromo [name] [coin] [lent]__**\n> `name` - Название промокода\n`coin` - Вознаграждение\n> `lent` - Количество его использований'), delete_after = 7)
+        if get_promo(ctx.guild.id, amount.lower()) == 1: return await ctx.send(ctx.author.mention, embed = emb(title = 'Ошибка создания промокода', text = f'❌ {ctx.author}, такой промокд уже существует.\n`Введите другое название или добавьте что-нибудь в данное, например:` **__{amount.lower()}123__**'), delete_after = 7)
+        embed = discord.Embed(title = '\⛩️ **__Подтвердите ваши действия__**', description = f'{ctx.author}, Вы действительно создать промокод со следующими параметрами:\n> `Название:` **__{amount}__**\n> `Вознаграждение за использование:` **__{setad} снежинок__**\n> `Количество использований:` **__{lent} раз__**\n\n✅ - **Подтвердить**\n❌ - **Отменитить действие**')
+        embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
+        message = await ctx.send(f'{ctx.author.mention}', embed = embed, delete_after = 30)
+        await message.add_reaction('✅')
+        await message.add_reaction('❌')
+        try:
+            react, user = await self.bot.wait_for('reaction_add', timeout= 30.0, check= lambda react, user: user == ctx.author and react.emoji in ['✅', '❌'])
+        except Exception:
+            return await message.delete()
+        else:
+            await message.delete()
+            if str(react.emoji) == '✅':
+                users.insert_one({"guild_id": ctx.guild.id, "promocode": amount.lower(), "amount": int(setad), "lent": int(lent), "users": []})
+                return await ctx.send(ctx.author.mention, embed = emb(title = 'Успешно', text = f'✅ {ctx.author}, Вы упешно создали новый промокод.\n\n**Его параметры:**\n> `Название:` **__{amount}__**\n> `Вознаграждение за использование:` **__{setad} снежинок__**\n> `Количество использований:` **__{lent} раз__**\n\nКоманды промокодов мжно найти используя {prefix}phelp'))
+            else: return
+		
+    @commands.command()
+    async def phelp(self, ctx):
+        global prefix
+        if not ctx.guild.id == 577511138032484360: return 
 	
+        return await ctx.send(ctx.author.mention, embed = emb(title = 'Список команд промокодов', text = f'**__{prefix}createpromo [name] [coin] [lent]__** `- Создать промокод`\n> `name` - Название промокода\n`coin` - Вознаграждение\n> `lent` - Количество его использований\n\n**__{prefix}promo [name]__** `- Использовать промокод`\n> `[name]` - Название промокода'))
 
+		
+    @commands.command()
+    async def promo(self, ctx, amount = None):
+        global prefix
+        if not ctx.guild.id == 577511138032484360: return 
 
+        if amount == None: return await ctx.send(ctx.author.mention, embed = emb(title = 'Ошибка использования команды', text = f'❌ {ctx.author}, используйте команду правильно\n\n`Пример:` **__{prefix}promo [name]__**\n> `name` - Название промокода'), delete_after = 7)
+        if get_promo(ctx.guild.id, amount.lower()) == 0: return await ctx.send(ctx.author.mention, embed = emb(title = 'Ошибка использования промокода промокода', text = f'❌ {ctx.author}, такого промокда не существует.\n`Проверьте правильность написания промокода, его валидность или используйте другой.`'), delete_after = 7)
+        if user_promo(ctx.guild.id, ctx.author.id, amount.lower()) == 1: return await ctx.send(ctx.author.mention, embed = emb(title = 'Ошибка использования промокода промокода', text = f'❌ {ctx.author}, Вы уже использовали данный промокод'), delete_after = 5)
+        head = use_promo(ctx.guild.id, ctx.author.id, amount.lower())
+        addbt(ctx.author, head)
+        return await ctx.send(ctx.author.mention, embed = emb('Успешно', text = f'✅ {ctx.author}, Вы упешно активировали промокод **__{amount}__**.\n`На Ваш баланс зачислено:` **{head}** снежинок.), delete_after = 10)
+		
     @commands.command()
     async def topcoins(self, ctx):
       if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return 
