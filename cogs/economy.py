@@ -122,7 +122,7 @@ class econom(commands.Cog):
         self.prev = []
 	
     @commands.command()
-    @commands.has_permissions(administraor = True)
+    @commands.has_permissions(administrator = True)
     async def createpromo(self, ctx, amount = None, setad: int = None, lent: int = None):
         prefix = reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]
         if not ctx.guild.id == 577511138032484360: return 
