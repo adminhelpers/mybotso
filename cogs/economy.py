@@ -76,18 +76,18 @@ def get_promo(guild, promocode):
 
 def user_promo(guild, member: discord.Member, promocode):
 	promo = users.find_one({"guild_id": guild, "promocode": promocode})
-	users = promo["users"]
-	if member.id in users: return 1
+	user = promo["users"]
+	if member.id in user: return 1
 	return 0
 
 def use_promo(guild, member: discord.Member, promocode):
 	promo = users.find_one({"guild_id": guild, "promocode": promocode})
-	users = promo["users"]
-	users.append(member.id)
+	user = promo["users"]
+	user.append(member.id)
 	if promo["lent"] == 1: 
 		users.delete_one({"_id": promo["_id"]})
 		return promo["amount"]
-	users.update_one({"_id": promo["_id"]}, {"$set": {"lent": promo["lent"] - 1, "users": users}})
+	users.update_one({"_id": promo["_id"]}, {"$set": {"lent": promo["lent"] - 1, "users": user}})
 	return promo["amount"]
 
 def proverka(guild, member, stv : int):
@@ -156,7 +156,7 @@ class econom(commands.Cog):
         prefix = reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]
         if not ctx.guild.id == 577511138032484360: return 
 	
-        return await ctx.send(ctx.author.mention, embed = emb(title = 'Список команд промокодов', text = f'**__{prefix}createpromo [name] [coin] [lent]__** `- Создать промокод`\n> `name` - Название промокода\n> `coin` - Вознаграждение\n> `lent` - Количество его использований\n\n**__{prefix}promo [name]__** `- Использовать промокод`\n> `[name]` - Название промокода'))
+        return await ctx.send(ctx.author.mention, embed = emb(title = 'Список команд промокодов', text = f'**__{prefix}createpromo [name] [coin] [lent]__** `- Создать промокод`\n> `[name]` - Название промокода\n> `[coin]` - Вознаграждение\n> `[lent]` - Количество его использований\n\n**__{prefix}promo [name]__** `- Использовать промокод`\n> `[name]` - Название промокода'), delete_after = 15)
 
 		
     @commands.command()
