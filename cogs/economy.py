@@ -152,11 +152,35 @@ class econom(commands.Cog):
             else: return
 		
     @commands.command()
+    @commands.has_permissions(administrator = True)
+    async def deleteepromo(self, ctx, amount = None):
+        prefix = reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]
+        if not ctx.guild.id == 577511138032484360: return 
+
+        if amount == None: return await ctx.send(ctx.author.mention, embed = emb(title = 'Ошибка использования команды', text = f'❌ {ctx.author}, используйте команду правильно\n\n`Пример:` **__{prefix}deletepromo [name]__**\n> `name` - Название промокода'), delete_after = 7)
+        if get_promo(ctx.guild.id, amount.lower()) == 0: return await ctx.send(ctx.author.mention, embed = emb(title = 'Ошибка создания промокода', text = f'❌ {ctx.author}, такого промокода не существует'), delete_after = 7)
+        embed = discord.Embed(title = '\⛩️ **__Подтвердите ваши действия__**', description = f'{ctx.author}, Вы действительно хотите удалить промокод **__{amount}__**\n\n✅ - **Подтвердить**\n❌ - **Отменитить действие**')
+        embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
+        message = await ctx.send(f'{ctx.author.mention}', embed = embed, delete_after = 30)
+        await message.add_reaction('✅')
+        await message.add_reaction('❌')
+        try:
+            react, user = await self.bot.wait_for('reaction_add', timeout= 30.0, check= lambda react, user: user == ctx.author and react.emoji in ['✅', '❌'])
+        except Exception:
+            return await message.delete()
+        else:
+            await message.delete()
+            if str(react.emoji) == '✅':
+                users.delete_one({"guild_id": ctx.guild.id, "promocode": amount.lower()})
+                return await ctx.send(ctx.author.mention, embed = emb(title = 'Успешно', text = f'✅ {ctx.author}, Вы упешно удалили промокод **__{amount}__**'))
+            else: return
+		
+    @commands.command()
     async def phelp(self, ctx):
         prefix = reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]
         if not ctx.guild.id == 577511138032484360: return 
 	
-        return await ctx.send(ctx.author.mention, embed = emb(title = 'Список команд промокодов', text = f'**__{prefix}createpromo [name] [coin] [lent]__** `- Создать промокод`\n> `[name]` - Название промокода\n> `[coin]` - Вознаграждение\n> `[lent]` - Количество его использований\n\n**__{prefix}promo [name]__** `- Использовать промокод`\n> `[name]` - Название промокода'), delete_after = 15)
+        return await ctx.send(ctx.author.mention, embed = emb(title = 'Список команд промокодов', text = f'**__{prefix}createpromo [name] [coin] [lent]__** `- Создать промокод`\n> `[name]` - Название промокода\n> `[coin]` - Вознаграждение\n> `[lent]` - Количество его использований\n\n**__{prefix}promo [name]__** `- Использовать промокод`\n> `[name]` - Название промокода\n\n**__{prefix}deletepromo [name]__** `- Удалить промокод`\n> `[name]` - Название промокода'), delete_after = 15)
 
 		
     @commands.command()
