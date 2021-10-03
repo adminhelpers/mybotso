@@ -153,7 +153,7 @@ class econom(commands.Cog):
 		
     @commands.command()
     @commands.has_permissions(administrator = True)
-    async def deleteepromo(self, ctx, amount = None):
+    async def deletepromo(self, ctx, amount = None):
         prefix = reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]
         if not ctx.guild.id == 577511138032484360: return 
 
