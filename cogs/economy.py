@@ -135,7 +135,7 @@ class econom(commands.Cog):
 
         if amount == None or lent == None or setad == None: return await ctx.send(ctx.author.mention, embed = emb(title = 'Ошибка использования команды', text = f'❌ {ctx.author}, используйте команду правильно\n\n`Пример:` **__{prefix}createpromo [name] [coin] [lent]__**\n> `name` - Название промокода\n> `coin` - Вознаграждение\n> `lent` - Количество его использований'), delete_after = 7)
         if get_promo(ctx.guild.id, amount.lower()) == 1: return await ctx.send(ctx.author.mention, embed = emb(title = 'Ошибка создания промокода', text = f'❌ {ctx.author}, такой промокд уже существует.\n`Введите другое название или добавьте что-нибудь в данное, например:` **__{amount.lower()}123__**'), delete_after = 7)
-        embed = discord.Embed(title = '\⛩️ **__Подтвердите ваши действия__**', description = f'{ctx.author}, Вы действительно создать промокод со следующими параметрами:\n> `Название:` **__{amount}__**\n> `Вознаграждение за использование:` **__{setad} снежинок__**\n> `Количество использований:` **__{lent} раз__**\n\n✅ - **Подтвердить**\n❌ - **Отменитить действие**')
+        embed = discord.Embed(title = '\⛩️ **__Подтвердите ваши действия__**', description = f'{ctx.author}, Вы действительно создать промокод со следующими параметрами:\n> `Название:` **__{amount}__**\n> `Вознаграждение за использование:` **__{setad} рисинок__**\n> `Количество использований:` **__{lent} раз__**\n\n✅ - **Подтвердить**\n❌ - **Отменитить действие**')
         embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
         message = await ctx.send(f'{ctx.author.mention}', embed = embed, delete_after = 30)
         await message.add_reaction('✅')
@@ -148,7 +148,7 @@ class econom(commands.Cog):
             await message.delete()
             if str(react.emoji) == '✅':
                 users.insert_one({"guild_id": ctx.guild.id, "promocode": amount.lower(), "amount": int(setad), "lent": int(lent), "users": []})
-                return await ctx.send(ctx.author.mention, embed = emb(title = 'Успешно', text = f'✅ {ctx.author}, Вы упешно создали новый промокод.\n\n**Его параметры:**\n> `Название:` **__{amount}__**\n> `Вознаграждение за использование:` **__{setad} снежинок__**\n> `Количество использований:` **__{lent} раз__**\n\nКоманды промокодов мжно найти используя {prefix}phelp'))
+                return await ctx.send(ctx.author.mention, embed = emb(title = 'Успешно', text = f'✅ {ctx.author}, Вы упешно создали новый промокод.\n\n**Его параметры:**\n> `Название:` **__{amount}__**\n> `Вознаграждение за использование:` **__{setad} рисинок__**\n> `Количество использований:` **__{lent} раз__**\n\nКоманды промокодов мжно найти используя {prefix}phelp'))
             else: return
 		
     @commands.command()
@@ -193,7 +193,7 @@ class econom(commands.Cog):
         if user_promo(ctx.guild.id, ctx.author, amount.lower()) == 1: return await ctx.send(ctx.author.mention, embed = emb(title = 'Ошибка использования промокода промокода', text = f'❌ {ctx.author}, Вы уже использовали данный промокод'), delete_after = 5)
         head = use_promo(ctx.guild.id, ctx.author, amount.lower())
         addbt(ctx.guild.id, ctx.author, head)
-        return await ctx.send(ctx.author.mention, embed = emb(title = 'Успешно', text = f'✅ {ctx.author}, Вы упешно активировали промокод **__{amount}__**.\n`На Ваш баланс зачислено:` **{head}** снежинок.'), delete_after = 10)
+        return await ctx.send(ctx.author.mention, embed = emb(title = 'Успешно', text = f'✅ {ctx.author}, Вы упешно активировали промокод **__{amount}__**.\n`На Ваш баланс зачислено:` **{head}** рисинок.'), delete_after = 10)
 		
     @commands.command()
     async def topcoins(self, ctx):
