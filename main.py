@@ -532,6 +532,7 @@ async def on_message(ctx):
     global uje
     role_registr = ['!роль', 'роль', 'Роль', '!Роль']
 
+    if ctx.guild == None: return
     if not ctx.author.bot:
         if not ctx.guild:
             for i in rolef.find({"user_id": ctx.author.id}):
@@ -627,7 +628,7 @@ async def on_message(ctx):
         add(ctx.author, "dezaprols")
         return await ctx.add_reaction('📨')
 
-    if msg in role_registr:
+    if msg.replace('-', '').replace('+', '') in role_registr:
         ak = ctx.author.display_name.replace('[', '')
         ak1 = ak.replace(']', '')
         ak2 = ak1.split()
