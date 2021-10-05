@@ -27,6 +27,32 @@ banlist = db["ban"]
 dbd = cluster["RodinaBD"]
 reports = dbd["reports"]
 
+global mtwo
+mtwo = [743887697327816705, # Заместитель Гл. Модератора
+        661284961428701209, # Глав. Модерация Discord
+        714504039072661545, # Supervisor Moderation
+        789910831868543027] # Discord Guard
+
+global mfull
+mfull = [743887697327816705, # Заместитель Гл. Модератора
+         661284961428701209, # Глав. Модерация Discord
+         714504039072661545, # Supervisor Moderation
+         789910831868543027, # Discord Guard
+         817813676178407425, # Support Team
+         652869023599558656] # Srectator
+
+global mone
+mone  = [743887697327816705, # Заместитель Гл. Модератора
+         661284961428701209, # Глав. Модерация Discord
+         714504039072661545, # Supervisor Moderation
+         789910831868543027, # Discord Guard
+         817813676178407425] # Support Team
+
+def is_accept(member: discord.Member, accept_roles):
+  for i in member.roles:
+    if i.id in accept_roles: return 1
+  return 0
+
 def add(member: discord.Member, arg):
   if moder.count_documents({"guild": 477547500232769536, "id": member.id}) == 0:
     moder.insert_one({"guild": 477547500232769536, "id": member.id, "close": 0, "rasm": 0, "mute": 0, "kick": 0, "warn": 0, "ban": 0, "unwarn": 0, "unmute": 0, "vmute": 0, "vunmute": 0, "rols": 0, "repa": 0, "derols": 0, "dezaprols": 0, "vig": 0, "leader": 0, "x2": 0})
@@ -46,12 +72,11 @@ class getform(commands.Cog):
 
     @commands.command(aliases = ['af', 'форма', 'addforma'])
     async def __addforma(self, ctx, *, amount = None):
-
+        global mfull
         if not ctx.guild.id == 477547500232769536:
             return
 
-        if not discord.utils.get(ctx.guild.roles, id = 652869023599558656) in ctx.author.roles and not discord.utils.get(ctx.guild.roles, id = 817813676178407425) in ctx.author.roles:
-            return await ctx.send(f'`[ERR]` {ctx.author.mention}, `вам не доступна данная команда!`', delete_after = 5)
+        if is_accept(ctx.author, mfull) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
 
         await ctx.message.delete()
         prefix = reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]
@@ -85,15 +110,15 @@ class getform(commands.Cog):
 
     @commands.command(aliases = ['gf', 'getforma'])
     async def __getforma(self, ctx):
+        global mone
         prefix = reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]
 
         if not ctx.guild.id == 477547500232769536:
             return
 
         await ctx.message.delete()
-
-        if not discord.utils.get(ctx.guild.roles, id = 817813676178407425) in ctx.author.roles:
-            return await ctx.send(f'`[ERR]` {ctx.author.mention}, `вам не доступна данная команда!`', delete_after = 5)
+        
+        if is_accept(ctx.author, mone) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
 
         if len([i for i in form.find({"guild": 477547500232769536})]) == 0:
             return await ctx.send(embed = discord.Embed(description = f'❌ На данный момент очередь пуста.', color = 0xFB9E14), delete_after = 10)
