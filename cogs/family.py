@@ -60,7 +60,8 @@ class family(commands.Cog):
 
 		if amount == '-':
     			return await ctx.send(embed = discord.Embed(title = '\⛩️ **__Не удалось найти указатель семьи__**', description = f'❌ `Использование этой команды доступно только участникам одной из семей.`'), delete_after = 7)
-					      	      
+		
+		if fam.find_one({"guild": ctx.guild.id, "name": amount})["leaderID"] == ctx.author.id: return await ctx.send(embed = discord.Embed(title = '\⛩️ **__Не удалось найти указатель семьи__**', description = f'❌ `Использование этой команды недоступно для лидера действующей семьи.`'), delete_after = 7)
 		embed = discord.Embed(title = '\⛩️ **__Подтвердите ваши действия__**', description = f'{ctx.author}, Вы действительно хотите покинуть семью **__{amount}__** по собственному желанию?\n\n✅ - **Подтвердить**\n❌ - **Отменитить действие**')
 		embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
 		message = await ctx.send(f'{ctx.author.mention}', embed = embed, delete_after = 30)
@@ -693,17 +694,16 @@ class family(commands.Cog):
 						try:
 							own = discord.utils.get(ctx.guild.members, id = nam["leaderID"])
 							owner = f'{own.mention}`({own})`'
-						except:
-							owner = 'Не найден'
-						try:
-							role = discord.utils.get(ctx.guild.roles, id = nam["roleID"])
-							await discord.utils.get(ctx.guild.roles, id = nam["roleID"]).delete()
+						except: owner = 'Не найден'
+						try: await discord.utils.get(ctx.guild.roles, id = nam["roleID"]).delete()
 						except: pass
-						await discord.utils.get(ctx.guild.channels, id = nam["channel"]).delete()
+						try: await discord.utils.get(ctx.guild.channels, id = nam["channel"]).delete()
+						except: pass
 						embed = discord.Embed(title = "Удаление семьи", description = f"**{ctx.author.mention}, вы успешно удалили семью {amount}**\n**Вот ее параметры:**\n\n1. `Владелец семьи:` **{owner}**\n2. `Семейная роль:` **{role.name}**")
 						embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
 						await ctx.send(embed = embed)
-						fam.delete_one({"name": amount})
+						try: fam.delete_one({"name": amount})
+						except: pass
 					else:
 						return
 
