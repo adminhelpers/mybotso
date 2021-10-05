@@ -63,6 +63,7 @@ class debug(commands.Cog):
                                 else:
                                   await message.delete()
                                   if str(react.emoji) == '✅':
+                                      print('+')
                                       if black_list.count_ducuments({"guild": ctx.guild.id, "userID": memberid}) > 0: return await ctx.send(embed = discord.Embed(title = '\⛩️ **__Ошибка занесения данных__**', description = f'❌ Пользователь с `ID: {memberid}` уже находится в бан-листе сервера `{ctx.guild.name}`'), delete_after = 10)                   
                                       reason = cmd[2] if not cmd[2] == None else 'Не указана'
                                       black_list.insert_one({"guild": ctx.guild.id, "userID": memberid, "moder": f'{ctx.author.name}#{ctx.author.discriminator}', "reason": reason})
@@ -77,7 +78,7 @@ class debug(commands.Cog):
                                       channel = self.bot.get_channel(834039427541631016)
                                       logsuser = self.bot.get_channel(850605849343819836)
                                       await channel.send(embed = embed) 
-                                      await logsuser.send(embed = embed)
+                                      return await logsuser.send(embed = embed)
                                   else: return
                         except: pass
                     return await ctx.send(embed=discord.Embed(description=f'❗ {ctx.author.name}, Пользователь не найден!', colour = 0xFB9E14), delete_after = 3)
