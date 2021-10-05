@@ -22,6 +22,7 @@ moder = db["moder"]
 warns = db["warns"]
 muted = db["mute"]
 banlist = db["ban"]
+black_list = db["banlist"]
 
 dbt = cluster["RodinaBD"]
 moderr = dbt["moders"]
@@ -294,12 +295,42 @@ class moderation(commands.Cog):
             return
 
         if is_accept(ctx.author, mtwo) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
-
-        if member == None:
-            await ctx.send(f'`[ERR]` {ctx.author.mention}, `обязательно укажите пользователя!`', delete_after = 5)
-            ctx.command.reset_cooldown(ctx)
-            return
-
+        
+        if member == None or not member.id in [i.id for i in ctx.guild.members]:
+            if member == None:
+                ctx.command.reset_cooldown(ctx)
+                return await ctx.send(f'`[ERR]` {ctx.author.mention}, `обязательно укажите пользователя!`', delete_after = 5)
+            elif not member.id in [i.id for i in ctx.guild.members]:
+                embed = discord.Embed(title = '\⛩️ **__Пользователь не найден__**', description = f'{ctx.author}, пользователь которого вы указали не найден на сервере `{ctx.guild.name}`.\nВы можете внести пользователя с `ID: {member.id}` в бан-лист гильдии.\n\n✅ - **Подтвердить занесение**\n❌ - **Не заносить**')
+		            embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
+                message = await ctx.send(f'{ctx.author.mention}', embed = embed)
+                await message.add_reaction('✅')
+                await message.add_reaction('❌')
+                try:
+                  react, user = await self.bot.wait_for('reaction_add', timeout= 30.0, check= lambda react, user: user == ctx.author and react.emoji in ['✅', '❌'])
+                except Exception:
+                  ctx.command.reset_cooldown(ctx)
+                  return await message.delete()
+                else:
+                  await message.delete()
+                  if str(react.emoji) == '✅':
+                      if black_list.count_ducuments({"guild": ctx.guild.id, "userID": member.id}) > 0: return await ctx.send(embed = discord.Embed(title = '\⛩️ **__Ошибка занесения данных__**', description = f'❌ Пользователь с `ID: {member.id}` уже находится в бан-листе сервера `{ctx.guild.name}`'), delete_after = 10)                   
+                      reason = reason if not reason == None else 'Не указана'
+                      black_list.insert_one({"guild": ctx.guild.id, "userID": member.id, "moder": f'{ctx.author.name}#{ctx.author.discriminator}', "reason": reason})
+                      await ctx.send(embed = discord.Embed(title = '\⛩️ **__Успешно__**', description = f'✅ Пользователь с `ID: {member.id}` успешно занесён в бан-лист сервера `{ctx.guild.name}`\n**Причина:** `{reason}`'), delete_after = 10)
+                      embed = discord.Embed(colour = member.color, timestamp = ctx.message.created_at) 
+                      embed.set_author(name = f'Пользователь был занесён в бан-лист!')
+                      embed.add_field(name = 'Пользователь', value = f'**ID:** `{member.id}`', inline = False) 
+                      embed.add_field(name = 'Модератор', value = f'**{ctx.author.display_name}**`({ctx.author})`', inline = False)    
+                      embed.add_field(name = 'Причина', value = f'{reason}', inline = False)  
+                      embed.set_thumbnail(url = 'https://images-ext-1.discordapp.net/external/yarwcyEZug1mZITDcgLOQKSbDh7O6361bRAu7S95qNU/https/avatars.mds.yandex.net/get-pdb/2826470/29569d4a-36f3-4b9c-94f5-027c7cfb03f6/s1200')
+                      embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
+                      channel = self.bot.get_channel(834039427541631016)
+                      logsuser = self.bot.get_channel(850605849343819836)
+                      await channel.send(embed = embed) 
+                      await logsuser.send(embed = embed)
+                  else: return
+                      
         if reason == None:
             await ctx.send(f'`[ERR]` {ctx.author.mention}, `обязательно укажите причинину бана!`', delete_after = 5)
             ctx.command.reset_cooldown(ctx)
