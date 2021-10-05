@@ -421,28 +421,28 @@ class econom(commands.Cog):
       if ctx.author.id in tens: return await ctx.send(embed = emb(title = 'Ошибка использования команды', text = '❌ Вы не можете передавать деньги пока играете в казино!'))
 
       if member == None:
-        return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{ctx.author.mention}, укажите пользователя**', colour = 0x09F2C8), delete_after = 5)
+        return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gb}', description = f'**{ctx.author.mention}, укажите пользователя**', colour = 0x09F2C8), delete_after = 5)
       
       if member == ctx.author or member.bot:
         return
 
       if amount == None:
-        return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{ctx.author.mention}, укажите сумму {pb} которую нужно передать!**', colour = 0x09F2C8), delete_after = 5)
+        return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gb}', description = f'**{ctx.author.mention}, укажите сумму {pb} которую нужно передать!**', colour = 0x09F2C8), delete_after = 5)
 
       if amount <= 0:
-        return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{ctx.author.mention}, указан неверный аргумент!**', colour = 0x09F2C8), delete_after = 5)
+        return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gb}', description = f'**{ctx.author.mention}, указан неверный аргумент!**', colour = 0x09F2C8), delete_after = 5)
 
 
       a = proverka(ctx.guild.id, ctx.author, amount)
       if a == 0:
-        await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{ctx.author.mention}, Вы не можете передать такую сумму!**', colour = 0x09F2C8))
+        await ctx.send(embed = discord.Embed(title = f'{gguild} | {gb}', description = f'**{ctx.author.mention}, Вы не можете передать такую сумму!**', colour = 0x09F2C8))
 
       else:
         bal = addbt(ctx.guild.id, member, amount)
         bal2 = rebt(ctx.guild.id, ctx.author, amount)
         channel = self.bot.get_channel(841588696334598154) if ctx.guild.id == 477547500232769536 else self.bot.get_channel(872186550715301910)
         await channel.send(embed = discord.Embed(title = 'Перевод', description = f'**Пользователь {ctx.author.mention}, передал {gs} пользователю {member.mention} в размере `{amount}`**', colour = 0x25f20a, timestamp = ctx.message.created_at))
-        await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{ctx.author.mention}, Вы передали пользователю {member.mention} `{amount}` {pb}.\nЕго баланс: `{bal}` {pb}\nВаш баланс: `{bal2}` {pb}**', colour = 0x09F2C8))
+        await ctx.send(embed = discord.Embed(title = f'{gguild} | {gb}', description = f'**{ctx.author.mention}, Вы передали пользователю {member.mention} `{amount}` {pb}.\nЕго баланс: `{bal}` {pb}\nВаш баланс: `{bal2}` {pb}**', colour = 0x09F2C8))
         
     @commands.command()
     @commands.cooldown(1, 10, commands.BucketType.member)
@@ -466,24 +466,24 @@ class econom(commands.Cog):
         
       if amount == None:
         ctx.command.reset_cooldown(ctx)
-        return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{ctx.author.mention}, укажите кол-во {pb} которое необходимо поставить!**', colour = 0x09F2C8))
+        return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gb}', description = f'**{ctx.author.mention}, укажите кол-во {pb} которое необходимо поставить!**', colour = 0x09F2C8))
 
       if amount <= 0:
         ctx.command.reset_cooldown(ctx)
-        return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{ctx.author.mention}, неверный аргумент!**', colour = 0x09F2C8))
+        return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gb}', description = f'**{ctx.author.mention}, неверный аргумент!**', colour = 0x09F2C8))
  
       a = proverka(ctx.guild.id, ctx.author, amount)
       if a == 0:
         ctx.command.reset_cooldown(ctx)
-        return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{ctx.author.mention}, Вы не можете сделать такую ставку!**', colour = 0x09F2C8))
+        return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gb}', description = f'**{ctx.author.mention}, Вы не можете сделать такую ставку!**', colour = 0x09F2C8))
       else:
         tens.append(ctx.author.id)
-        await ctx.send(embed = discord.Embed(title = f'Северный Округ | {gs}', description = f'**{ctx.author.mention}, Отдохни минутку и получишь результат!**', colour = 0x09F2C8))
+        await ctx.send(embed = discord.Embed(title = f'Северный Округ | {gb}', description = f'**{ctx.author.mention}, Отдохни минутку и получишь результат!**', colour = 0x09F2C8))
         a = random.randint(1, 2)
         if a == 1:
             await asyncio.sleep(5)
             bal = rebt(ctx.guild.id, ctx.author, amount)
-            await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{ctx.author.mention}, к сожалению, вы проиграли!\nТеперь Ваш баланс составляет: `{bal}` {pb}!**', colour = 0xff0000))
+            await ctx.send(embed = discord.Embed(title = f'{gguild} | {gb}', description = f'**{ctx.author.mention}, к сожалению, вы проиграли!\nТеперь Ваш баланс составляет: `{bal}` {pb}!**', colour = 0xff0000))
             tens.remove(ctx.author.id)
         if a == 2:
             amount *= 1
@@ -491,7 +491,7 @@ class econom(commands.Cog):
             f = amount
             bal = addbt(ctx.guild.id, ctx.author, f)
             tens.remove(ctx.author.id)
-            return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{ctx.author.mention}, Вам повезло, вы удвоили свою ставку!!\nТеперь Ваш баланс составляет: `{bal}` {pb}!**', colour = 0x25f20a))
+            return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gb}', description = f'**{ctx.author.mention}, Вам повезло, вы удвоили свою ставку!!\nТеперь Ваш баланс составляет: `{bal}` {pb}!**', colour = 0x25f20a))
 
     @commands.command()
     @commands.has_permissions(administrator = True)
