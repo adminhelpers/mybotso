@@ -43,7 +43,7 @@ class debug(commands.Cog):
             return await ctx.send(embed=discord.Embed(description=f'❗ {ctx.author.name}, У вас недостаточно прав!', colour = 0xFB9E14), delete_after = 3)
         elif isinstance(error, commands.BadArgument):
             if "Member" in str(error):
-                print(ctx.command)
+                if ctx.command == 'ban': pass
                 if ctx.author.id == 646573856785694721:
                     ctx.command.reset_cooldown(ctx)
                 return await ctx.send(embed=discord.Embed(description=f'❗ {ctx.author.name}, Пользователь не найден!', colour = 0xFB9E14), delete_after = 3)
