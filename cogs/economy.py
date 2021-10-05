@@ -485,7 +485,7 @@ class econom(commands.Cog):
             bal = rebt(ctx.guild.id, ctx.author, amount)
             await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{ctx.author.mention}, к сожалению, вы проиграли!\nТеперь Ваш баланс составляет: `{bal}` {pb}!**', colour = 0xff0000))
             tens.remove(ctx.author.id)
-	if a == 2:
+        if a == 2:
             amount *= 1
             await asyncio.sleep(5)
             f = amount
