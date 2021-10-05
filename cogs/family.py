@@ -695,11 +695,15 @@ class family(commands.Cog):
 							own = discord.utils.get(ctx.guild.members, id = nam["leaderID"])
 							owner = f'{own.mention}`({own})`'
 						except: owner = 'Не найден'
-						try: await discord.utils.get(ctx.guild.roles, id = nam["roleID"]).delete()
-						except: pass
+						try: 
+							rolename = discord.utils.get(ctx.guild.roles, id = nam["roleID"])
+							await discord.utils.get(ctx.guild.roles, id = nam["roleID"]).delete()
+						except: 
+							rolename = 'Не найдена'
+							pass
 						try: await discord.utils.get(ctx.guild.channels, id = nam["channel"]).delete()
 						except: pass
-						embed = discord.Embed(title = "Удаление семьи", description = f"**{ctx.author.mention}, вы успешно удалили семью {amount}**\n**Вот ее параметры:**\n\n1. `Владелец семьи:` **{owner}**\n2. `Семейная роль:` **{role.name}**")
+						embed = discord.Embed(title = "Удаление семьи", description = f"**{ctx.author.mention}, вы успешно удалили семью {amount}**\n**Вот ее параметры:**\n\n1. `Владелец семьи:` **{owner}**\n2. `Семейная роль:` **{rolename}**")
 						embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
 						await ctx.send(embed = embed)
 						try: fam.delete_one({"name": amount})
