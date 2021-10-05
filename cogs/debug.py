@@ -35,7 +35,7 @@ class debug(commands.Cog):
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
         print(ctx.command)
-        if not ctx.content.split(' ')[0] == '!ban':
+        if not ctx.message.content.split(' ')[0] == '!ban':
             print('+')
             if isinstance(error, commands.CommandNotFound):
                 return # await ctx.send(embed=discord.Embed(description=f'❗ {ctx.author.name}, Команда не найдена!', colour = 0xFB9E14))
