@@ -34,6 +34,7 @@ class debug(commands.Cog):
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
+        print(ctx.command)
         if not ctx.command == 'ban':
             print('+')
             if isinstance(error, commands.CommandNotFound):
