@@ -20,6 +20,7 @@ from pymongo import MongoClient
 cluster = MongoClient("mongodb+srv://dbrbase:YqxZgV1GL8s4CVxX@rodinadb.rhew3.mongodb.net/rodinaname?retryWrites=true&w=majority")
 db = cluster["rodina"]
 muted = db["muted"]
+black_list = db["banlist"]
 
 class debug(commands.Cog):
     """DEBUG Cog."""
@@ -65,7 +66,8 @@ class debug(commands.Cog):
                                   if str(react.emoji) == '✅':
                                       print('+')
                                       if black_list.count_ducuments({"guild": ctx.guild.id, "userID": memberid}) > 0: return await ctx.send(embed = discord.Embed(title = '\⛩️ **__Ошибка занесения данных__**', description = f'❌ Пользователь с `ID: {memberid}` уже находится в бан-листе сервера `{ctx.guild.name}`'), delete_after = 10)                   
-                                      reason = cmd[2] if not cmd[2] == None else 'Не указана'
+                                      try: reason = cmd[2] if not cmd[2] == None else 'Не указана'
+                                      except: reason = 'Не указана'
                                       black_list.insert_one({"guild": ctx.guild.id, "userID": memberid, "moder": f'{ctx.author.name}#{ctx.author.discriminator}', "reason": reason})
                                       await ctx.send(embed = discord.Embed(title = '\⛩️ **__Успешно__**', description = f'✅ Пользователь с `ID: {memberid}` успешно занесён в бан-лист сервера `{ctx.guild.name}`\n**Причина:** `{reason}`'), delete_after = 10)
                                       embed = discord.Embed(colour = ctx.author.color, timestamp = ctx.message.created_at) 
