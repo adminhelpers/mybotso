@@ -302,7 +302,7 @@ class moderation(commands.Cog):
                 return await ctx.send(f'`[ERR]` {ctx.author.mention}, `обязательно укажите пользователя!`', delete_after = 5)
             elif not member.id in [i.id for i in ctx.guild.members]:
                 embed = discord.Embed(title = '\⛩️ **__Пользователь не найден__**', description = f'{ctx.author}, пользователь которого вы указали не найден на сервере `{ctx.guild.name}`.\nВы можете внести пользователя с `ID: {member.id}` в бан-лист гильдии.\n\n✅ - **Подтвердить занесение**\n❌ - **Не заносить**')
-		embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
+                embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
                 message = await ctx.send(f'{ctx.author.mention}', embed = embed)
                 await message.add_reaction('✅')
                 await message.add_reaction('❌')
