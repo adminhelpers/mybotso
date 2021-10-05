@@ -410,12 +410,15 @@ class econom(commands.Cog):
 
     @commands.command()
     async def pay(self, ctx, member: discord.Member = None, amount:int = None):
+      global tens
       if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return
 
       gguild = get_guilds(ctx.guild.id)
       gs = get_name(ctx.guild.id)
       gb = '❄️Снежинки' if ctx.guild.id == 477547500232769536 else 'Рисинки'
       pb = "`❄️Снежинок`" if ctx.guild.id == 477547500232769536 else 'рисинок'
+
+      if ctx.author.id in tens: return await ctx.send(embed = emb(title = 'Ошибка использования команды', text = '❌ Вы не можете передавать деньги пока играете в казино!'))
 
       if member == None:
         return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{ctx.author.mention}, укажите пользователя**', colour = 0x09F2C8), delete_after = 5)
@@ -444,6 +447,7 @@ class econom(commands.Cog):
     @commands.command()
     @commands.cooldown(1, 10, commands.BucketType.member)
     async def casino(self, ctx, amount : int = None):
+      global tens
       if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return
 
       gguild = get_guilds(ctx.guild.id)
@@ -467,23 +471,26 @@ class econom(commands.Cog):
       if amount <= 0:
         ctx.command.reset_cooldown(ctx)
         return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{ctx.author.mention}, неверный аргумент!**', colour = 0x09F2C8))
-
+ 
       a = proverka(ctx.guild.id, ctx.author, amount)
       if a == 0:
         ctx.command.reset_cooldown(ctx)
         return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{ctx.author.mention}, Вы не можете сделать такую ставку!**', colour = 0x09F2C8))
       else:
+        tens.append(ctx.author.id)
         await ctx.send(embed = discord.Embed(title = f'Северный Округ | {gs}', description = f'**{ctx.author.mention}, Отдохни минутку и получишь результат!**', colour = 0x09F2C8))
         a = random.randint(1, 2)
         if a == 1:
             await asyncio.sleep(5)
             bal = rebt(ctx.guild.id, ctx.author, amount)
             await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{ctx.author.mention}, к сожалению, вы проиграли!\nТеперь Ваш баланс составляет: `{bal}` {pb}!**', colour = 0xff0000))
-        if a == 2:
+            tens.remove(ctx.author.id)
+	if a == 2:
             amount *= 1
             await asyncio.sleep(5)
             f = amount
             bal = addbt(ctx.guild.id, ctx.author, f)
+            tens.remove(ctx.author.id)
             return await ctx.send(embed = discord.Embed(title = f'{gguild} | {gs}', description = f'**{ctx.author.mention}, Вам повезло, вы удвоили свою ставку!!\nТеперь Ваш баланс составляет: `{bal}` {pb}!**', colour = 0x25f20a))
 
     @commands.command()
