@@ -622,7 +622,7 @@ class moderation(commands.Cog):
         logs = self.bot.get_channel(834039427541631016)
         logsuser = self.bot.get_channel(is_logchannel(ctx.guild.id))
         await ctx.message.add_reaction('✅')
-        if ctx.guild.id == 477547500232769536: if ctx.guild.id == 477547500232769536: await logs.send(embed = embed)  
+        if ctx.guild.id == 477547500232769536: await logs.send(embed = embed)  
         await logsuser.send(embed = embed)
         if f == 1:
           await asyncio.sleep(sleep)
