@@ -1626,7 +1626,7 @@ class moderation(commands.Cog):
           return await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, данный пользователь не является модератором, либо он не сделал никаких действий.**', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow()), delete_after = 5)
         
         i, b = [], []
-        if ctx.guild.id == 465086262383083520: ms = ['close', 'rasm', 'mute', 'kick', 'ban', 'warn', 'unwarn', 'unmute', 'vmute', 'vunmute', 'rols', 'repa', 'derols', 'dezaprols', 'vig', 'clear’]
+        if ctx.guild.id == 465086262383083520: ms = ['close', 'rasm', 'mute', 'kick', 'ban', 'warn', 'unwarn', 'unmute', 'vmute', 'vunmute', 'rols', 'repa', 'derols', 'dezaprols', 'vig', 'clear']
         else: ms = ['close', 'rasm', 'mute', 'kick', 'ban', 'warn', 'unwarn', 'unmute', 'vmute', 'vunmute', 'rols', 'repa', 'derols', 'dezaprols', 'vig']
         for v in ms:
           try:
