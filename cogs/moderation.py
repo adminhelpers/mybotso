@@ -1610,7 +1610,7 @@ class moderation(commands.Cog):
     }
 
     '''
-
+             
     @commands.command(aliases = ['imd', 'модеринфо'])
     async def mstat(self, ctx, member: discord.Member = None):
         if not is_accept_guild(ctx.guild.id) == 1: return 
@@ -1626,45 +1626,7 @@ class moderation(commands.Cog):
           return await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, данный пользователь не является модератором, либо он не сделал никаких действий.**', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow()), delete_after = 5)
         
         i, b = [], []
-        ms = ['close', 'rasm', 'mute', 'kick', 'ban', 'warn', 'unwarn', 'unmute', 'vmute', 'vunmute', 'rols', 'repa', 'derols', 'dezaprols', 'vig']
-        for v in ms:
-          try:
-            i.append(moder.find_one({"guild": ctx.guild.id, "id": member.id})[v])
-          except:
-            i.append(0)
-
-        ms2 = ['close', 'rasm', 'repa', 'addme', 'addrep']
-        for v in ms2:
-          try:
-            b.append(moderr.find_one({"guild": ctx.guild.id, "id": member.id})[v])
-          except:
-            b.append(0)
-
-        now = datetime.datetime.now()
-        foc = int(i[0]) + int(i[1]) + int(i[2]) + int(i[3]) + int(i[4]) + int(i[5]) + int(i[6]) + int(i[7]) + int(i[8]) + int(i[9]) + int(i[10]) + int(i[12]) + int(i[13]) + int(b[0]) + int(b[1]) + int(b[3]) + int(b[4]) 
-        embed = discord.Embed(title = f'Статистика модератора 📍 {member}', description = f'**👁️ Всего действий от него: {foc}**', colour = 0xFB9E14)
-        embed.add_field(name = '❔ | `Статистика вопросов`', value = f'**Всего действий:** {int(b[0]) + int(b[1]) + int(b[3]) + int(b[4])}\n> 🔹 `Принято вопросов:` {b[3]}\n> 🔹 `Закрыто вопросов:` {b[0]}\n> 🔹 `Поставлено на рассмотрение:` {b[1]}\n> 🔹 `Добавлено людей к репортам:` {b[4]}\n\n> ➕ `Репутация:` {b[2]}', inline = False)
-        embed.add_field(name = '🔰 | `Статистика модерирования`', value = f'**Всего действий: {foc - int(b[0]) - int(b[1]) - int(b[3]) - int(b[4])}\n> ✏️ | `Выдано текстовых мутов:` {i[2]}\n> 🔊 | `Выдано голосовых мутов:` {i[8]}\n> ✏️ | `Снято текстовых мутов:` {i[7]}\n> 🔊 | `Снято голосовых мутов:` {i[9]}\n\n> `Выдано предупреждений:` {i[5]}\n> `Снято предупреждений:` {i[6]}\n> `Кикнул:` {i[3]}\n> `Забанил:` {i[4]}\n\n> `Одобрено запросов на выдачу роли:` {i[10]}\n> `Отправлено запросов на снятие роли:` {i[13]}\n> `Одобрено запросов на снятие роли:` {i[12]}\n\n> ❗ `Выговоров:` {i[14]} ❗**', inline = False)
-        embed.set_footer(text = f'Support Team by dollar ム baby#3603 | Дата: {now.strftime("%d-%m-%Y %H:%M")}', icon_url = self.bot.user.avatar_url)
-        await ctx.send(embed = embed)
-        
-        
-    @commands.command(aliases = ['imd', 'модеринфо'])
-    async def mstat(self, ctx, member: discord.Member = None):
-        if not is_accept_guild(ctx.guild.id) == 1: return 
-
-        if member == None:
-          member = ctx.author
-
-        if is_accept(ctx.guild.id, mf, ctx.author) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`'), delete_after = 5)
-
-        if is_accept(ctx.guild.id, mf, member) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Данная команда не доступна, потому что выбранный Вами пользователь:\n> `◘ Не является модератором`'), delete_after = 5)
-        
-        if moderr.count_documents({"id": member.id}) == 0 and moder.count_documents({"guild": 477547500232769536, "id": member.id}) == 0:
-          return await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, данный пользователь не является модератором, либо он не сделал никаких действий.**', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow()), delete_after = 5)
-        
-        i, b = [], []
-        if ctx.guild.id == 465086262383083520: ms = ['close', 'rasm', 'mute', 'kick', 'ban', 'warn', 'unwarn', 'unmute', 'vmute', 'vunmute', 'rols', 'repa', 'derols', 'dezaprols', 'vig', ‘clear’]
+        if ctx.guild.id == 465086262383083520: ms = ['close', 'rasm', 'mute', 'kick', 'ban', 'warn', 'unwarn', 'unmute', 'vmute', 'vunmute', 'rols', 'repa', 'derols', 'dezaprols', 'vig', 'clear’]
         else: ms = ['close', 'rasm', 'mute', 'kick', 'ban', 'warn', 'unwarn', 'unmute', 'vmute', 'vunmute', 'rols', 'repa', 'derols', 'dezaprols', 'vig']
         for v in ms:
           try:
@@ -1683,8 +1645,8 @@ class moderation(commands.Cog):
         foc = int(i[0]) + int(i[1]) + int(i[2]) + int(i[3]) + int(i[4]) + int(i[5]) + int(i[6]) + int(i[7]) + int(i[8]) + int(i[9]) + int(i[10]) + int(i[12]) + int(i[13]) + int(b[0]) + int(b[1]) + int(b[3]) + int(b[4])
         if ctx.guild.id == 465086262383083520:
           embed = discord.Embed(title = f'\👨‍💻**__Статистика модератора:__ {member}**')
-          embed.add_field(name = '\💌 | **Статистика репорта**', value = f'**Всего:** {int(b[0]) + int(b[3]) + int(b[4])}\n> \◽ Принято вопросов:{b[3]}\n> \◽ Закрыто вопросов: 0 {b[0]}\ n> \◽ Добавлено людей к репортам:{b[4]}\n> \✅ Оценка ответов:{b[2]}', inline = False)
-          embed.add_field(name = '\📩 | **Статистика модерирования**', value = f'> \◽ Выдал мут: {i[2]}\n> \◽ Снял мут:{i[7]}\n> \◽ Кикнул: {i[3]}\n\◽ Забанил: {i[4]} ', inline = False
+          embed.add_field(name = '\💌 | **Статистика репорта**', value = f'**Всего:** {int(b[0]) + int(b[3]) + int(b[4])}\n> \◽ Принято вопросов:{b[3]}\n> \◽ Закрыто вопросов: 0 {b[0]}\n> \◽ Добавлено людей к репортам:{b[4]}\n> \✅ Оценка ответов:{b[2]}', inline = False)
+          embed.add_field(name = '\📩 | **Статистика модерирования**', value = f'> \◽ Выдал мут: {i[2]}\n> \◽ Снял мут:{i[7]}\n> \◽ Кикнул: {i[3]}\n\◽ Забанил: {i[4]}', inline = False)
           embed.add_field(name = ' \📨 | **Статистика ролей**', value = f'**Всего:** {int({i[10]}) + int({i[11]}) + int({i[12]})}\n> \◽ Одобрено запросов на выдачу роли: {i[10]}\n > \◽ Отправлено запросов на снятие роли: {i[13]}\n > \◽ Одобрено запросов на снятие роли: {i[12]}', inline = False)
         else:
           embed = discord.Embed(title = f'Статистика модератора 📍 {member}', description = f'**👁️ Всего действий от него: {foc}**', colour = 0xFB9E14)
