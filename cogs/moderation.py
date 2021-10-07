@@ -81,6 +81,9 @@ def is_accept(guild_id, mas, member: discord.Member):
           789910831868543027, # Discord Guard
           817813676178407425, # Support Team
           652869023599558656] # Srectator
+    for i in member.roles:
+      if i.id in mas: return 1
+    return 0
   elif guild_id == 465086262383083520: #rodina 02
     mo = [822340589894893578, # ⚒ Главный Модератор ⚒
           822442266844725260, # ⚒ Зам.Главного Модератора ⚒
@@ -100,9 +103,9 @@ def is_accept(guild_id, mas, member: discord.Member):
           822434022613450782, # ⚒ Модератор ⚒
           822432957171105803] # ⚒ Младший Модератор ⚒
     
-  for i in member.roles:
-    if i.id in mas: return 1
-  return 0
+    for i in member.roles:
+      if i.id in mas: return 1
+    return 0
 
 class moderation(commands.Cog):
     """MODERATION Cog."""
