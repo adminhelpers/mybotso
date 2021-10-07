@@ -62,7 +62,7 @@ def is_accept_guild(guild_id):
   if guild_id in [477547500232769536, 465086262383083520]: return 1
   else: return 0
 
-def is_accept(guild_id, mas, member: discord.Member, accept_roles):
+def is_accept(guild_id, mas, member: discord.Member):
   if guild_id == 477547500232769536: # rodina 03
     mo = [743887697327816705, # Заместитель Гл. Модератора
           661284961428701209, # Глав. Модерация Discord
@@ -101,7 +101,7 @@ def is_accept(guild_id, mas, member: discord.Member, accept_roles):
           822432957171105803] # ⚒ Младший Модератор ⚒
     
   for i in member.roles:
-    if i.id in accept_roles: return 1
+    if i.id in mas: return 1
   return 0
 
 class moderation(commands.Cog):
