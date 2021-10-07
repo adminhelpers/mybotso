@@ -34,12 +34,15 @@ reports = dbt["reports"]
 # print(family.find_one({"_id": ctx.author.id})["name"]) -> Получение отдельного значения(Коллекция: Family | Поиск по графе: _id | Значение графы: name) 
 # family.update_one({"_id": ctx.author.id}, {"$set": {"name": settle}}) -> Обновление значения в базе(Коллекция: Family | По графе: _id | Аргумент: $set - Замена | Значение графы: name | Устанавливаемое значение: settle)
 
-def add(member: discord.Member, arg):
-  if moder.count_documents({"guild": 477547500232769536, "id": member.id}) == 0:
-    moder.insert_one({"guild": 477547500232769536, "id": member.id, "close": 0, "rasm": 0, "mute": 0, "kick": 0, "warn": 0, "ban": 0, "unwarn": 0, "unmute": 0, "vmute": 0, "vunmute": 0, "rols": 0, "repa": 0, "derols": 0, "dezaprols": 0, "vig": 0, "leader": 0, "x2": 0})
-    moder.update_one({"guild": 477547500232769536, "id": member.id}, {"$set": {arg: 1}})
+def add(guild_id, member: discord.Member, arg):
+  if moder.count_documents({"guild": guild_id, "id": member.id}) == 0:
+    if guild_id == 477547500232769536:
+      moder.insert_one({"guild": guild_id, "id": member.id, "close": 0, "rasm": 0, "mute": 0, "kick": 0, "warn": 0, "ban": 0, "unwarn": 0, "unmute": 0, "vmute": 0, "vunmute": 0, "rols": 0, "repa": 0, "derols": 0, "dezaprols": 0, "vig": 0, "leader": 0, "x2": 0})
+    elif guild_id == 465086262383083520:
+      moder.insert_one({"guild": guild_id, "id": member.id, "close": 0, "rasm": 0, "mute": 0, "kick": 0, "warn": 0, "ban": 0, "unwarn": 0, "unmute": 0, "vmute": 0, "vunmute": 0, "rols": 0, "repa": 0, "derols": 0, "dezaprols": 0, "clear": 0, "vig": 0, "leader": 0, "x2": 0})
+    moder.update_one({"guild": guild_id, "id": member.id}, {"$set": {arg: 1}})
   else:
-    moder.update_one({"guild": 477547500232769536, "id": member.id}, {"$set": {arg: moder.find_one({"guild": 477547500232769536, "id": member.id})[arg] + 1}})
+    moder.update_one({"guild": guild_id, "id": member.id}, {"$set": {arg: moder.find_one({"guild": guild_id, "id": member.id})[arg] + 1}})
 
 global log
 log = 736200220311945256
@@ -47,30 +50,56 @@ log = 736200220311945256
 global message_id
 message_id = 0
 
-global mfull
-mfull = [743887697327816705, # Заместитель Гл. Модератора
-            661284961428701209, # Глав. Модерация Discord
-            714504039072661545, # Supervisor Moderation
-            789910831868543027, # Discord Guard
-            817813676178407425, # Support Team
-            652869023599558656] # Srectator
-             
-             
+def is_mute_role(guild_id):
+  if guild_id == 477547500232769536: return discord.utils.get(ctx.guild.roles, id = 800085900435652678) # rodina 03
+  elif guild_id == 465086262383083520: return discord.utils.get(ctx.guild.roles, id = 708688299467997266) # rodina 02
 
-global mone
-mone  = [743887697327816705, # Заместитель Гл. Модератора
-            661284961428701209, # Глав. Модерация Discord
-            714504039072661545, # Supervisor Moderation
-            789910831868543027, # Discord Guard
-            817813676178407425] # Support Team
+def is_logchannel(guild_id):
+  if guild_id == 477547500232769536: return 834039427541631016 # rodina 03
+  elif guild_id == 465086262383083520: return 895746018589700117 # rodina 02
 
-global mtwo
-mtwo = [743887697327816705, # Заместитель Гл. Модератора
-            661284961428701209, # Глав. Модерация Discord
-            714504039072661545, # Supervisor Moderation
-            789910831868543027] # Discord Guard
+def is_accept_guild(guild_id):
+  if guild_id in [477547500232769536, 465086262383083520]: return 1
+  else: return 0
 
-def is_accept(member: discord.Member, accept_roles):
+def is_accept(guild_id, mas, member: discord.Member, accept_roles):
+  if guild_id == 477547500232769536: # rodina 03
+    mo = [743887697327816705, # Заместитель Гл. Модератора
+          661284961428701209, # Глав. Модерация Discord
+          714504039072661545, # Supervisor Moderation
+          789910831868543027, # Discord Guard
+          817813676178407425] # Support Team
+    
+    mt = [743887697327816705, # Заместитель Гл. Модератора
+          661284961428701209, # Глав. Модерация Discord
+          714504039072661545, # Supervisor Moderation
+          789910831868543027] # Discord Guard
+    
+    mf = [743887697327816705, # Заместитель Гл. Модератора
+          661284961428701209, # Глав. Модерация Discord
+          714504039072661545, # Supervisor Moderation
+          789910831868543027, # Discord Guard
+          817813676178407425, # Support Team
+          652869023599558656] # Srectator
+  elif guild_id == 465086262383083520: #rodina 02
+    mo = [822340589894893578, # ⚒ Главный Модератор ⚒
+          822442266844725260, # ⚒ Зам.Главного Модератора ⚒
+          642319092174553091, # ム Technical Administrator Discord ム
+          822435014897434624, # ⚒ Старший Модератор ⚒
+          822434022613450782] # ⚒ Модератор ⚒
+    
+    mt = [822340589894893578, # ⚒ Главный Модератор ⚒
+          822442266844725260, # ⚒ Зам.Главного Модератора ⚒
+          642319092174553091, # ム Technical Administrator Discord ム
+          822435014897434624] # ⚒ Старший Модератор ⚒
+    
+    mf = [822340589894893578, # ⚒ Главный Модератор ⚒
+          822442266844725260, # ⚒ Зам.Главного Модератора ⚒
+          642319092174553091, # ム Technical Administrator Discord ム
+          822435014897434624, # ⚒ Старший Модератор ⚒
+          822434022613450782, # ⚒ Модератор ⚒
+          822432957171105803] # ⚒ Младший Модератор ⚒
+    
   for i in member.roles:
     if i.id in accept_roles: return 1
   return 0
@@ -162,14 +191,13 @@ class moderation(commands.Cog):
 
       '''
 
-    @commands.command() #mfull 
+    @commands.command() #mf 
     async def clear(self, ctx, member: typing.Optional[discord.Member] = None, amount : int = None):
       
-        if not ctx.guild.id == 477547500232769536: return 
+        if not is_accept_guild(ctx.guild.id) == 1: return 
         global log
-        global mfull
 
-        if is_accept(ctx.author, mfull) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
+        if is_accept(ctx.guild.id, mf, ctx.author) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
 
         if amount == None and member == None:
             return await ctx.send(embed = discord.Embed(description = f'''Пожалуйста, используйте команду правильно, одним из двумя способов\n\n**1) После команды укажите кол-во удаляемых сообщений.**\n`Форма:` **{reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]}clear `Кол-во Сообщений`**\n```{reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]}clear 10\n-- я удалю 10 первых сообщений.\n{reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]}clear 0\n-- я не удалю ни одного сообщения.```• Область допустимых значений: От `1` до `300`\n\n**2) После команды `@упомяните` участника чьи сообщения удалить, опционально укажите кол-во сообщений.**\n`Форма:` **{reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]}clear [Нарушитель] [Кол-во Сообщений]**\n```{reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]}clear @Провокатор 10\n-- я удалю 10 последних сообщений от пользователя.\n{reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]}clear @провокатор\n-- я не удалю ни одного сообщения от указанного пользователя.```• Область допустимых значений: От `1` до `50`''', colour = 0xFB9E14), delete_after = 60)  
@@ -214,7 +242,7 @@ class moderation(commands.Cog):
                         await ctx.send(embed = discord.Embed(description = f'** :white_check_mark: Удалено {amount} сообщений от пользователя {member.mention}**', colour = 0xFB9E14), delete_after = 5)   
                         break              
 
-            logs = self.bot.get_channel(log)
+            logs = self.bot.get_channel(is_logchannel(ctx.guild.id))
             e = discord.Embed(colour = 0xFB9E14, timestamp = datetime.datetime.utcnow())
             e.set_author(name = 'Удаление сообщений пользователя', icon_url = ctx.author.avatar_url)
             e.add_field(name = "Удалили у", value = f"{member.display_name}({member.mention})")
@@ -226,18 +254,18 @@ class moderation(commands.Cog):
               return await logs.send(embed = e)
             except:
               pass
+            add(ctx.guild.id, ctx.author.id, "clear")
 
     @commands.command(aliases = ['ссылка', 'инвайт'])
     async def invite(self, ctx):
         if ctx.guild.id == 477547500232769536: return await ctx.send(embed = discord.Embed(title = f'Discord Helper', description = f'''**Единая ссылка на приглашения пользователей --\n https://discord.gg/rodina03**''', colour = 0xFB9E14))
 
-    @commands.command() #mfull
+    @commands.command() #mf
     async def vmute(self, ctx, member: discord.Member = None):
-        if not ctx.guild.id == 477547500232769536: return 
+        if not ctx.guild.id == 465086262383083520 or not is_accept_guild(ctx.guild.id) == 1: return 
         global log
-        global mfull
 
-        if is_accept(ctx.author, mfull) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
+        if is_accept(ctx.guild.id, mf, ctx.author) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
 
         if member == ctx.message.author:
             return await ctx.send(embed = discord.Embed(title = f'Система наказаний', description = f'''**:shield: {ctx.author.mention}, Вы не можете выдать голосовой мут самому себе.**''', colour = 0xFB9E14), delete_after = 5)
@@ -247,7 +275,7 @@ class moderation(commands.Cog):
 
         await member.edit(mute = True)
         await ctx.send(embed = discord.Embed(title = f'Система наказаний', description = f'''**:shield: {ctx.author.mention}, Вы выдали голосовой мут пользователю {member.mention}**''', colour = 0xFB9E14))
-        logsuser = self.bot.get_channel(850605849343819836)
+        logsuser = self.bot.get_channel(is_logchannel(ctx.guild.id))
         logs = self.bot.get_channel(834039427541631016)
         e = discord.Embed(colour = 0xFB9E14, timestamp = datetime.datetime.utcnow())
         e.set_author(name = 'Выдача голосового мута', icon_url = ctx.author.avatar_url)
@@ -256,15 +284,14 @@ class moderation(commands.Cog):
         e.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
         await logs.send(embed = e)
         await logsuser.send(embed = e)
-        add(ctx.author, "vmute")
+        add(ctx.guild.id, ctx.author, "vmute")
 
-    @commands.command() #mfull
+    @commands.command() #mf
     async def vunmute(self, ctx, member: discord.Member = None):
-        if not ctx.guild.id == 664111470782578708: return 
+        if not ctx.guild.id == 465086262383083520 or not is_accept_guild(ctx.guild.id) == 1: return 
         global log
-        global mfull
-
-        if is_accept(ctx.author, mfull) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
+        
+        if is_accept(ctx.guild.id, mf, ctx.author) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
 
         if member == ctx.message.author:
             return await ctx.send(embed = discord.Embed(title = f'Система наказаний', description = f'''**:shield: {ctx.author.mention}, вы не можете снять голосовой мут самому себе.**''', colour = 0xFB9E14), delete_after = 5)
@@ -275,7 +302,7 @@ class moderation(commands.Cog):
         await member.edit(mute = False)
         await ctx.send(embed = discord.Embed(title = f'Система наказаний', description = f'''**:shield: {ctx.author.mention}, Вы сняли голосовой мут пользователю {member.mention}**''', colour = 0xFB9E14))
         logs = self.bot.get_channel(834039427541631016)
-        logsuser = self.bot.get_channel(850605849343819836)
+        logsuser = self.bot.get_channel(is_logchannel(ctx.guild.id))
         e = discord.Embed(colour = 0xFB9E14, timestamp = datetime.datetime.utcnow())
         e.set_author(name = 'Снятие голосового мута', icon_url = ctx.author.avatar_url)
         e.add_field(name = "Сняли", value = f"{member.display_name}`({member})`")
@@ -283,18 +310,16 @@ class moderation(commands.Cog):
         e.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
         await logs.send(embed = e)
         await logsuser.send(embed = e)
-        add(ctx.author, "vunmute")
+        add(ctx.guild.id, ctx.author, "vunmute")
 
     @commands.command()
-    @commands.cooldown(1, 300, commands.BucketType.member) # mtwo
+    @commands.cooldown(1, 300, commands.BucketType.member) # mt
     async def ban(self, ctx, member: discord.Member = None, *, reason = None):
         global log
-        global mtwo
 
-        if not ctx.guild.id == 477547500232769536:
-            return
+        if not is_accept_guild(ctx.guild.id) == 1: return 
 
-        if is_accept(ctx.author, mtwo) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
+        if is_accept(ctx.guild.id, mt, ctx.author) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
         
         if member == None or not member.id in [i.id for i in ctx.guild.members]:
             if member == None:
@@ -326,8 +351,8 @@ class moderation(commands.Cog):
                       embed.set_thumbnail(url = 'https://images-ext-1.discordapp.net/external/yarwcyEZug1mZITDcgLOQKSbDh7O6361bRAu7S95qNU/https/avatars.mds.yandex.net/get-pdb/2826470/29569d4a-36f3-4b9c-94f5-027c7cfb03f6/s1200')
                       embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
                       channel = self.bot.get_channel(834039427541631016)
-                      logsuser = self.bot.get_channel(850605849343819836)
-                      await channel.send(embed = embed) 
+                      logsuser = self.bot.get_channel(is_logchannel(ctx.guild.id))
+                      if ctx.guild.id == 477547500232769536: await channel.send(embed = embed)  
                       await logsuser.send(embed = embed)
                   else: return
                       
@@ -353,24 +378,21 @@ class moderation(commands.Cog):
         embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
         await ctx.send(embed = embed)
         channel = self.bot.get_channel(834039427541631016)
-        logsuser = self.bot.get_channel(850605849343819836)
-        await channel.send(embed = embed) 
+        logsuser = self.bot.get_channel(is_logchannel(ctx.guild.id))
+        if ctx.guild.id == 477547500232769536: await channel.send(embed = embed)  
         await logsuser.send(embed = embed)
         await ctx.guild.ban(member, reason = f'BANNED by {ctx.author.display_name} | REASON: {reason}')
-        add(ctx.author, "ban")
+        add(ctx.guild.id, ctx.author, "ban")
         await ctx.message.add_reaction('✅')
 
-    @commands.command(aliases = ['bt']) # mtwo
+    @commands.command(aliases = ['bt']) # mt
     @commands.cooldown(1, 300, commands.BucketType.member)
     async def bantime(self, ctx, member: discord.Member = None, arg = None, *, reason = None):
-
         global log
-        global mtwo
 
-        if not ctx.guild.id == 477547500232769536:
-            return
+        if not is_accept_guild(ctx.guild.id) == 1: return 
 
-        if is_accept(ctx.author, mtwo) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
+        if is_accept(ctx.guild.id, mt, ctx.author) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
 
         if arg == None:
             return await ctx.send(embed = discord.Embed(description = f'Пожалуйста, `@упомяните` участника для ограничения, опционально укажите срок и/или причину.\n`Форма:` **{reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]}bantime @упоминание [длительность] [причина]**\n\n`{reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]}bantime @Провокатор#1234 3h`\n-- я забаню пользователя на 3 часа\n`{reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]}bantime @Провокатор#1234 5d реклама`\n-- я забаню пользователя на 5 дней с указанием причины\n\n• Допустимые значения: `h, d`\n• Вместо упоминания можно использовать `ID `участника.', colour = 0xFB9E14), delete_after = 30)  
@@ -422,7 +444,7 @@ class moderation(commands.Cog):
         try:
           await ctx.guild.ban(member, reason = f'BANNED by {ctx.author.display_name} | REASON: {reason} | TIME: {tp}')
           banlist.insert_one({"guild": ctx.guild.id, "type": "bands", "id": member.id, "time": fpl, "name": f'{member.name}#{member.discriminator}'})
-          add(ctx.author, "ban")
+          add(ctx.guild.id, ctx.author, "ban")
           embed = discord.Embed(colour = member.color, timestamp = ctx.message.created_at) 
           embed.set_author(name = f'Пользователь был забанен!')
           embed.add_field(name = 'Пользователь', value = f'**{member.display_name}**`({member})`', inline = False) 
@@ -433,9 +455,9 @@ class moderation(commands.Cog):
           embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
           await ctx.send(embed = embed)
           channel = self.bot.get_channel(834039427541631016)
-          logsuser = self.bot.get_channel(850605849343819836)
+          logsuser = self.bot.get_channel(is_logchannel(ctx.guild.id))
           await logsuser.send(embed = embed)
-          await channel.send(embed = embed) 
+          if ctx.guild.id == 477547500232769536: await channel.send(embed = embed)  
           embed = discord.Embed(colour = member.color, timestamp = ctx.message.created_at) 
           embed.set_author(name = f'Вы были забанены на сервере {ctx.guild.name}!')
           embed.add_field(name = 'Модератором', value = f'**{ctx.author.display_name}**`({ctx.author})`', inline = False)    
@@ -450,16 +472,12 @@ class moderation(commands.Cog):
         except:
           await ctx.send(embed = discord.Embed(description = f'**Произошла неизвестная ошибка.**', color = 0xFB9E14), delete_after = 5)
 
-    @commands.command() # mtwo
+    @commands.command() # mt
     @commands.cooldown(1, 300, commands.BucketType.member)
     async def kick(self, ctx, member: discord.Member = None, *, reason = None):
-
-        if not ctx.guild.id == 477547500232769536:
-            return
-          
-        global mtwo
-
-        if is_accept(ctx.author, mtwo) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
+        if not is_accept_guild(ctx.guild.id) == 1: return 
+      
+        if is_accept(ctx.guild.id, mt, ctx.author) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
 
         if member == None:
             await ctx.send(f'`[ERR]` {ctx.author.mention}, `обязательно укажите пользователя!`', delete_after = 5)
@@ -489,23 +507,21 @@ class moderation(commands.Cog):
         await ctx.send(embed = embed)
 
         channel = self.bot.get_channel(834039427541631016)
-        logsuser = self.bot.get_channel(850605849343819836)
+        logsuser = self.bot.get_channel(is_logchannel(ctx.guild.id))
         await logsuser.send(embed = embed)
-        await channel.send(embed = embed)
+        if ctx.guild.id == 477547500232769536: await channel.send(embed = embed) 
         await ctx.guild.kick(member, reason = f'KICKED by {ctx.author.display_name} | REASON: {reason}')
-        add(ctx.author, "kick")
+        add(ctx.guild.id, ctx.author, "kick")
         await ctx.message.add_reaction('✅')
 
-    @commands.command() #mfull
+    @commands.command() #mf
     async def mute(self, ctx, member: discord.Member = None, arg = None, *, reason = None):
 
         global log 
-        global mfull
         
-        if not ctx.guild.id == 477547500232769536:
-            return
+        if not is_accept_guild(ctx.guild.id) == 1: return 
 
-        if is_accept(ctx.author, mfull) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
+        if is_accept(ctx.guild.id, mf, ctx.author) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
 
         if arg == None:
             return await ctx.send(embed = discord.Embed(description = f'Пожалуйста, `@упомяните` участника для ограничения, опционально укажите срок и/или причину.\nДля выдачи голосового мута в конце ставьте `voice` или `v`\n`Форма:` **{reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]}mute @упоминание [длительность] [причина]**\n\n`{reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]}mute @Провокатор#1234 10s`\n-- я выдам роль мута на 10 минут\n`{reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]}mute @Провокатор#1234 10m за провокацию`\n-- я выдам роль мута на 10 минут с указанием причины\n`{reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]}mute @Провокатор#1234 10m voice`\n-- я выдам голосовой мут на 10 минут\n\n• Допустимые значения: `s, m, h, d`\n• Вместо упоминания можно использовать `ID `участника.', colour = 0xFB9E14), delete_after = 30)  
@@ -532,7 +548,7 @@ class moderation(commands.Cog):
             f = 1
           else:
             f = 0
-        mute_role = discord.utils.get(ctx.guild.roles, id = 800085900435652678)
+        mute_role = is_mute_role(ctx.guild.id)
         sleep = 0
 
         if mute_role in member.roles:
@@ -591,10 +607,10 @@ class moderation(commands.Cog):
           await member.add_roles(mute_role, reason = f'По причине: {reason}\nМодератором: {ctx.author.display_name}')
         if f == 1:
           embed.set_author(name = f'Пользователь получил голосовой мут!')
-          add(ctx.author, "vmute")
+          add(ctx.guild.id, ctx.author, "vmute")
         else:
           embed.set_author(name = f'Пользователь получил мут!')
-          add(ctx.author, "mute")
+          add(ctx.guild.id, ctx.author, "mute")
         embed.add_field(name = 'Пользователь', value = f'**{member.display_name}**`({member})`', inline = False) 
         embed.add_field(name = 'Модератор', value = f'**{ctx.author.display_name}**`({ctx.author})`', inline = False)
         embed.add_field(name = 'Время', value = f'**{tp}**')    
@@ -604,9 +620,9 @@ class moderation(commands.Cog):
         await ctx.send(embed = embed)
 
         logs = self.bot.get_channel(834039427541631016)
-        logsuser = self.bot.get_channel(850605849343819836)
+        logsuser = self.bot.get_channel(is_logchannel(ctx.guild.id))
         await ctx.message.add_reaction('✅')
-        await logs.send(embed = embed)
+        if ctx.guild.id == 477547500232769536: if ctx.guild.id == 477547500232769536: await logs.send(embed = embed)  
         await logsuser.send(embed = embed)
         if f == 1:
           await asyncio.sleep(sleep)
@@ -622,24 +638,22 @@ class moderation(commands.Cog):
 
         if ctx.guild == None: return
         
-        if not ctx.guild.id == 477547500232769536: return
+        if not is_accept_guild(ctx.guild.id) == 1: return 
 
-        mute_role = discord.utils.get(ctx.guild.roles, id = 800085900435652678)
+        mute_role = is_mute_role(ctx.guild.id)
         if mute_role in ctx.author.roles: 
             if ctx.channel.id == 817815183094448130 or ctx.channel.id == 805487247692005417: return
             await asyncio.sleep(0.1)
             try: return await ctx.delete()
             except: return
 
-    @commands.command() # mfull
+    @commands.command() # mf
     async def unmute(self, ctx, member: discord.Member = None, reason = None):
         global log 
-        global mfull
 
-        if not ctx.guild.id == 477547500232769536:
-            return
+        if not is_accept_guild(ctx.guild.id) == 1: return 
 
-        if is_accept(ctx.author, mfull) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
+        if is_accept(ctx.guild.id, mf, ctx.author) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
 
         if member == None:
             return await ctx.send(f'`[ERR]` {ctx.author.mention}, `укажите пользователя`', delete_after = 5)
@@ -655,10 +669,10 @@ class moderation(commands.Cog):
             f = 1
         else:
           f = 0
-          mute_role = discord.utils.get(ctx.guild.roles, id = 800085900435652678)
+          mute_role = is_mute_role(ctx.guild.id)
         
         logs = self.bot.get_channel(834039427541631016)
-        logsuser = self.bot.get_channel(850605849343819836)
+        logsuser = self.bot.get_channel(is_logchannel(ctx.guild.id))
 
         if f == 0:
           if not mute_role in member.roles:
@@ -671,7 +685,7 @@ class moderation(commands.Cog):
 
           await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, вы сняли голосовой мут с пользователя {member.mention}**', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow()))
 
-          add(ctx.author, "vunmute")
+          add(ctx.guild.id, ctx.author, "vunmute")
           await logsuser.send(embed = discord.Embed(description = f'**Модератор {ctx.author.mention}`({ctx.author})`, снял голосовой мут с пользователя {member.mention}`({member})`**', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow()))
           return await logs.send(embed = discord.Embed(description = f'**Модератор {ctx.author.mention}, снял голосовой мут с пользователя {member.mention}**', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow()))
         
@@ -679,16 +693,16 @@ class moderation(commands.Cog):
           muted.delete_one({"id": member.id})
         await member.remove_roles(mute_role)
         await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, вы сняли мут с пользователя {member.mention}**', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow()))
-        await logs.send(embed = discord.Embed(description = f'**Модератор {ctx.author.mention}, снял мут с пользователя {member.mention}`({member})`**', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow()))
+        if ctx.guild.id == 477547500232769536: await logs.send(embed = discord.Embed(description = f'**Модератор {ctx.author.mention}, снял мут с пользователя {member.mention}`({member})`**', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow()))
         await logsuser.send(embed = discord.Embed(description = f'**Модератор {ctx.author.mention}`({ctx.author})`, снял мут с пользователя {member.mention}`({member})`**', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow()))
-        add(ctx.author, "unmute")
+        add(ctx.guild.id, ctx.author, "unmute")
 
     '''
 
     @commands.command(aliases = ['фото'])
     async def photo(self, ctx, *, arg = None):
 
-        if not ctx.guild.id == 477547500232769536:
+         if not is_accept_guild(ctx.guild.id) == 1: return 
             return
 
         if not arg:
@@ -720,7 +734,7 @@ class moderation(commands.Cog):
 
     @commands.command(aliases = ['Почистить роль', 'Начать чистку'])
     async def chistka(self, ctx, role: discord.Role = None):
-        if not ctx.guild.id == 477547500232769536:
+         if not is_accept_guild(ctx.guild.id) == 1: return 
             return
 
         a23 = [ ]
@@ -783,7 +797,7 @@ class moderation(commands.Cog):
 
     @commands.command()
     async def rep(self, ctx,member: discord.Member = None,*,arg = None):
-        if not ctx.guild.id == 477547500232769536:
+         if not is_accept_guild(ctx.guild.id) == 1: return 
             return
 
         channel = self.bot.get_channel(577541992599388180) #Айди канала жалоб
@@ -801,7 +815,7 @@ class moderation(commands.Cog):
         embed = discord.Embed(description =f'**:shield: На пользователя {member.mention} была отправлена жалоба.\n:bookmark_tabs: По причине: {arg}\n:bust_in_silhouette: Автор жалобы: {ctx.author.mention}**', color=0xFB9E14)
         embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
         embed.set_thumbnail(url = 'https://banki-kredity.ru/wp-content/uploads/2019/11/436.jpg')
-        await channel.send(embed = embed)
+        if ctx.guild.id == 477547500232769536: await channel.send(embed = embed) 
 
     @commands.Cog.listener()
     async def on_message(self, ctx):
@@ -809,7 +823,7 @@ class moderation(commands.Cog):
       if ctx.guild == None:
         return
         
-      if not ctx.guild.id == 477547500232769536:
+       if not is_accept_guild(ctx.guild.id) == 1: return 
           return
 
       mute_role = discord.utils.get(ctx.guild.roles, id = 800085900435652678)
@@ -823,7 +837,7 @@ class moderation(commands.Cog):
       if ctx.guild == None:
         return
 
-      if not ctx.guild.id == 477547500232769536:
+       if not is_accept_guild(ctx.guild.id) == 1: return 
         return
 
       if discord.utils.get(ctx.guild.roles, id = 817813676178407425) in ctx.author.roles:
@@ -912,15 +926,14 @@ class moderation(commands.Cog):
             embed1.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
             await channel.send(f'{ctx.author.mention} ожидайте ответа от <@&810858517618491394>\n', embed=embed1)
             message = await self.bot.get_channel(805487247692005417).fetch_message(887687791679524974)
-            emb23 = discord.Embed(description = f'«:money_with_wings: Магазин Север :money_with_wings:» ─ это официальный магазин Северного Округа, в котором можно приобрести:\n\❄️ роль <@&805493447674036234> , которая позволяет включать музыку в музыкальных каналах. `Цена: 30❄️`\n\❄️ роль <@&805487952620814387> , которая позволяет включать музыку во всех каналах, даже фракций. `Цена: 50❄️`\n\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\❄️**__Роли для украшения профиля__** \❄️\nТы можешь арендовать себе роль из списка ниже, сроком на один месяц. `Цена: 40❄️`\n\❄️ <@&886187186066690068>\n\❄️ <@&886188540998860831>\n\❄️ <@&886188961217802250>\n\❄️ <@&886189459534667836>\n\❄️ <@&886208489628794920>\n\❄️ <@&886207966255153182>\n\❄️ <@&886208289413672990>\n\❄️ <@&886190373758705694>\n\❄️ <@&886190189024804894>\n\❄️ <@&886208927249870898>\n\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\❄️**__Роли доступа к фракциям__** \❄️\nТы можешь арендовать себе _не более трех ролей_, позволяющих получить доступ к голосовому и текстовому каналу фракции. Срок действия "аренды" ─ одна неделя. `Цена: 30❄️` \n :exclamation: *Роль может быть снята раньше срока, при поступлении жалоб на твое поведение в каналах.*\n\❄️ <@&886211039677546496> ─ доступ к каналам фракции Правительство\n\❄️ <@&886211219944525834> ─ доступ к каналам фракции Банк\n\❄️ <@&886211293298720839> ─ доступ к каналам фракции МРЭО\n\❄️ <@&886211351272390686> ─ доступ к каналам фракции ФСБ\n\❄️ <@&886211354141290497> ─ доступ к каналам фракций ГИБДД, ГУВД, РУВД\n\❄️ <@&886211356477505536> ─ доступ к каналам фракции Армия\n\❄️ <@&886211358792757298> ─ доступ к каналам фракции ТСР\n\❄️ <@&886211361204469780> ─ доступ к каналам фракции Новостного агенста\n\❄️ <@&886211362169188392> ─ доступ к каналам фракции Министерства Здравоохранения\n\n\n`Для заказа услуг, либо отправления заказа продавцам, напиши любое слово в данный текстовый канал, после чего в созданном текстовом канале ты сможешь задать свой заказ.`\n`Также ты можешь узнать информацию о том, как и кому перевести игровую валюту в валюту Discord.`\n`Для закрытия данного канала используй команду !close_buy(cb|закрыть)`')
+            emb23 = discord.Embed(description = f'«:moy_with_wings: Магазин Север :moy_with_wings:» ─ это официальный магазин Северного Округа, в котором можно приобрести:\n\❄️ роль <@&805493447674036234> , которая позволяет включать музыку в музыкальных каналах. `Цена: 30❄️`\n\❄️ роль <@&805487952620814387> , которая позволяет включать музыку во всех каналах, даже фракций. `Цена: 50❄️`\n\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\❄️**__Роли для украшения профиля__** \❄️\nТы можешь арендовать себе роль из списка ниже, сроком на один месяц. `Цена: 40❄️`\n\❄️ <@&886187186066690068>\n\❄️ <@&886188540998860831>\n\❄️ <@&886188961217802250>\n\❄️ <@&886189459534667836>\n\❄️ <@&886208489628794920>\n\❄️ <@&886207966255153182>\n\❄️ <@&886208289413672990>\n\❄️ <@&886190373758705694>\n\❄️ <@&886190189024804894>\n\❄️ <@&886208927249870898>\n\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\❄️**__Роли доступа к фракциям__** \❄️\nТы можешь арендовать себе _не более трех ролей_, позволяющих получить доступ к голосовому и текстовому каналу фракции. Срок действия "аренды" ─ одна неделя. `Цена: 30❄️` \n :exclamation: *Роль может быть снята раньше срока, при поступлении жалоб на твое поведение в каналах.*\n\❄️ <@&886211039677546496> ─ доступ к каналам фракции Правительство\n\❄️ <@&886211219944525834> ─ доступ к каналам фракции Банк\n\❄️ <@&886211293298720839> ─ доступ к каналам фракции МРЭО\n\❄️ <@&886211351272390686> ─ доступ к каналам фракции ФСБ\n\❄️ <@&886211354141290497> ─ доступ к каналам фракций ГИБДД, ГУВД, РУВД\n\❄️ <@&886211356477505536> ─ доступ к каналам фракции Армия\n\❄️ <@&886211358792757298> ─ доступ к каналам фракции ТСР\n\❄️ <@&886211361204469780> ─ доступ к каналам фракции Новостного агенста\n\❄️ <@&886211362169188392> ─ доступ к каналам фракции Министерства Здравоохранения\n\n\n`Для заказа услуг, либо отправления заказа продавцам, напиши любое слово в данный текстовый канал, после чего в созданном текстовом канале ты сможешь задать свой заказ.`\n`Также ты можешь узнать информацию о том, как и кому перевести игровую валюту в валюту Discord.`\n`Для закрытия данного канала используй команду !close_buy(cb|закрыть)`')
             emb23.set_author(name='💸 Магазин Центральный рынок 💸 | Rodina RolePlay', icon_url= 'https://i.imgur.com/s5CvtOT.png')
             emb23.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
             await message.edit(embed=emb23)
 
     @commands.command(aliases = ['cb', 'закрыть'])
     async def close_buy(self, ctx):
-      if not ctx.guild.id == 477547500232769536:
-        return
+      if not is_accept_guild(ctx.guild.id) == 1: return 
 
       if not 'заказ' in ctx.channel.name.split('-'):
         return await ctx.message.delete()
@@ -992,13 +1005,11 @@ class moderation(commands.Cog):
       else:
         return ctx.message.delete()
 
-    @commands.command() #mone
+    @commands.command() #mo
     async def warn(self, ctx, member: discord.Member = None, *, reason = None):
-        if not ctx.guild.id == 477547500232769536:
-            return
-        global mone
+        if not ctx.guild.id == 465086262383083520 or not is_accept_guild(ctx.guild.id) == 1: return 
 
-        if is_accept(ctx.author, mone) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
+        if is_accept(ctx.guild.id, mo, ctx.author) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
 
         if member == None:
             return await ctx.send(f'`[ERR]` {ctx.author.mention}, `обязательно укажите пользователя!`', delete_after = 5)
@@ -1024,7 +1035,7 @@ class moderation(commands.Cog):
           banlist.insert_one({"guild": ctx.guild.id, "type": "bands", "id": member.id, "time": 480, "name": f'{member.name}#{member.discriminator}'})
           await ctx.guild.ban(member, reason = f'3/6 warns | Выдал: {ctx.author.display_name} | Причина: {reason}')
           chan = self.bot.get_channel(834039427541631016)
-          logsuser = self.bot.get_channel(850605849343819836)
+          logsuser = self.bot.get_channel(is_logchannel(ctx.guild.id))
           embed = discord.Embed(title = '\⛩️ **__Временный бан__**', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow())
           embed.add_field(name = '**__Пользователь__**', value = f'{member.display_name}`({member})`', inline = False)
           embed.add_field(name = '**__Модератор__**', value = f'{ctx.author.display_name}({ctx.author})', inline = False)
@@ -1044,7 +1055,7 @@ class moderation(commands.Cog):
           except: pass
           await ctx.guild.ban(member, reason = f'6/6 warns | Выдал: {ctx.author.display_name} | Причина: {reason}')
           chan = self.bot.get_channel(834039427541631016)
-          logsuser = self.bot.get_channel(850605849343819836)
+          logsuser = self.bot.get_channel(is_logchannel(ctx.guild.id))
           embed = discord.Embed(title = '\⛩️ **__Вечный бан__**', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow())
           embed.add_field(name = '**__Пользователь__**', value = f'{member.display_name}`({member})`', inline = False)
           embed.add_field(name = '**__Модератор__**', value = f'{ctx.author.display_name}({ctx.author})', inline = False)
@@ -1061,7 +1072,7 @@ class moderation(commands.Cog):
           warns.update_one({"proverka": 1}, {"$set": {"numbed": warns.find_one({"proverka": 1})["numbed"] + 1}})
           await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, вы выдали пользователю {member.mention} предупреждение.\nКол-во предупреждений: {s + 1}/3**', colour = 0xFB9E14))  
           chan = self.bot.get_channel(834039427541631016)
-          logsuser = self.bot.get_channel(850605849343819836)
+          logsuser = self.bot.get_channel(is_logchannel(ctx.guild.id))
           embed = discord.Embed(title = '\⛩️ **_Выдача предупреждения__**', timestamp = datetime.datetime.utcnow())
           embed.add_field(name = '**__Пользователь__**', value = f'{member.display_name}`({member})`', inline = False)
           embed.add_field(name = '**__Модератор__**', value = f'{ctx.author.display_name}({ctx.author})', inline = False)
@@ -1072,12 +1083,11 @@ class moderation(commands.Cog):
           await logsuser.send(embed = embed)
           try: await member.send(embed = discord.Embed(title = '\⛩️ **_Выдача предупреждения__**', description = f'Вы получили предупреждение на сервере `Rodina Role Play • Северный округ`\nПроверить свои предупреждения можно командой `!warnlog`.\n\n**Наказание выдал:** {ctx.author.mention}`({ctx.author})`\n**Причина:** {reason}\n\n❗ Пожалуйста, ознакомьтесь с правилами сервера и постарайтесь больше не получать предупреждений, иначе вы можете быть наказаны более серьезно.\n❗ `[P.S]:` Если Вы не согласны с выданным, за Вами остаётся право написать жалобу на форум модераторов `"Робохомячок"`'))
           except: pass
-        add(ctx.author, "warn")
+        add(ctx.guild.id, ctx.author, "warn")
 
     @commands.command()
     async def warnlog(self, ctx, member: discord.Member = None):
-        if not ctx.guild.id == 477547500232769536:
-            return
+        if not ctx.guild.id == 465086262383083520 or  not is_accept_guild(ctx.guild.id) == 1: return 
 
         if member == None:
             member = ctx.author
@@ -1107,13 +1117,11 @@ class moderation(commands.Cog):
         embed.set_thumbnail(url = ctx.guild.icon_url)
         return await ctx.send(embed = embed)
 
-    @commands.command() # mone
+    @commands.command() # mo
     async def unwarn(self, ctx, numbed : int = None):
-        if not ctx.guild.id == 477547500232769536:
-            return
-        global mone
+        if not ctx.guild.id == 465086262383083520 or  not is_accept_guild(ctx.guild.id) == 1: return 
         
-        if is_accept(ctx.author, mone) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5) 
+        if is_accept(ctx.guild.id, mo, ctx.author) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5) 
 
         if int(numbed) > 0:
             if warns.count_documents({"numbed": numbed}) == 1:               
@@ -1123,26 +1131,24 @@ class moderation(commands.Cog):
 
               await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, вы сняли пользователю {memb.mention} 1 предупреждение.**', colour = 0xFB9E14))
               chan = self.bot.get_channel(834039427541631016)
-              logsuser = self.bot.get_channel(850605849343819836)
+              logsuser = self.bot.get_channel(is_logchannel(ctx.guild.id))
               try: await logsuser.send(embed = discord.Embed(description = f'**{ctx.author.mention}`({ctx.author})`, снял пользователю {memb.mention}`({member})` 1 предупреждение.**', colour = 0xFB9E14))
               except: pass              
               try: await chan.send(embed = discord.Embed(description = f'**{ctx.author.mention}, снял пользователю {memb.mention} 1 предупреждение.**', colour = 0xFB9E14))
               except: pass              
               warns.delete_one({"numbed": numbed})
-              add(ctx.author, "unwarn")
+              add(ctx.guild.id, ctx.author, "unwarn")
             else:
                 return await ctx.send(f'`[ERR]` {ctx.author.mention}, `такого случая нету!`', delete_after = 5)
 
         else:
             return await ctx.send(f'`[ERR]` {ctx.author.mention}, `укажите номер случая, его можно узнать прописав команду /warnlog @пользователь#1234`', delete_after = 5)
 
-    @commands.command() # mone
+    @commands.command() # mo
     async def unwarns(self, ctx, member: discord.Member):
-        if not ctx.guild.id == 477547500232769536:
-            return
-        global mone
+        if not ctx.guild.id == 465086262383083520 or  not is_accept_guild(ctx.guild.id) == 1: return 
 
-        if is_accept(ctx.author, mone) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
+        if is_accept(ctx.guild.id, mo, ctx.author) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
 
         if member is None:
           return await ctx.send(f'`[ERR]` {ctx.author.mention}, `укажите пользователя!`', delete_after = 5)
@@ -1200,10 +1206,10 @@ class moderation(commands.Cog):
           await message.delete()
           await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, Вы сняли пользователю {member.mention} {txt}**', colour = 0xFB9E14))
           chan = self.bot.get_channel(834039427541631016)
-          logsuser = self.bot.get_channel(850605849343819836)
+          logsuser = self.bot.get_channel(is_logchannel(ctx.guild.id))
           await logsuser.send(embed = discord.Embed(description = f'**{ctx.author.mention}`({ctx.author})`, снял пользователю {member.mention}`({member})` 1 {txt}**', colour = 0xFB9E14))
           await chan.send(embed = discord.Embed(description = f'**{ctx.author.mention}, снял пользователю {member.mention} 1 {txt}**', colour = 0xFB9E14))
-          add(ctx.author, "unwarn")
+          add(ctx.guild.id, ctx.author, "unwarn")
         else:
           return await ctx.send(f'`[ERR]` {ctx.author.mention}, `пользователь не имеет предупреждений!`', delete_after = 5)
 
@@ -1607,18 +1613,14 @@ class moderation(commands.Cog):
 
     @commands.command(aliases = ['imd', 'модеринфо'])
     async def mstat(self, ctx, member: discord.Member = None):
-        if not ctx.guild.id == 477547500232769536:
-            return
+        if not is_accept_guild(ctx.guild.id) == 1: return 
 
         if member == None:
           member = ctx.author
-          
-        
-        if not discord.utils.get(ctx.guild.roles, id = 652869023599558656) in member.roles and not discord.utils.get(ctx.guild.roles, id = 817813676178407425) in member.roles and not discord.utils.get(ctx.guild.roles, id = 851768758267412480) in member.roles:
-            return await ctx.send(f'`[ERR]` {ctx.author.mention}, `вам не доступна данная команда!`', delete_after = 5) 
 
-        if not discord.utils.get(ctx.guild.roles, id = 652869023599558656) in member.roles and not discord.utils.get(ctx.guild.roles, id = 817813676178407425) in member.roles and not discord.utils.get(ctx.guild.roles, id = 851768758267412480) in member.roles:
-          return await ctx.send(f'`[ERR]` {ctx.author.mention}, `данный пользователь не является агентом поддержки!`', delete_after = 5)
+        if is_accept(ctx.guild.id, mf, ctx.author) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`'), delete_after = 5)
+
+        if is_accept(ctx.guild.id, mf, member) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Данная команда не доступна, потому что выбранный Вами пользователь:\n> `◘ Не является модератором`'), delete_after = 5)
         
         if moderr.count_documents({"id": member.id}) == 0 and moder.count_documents({"guild": 477547500232769536, "id": member.id}) == 0:
           return await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, данный пользователь не является модератором, либо он не сделал никаких действий.**', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow()), delete_after = 5)
@@ -1645,12 +1647,59 @@ class moderation(commands.Cog):
         embed.add_field(name = '🔰 | `Статистика модерирования`', value = f'**Всего действий: {foc - int(b[0]) - int(b[1]) - int(b[3]) - int(b[4])}\n> ✏️ | `Выдано текстовых мутов:` {i[2]}\n> 🔊 | `Выдано голосовых мутов:` {i[8]}\n> ✏️ | `Снято текстовых мутов:` {i[7]}\n> 🔊 | `Снято голосовых мутов:` {i[9]}\n\n> `Выдано предупреждений:` {i[5]}\n> `Снято предупреждений:` {i[6]}\n> `Кикнул:` {i[3]}\n> `Забанил:` {i[4]}\n\n> `Одобрено запросов на выдачу роли:` {i[10]}\n> `Отправлено запросов на снятие роли:` {i[13]}\n> `Одобрено запросов на снятие роли:` {i[12]}\n\n> ❗ `Выговоров:` {i[14]} ❗**', inline = False)
         embed.set_footer(text = f'Support Team by dollar ム baby#3603 | Дата: {now.strftime("%d-%m-%Y %H:%M")}', icon_url = self.bot.user.avatar_url)
         await ctx.send(embed = embed)
+        
+        
+    @commands.command(aliases = ['imd', 'модеринфо'])
+    async def mstat(self, ctx, member: discord.Member = None):
+        if not is_accept_guild(ctx.guild.id) == 1: return 
+
+        if member == None:
+          member = ctx.author
+
+        if is_accept(ctx.guild.id, mf, ctx.author) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`'), delete_after = 5)
+
+        if is_accept(ctx.guild.id, mf, member) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Данная команда не доступна, потому что выбранный Вами пользователь:\n> `◘ Не является модератором`'), delete_after = 5)
+        
+        if moderr.count_documents({"id": member.id}) == 0 and moder.count_documents({"guild": 477547500232769536, "id": member.id}) == 0:
+          return await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, данный пользователь не является модератором, либо он не сделал никаких действий.**', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow()), delete_after = 5)
+        
+        i, b = [], []
+        if ctx.guild.id == 465086262383083520: ms = ['close', 'rasm', 'mute', 'kick', 'ban', 'warn', 'unwarn', 'unmute', 'vmute', 'vunmute', 'rols', 'repa', 'derols', 'dezaprols', 'vig', ‘clear’]
+        else: ms = ['close', 'rasm', 'mute', 'kick', 'ban', 'warn', 'unwarn', 'unmute', 'vmute', 'vunmute', 'rols', 'repa', 'derols', 'dezaprols', 'vig']
+        for v in ms:
+          try:
+            i.append(moder.find_one({"guild": ctx.guild.id, "id": member.id})[v])
+          except:
+            i.append(0)
+
+        ms2 = ['close', 'rasm', 'repa', 'addme', 'addrep']
+        for v in ms2:
+          try:
+            b.append(moderr.find_one({"guild": ctx.guild.id, "id": member.id})[v])
+          except:
+            b.append(0)
+
+        now = datetime.datetime.now()
+        foc = int(i[0]) + int(i[1]) + int(i[2]) + int(i[3]) + int(i[4]) + int(i[5]) + int(i[6]) + int(i[7]) + int(i[8]) + int(i[9]) + int(i[10]) + int(i[12]) + int(i[13]) + int(b[0]) + int(b[1]) + int(b[3]) + int(b[4])
+        if ctx.guild.id == 465086262383083520:
+          embed = discord.Embed(title = f'\👨‍💻**__Статистика модератора:__ {member}**')
+          embed.add_field(name = '\💌 | **Статистика репорта**', value = f'**Всего:** {int(b[0]) + int(b[3]) + int(b[4])}\n> \◽ Принято вопросов:{b[3]}\n> \◽ Закрыто вопросов: 0 {b[0]}\ n> \◽ Добавлено людей к репортам:{b[4]}\n> \✅ Оценка ответов:{b[2]}', inline = False)
+          embed.add_field(name = '\📩 | **Статистика модерирования**', value = f'> \◽ Выдал мут: {i[2]}\n> \◽ Снял мут:{i[7]}\n> \◽ Кикнул: {i[3]}\n\◽ Забанил: {i[4]} ', inline = False
+          embed.add_field(name = ' \📨 | **Статистика ролей**', value = f'**Всего:** {int({i[10]}) + int({i[11]}) + int({i[12]})}\n> \◽ Одобрено запросов на выдачу роли: {i[10]}\n > \◽ Отправлено запросов на снятие роли: {i[13]}\n > \◽ Одобрено запросов на снятие роли: {i[12]}', inline = False)
+        else:
+          embed = discord.Embed(title = f'Статистика модератора 📍 {member}', description = f'**👁️ Всего действий от него: {foc}**', colour = 0xFB9E14)
+          embed.add_field(name = '❔ | `Статистика вопросов`', value = f'**Всего действий:** {int(b[0]) + int(b[1]) + int(b[3]) + int(b[4])}\n> 🔹 `Принято вопросов:` {b[3]}\n> 🔹 `Закрыто вопросов:` {b[0]}\n> 🔹 `Поставлено на рассмотрение:` {b[1]}\n> 🔹 `Добавлено людей к репортам:` {b[4]}\n\n> ➕ `Репутация:` {b[2]}', inline = False)
+          embed.add_field(name = '🔰 | `Статистика модерирования`', value = f'**Всего действий: {foc - int(b[0]) - int(b[1]) - int(b[3]) - int(b[4])}\n> ✏️ | `Выдано текстовых мутов:` {i[2]}\n> 🔊 | `Выдано голосовых мутов:` {i[8]}\n> ✏️ | `Снято текстовых мутов:` {i[7]}\n> 🔊 | `Снято голосовых мутов:` {i[9]}\n\n> `Выдано предупреждений:` {i[5]}\n> `Снято предупреждений:` {i[6]}\n> `Кикнул:` {i[3]}\n> `Забанил:` {i[4]}\n\n> `Одобрено запросов на выдачу роли:` {i[10]}\n> `Отправлено запросов на снятие роли:` {i[13]}\n> `Одобрено запросов на снятие роли:` {i[12]}\n\n> ❗ `Выговоров:` {i[14]} ❗**', inline = False)
+        embed.set_footer(text = f'Support Team by dollar ム baby#3603 | Дата: {now.strftime("%d-%m-%Y %H:%M")}', icon_url = self.bot.user.avatar_url)
+        await ctx.send(embed = embed)
+        
+
 
     '''
     @commands.command(aliases = ['imoders'])
     @commands.has_permissions(administrator = True)
     async def allmstats(self, ctx):
-        if not ctx.guild.id == 477547500232769536:
+         if not is_accept_guild(ctx.guild.id) == 1: return 
             return  
 
         fcff = {
@@ -1687,7 +1736,7 @@ class moderation(commands.Cog):
 
     @commands.command(aliases = ['addmoderpanel'])
     async def __addmoderpanel(self, ctx, member: discord.Member = None, arg : int = None):
-      if not ctx.guild.id == 477547500232769536:
+       if not is_accept_guild(ctx.guild.id) == 1: return 
           return
 
       await ctx.message.delete()
@@ -1732,7 +1781,7 @@ class moderation(commands.Cog):
 
     @commands.command(aliases = ['mwarn'])
     async def warnmoder(self, ctx, member: discord.Member = None, *, reason = None):
-      if not ctx.guild.id == 477547500232769536:
+       if not is_accept_guild(ctx.guild.id) == 1: return 
           return
 
       await ctx.message.delete()
@@ -1766,7 +1815,7 @@ class moderation(commands.Cog):
  
     @commands.command(aliases = ['munwarn'])
     async def unwarnmoder(self, ctx, member: discord.Member = None, *, reason = None):
-      if not ctx.guild.id == 477547500232769536:
+       if not is_accept_guild(ctx.guild.id) == 1: return 
           return
 
       if member is None:
@@ -1788,7 +1837,7 @@ class moderation(commands.Cog):
 
     @commands.command(aliases = ['setbonus'])
     async def __setbonus(self, ctx, member: discord.Member = None, arg : int = None):
-      if not ctx.guild.id == 477547500232769536:
+       if not is_accept_guild(ctx.guild.id) == 1: return 
           return
 
       await ctx.message.delete()
