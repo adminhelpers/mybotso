@@ -552,7 +552,8 @@ class moderation(commands.Cog):
             f = 1
           else:
             f = 0
-        mute_role = discord.utils.get(ctx.guild.roles, id = is_mute_role(ctx.guild.id))
+        if ctx.guild.id == 477547500232769536: mute_role = discord.utilgs.get(ctx.guild.roles, id = 800085900435652678) # rodina 03
+        elif ctx.guild.id == 465086262383083520: mute_role = discord.utilgs.get(ctx.guild.roles, id = 708688299467997266) # rodina 02
         sleep = 0
 
         if mute_role in member.roles:
@@ -644,7 +645,8 @@ class moderation(commands.Cog):
         
         if not is_accept_guild(ctx.guild.id) == 1: return 
 
-        mute_role = discord.utils.get(ctx.guild.roles, id = is_mute_role(ctx.guild.id))
+        if ctx.guild.id == 477547500232769536: mute_role = discord.utilgs.get(ctx.guild.roles, id = 800085900435652678) # rodina 03
+        elif ctx.guild.id == 465086262383083520: mute_role = discord.utilgs.get(ctx.guild.roles, id = 708688299467997266) # rodina 02
         if mute_role in ctx.author.roles: 
             if ctx.channel.id == 817815183094448130 or ctx.channel.id == 805487247692005417: return
             await asyncio.sleep(0.1)
@@ -673,7 +675,8 @@ class moderation(commands.Cog):
             f = 1
         else:
           f = 0
-          mute_role = discord.utils.get(ctx.guild.roles, id = is_mute_role(ctx.guild.id))
+          if ctx.guild.id == 477547500232769536: mute_role = discord.utilgs.get(ctx.guild.roles, id = 800085900435652678) # rodina 03
+          elif ctx.guild.id == 465086262383083520: mute_role = discord.utilgs.get(ctx.guild.roles, id = 708688299467997266) # rodina 02
         
         logs = self.bot.get_channel(834039427541631016)
         logsuser = self.bot.get_channel(is_logchannel(ctx.guild.id))
