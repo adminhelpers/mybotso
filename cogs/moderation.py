@@ -51,8 +51,9 @@ global message_id
 message_id = 0
 
 def is_mute_role(guild_id):
-  if guild_id == 477547500232769536: return discord.utils.get(ctx.guild.roles, id = 800085900435652678) # rodina 03
-  elif guild_id == 465086262383083520: return discord.utils.get(ctx.guild.roles, id = 708688299467997266) # rodina 02
+  guild = bot.get_guild(guild_id)
+  if guild_id == 477547500232769536: return discord.utils.get(guild, id = 800085900435652678) # rodina 03
+  elif guild_id == 465086262383083520: return discord.utils.get(guild, id = 708688299467997266) # rodina 02
 
 def is_logchannel(guild_id):
   if guild_id == 477547500232769536: return 834039427541631016 # rodina 03
