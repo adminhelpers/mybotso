@@ -96,6 +96,10 @@ def is_accept(guild_id, mas, member: discord.Member):
           822442266844725260, # ⚒ Зам.Главного Модератора ⚒
           642319092174553091, # ム Technical Administrator Discord ム
           822435014897434624] # ⚒ Старший Модератор ⚒
+
+    if mas == 'mun': mas = [822340589894893578, # ⚒ Главный Модератор ⚒
+          822442266844725260, # ⚒ Зам.Главного Модератора ⚒
+          642319092174553091] # ム Technical Administrator Discord ム
     
     if mas == 'mf': mas = [822340589894893578, # ⚒ Главный Модератор ⚒
           822442266844725260, # ⚒ Зам.Главного Модератора ⚒
@@ -659,7 +663,7 @@ class moderation(commands.Cog):
 
         if not is_accept_guild(ctx.guild.id) == 1: return 
 
-        if is_accept(ctx.guild.id, 'mf', ctx.author) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
+        if is_accept(ctx.guild.id, 'mun', ctx.author) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
 
         if member == None:
             return await ctx.send(f'`[ERR]` {ctx.author.mention}, `укажите пользователя`', delete_after = 5)
