@@ -327,7 +327,7 @@ class moderation(commands.Cog):
 
         if not is_accept_guild(ctx.guild.id) == 1: return 
 
-        if is_accept(ctx.guild.id, 'mt', ctx.author) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
+        if is_accept(ctx.guild.id, 'mun', ctx.author) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
         
         if member == None or not member.id in [i.id for i in ctx.guild.members]:
             if member == None:
