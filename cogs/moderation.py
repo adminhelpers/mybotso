@@ -59,7 +59,7 @@ def is_logchannel(guild_id):
   elif guild_id == 465086262383083520: return 895746018589700117 # rodina 02
 
 def is_accept_guild(guild_id):
-  if guild_id in [477547500232769536, 465086262383083520]: return 1
+  if guild_id in [477547500232769536]: return 1
   else: return 0
 
 def is_accept(guild_id, mas, member: discord.Member):
