@@ -97,7 +97,6 @@ class family(commands.Cog):
 
 	@commands.command(aliases = ['fhelp'])
 	async def famhelp(self, ctx):
-		print('+')
 		if guild_accept(ctx.guild.id) == 0: return 
 		await ctx.message.delete()
 		name = guild_name(ctx.guild.id)
