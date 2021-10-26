@@ -269,6 +269,15 @@ class econom(commands.Cog):
           except: m.append(f'Неизвестный тип с ID: {i["ids"]} - {i["messages"]} coins')
       print(m)
 
+    @commands.command(aliases = ["hwen"])
+    async def halloween(self, ctx):
+      if not ctx.guild.id == 477547500232769536: return
+      embed = discord.Embed(title = 'Тили тили бом, закрой глаза скорее..', description = f'\🎃 **Скоро наступит ночь ужаса, ты готов?** \🎃\n\nИз тьмы выходят призраки и потусторонние существа, чтобы напугать тебя! Но мы не дадим тебя в обиду, ведь мы сами вселяем страх на том сервере \👻\n\n**Чтобы защитить себя от зла, стань этим злом! Нажми на реакцию тыквы Джона \🎃 и он выдаст тебе роль.**', color = 0xFB9E14)
+      embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
+      embed.set_thumbnail(url = ctx.guild.icon_url)
+      await ctx.message.delete()
+      return await ctx.send('@everyone', embed = embed)
+	
     @commands.command(aliases = ["mtop"])
     async def topmessages(self, ctx):
       if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360:
