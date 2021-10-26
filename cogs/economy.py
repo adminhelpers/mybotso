@@ -596,9 +596,9 @@ class econom(commands.Cog):
                 m = mons.find_one({"guild": ctx.guild.id, "ids": ctx.author.id})
                 mons_list, mons_info, mons_name = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"], [], {"monday": "Понедельник", "tuesday": "Вторник", "wednesday": "Среда", "thursday": "Четверг", "friday": "Пятница", "saturday": "Суббота", "sunday": "Воскресенье"}
                 for i in mons_list:
-                    if i != datetime.today("%A").lower(): mons_info.append(f'`• | {mons_name[i]}` - {m[i] сообщений}\n')
+                    if i != datetime.today("%A").lower(): mons_info.append(f'`• | {mons_name[i]}` - {m[i]} сообщений\n')
                     else: 
-                        mons_info.append(f'`• | {mons_name[i]}` - {m[i] сообщений}\n')
+                        mons_info.append(f'`• | {mons_name[i]}` - {m[i]} сообщений\n')
                         mon_full = int(m["monday"]) + int(m["tuesday"]) + int(m["wednesday"]) + int(m["thursday"]) + int(m["friday"]) + int(m["saturday"]) + int(m["sunday"])
                         mons_info.append(f'`• | Всего сообщений за неделю:` - {mon_full}\n')
                         user_full_messages = users.find_one({"guild": ctx.guild.id, "ids": ctx.author.id})["messages"]
