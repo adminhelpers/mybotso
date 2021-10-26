@@ -617,7 +617,7 @@ class econom(commands.Cog):
                 await message.add_reaction('✅')
                 await message.add_reaction('❌')
                 try:
-		    react, user = await self.bot.wait_for('reaction_add', timeout= 30.0, check= lambda react, user: user == ctx.author and react.emoji in ['✅', '❌'])
+                    react, user = await self.bot.wait_for('reaction_add', timeout= 30.0, check= lambda react, user: user == ctx.author and react.emoji in ['✅', '❌'])
                 except Exception:
                     return await message.delete()
                 else:
@@ -642,7 +642,7 @@ class econom(commands.Cog):
                 await message.add_reaction('✅')
                 await message.add_reaction('❌')
                 try:
-		    react, user = await self.bot.wait_for('reaction_add', timeout= 30.0, check= lambda react, user: user == ctx.author and react.emoji in ['✅', '❌'])
+                    react, user = await self.bot.wait_for('reaction_add', timeout= 30.0, check= lambda react, user: user == ctx.author and react.emoji in ['✅', '❌'])
                 except Exception:
                     return await message.delete()
                 else:
