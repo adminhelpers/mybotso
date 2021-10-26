@@ -77,10 +77,11 @@ class debug(commands.Cog):
                                       embed.add_field(name = 'Причина', value = f'{reason}', inline = False)  
                                       embed.set_thumbnail(url = 'https://images-ext-1.discordapp.net/external/yarwcyEZug1mZITDcgLOQKSbDh7O6361bRAu7S95qNU/https/avatars.mds.yandex.net/get-pdb/2826470/29569d4a-36f3-4b9c-94f5-027c7cfb03f6/s1200')
                                       embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
-                                      channel = self.bot.get_channel(834039427541631016)
-                                      logsuser = self.bot.get_channel(850605849343819836)
-                                      await channel.send(embed = embed) 
-                                      return await logsuser.send(embed = embed)
+                                      if ctx.guild.id == 477547500232769536:
+                                          channel = self.bot.get_channel(834039427541631016)
+                                          logsuser = self.bot.get_channel(850605849343819836)
+                                          await channel.send(embed = embed) 
+                                          return await logsuser.send(embed = embed)
                                   else: return
                         except: pass      
                     return await ctx.send(embed=discord.Embed(description=f'❗ {ctx.author.name}, Пользователь не найден!', colour = 0xFB9E14), delete_after = 3)
