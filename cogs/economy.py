@@ -151,6 +151,38 @@ class econom(commands.Cog):
                 return await ctx.send(ctx.author.mention, embed = emb(title = 'Успешно', text = f'✅ {ctx.author}, Вы упешно создали новый промокод.\n\n**Его параметры:**\n> `Название:` **__{amount}__**\n> `Вознаграждение за использование:` **__{setad} рисинок__**\n> `Количество использований:` **__{lent} раз__**\n\nКоманды промокодов мжно найти используя {prefix}phelp'))
             else: return
 		
+    @commands.Cog.listener()
+    async def on_raw_reaction_add(self, payload):
+        guild = self.bot.get_guild(payload.guild_id)
+        if guild == None: return
+        if not guild.id == 477547500232769536: return
+
+        user = self.bot.get_user(payload.user_id)
+        if user.bot: pass
+        else:
+            emoji, channel = str(payload.emoji), self.bot.get_channel(payload.channel_id)
+            if not channel.id == 902666153674035280: return
+            message = await channel.fetch_message(payload.message_id)
+            if not message.id == 902669326551773205: return
+            memb = discord.utils.get(message.guild.members, id=payload.user_id)
+            if emoji == '🎃': return await memb.add_roles(discord.utils.get(guild.roles, id = 902667071933009990))
+
+    @commands.Cog.listener()
+    async def on_raw_reaction_remove(self, payload):
+        guild = self.bot.get_guild(payload.guild_id)
+        if guild == None: return
+        if not guild.id == 477547500232769536: return
+
+        user = self.bot.get_user(payload.user_id)
+        if user.bot: pass
+        else:
+            emoji, channel = str(payload.emoji), self.bot.get_channel(payload.channel_id)
+            if not channel.id == 902666153674035280: return
+            message = await channel.fetch_message(payload.message_id)
+            if not message.id == 902669326551773205: return
+            memb = discord.utils.get(message.guild.members, id=payload.user_id)   
+            if emoji == '🎃': return await memb.remove_roles(discord.utils.get(guild.roles, id = 902667071933009990))
+		
     @commands.command()
     @commands.has_permissions(administrator = True)
     async def deletepromo(self, ctx, amount = None):
