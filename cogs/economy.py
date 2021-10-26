@@ -610,7 +610,7 @@ class econom(commands.Cog):
             elif str(react.emoji) == '2⃣':
                 if mons.count_documents({"guild": ctx.guild.id, "ids": ctx.author.id}): mons.insert_one({"guild": ctx.guild.id, "ids": ctx.author.id, "monday": 0, "tuesday": 0, "wednesday": 0, "thursday": 0, "friday": 0, "saturday": 0, "sunday": 0, "date": int(datetime.today("%d"))})
                 m = mons.find_one({"guild": ctx.guild.id, "ids": ctx.author.id})
-		mons_list, mons_info, mons_name = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"], [], {"monday": "Понедельник", "tuesday": "Вторник", "wednesday": "Среда", "thursday": "Четверг", "friday": "Пятница", "saturday": "Суббота", "sunday": "Воскресенье"}
+                mons_list, mons_info, mons_name = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"], [], {"monday": "Понедельник", "tuesday": "Вторник", "wednesday": "Среда", "thursday": "Четверг", "friday": "Пятница", "saturday": "Суббота", "sunday": "Воскресенье"}
                 embed = discord.Embed(title = '\⛩️ **__Подтвердите ваши действия__**', description = f'{ctx.author}, Вы действительно хотите обнулить статистику сообщений за неделю у пользователя {member.mention}`({member})`?\n\n✅ - **Подтвердить**\n❌ - **Отменитить действие**')
                 embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
                 message = await ctx.send(f'{ctx.author.mention}', embed = embed)
@@ -635,7 +635,7 @@ class econom(commands.Cog):
             elif str(react.emoji) == '3⃣':
                 if mons.count_documents({"guild": ctx.guild.id, "ids": ctx.author.id}): mons.insert_one({"guild": ctx.guild.id, "ids": ctx.author.id, "monday": 0, "tuesday": 0, "wednesday": 0, "thursday": 0, "friday": 0, "saturday": 0, "sunday": 0, "date": int(datetime.today("%d"))})
                 m = mons.find_one({"guild": ctx.guild.id, "ids": ctx.author.id})
-		mons_list, mons_info, mons_name = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"], [], {"monday": "Понедельник", "tuesday": "Вторник", "wednesday": "Среда", "thursday": "Четверг", "friday":"Пятница", "saturday":"Суббота", "sunday":"Воскресенье"}
+                mons_list, mons_info, mons_name = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"], [], {"monday": "Понедельник", "tuesday": "Вторник", "wednesday": "Среда", "thursday": "Четверг", "friday":"Пятница", "saturday":"Суббота", "sunday":"Воскресенье"}
                 embed = discord.Embed(title = '\⛩️ **__Подтвердите ваши действия__**', description = f'{ctx.author}, Вы действительно хотите обнулить статистику сообщений за сегодняшний день у пользователя {member.mention}`({member})`?\n\n✅ - **Подтвердить**\n❌ - **Отменитить действие**')
                 embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
                 message = await ctx.send(f'{ctx.author.mention}', embed = embed)
