@@ -171,7 +171,6 @@ class mafia(commands.Cog):
             vchannel = self.bot.get_channel(806214892012830770)
 
             if channel.id == bmafia.find_one({"guild": guild.id})["meschan"] and message.id == bmafia.find_one({"guild": guild.id})["mesid"]:
-                print('1111')
                 if emoji == '✔️':
 
                     if memb.id in players:
@@ -207,11 +206,8 @@ class mafia(commands.Cog):
                     coold = 0
 
                 if emoji == '❌':
-                    print('2222')
                     if not memb.id == bmafia.find_one({"leader": 1})["ved"]:
-                        print('2223')
                         return
-                    print('3333')
                     
                     await message.delete()
 
@@ -238,7 +234,8 @@ class mafia(commands.Cog):
                     chan = self.bot.get_channel(806215783121289297)
                     for i in bmafia.find({"guild": guild.id}):
                         member = discord.utils.get(guild.members, id = i["id"])
-                        await member.edit(nick = i["name"])
+                        try: await member.edit(nick = i["name"])
+                        except: pass
                     await chan.edit(overwrites = overwrites)
                     await chan.purge(limit = 1000)
 
@@ -283,7 +280,8 @@ class mafia(commands.Cog):
                     for i in players:
                         member = discord.utils.get(guild.members, id = i)
                         if member.id == bmafia.find_one({"leader": 1})["ved"]:
-                            await member.edit(nick = '[MAFIA]: Ведущий')
+                            try: await member.edit(nick = '[MAFIA]: Ведущий')
+                            except: pass
                             vedid = member.id
                             continue
                         else:
@@ -292,7 +290,8 @@ class mafia(commands.Cog):
                             name = member.display_name
                             await member.add_roles(igr)
                             bmafia.insert_one({"guild": guild.id, "ved": 0, "id": member.id, "name": member.display_name, "role": 0, "del": 1, "night": 0, "nicks": 0, "golos": 777, "active": 1, "fols": 0, "num": min(chisla)})
-                            await member.edit(nick = f'{min(chisla)}')
+                            try: await member.edit(nick = f'{min(chisla)}')
+                            except: pass
                             chisla.remove(min(chisla))
                             a = random.randint(0, len(role) - 1)
                             embed = discord.Embed(description = f'**Привет {member.mention}! Ты учавствуешь в мафии на сервере {guild.name} :)**', colour = 0xFB9E14)
