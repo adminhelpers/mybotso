@@ -594,7 +594,7 @@ class econom(commands.Cog):
             elif str(react.emoji) == '1⃣':
                 if mons.count_documents({"guild": ctx.guild.id, "ids": ctx.author.id}): mons.insert_one({"guild": ctx.guild.id, "ids": ctx.author.id, "monday": 0, "tuesday": 0, "wednesday": 0, "thursday": 0, "friday": 0, "saturday": 0, "sunday": 0, "date": int(datetime.today("%d"))})
                 m = mons.find_one({"guild": ctx.guild.id, "ids": ctx.author.id})
-		mons_list, mons_info, mons_name = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"], [], {"monday": "Понедельник", "tuesday": "Вторник", "wednesday": "Среда", "thursday": "Четверг", "friday": "Пятница", "saturday": "Суббота", "sunday": "Воскресенье"}
+                mons_list, mons_info, mons_name = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"], [], {"monday": "Понедельник", "tuesday": "Вторник", "wednesday": "Среда", "thursday": "Четверг", "friday": "Пятница", "saturday": "Суббота", "sunday": "Воскресенье"}
                 for i in mons_list:
                     if i != datetime.today("%A").lower(): mons_info.append(f'`• | {mons_name[i]}` - {m[i] сообщений}\n')
                     else: 
