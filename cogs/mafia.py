@@ -163,7 +163,7 @@ class mafia(commands.Cog):
             pass
         else:
             channel = self.bot.get_channel(payload.channel_id)
-            if channel.id == 505009452571820032 or not channel.id == 806215783121289297:
+            if channel.id == 505009452571820032 or not channel.id == 885503856556011570:
                 return
             message = await channel.fetch_message(payload.message_id)
             memb = discord.utils.get(message.guild.members, id=payload.user_id)
@@ -171,6 +171,7 @@ class mafia(commands.Cog):
             vchannel = self.bot.get_channel(806214892012830770)
 
             if channel.id == bmafia.find_one({"guild": guild.id})["meschan"] and message.id == bmafia.find_one({"guild": guild.id})["mesid"]:
+                print('1111')
                 if emoji == '✔️':
 
                     if memb.id in players:
@@ -206,8 +207,11 @@ class mafia(commands.Cog):
                     coold = 0
 
                 if emoji == '❌':
+                    print('2222')
                     if not memb.id == bmafia.find_one({"leader": 1})["ved"]:
+                        print('2223')
                         return
+                    print('3333')
                     
                     await message.delete()
 
