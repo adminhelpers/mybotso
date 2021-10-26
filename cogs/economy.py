@@ -561,7 +561,7 @@ class econom(commands.Cog):
       await channel.send(embed = discord.Embed(title = 'Обнуление', description = f'**Модератор {ctx.author.mention} обнулил {gs} пользователю {member.mention}!**', colour = 0x25f20a, timestamp = ctx.message.created_at))
       return await ctx.send(embed = discord.Embed(title = 'Обнуление', description = f'**Модератор {ctx.author.mention} обнулил {gs} пользователю {member.mention}!**', colour = 0x25f20a), delete_after = 10)      
   
-    @commands.command(aliases = ['mmenu', 'сменю']
+    @commands.command(aliases = ['mmenu', 'сменю'])
     async def message_menu(self, ctx, member: discord.Member = None):
         if ctx.guild == None: return
         if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return
