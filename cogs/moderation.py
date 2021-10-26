@@ -70,7 +70,7 @@ def is_accept(guild_id, mas, member: discord.Member):
           789910831868543027, # Discord Guard
           817813676178407425] # Support Team
     
-    if mas == 'mt': mas = [743887697327816705, # Заместитель Гл. Модератора
+    if mas == 'mt' or mas == 'mun': mas = [743887697327816705, # Заместитель Гл. Модератора
           661284961428701209, # Глав. Модерация Discord
           714504039072661545, # Supervisor Moderation
           789910831868543027] # Discord Guard
@@ -83,7 +83,7 @@ def is_accept(guild_id, mas, member: discord.Member):
           652869023599558656] # Srectator
     
     for i in member.roles:
-      if i.id in mas: return 1
+      if int(i.id) in mas: return 1
     return 0
   elif guild_id == 465086262383083520: #rodina 02
     if mas == 'mo': mas = [822340589894893578, # ⚒ Главный Модератор ⚒
