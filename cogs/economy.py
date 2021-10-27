@@ -593,7 +593,7 @@ class econom(commands.Cog):
             if str(react.emoji) == '❌':
                 return
             elif str(react.emoji) == '1⃣':
-                if mons.count_documents({"guild": ctx.guild.id, "ids": ctx.author.id}): mons.insert_one({"guild": ctx.guild.id, "ids": ctx.author.id, "monday": 0, "tuesday": 0, "wednesday": 0, "thursday": 0, "friday": 0, "saturday": 0, "sunday": 0, "date": int(dt.strftime("%d"))})
+                if mons.count_documents({"guild": ctx.guild.id, "ids": ctx.author.id}) == 0: mons.insert_one({"guild": ctx.guild.id, "ids": ctx.author.id, "monday": 0, "tuesday": 0, "wednesday": 0, "thursday": 0, "friday": 0, "saturday": 0, "sunday": 0, "date": int(dt.strftime("%d"))})
                 m = mons.find_one({"guild": ctx.guild.id, "ids": ctx.author.id})
                 mons_list, mons_info, mons_name = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"], [], {"monday": "Понедельник", "tuesday": "Вторник", "wednesday": "Среда", "thursday": "Четверг", "friday": "Пятница", "saturday": "Суббота", "sunday": "Воскресенье"}
                 for i in mons_list:
@@ -609,7 +609,7 @@ class econom(commands.Cog):
                 return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Управление сообщениями__**', description = f'✅ {ctx.author}, вот статистика сообщений пользователя {member.mention}`({member})`:\n\n{str_a}'))
 		      
             elif str(react.emoji) == '2⃣':
-                if mons.count_documents({"guild": ctx.guild.id, "ids": ctx.author.id}): mons.insert_one({"guild": ctx.guild.id, "ids": ctx.author.id, "monday": 0, "tuesday": 0, "wednesday": 0, "thursday": 0, "friday": 0, "saturday": 0, "sunday": 0, "date": int(dt.strftime("%d"))})
+                if mons.count_documents({"guild": ctx.guild.id, "ids": ctx.author.id}) == 0: mons.insert_one({"guild": ctx.guild.id, "ids": ctx.author.id, "monday": 0, "tuesday": 0, "wednesday": 0, "thursday": 0, "friday": 0, "saturday": 0, "sunday": 0, "date": int(dt.strftime("%d"))})
                 m = mons.find_one({"guild": ctx.guild.id, "ids": ctx.author.id})
                 mons_list, mons_info, mons_name = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"], [], {"monday": "Понедельник", "tuesday": "Вторник", "wednesday": "Среда", "thursday": "Четверг", "friday": "Пятница", "saturday": "Суббота", "sunday": "Воскресенье"}
                 embed = discord.Embed(title = '\⛩️ **__Подтвердите ваши действия__**', description = f'{ctx.author}, Вы действительно хотите обнулить статистику сообщений за неделю у пользователя {member.mention}`({member})`?\n\n✅ - **Подтвердить**\n❌ - **Отменитить действие**')
@@ -634,7 +634,7 @@ class econom(commands.Cog):
                         embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
                         return await ctx.send(f'{ctx.author.mention}', embed = embed, delete_after = 5)
             elif str(react.emoji) == '3⃣':
-                if mons.count_documents({"guild": ctx.guild.id, "ids": ctx.author.id}): mons.insert_one({"guild": ctx.guild.id, "ids": ctx.author.id, "monday": 0, "tuesday": 0, "wednesday": 0, "thursday": 0, "friday": 0, "saturday": 0, "sunday": 0, "date": int(dt.strftime("%d"))})
+                if mons.count_documents({"guild": ctx.guild.id, "ids": ctx.author.id}) == 0: mons.insert_one({"guild": ctx.guild.id, "ids": ctx.author.id, "monday": 0, "tuesday": 0, "wednesday": 0, "thursday": 0, "friday": 0, "saturday": 0, "sunday": 0, "date": int(dt.strftime("%d"))})
                 m = mons.find_one({"guild": ctx.guild.id, "ids": ctx.author.id})
                 mons_list, mons_info, mons_name = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"], [], {"monday": "Понедельник", "tuesday": "Вторник", "wednesday": "Среда", "thursday": "Четверг", "friday":"Пятница", "saturday":"Суббота", "sunday":"Воскресенье"}
                 embed = discord.Embed(title = '\⛩️ **__Подтвердите ваши действия__**', description = f'{ctx.author}, Вы действительно хотите обнулить статистику сообщений за сегодняшний день у пользователя {member.mention}`({member})`?\n\n✅ - **Подтвердить**\n❌ - **Отменитить действие**')
@@ -681,7 +681,7 @@ class econom(commands.Cog):
             else: 
                 mons.update_one({"guild": ctx.guild.id, "ids": ctx.author.id}, {"$set": {one.lower(): 1, "date": int(two)}})
         else:
-            if mons.count_documents({"guild": ctx.guild.id, "ids": ctx.author.id}): mons.insert_one({"guild": ctx.guild.id, "ids": ctx.author.id, "monday": 0, "tuesday": 0, "wednesday": 0, "thursday": 0, "friday": 0, "saturday": 0, "sunday": 0, "date": int(dt.strftime("%d"))})
+            if mons.count_documents({"guild": ctx.guild.id, "ids": ctx.author.id}) == 0: mons.insert_one({"guild": ctx.guild.id, "ids": ctx.author.id, "monday": 0, "tuesday": 0, "wednesday": 0, "thursday": 0, "friday": 0, "saturday": 0, "sunday": 0, "date": int(dt.strftime("%d"))})
             a = users.find_one({"guild": ctx.guild.id, "ids": ctx.author.id})["messages"]
             users.update_one({"guild": ctx.guild.id, "ids": ctx.author.id}, {"$set": {"messages": a + 1}})
             one, two = dt.strftime("%A"), dt.strftime("%d")
