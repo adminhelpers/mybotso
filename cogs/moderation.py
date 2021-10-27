@@ -67,6 +67,7 @@ def is_accept(guild_id, mas, member: discord.Member):
     if mas == 'mo': mas = [743887697327816705, # Заместитель Гл. Модератора
           661284961428701209, # Глав. Модерация Discord
           714504039072661545, # Supervisor Moderation
+          789910831868543027, # Машулька мурлёнок
           789910831868543027, # Discord Guard
           817813676178407425] # Support Team
     
@@ -79,6 +80,7 @@ def is_accept(guild_id, mas, member: discord.Member):
     if mas == 'mf': mas = [743887697327816705, # Заместитель Гл. Модератора
           661284961428701209, # Глав. Модерация Discord
           714504039072661545, # Supervisor Moderation
+          789910831868543027, # Машулька мурлёнок
           789910831868543027, # Discord Guard
           817813676178407425, # Support Team
           652869023599558656] # Srectator
