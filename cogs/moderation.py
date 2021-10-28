@@ -55,7 +55,7 @@ def is_mute_role(guild_id):
   elif guild_id == 465086262383083520: 708688299467997266 # rodina 02
 
 def is_logchannel(guild_id):
-  if guild_id == 477547500232769536: return 834039427541631016 # rodina 03
+  if guild_id == 477547500232769536: return 850605849343819836 # rodina 03
   elif guild_id == 465086262383083520: return 895746018589700117 # rodina 02
 
 def is_accept_guild(guild_id):
