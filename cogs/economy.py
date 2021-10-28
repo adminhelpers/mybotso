@@ -642,16 +642,16 @@ class econom(commands.Cog):
                     try: react, user = await self.bot.wait_for('reaction_add', timeout= 30.0, check= lambda react, user: user == ctx.author and react.emoji in ['✅', '❌'])
                     except Exception: return await message.delete()
                     else: 
-                    await message.delete()
-                    if str(react.emoji) == '✅':
-                        embed = discord.Embed(title = '\⛩️ **__Успешно__**', description = f'✅ {ctx.author}, Вы обнулили статистику сообщений за сегодняшний день пользователю {member.mention}`({member})`')
-                        embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
-                        await ctx.send(embed = embed)
-                        mons.update_one({"guild": ctx.guild.id, "ids": ctx.author.id}, {"$set": {dt.strftime("%A").lower(): 0}})
-                    elif str(react.emoji) == '❌':
-                        embed = discord.Embed(title = f'❌ {ctx.author}, Вы отменили действие.')
-                        embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
-                        return await ctx.send(f'{ctx.author.mention}', embed = embed, delete_after = 5)
+                        await message.delete()
+                        if str(react.emoji) == '✅':
+                            embed = discord.Embed(title = '\⛩️ **__Успешно__**', description = f'✅ {ctx.author}, Вы обнулили статистику сообщений за сегодняшний день пользователю {member.mention}`({member})`')
+                            embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
+                            await ctx.send(embed = embed)
+                            mons.update_one({"guild": ctx.guild.id, "ids": ctx.author.id}, {"$set": {dt.strftime("%A").lower(): 0}})
+                        elif str(react.emoji) == '❌':
+                            embed = discord.Embed(title = f'❌ {ctx.author}, Вы отменили действие.')
+                            embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
+                            return await ctx.send(f'{ctx.author.mention}', embed = embed, delete_after = 5)
         else:
             embed = discord.Embed(title = '\⛩️ **__Управление сообщениями__**', description = f'Привет, {ctx.author}, ты попал в меню управления сообщений на сервере `{ctx.guild.name}`\n\n`Вот список доступных для вас действий:`\n\n`•` 1⃣ - Показать общий топ сообщений за неделю\n`•` 2⃣ - Обнулить недельные сообщения\n\n> ❌ - **Закрыть меню**')
             message = await ctx.send(f'{ctx.author.mention}', embed = embed)
