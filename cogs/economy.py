@@ -606,8 +606,8 @@ class econom(commands.Cog):
 
                             mons_info.append(f'`• | Всего сообщений за всё время:` - {user_full_messages}\n')
                             break
-                        str_a = ''.join(mons_info)
-                        return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Управление сообщениями__**', description = f'✅ {ctx.author}, вот статистика сообщений пользователя {member.mention}`({member})`:\n\n{str_a}'))
+                    str_a = ''.join(mons_info)
+                    return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Управление сообщениями__**', description = f'✅ {ctx.author}, вот статистика сообщений пользователя {member.mention}`({member})`:\n\n{str_a}'))
 
                 elif str(react.emoji) == '2⃣':
                     if mons.count_documents({"guild": ctx.guild.id, "ids": ctx.author.id}) == 0: mons.insert_one({"guild": ctx.guild.id, "ids": ctx.author.id, "monday": 0, "tuesday": 0, "wednesday": 0, "thursday": 0, "friday": 0, "saturday": 0, "sunday": 0, "date": int(dt.strftime("%d"))})
