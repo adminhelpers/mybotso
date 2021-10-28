@@ -576,7 +576,7 @@ class econom(commands.Cog):
 
         if a == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
         prefix = reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]
-        if member is None:
+        if member != None:
             embed = discord.Embed(title = '\⛩️ **__Управление сообщениями__**', description = f'Привет, {ctx.author}, ты попал в меню управления сообщениями пользователя {member.mention}`({member})`\n\n`Вот список доступных для вас действий:`\n\n`•` 1⃣ - Проверить количество сообщений пользователя.\n`•` 2⃣ - Обнулить недельную статистику сообщений\n`•` 3⃣ - Обнулить сообщения за сегодня.\nn`•` 4⃣ - Посмотреть топы сообщений\n\n> ❌ - **Закрыть меню**')
             message = await ctx.send(f'{ctx.author.mention}', embed = embed)
             await message.add_reaction('1⃣')
