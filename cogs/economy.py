@@ -583,7 +583,7 @@ class econom(commands.Cog):
         await message.add_reaction('1⃣')
         await message.add_reaction('2⃣')
         await message.add_reaction('3⃣')
-	await message.add_reaction('4⃣')
+        await message.add_reaction('4⃣')
         await message.add_reaction('❌')
         try:
             react, user = await self.bot.wait_for('reaction_add', timeout= 120.0, check= lambda react, user: user == ctx.author and react.emoji in ['1⃣', '2⃣', '3⃣', , '4⃣', '❌'])
