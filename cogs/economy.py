@@ -666,7 +666,7 @@ class econom(commands.Cog):
                 if str(react.emoji) == '❌': return
                 elif str(react.emoji) == '1⃣':
                     nosort_users = [f'{int(user["monday"]) + int(user["tuesday"]) + int(user["wednesday"]) + int(user["thursday"]) + int(user["friday"]) + int(user["saturday"]) + int(user["sunday"])} `{discord.utils.get(ctx.guild.members, id = user["ids"])}`' for user in mons.find({"guild": ctx.guild.id})]
-                    sort_users = nosort_users.sorted()
+                    sort_users = sorted(nosort_users)
                     print(sort_users)
 		    
     @commands.Cog.listener()
