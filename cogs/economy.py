@@ -566,6 +566,7 @@ class econom(commands.Cog):
         dt = datetime.datetime.now()
         if ctx.guild == None: return
         if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return
+        await ctx.message.delete()
         mas = [743887697327816705, # Заместитель Гл. Модератора
 	       661284961428701209, # Глав. Модерация Discord
 	       714504039072661545, # Supervisor Moderation
@@ -664,7 +665,7 @@ class econom(commands.Cog):
                 await message.delete()
                 if str(react.emoji) == '❌': return
                 elif str(react.emoji) == '1⃣':
-                    nosort_users = [f'{int(user["monday"]) + int(user["tuesday"]) + int(user["wednesday"]) + int(user["thursday"]) + int(user["friday"]) + int(user["saturday"]) + int(user["sunday"])} `{discord.utilgs.get(ctx.guild.members, id = user["ids"])}`' for user in mons.find({"guild": ctx.guild.id})]
+                    nosort_users = [f'{int(user["monday"]) + int(user["tuesday"]) + int(user["wednesday"]) + int(user["thursday"]) + int(user["friday"]) + int(user["saturday"]) + int(user["sunday"])} `{discord.utils.get(ctx.guild.members, id = user["ids"])}`' for user in mons.find({"guild": ctx.guild.id})]
                     sort_users = nosort_users.sorted()
                     print(sort_users)
 		    
