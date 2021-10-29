@@ -673,6 +673,7 @@ class econom(commands.Cog):
                     for user in mons.find({"guild": ctx.guild.id}):
                         if get_user_in_guild(ctx.guild, user["ids"]) == 0: continue
                         member = discord.utils.get(ctx.guild.members, id = user["ids"])
+                        if member.bot: continue
                         messages = int(user["monday"]) + int(user["tuesday"]) + int(user["wednesday"]) + int(user["thursday"]) + int(user["friday"]) + int(user["saturday"]) + int(user["sunday"])
                         if messages < 1: continue
                         user_messages.append(messages)
@@ -688,7 +689,7 @@ class econom(commands.Cog):
                         elif index_win == 2:
                             message = f'🥈 **{user_list[index_coins]}**\n    `•` {user_request[index_coins]}\n\n'
                         elif index_win == 3:
-                            message = f'🥉 **{user_list[index_coins]}**\n    `•` {user_request[index_coins]}\n]n'
+                            message = f'🥉 **{user_list[index_coins]}**\n    `•` {user_request[index_coins]}\n\n'
                         else:
                             message = f'`{index_win}.` **{user_list[index_coins]}**\n    `•` {user_request[index_coins]}\n\n'
                         win_content.append(message)
