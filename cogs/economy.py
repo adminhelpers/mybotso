@@ -689,9 +689,9 @@ class econom(commands.Cog):
                         else:
                             message = f'`{index_win}.` **{user_list[index_coins]}**\n> `•` {user_request[index_coins]}'
                         win_content.append(message)
-                        user_messages.remove(index_coins)
-                        user_list.append(user_list[index_coins])
-                        user_request.append(user_request[index_coins])
+                        #user_messages.remove(index_coins)
+                        #user_list.append(user_list[index_coins])
+                        #user_request.append(user_request[index_coins])
                     answer = ''.join(win_content)
                     embed = discord.Embed(title = '\⛩️ **__Топ участников по сообщениям за неделю__**', description = answer)
                     embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
