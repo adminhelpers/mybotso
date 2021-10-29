@@ -672,10 +672,10 @@ class econom(commands.Cog):
                     user_list, user_messages, user_request, win_content = [], [], [], []
                     for user in mons.find({"guild": ctx.guild.id}):
                         if get_user_in_guild(ctx.guild, user["ids"]) == 0: continue
-                        member = discord.utils.get(ctx.guild.members, id = user["ids"]).display_name
+                        member = discord.utils.get(ctx.guild.members, id = user["ids"])
                         messages = int(user["monday"]) + int(user["tuesday"]) + int(user["wednesday"]) + int(user["thursday"]) + int(user["friday"]) + int(user["saturday"]) + int(user["sunday"])
                         user_messages.append(messages)
-                        user_list.append(member.name)
+                        user_list.append(member.display_name)
                         user_request.append(f'`Сообщений за неделю:` **{coins}**')
                     user_list_copy, sort_messages, index_win = user_list, sorted(user_messages), 1
                     for index_massive in sort_messages:
