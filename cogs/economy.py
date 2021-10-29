@@ -677,8 +677,9 @@ class econom(commands.Cog):
                         user_messages.append(messages)
                         user_list.append(member.display_name)
                         user_request.append(f'`Сообщений за неделю:` **{messages}**')
-                    user_list_copy, sort_messages, index_win = user_list, sorted(user_messages), 1
+                    user_list_copy, sort_messages, index_win = user_list, sorted(user_messages), 0
                     for index_massive in sort_messages:
+			index_win += 1
                         index_coins = user_list_copy.index(index_massive)
                         if index_win == 1:
                             message = f'🥇 **{user_list[index_coins]}**\n> `•` {user_request[index_coins]}'
@@ -692,6 +693,7 @@ class econom(commands.Cog):
                         #user_messages.remove(index_coins)
                         #user_list.append(user_list[index_coins])
                         #user_request.append(user_request[index_coins])
+			if index_win == 10: break
                     answer = ''.join(win_content)
                     embed = discord.Embed(title = '\⛩️ **__Топ участников по сообщениям за неделю__**', description = answer)
                     embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
