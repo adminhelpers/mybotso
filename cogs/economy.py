@@ -665,7 +665,7 @@ class econom(commands.Cog):
                 await message.delete()
                 if str(react.emoji) == '❌': return
                 elif str(react.emoji) == '1⃣':
-                    nosort_users = [f'{int(user["monday"]) + int(user["tuesday"]) + int(user["wednesday"]) + int(user["thursday"]) + int(user["friday"]) + int(user["saturday"]) + int(user["sunday"])} `{discord.utils.get(ctx.guild.members, id = user["ids"])}`' for user in mons.find({"guild": ctx.guild.id})]
+                    nosort_users = [f'`{discord.utils.get(ctx.guild.members, id = user["ids"]).display_name}` - {int(user["monday"]) + int(user["tuesday"]) + int(user["wednesday"]) + int(user["thursday"]) + int(user["friday"]) + int(user["saturday"]) + int(user["sunday"])}\n' for user in mons.find({"guild": ctx.guild.id})]
                     sort_users = sorted(nosort_users)
                     print(sort_users)
 		    
