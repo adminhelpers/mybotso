@@ -669,9 +669,33 @@ class econom(commands.Cog):
                 await message.delete()
                 if str(react.emoji) == '❌': return
                 elif str(react.emoji) == '1⃣':
-                    nosort_users = [f'`{discord.utils.get(ctx.guild.members, id = user["ids"]).display_name}` - {int(user["monday"]) + int(user["tuesday"]) + int(user["wednesday"]) + int(user["thursday"]) + int(user["friday"]) + int(user["saturday"]) + int(user["sunday"])}\n' for user in mons.find({"guild": ctx.guild.id}) if get_user_in_guild(ctx.guild, user["ids"]) == 1]
-                    sort_users = sorted(nosort_users)
-                    print(sort_users)
+                    user_list, user_messages, user_request, win_content = [], [], [], []
+                    for user in mons.find({"guild": ctx.guild.id}) if get_user_in_guild(ctx.guild, user["ids"]) == 1:
+                        member = discord.utils.get(ctx.guild.members, id = user["ids"]).display_name
+                        messages = int(user["monday"]) + int(user["tuesday"]) + int(user["wednesday"]) + int(user["thursday"]) + int(user["friday"]) + int(user["saturday"]) + int(user["sunday"])
+                        user_messages.append(messages)
+                        user_list.append(member.name)
+                        user_request.append(f'`Сообщений за неделю:` **{coins}**')
+                    user_list_copy, sort_messages, index_win = user_list, sorted(user_messages), 1
+                    for index_massive in sort_messages:
+                        index_coins = user_list_copy.index(index_massive)
+                        if index_win == 1:
+                            message = f'🥇 **{user_list[index_coins]}**\n> `•` {user_request[index_coins]}'
+                        elif index_win == 2:
+                            message = f'🥈 **{user_list[index_coins]}**\n> `•` {user_request[index_coins]}'
+                        elif index_win == 3:
+                            message = f'🥉 **{user_list[index_coins]}**\n> `•` {user_request[index_coins]}'
+                        else:
+                            message = f'`{index_win}.` **{user_list[index_coins]}**\n> `•` {user_request[index_coins]}'
+                        win_content.append(message)
+                        user_messages.remove(index_coins)
+                        user_list.append(user_list[index_coins])
+                        user_request.append(user_request[index_coins])
+                    answer = ''.join(win_content)
+                    embed = discord.Embed(title = '\⛩️ **__Топ участников по сообщениям за неделю__**', description = answer)
+                    embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
+                    message = await ctx.send(f'{ctx.author.mention}', embed = embed)
+
 		    
     @commands.Cog.listener()
     async def on_message(self, ctx):
