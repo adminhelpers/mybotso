@@ -32,7 +32,8 @@ global tens
 tens = [ ]
 
 def get_user_in_guild(guild: discord.Guild, user_id):
-	if int(user_id) in [i.id for i in guild.members]
+	if int(user_id) in [i.id for i in guild.members]: return 1
+	else: return 0
 
 def get_name(guild):
 	if not guild == 477547500232769536 and not guild == 577511138032484360: return
