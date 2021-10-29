@@ -693,7 +693,6 @@ class econom(commands.Cog):
                         else:
                             message = f'`{index_win}.` **{user_list[index_coins]}**\n    `•` {user_request[index_coins]}\n\n'
                         win_content.append(message)
-                        user_messages.pop(index_coins)
                         user_list.pop(index_coins)
                         user_request.pop(index_coins)
                         if index_win == 10: break
