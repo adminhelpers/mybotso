@@ -31,6 +31,9 @@ mons = db["usermon"]
 global tens
 tens = [ ]
 
+def get_user_in_guild(guild: discord.Guild, user_id):
+	if int(user_id) in [i.id for i in guild.members]
+
 def get_name(guild):
 	if not guild == 477547500232769536 and not guild == 577511138032484360: return
 	if guild == 477547500232769536:
@@ -665,7 +668,7 @@ class econom(commands.Cog):
                 await message.delete()
                 if str(react.emoji) == '❌': return
                 elif str(react.emoji) == '1⃣':
-                    nosort_users = [f'`{discord.utils.get(ctx.guild.members, id = user["ids"]).display_name}` - {int(user["monday"]) + int(user["tuesday"]) + int(user["wednesday"]) + int(user["thursday"]) + int(user["friday"]) + int(user["saturday"]) + int(user["sunday"])}\n' for user in mons.find({"guild": ctx.guild.id})]
+                    nosort_users = [f'`{discord.utils.get(ctx.guild.members, id = user["ids"]).display_name}` - {int(user["monday"]) + int(user["tuesday"]) + int(user["wednesday"]) + int(user["thursday"]) + int(user["friday"]) + int(user["saturday"]) + int(user["sunday"])}\n' for user in mons.find({"guild": ctx.guild.id}) if get_user_in_guild(ctx.guild, user["ids"]) == 1]
                     sort_users = sorted(nosort_users)
                     print(sort_users)
 		    
