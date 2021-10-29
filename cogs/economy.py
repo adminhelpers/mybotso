@@ -670,7 +670,8 @@ class econom(commands.Cog):
                 if str(react.emoji) == '❌': return
                 elif str(react.emoji) == '1⃣':
                     user_list, user_messages, user_request, win_content = [], [], [], []
-                    for user in mons.find({"guild": ctx.guild.id}) if get_user_in_guild(ctx.guild, user["ids"]) == 1:
+                    for user in mons.find({"guild": ctx.guild.id}):
+                        if get_user_in_guild(ctx.guild, user["ids"]) == 0: continue
                         member = discord.utils.get(ctx.guild.members, id = user["ids"]).display_name
                         messages = int(user["monday"]) + int(user["tuesday"]) + int(user["wednesday"]) + int(user["thursday"]) + int(user["friday"]) + int(user["saturday"]) + int(user["sunday"])
                         user_messages.append(messages)
