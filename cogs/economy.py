@@ -674,13 +674,17 @@ class econom(commands.Cog):
                         if get_user_in_guild(ctx.guild, user["ids"]) == 0: continue
                         member = discord.utils.get(ctx.guild.members, id = user["ids"])
                         messages = int(user["monday"]) + int(user["tuesday"]) + int(user["wednesday"]) + int(user["thursday"]) + int(user["friday"]) + int(user["saturday"]) + int(user["sunday"])
+                        if messages < 30: continue
                         user_messages.append(messages)
                         user_list.append(member.display_name)
                         user_request.append(f'`Сообщений за неделю:` **{messages}**')
                     user_list_copy, sort_messages, index_win = user_list, sorted(user_messages), 0
                     for index_massive in sort_messages:
+                        print(index_massive)
+                        print(sort_messages)
                         index_win += 1
                         index_coins = user_list_copy.index(index_massive)
+                        print(index_coins)
                         if index_win == 1:
                             message = f'🥇 **{user_list[index_coins]}**\n> `•` {user_request[index_coins]}'
                         elif index_win == 2:
