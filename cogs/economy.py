@@ -683,16 +683,18 @@ class econom(commands.Cog):
                         index_win += 1
                         index_coins = user_list_copy.index(index_massive)
                         if index_win == 1:
-                            message = f'🥇 **{user_list[index_coins]}**\n> `•` {user_request[index_coins]}\n'
+                            message = f'🥇 **{user_list[index_coins]}**\n    `•` {user_request[index_coins]}\n\n'
                         elif index_win == 2:
-                            message = f'🥈 **{user_list[index_coins]}**\n> `•` {user_request[index_coins]}\n'
+                            message = f'🥈 **{user_list[index_coins]}**\n    `•` {user_request[index_coins]}\n\n'
                         elif index_win == 3:
-                            message = f'🥉 **{user_list[index_coins]}**\n> `•` {user_request[index_coins]}\n'
+                            message = f'🥉 **{user_list[index_coins]}**\n    `•` {user_request[index_coins]}\n]n'
                         else:
-                            message = f'`{index_win}.` **{user_list[index_coins]}**\n> `•` {user_request[index_coins]}\n'
+                            message = f'`{index_win}.` **{user_list[index_coins]}**\n    `•` {user_request[index_coins]}\n\n'
                         win_content.append(message)
-                        user_list.remove(user_list[index_coins])
-                        user_request.remove(user_request[index_coins])
+                        user_messages.pop(index_coins)
+			user_list_copy.pop(index_coins)
+                        user_list.pop(index_coins)
+                        user_request.pop(index_coins)
                         if index_win == 10: break
                     answer = ''.join(win_content)
                     embed = discord.Embed(title = '\⛩️ **__Топ участников по сообщениям за неделю__**', description = answer)
