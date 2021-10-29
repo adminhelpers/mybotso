@@ -678,7 +678,7 @@ class econom(commands.Cog):
                         user_messages.append(messages)
                         user_list.append(member.display_name)
                         user_request.append(f'`Сообщений за неделю:` **{messages}**')
-                    user_list_copy, sort_messages, index_win = user_messages, sorted(user_messages), 0
+                    user_list_copy, sort_messages, index_win = user_messages, sorted(user_messages)[::-1], 0
                     for index_massive in sort_messages:
                         index_win += 1
                         index_coins = user_list_copy.index(index_massive)
@@ -691,8 +691,8 @@ class econom(commands.Cog):
                         else:
                             message = f'`{index_win}.` **{user_list[index_coins]}**\n> `•` {user_request[index_coins]}\n'
                         win_content.append(message)
-                        user_list.append(user_list[index_coins])
-                        user_request.append(user_request[index_coins])
+                        user_list.remove(user_list[index_coins])
+                        user_request.remove(user_request[index_coins])
                         if index_win == 10: break
                     answer = ''.join(win_content)
                     embed = discord.Embed(title = '\⛩️ **__Топ участников по сообщениям за неделю__**', description = answer)
