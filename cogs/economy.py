@@ -674,12 +674,13 @@ class econom(commands.Cog):
                         if get_user_in_guild(ctx.guild, user["ids"]) == 0: continue
                         member = discord.utils.get(ctx.guild.members, id = user["ids"])
                         messages = int(user["monday"]) + int(user["tuesday"]) + int(user["wednesday"]) + int(user["thursday"]) + int(user["friday"]) + int(user["saturday"]) + int(user["sunday"])
-                        if messages < 30: continue
+                        if messages < 100: continue
                         user_messages.append(messages)
                         user_list.append(member.display_name)
                         user_request.append(f'`Сообщений за неделю:` **{messages}**')
                     user_list_copy, sort_messages, index_win = user_messages, sorted(user_messages)[::-1], 0
                     for index_massive in sort_messages:
+                        print(user_list_copy)
                         index_win += 1
                         index_coins = user_list_copy.index(index_massive)
                         if index_win == 1:
