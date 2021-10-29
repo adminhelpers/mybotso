@@ -680,23 +680,19 @@ class econom(commands.Cog):
                         user_request.append(f'`Сообщений за неделю:` **{messages}**')
                     user_list_copy, sort_messages, index_win = user_messages, sorted(user_messages), 0
                     for index_massive in sort_messages:
-                        print(index_massive)
-                        print(sort_messages)
                         index_win += 1
                         index_coins = user_list_copy.index(index_massive)
-                        print(index_coins)
                         if index_win == 1:
-                            message = f'🥇 **{user_list[index_coins]}**\n> `•` {user_request[index_coins]}'
+                            message = f'🥇 **{user_list[index_coins]}**\n> `•` {user_request[index_coins]}\n'
                         elif index_win == 2:
-                            message = f'🥈 **{user_list[index_coins]}**\n> `•` {user_request[index_coins]}'
+                            message = f'🥈 **{user_list[index_coins]}**\n> `•` {user_request[index_coins]}\n'
                         elif index_win == 3:
-                            message = f'🥉 **{user_list[index_coins]}**\n> `•` {user_request[index_coins]}'
+                            message = f'🥉 **{user_list[index_coins]}**\n> `•` {user_request[index_coins]}\n'
                         else:
-                            message = f'`{index_win}.` **{user_list[index_coins]}**\n> `•` {user_request[index_coins]}'
+                            message = f'`{index_win}.` **{user_list[index_coins]}**\n> `•` {user_request[index_coins]}\n'
                         win_content.append(message)
-                        #user_messages.remove(index_coins)
-                        #user_list.append(user_list[index_coins])
-                        #user_request.append(user_request[index_coins])
+                        user_list.append(user_list[index_coins])
+                        user_request.append(user_request[index_coins])
                         if index_win == 10: break
                     answer = ''.join(win_content)
                     embed = discord.Embed(title = '\⛩️ **__Топ участников по сообщениям за неделю__**', description = answer)
