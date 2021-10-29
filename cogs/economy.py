@@ -676,7 +676,7 @@ class econom(commands.Cog):
                         messages = int(user["monday"]) + int(user["tuesday"]) + int(user["wednesday"]) + int(user["thursday"]) + int(user["friday"]) + int(user["saturday"]) + int(user["sunday"])
                         user_messages.append(messages)
                         user_list.append(member.display_name)
-                        user_request.append(f'`Сообщений за неделю:` **{coins}**')
+                        user_request.append(f'`Сообщений за неделю:` **{messages}**')
                     user_list_copy, sort_messages, index_win = user_list, sorted(user_messages), 1
                     for index_massive in sort_messages:
                         index_coins = user_list_copy.index(index_massive)
