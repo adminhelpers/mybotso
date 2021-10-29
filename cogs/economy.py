@@ -714,7 +714,7 @@ class econom(commands.Cog):
                             embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
                             await ctx.send(embed = embed)
                             for i in mons.find({"guild": ctx.guild.id}):
-                                mons.update_one({"_id": i["_id"]}, {"$set":{"monday": 0, "tuesday": 0, "wednesday": 0, "thursday": 0, "friday": 0, "saturday": 0, "sunday": 0, "date": int(dt.strftime("%d"))}}}
+                                mons.update_one({"_id": i["_id"]}, {"$set": {"monday": 0, "tuesday": 0, "wednesday": 0, "thursday": 0, "friday": 0, "saturday": 0, "sunday": 0, "date": int(dt.strftime("%d"))}})
                         elif str(react.emoji) == '❌':
                             embed = discord.Embed(title = f'❌ {ctx.author}, Вы отменили действие.')
                             embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
