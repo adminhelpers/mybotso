@@ -582,7 +582,7 @@ class econom(commands.Cog):
         if a == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
         prefix = reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]
         if member != None:
-            embed = discord.Embed(title = '\⛩️ **__Управление сообщениями__**', description = f'Привет, {ctx.author}, ты попал в меню управления сообщениями пользователя {member.mention}`({member})`\n\n`Вот список доступных для вас действий:`\n\n`•` 1⃣ - Проверить количество сообщений пользователя.\n`•` 2⃣ - Обнулить недельную статистику сообщений\n`•` 3⃣ - Обнулить сообщения за сегодня.\nn`•` 4⃣ - Посмотреть топы сообщений\n\n> ❌ - **Закрыть меню**')
+            embed = discord.Embed(title = '\⛩️ **__Управление сообщениями__**', description = f'Привет, {ctx.author}, ты попал в меню управления сообщениями пользователя {member.mention}`({member})`\n\n`Вот список доступных для вас действий:`\n\n`•` 1⃣ - Проверить количество сообщений пользователя.\n`•` 2⃣ - Обнулить недельную статистику сообщений\n`•` 3⃣ - Обнулить сообщения за сегодня.\n\n\n> ❌ - **Закрыть меню**')
             message = await ctx.send(f'{ctx.author.mention}', embed = embed)
             await message.add_reaction('1⃣')
             await message.add_reaction('2⃣')
@@ -674,14 +674,12 @@ class econom(commands.Cog):
                         if get_user_in_guild(ctx.guild, user["ids"]) == 0: continue
                         member = discord.utils.get(ctx.guild.members, id = user["ids"])
                         messages = int(user["monday"]) + int(user["tuesday"]) + int(user["wednesday"]) + int(user["thursday"]) + int(user["friday"]) + int(user["saturday"]) + int(user["sunday"])
-                        if messages < 100: continue
+                        if messages < 1: continue
                         user_messages.append(messages)
                         user_list.append(member.display_name)
                         user_request.append(f'`Сообщений за неделю:` **{messages}**')
                     user_list_copy, sort_messages, index_win = user_messages, sorted(user_messages)[::-1], 0
-                    print(sort_messages)
                     for index_massive in sort_messages:
-                        print(index_massive)
                         index_win += 1
                         index_coins = user_list_copy.index(index_massive)
                         user_list_copy.pop(index_coins)
@@ -701,6 +699,26 @@ class econom(commands.Cog):
                     embed = discord.Embed(title = '\⛩️ **__Топ участников по сообщениям за неделю__**', description = answer)
                     embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
                     message = await ctx.send(f'{ctx.author.mention}', embed = embed)
+                elif str(react.emoji) == '2⃣':
+                    embed = discord.Embed(title = '\⛩️ **__Подтвердите ваши действия__**', description = f'{ctx.author}, Вы действительно хотите обнулить недельную статистику сообщений всем пользователям?\n\n✅ - **Подтвердить**\n❌ - **Отменитить действие**')
+                    embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
+                    message = await ctx.send(f'{ctx.author.mention}', embed = embed)
+                    await message.add_reaction('✅')
+                    await message.add_reaction('❌')
+                    try: react, user = await self.bot.wait_for('reaction_add', timeout= 30.0, check= lambda react, user: user == ctx.author and react.emoji in ['✅', '❌'])
+                    except Exception: return await message.delete()
+                    else: 
+                        await message.delete()
+                        if str(react.emoji) == '✅':
+                            embed = discord.Embed(title = '\⛩️ **__Успешно__**', description = f'✅ {ctx.author}, Вы обнулили недельную статистику сообщений всем пользователям.')
+                            embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
+                            await ctx.send(embed = embed)
+                            for i in mons.find({"guild": ctx.guild.id}):
+                                mons.update_one({"_id": i["_id"]}, {"$set":{"monday": 0, "tuesday": 0, "wednesday": 0, "thursday": 0, "friday": 0, "saturday": 0, "sunday": 0, "date": int(dt.strftime("%d"))}}}
+                        elif str(react.emoji) == '❌':
+                            embed = discord.Embed(title = f'❌ {ctx.author}, Вы отменили действие.')
+                            embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
+                            return await ctx.send(f'{ctx.author.mention}', embed = embed, delete_after = 5)
 
 		    
     @commands.Cog.listener()
