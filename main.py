@@ -151,9 +151,9 @@ bot.load_extension('cogs.debug')
 @commands.has_permissions(administrator = True)
 async def kitog(ctx, count: int = None, member: discord.Member = None, amount: int = None, response: int = None):
     await ctx.message.delete()
-    if members is None or amount is None or count is None:
+    if member is None or amount is None or count is None:
         return await ctx.send('введены не все аргументы\n`!kitog [номер участника] [member: discord.Member] [баллы] [кол-во судей]', delete_after = 5)
-    embed = discord.Embed(title = f'\⛩️ **__Оценка участника №{count}: {member}__**', description = f'**__Общее количество баллов участника `№ {count}`: {amount}\n`Количество судей:` {response}**')
+    embed = discord.Embed(title = f'\⛩️ **__Оценка участника №{count}: {member}__**', description = f'**__Общее количество баллов участника `№ {count}`: {amount}\n`Количество судей:` {response}__**')
     embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
     return await ctx.send(embed = embed)
 
