@@ -226,7 +226,7 @@ class mafia(commands.Cog):
                     chisla = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10']
                     get_role = [ ]
                     role = ['Мафия', 'Дон мафии', 'Шериф', 'Врач', 'Мирный житель 1', 'Мирный житель 2', 'Мирный житель 3', 'Мирный житель 4', 'Мирный житель 5', 'Ночная Бабочка']
-                    rol = discord.utils.get(guild.roles, id = 817870286522810390)
+                    rol = discord.utils.get(guild.roles, id = 914455571741167646)
                     overwrites = {
                         guild.default_role: discord.PermissionOverwrite(view_channel = False, read_messages=False, read_message_history = False),
                         rol: discord.PermissionOverwrite(view_channel = True, read_messages=True, send_messages = True, read_message_history = True)
@@ -270,7 +270,7 @@ class mafia(commands.Cog):
                     guild = self.bot.get_guild(payload.guild_id)
                     f = 0
                     mafadd = self.bot.get_channel(806215783121289297)
-                    igr = discord.utils.get(guild.roles, id = 817870286522810390)
+                    igr = discord.utils.get(guild.roles, id = 806215783121289297)
                     dm = 0
                     mf = 0
                     force = [ ]
@@ -339,7 +339,7 @@ class mafia(commands.Cog):
                                 chisla = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10']
                                 get_role = [ ]
                                 role = ['Мафия', 'Дон мафии', 'Шериф', 'Врач', 'Мирный житель 1', 'Мирный житель 2', 'Мирный житель 3', 'Мирный житель 4', 'Мирный житель 5', 'Ночная Бабочка']
-                                rol = discord.utils.get(guild.roles, id = 817870286522810390)
+                                rol = discord.utils.get(guild.roles, id = 914455571741167646)
                                 overwrites = {
                                     guild.default_role: discord.PermissionOverwrite(view_channel = False, read_messages=False, read_message_history = False),
                                     rol: discord.PermissionOverwrite(view_channel = True, read_messages=True, send_messages = True, read_message_history = True)
@@ -442,7 +442,7 @@ class mafia(commands.Cog):
         chisla = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10']
         get_role = [ ]
         role = ['Мафия', 'Дон мафии', 'Шериф', 'Врач', 'Мирный житель 1', 'Мирный житель 2', 'Мирный житель 3', 'Мирный житель 4', 'Мирный житель 5', 'Ночная Бабочка']
-        rol = discord.utils.get(ctx.guild.roles, id = 817870286522810390)
+        rol = discord.utils.get(ctx.guild.roles, id = 914455571741167646)
         overwrites = {
             ctx.guild.default_role: discord.PermissionOverwrite(view_channel = False, read_messages=False, read_message_history = False),
             rol: discord.PermissionOverwrite(view_channel = True, read_messages=True, send_messages = True, read_message_history = True)
@@ -460,7 +460,7 @@ class mafia(commands.Cog):
         chann2 = self.bot.get_channel(806215020333236244)
         await chann2.purge(limit = 1000)
         vchannel1 = self.bot.get_channel(806214892012830770)
-        uch = discord.utils.get(ctx.guild.roles, id = 817870286522810390)
+        uch = discord.utils.get(ctx.guild.roles, id = 914455571741167646)
         for i in vchannel1.members:
             if uch in i.roles:
                 await i.remove_roles(uch)
@@ -559,7 +559,7 @@ class mafia(commands.Cog):
                 for z in self.bot.get_channel(806214892012830770).members:
                     await z.send(text)
                 vhannel = self.bot.get_channel(806214892012830770)
-                uch = discord.utils.get(ctx.guild.roles, id = 817870286522810390)
+                uch = discord.utils.get(ctx.guild.roles, id = 914455571741167646)
                 if uch in member.roles:
                     await member.remove_roles(uch)
 
@@ -655,7 +655,7 @@ class mafia(commands.Cog):
 
         if not bmafia.find_one({"id": member.id})["active"] == 0:
             try:
-                uch = discord.utils.get(ctx.guild.roles, id = 817870286522810390)
+                uch = discord.utils.get(ctx.guild.roles, id = 914455571741167646)
                 if uch in member.roles:
                     await member.remove_roles(uch)
 
@@ -720,7 +720,7 @@ class mafia(commands.Cog):
             await chan.set_permissions(member, read_messages = True, view_channel = True, send_messages = True, read_message_history = True)
         
         mchannel = self.bot.get_channel(806215020333236244)
-        await member.add_roles(discord.utils.get(ctx.guild.roles, id = 817870286522810390))
+        await member.add_roles(discord.utils.get(ctx.guild.roles, id = 914455571741167646))
 
         embed = discord.Embed(description = f'**Пользователь {member.mention} возвращается в нашу игру**', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow())
         embed.set_footer(text = f'Приянтной игры, {member}!')
@@ -823,7 +823,7 @@ class mafia(commands.Cog):
                 if bmafia.find_one({"id": f.id})["active"] == 1:
                     await f.edit(mute = True)
         
-        uch = discord.utils.get(ctx.guild.roles, id = 817870286522810390)
+        uch = discord.utils.get(ctx.guild.roles, id = 914455571741167646)
         await mchannel.set_permissions(uch, send_messages = False, read_message_history = True, read_messages = True)
         bmafia.update_one({"id": ctx.author.id}, {"$set": {"night": 1}})
         return await mchannel.send(embed = discord.Embed(description = '**В городе наступает тёмная и страшная ночь. Микрофоны участников были выключены.**', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow()))
@@ -851,7 +851,7 @@ class mafia(commands.Cog):
                 if bmafia.find_one({"id": f.id})["active"] == 1:
                     await f.edit(mute = False)
         
-        uch = discord.utils.get(ctx.guild.roles, id = 817870286522810390)
+        uch = discord.utils.get(ctx.guild.roles, id = 914455571741167646)
         await mchannel.set_permissions(uch, send_messages = True, read_message_history = True, read_messages = True)
         bmafia.update_one({"id": ctx.author.id}, {"$set": {"night": 0}})
         return await mchannel.send(embed = discord.Embed(description = '**Ночь прошла, наступает утро. Микрофоны участников были включены.**', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow()))
@@ -931,7 +931,7 @@ class mafia(commands.Cog):
             if entry.user.bot:
                 return
         
-        if discord.utils.get(before.guild.roles, id = 817870286522810390) in after.roles:
+        if discord.utils.get(before.guild.roles, id = 914455571741167646) in after.roles:
             await after.edit(nick = before.display_name)     
 
 
