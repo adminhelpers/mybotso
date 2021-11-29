@@ -268,7 +268,7 @@ class mafia(commands.Cog):
                         await self.bot.http.remove_reaction(channel.id, message.id, emoji, memb.id)
                         return await channel.send('`[ERROR]` `Игра уже запущена!`', delete_after = 2)
                     
-                    if not len(force) < 10:
+                    if not len(force) == 10:
                         await self.bot.http.remove_reaction(channel.id, message.id, emoji, memb.id)
                         return await channel.send('`[ERROR]` `В данный момент не достаточно участников для начала игры!`', delete_after = 3)
 
