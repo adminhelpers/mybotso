@@ -27,7 +27,8 @@ bmafia = db["mafia"]
 # print(family.find_one({"_id": ctx.author.id})["name"]) -> Получение отдельного значения(Коллекция: Family | Поиск по графе: _id | Значение графы: name) 
 # family.update_one({"_id": ctx.author.id}, {"$set": {"name": settle}}) -> Обновление значения в базе(Коллекция: Family | По графе: _id | Аргумент: $set - Замена | Значение графы: name | Устанавливаемое значение: settle)
 
-global chat_maf, chat_game_maf = 885503856556011570, 806215020333236244
+global chat_maf, chat_game_maf 
+chat_maf, chat_game_maf = 885503856556011570, 806215020333236244
 
 global force, cids, prov, chisla, chisla1, get_role, players, role, game, messageid, coold, delb
 force, cids, prov, chisla, chisla1, get_role, players, role, game, messageid, coold, delb = [ ], [ ], 0, ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'], ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'], [ ], [ ], ['Мафия', 'Дон мафии', 'Шериф', 'Врач', 'Мирный житель 1', 'Мирный житель 2', 'Мирный житель 3', 'Мирный житель 4', 'Мирный житель 5', 'Ночная Бабочка'], 0, 0, 0, 0
