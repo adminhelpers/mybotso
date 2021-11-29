@@ -27,6 +27,8 @@ bmafia = db["mafia"]
 # print(family.find_one({"_id": ctx.author.id})["name"]) -> Получение отдельного значения(Коллекция: Family | Поиск по графе: _id | Значение графы: name) 
 # family.update_one({"_id": ctx.author.id}, {"$set": {"name": settle}}) -> Обновление значения в базе(Коллекция: Family | По графе: _id | Аргумент: $set - Замена | Значение графы: name | Устанавливаемое значение: settle)
 
+global chat_maf, chat_game_maf = 885503856556011570, 806215020333236244
+
 global force, cids, prov, chisla, chisla1, get_role, players, role, game, messageid, coold, delb
 force, cids, prov, chisla, chisla1, get_role, players, role, game, messageid, coold, delb = [ ], [ ], 0, ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'], ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'], [ ], [ ], ['Мафия', 'Дон мафии', 'Шериф', 'Врач', 'Мирный житель 1', 'Мирный житель 2', 'Мирный житель 3', 'Мирный житель 4', 'Мирный житель 5', 'Ночная Бабочка'], 0, 0, 0, 0
 
@@ -74,6 +76,8 @@ class mafia(commands.Cog):
             ctx.command.reset_cooldown(ctx)
             return
 
+        global chat_maf
+        global chat_game_maf
         global prov 
         global messageid
 
@@ -116,6 +120,8 @@ class mafia(commands.Cog):
     @commands.command(aliases = ['оповещение', 'линк'])
     @commands.cooldown(1, 600, commands.BucketType.member)
     async def link(self, ctx):
+        global chat_maf
+        global chat_game_maf
         if not ctx.guild.id == 477547500232769536:
             ctx.command.reset_cooldown(ctx)
             return
@@ -139,6 +145,8 @@ class mafia(commands.Cog):
     @commands.Cog.listener()
     @commands.cooldown(1, 10, commands.BucketType.member)
     async def on_raw_reaction_add(self, payload):
+        global chat_maf
+        global chat_game_maf
         global players
         guild = self.bot.get_guild(payload.guild_id)
         if guild == None:
@@ -163,7 +171,7 @@ class mafia(commands.Cog):
             pass
         else:
             channel = self.bot.get_channel(payload.channel_id)
-            if channel.id == 505009452571820032 or not channel.id == 885503856556011570:
+            if channel.id == 505009452571820032 or not channel.id == chat_game_maf:
                 return
             message = await channel.fetch_message(payload.message_id)
             memb = discord.utils.get(message.guild.members, id=payload.user_id)
@@ -231,7 +239,7 @@ class mafia(commands.Cog):
                         guild.default_role: discord.PermissionOverwrite(view_channel = False, read_messages=False, read_message_history = False),
                         rol: discord.PermissionOverwrite(view_channel = True, read_messages=True, send_messages = True, read_message_history = True)
                         }
-                    chan = self.bot.get_channel(885503856556011570)
+                    chan = self.bot.get_channel(chat_maf)
                     for i in bmafia.find({"guild": guild.id}):
                         member = discord.utils.get(guild.members, id = i["id"])
                         try: await member.edit(nick = i["name"])
@@ -269,7 +277,7 @@ class mafia(commands.Cog):
                     game = 1
                     guild = self.bot.get_guild(payload.guild_id)
                     f = 0
-                    mafadd = self.bot.get_channel(806215783121289297)
+                    mafadd = self.bot.get_channel(chat_game_maf)
                     igr = discord.utils.get(guild.roles, id = 914455571741167646)
                     dm = 0
                     mf = 0
@@ -297,7 +305,7 @@ class mafia(commands.Cog):
                             embed = discord.Embed(description = f'**Привет {member.mention}! Ты учавствуешь в мафии на сервере {guild.name} :)**', colour = 0xFB9E14)
                             ath = re.split(r'\W+', str(role[a]))
                             if role[a] == 'Дон мафии':
-                                chan = self.bot.get_channel(806215783121289297)
+                                chan = self.bot.get_channel(chat_maf)
                                 await chan.set_permissions(member, read_messages = True, view_channel = True, send_messages = True, read_message_history = True)
                                 embed.add_field(name = '❤️ Информация о тебе:', value = f'> `Твоя роль:` **Дон Мафии**\n> `Канал тёмной стороны:` {chan.mention}.', inline = False)
                                 get_role.append(f'> 🧛‍♂ `Дон Мафии -` {member.display_name} | `Nick:` **{name} | `ID:` {member.id}**\n')
@@ -305,7 +313,7 @@ class mafia(commands.Cog):
                                 await chan.send(embed = discord.Embed(description = f'Привет! Данный чат создан для тёмной стороны города! Доступ в него имеют только красные отрицательные роли: Мафия, Дон Мафии.\n\nОтправлять сообщения о убийстве и проверке необходимо Дону Мафии\n**Форма отправки сообщения от {member.mention}:**\n{memb.mention}, килл(номер), чек(номер)\n\n❗ ❗ ВАЖНО ❗ ❗\n> `Сообщение отправленное по другой форме будет отклонено`\n> `Сообщение без упоминание ведущего будет отклонено`\n> `Сообщение нет от Дона Мафии(Если жив) будет отклонено.`\n❗ ❗ ВАЖНО ❗ ❗'))
                                 dm = member.id
                             elif role[a] == 'Мафия':
-                                chan = self.bot.get_channel(806215783121289297)
+                                chan = self.bot.get_channel(chat_maf)
                                 await chan.set_permissions(member, read_messages = True, view_channel = True, send_messages = True, read_message_history = True)
                                 embed.add_field(name = '❤️ Информация о тебе:', value = f'> `Твоя роль:` **Мафия**\n> `Канал тёмной:` {chan.mention}.', inline = False)
                                 get_role.append(f'> 🤵 `Мафия -` {member.display_name} | `Nick:` **{name} | `ID:` {member.id}**\n')
@@ -344,7 +352,7 @@ class mafia(commands.Cog):
                                     guild.default_role: discord.PermissionOverwrite(view_channel = False, read_messages=False, read_message_history = False),
                                     rol: discord.PermissionOverwrite(view_channel = True, read_messages=True, send_messages = True, read_message_history = True)
                                     }
-                                chan = self.bot.get_channel(885503856556011570)
+                                chan = self.bot.get_channel(chat_maf)
                                 await chan.edit(overwrites = overwrites)
                                 await chan.purge(limit = 1000)
                                 chann2 = self.bot.get_channel(806215020333236244)
@@ -425,6 +433,8 @@ class mafia(commands.Cog):
         global prov
         global chisla
         global chisla1
+        global chat_maf
+        global chat_game_maf
         global force
 
         if game == 0:
@@ -448,7 +458,7 @@ class mafia(commands.Cog):
             rol: discord.PermissionOverwrite(view_channel = True, read_messages=True, send_messages = True, read_message_history = True)
             }
 
-        chan = self.bot.get_channel(885503856556011570)
+        chan = self.bot.get_channel(chat_maf)
         for i in bmafia.find({"guild": ctx.guild.id}):
             member = discord.utils.get(ctx.guild.members, id = i["id"])
             try:
@@ -457,7 +467,7 @@ class mafia(commands.Cog):
               pass
         await chan.edit(overwrites = overwrites)
         await chan.purge(limit = 1000)
-        chann2 = self.bot.get_channel(806215020333236244)
+        chann2 = self.bot.get_channel(chat_game_maf)
         await chann2.purge(limit = 1000)
         vchannel1 = self.bot.get_channel(806214892012830770)
         uch = discord.utils.get(ctx.guild.roles, id = 914455571741167646)
@@ -635,6 +645,8 @@ class mafia(commands.Cog):
     async def mafkill(self, ctx, member: discord.Member = None, arg = None):
         global get_role
         global game
+        global chat_maf
+        global chat_game_maf
 
         if not ctx.guild.id == 477547500232769536:
             return
@@ -660,14 +672,14 @@ class mafia(commands.Cog):
                     await member.remove_roles(uch)
 
                 if bmafia.find_one({"id": member.id})["role"] == 'Мафия' or bmafia.find_one({"id": member.id})["role"] == 'Дон мафии':
-                    chan = self.bot.get_channel(885503856556011570)
+                    chan = self.bot.get_channel(chat_maf)
                     await chan.set_permissions(member, read_messages = False, view_channel = False, send_messages = False, read_message_history = False)
                 if bmafia.find_one({"id": member.id})["fols"] == 0:
                     uname = member.display_name
                 else:
                     uname = f'0{bmafia.find_one({"id": member.id})["nicks"]}[Фолов: {bmafia.find_one({"id": member.id})["fols"]}/4]'
                 bmafia.update_one({"id": member.id}, {"$set": {"active": 0, "nicks": uname}})
-                mchannel = self.bot.get_channel(806215020333236244)
+                mchannel = self.bot.get_channel(chat_game_maf)
                 embed = discord.Embed(description = f'**Пользователь {member.mention} покидает наш стол.**', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow())
                 embed.set_footer(text = f'Спасибо за участие, {member}!')
                 if not arg == None:
@@ -691,6 +703,8 @@ class mafia(commands.Cog):
     async def вернуть(self, ctx, member: discord.Member = None):
         global get_role
         global game
+        global chat_maf
+        global chat_game_maf
 
         if not ctx.guild.id == 477547500232769536:
             return
@@ -716,10 +730,10 @@ class mafia(commands.Cog):
             return await ctx.send(f'`[ERROR]` {ctx.author.mention}, `возрождаемый игрок должен находиться в канале проведения мафии!`', delete_after = 5)
 
         if bmafia.find_one({"id": member.id})["role"] == 'Мафия' or bmafia.find_one({"id": member.id})["role"] == 'Дон мафии':
-            chan = self.bot.get_channel(885503856556011570)
+            chan = self.bot.get_channel(chat_maf)
             await chan.set_permissions(member, read_messages = True, view_channel = True, send_messages = True, read_message_history = True)
         
-        mchannel = self.bot.get_channel(806215020333236244)
+        mchannel = self.bot.get_channel(chat_game_maf)
         await member.add_roles(discord.utils.get(ctx.guild.roles, id = 914455571741167646))
 
         embed = discord.Embed(description = f'**Пользователь {member.mention} возвращается в нашу игру**', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow())
@@ -804,13 +818,15 @@ class mafia(commands.Cog):
     async def night(self, ctx):
         global get_role
         global game
+        global chat_maf
+        global chat_game_maf
 
         if not ctx.guild.id == 477547500232769536:
             return
 
         await ctx.message.delete()
 
-        mchannel = self.bot.get_channel(806215020333236244)
+        mchannel = self.bot.get_channel(chat_game_maf)
 
         if not ctx.author.id == bmafia.find_one({"leader": 1})["ved"]:
             return
@@ -832,13 +848,15 @@ class mafia(commands.Cog):
     async def day(self, ctx):
         global get_role
         global game
+        global chat_maf
+        global chat_game_maf
 
         if not ctx.guild.id == 477547500232769536:
             return
 
         await ctx.message.delete()
 
-        mchannel = self.bot.get_channel(806215020333236244)
+        mchannel = self.bot.get_channel(chat_game_maf)
 
         if not ctx.author.id == bmafia.find_one({"leader": 1})["ved"]:
             return
