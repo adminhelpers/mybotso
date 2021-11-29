@@ -21,8 +21,8 @@ cluster = MongoClient("mongodb+srv://dbrbase:YqxZgV1GL8s4CVxX@rodinadb.rhew3.mon
 db = cluster["rodina"]
 bmafia = db["mafia"]
 
-global parse
-parse = [ ] 
+global parse, game_chat_maf
+parse,  = [ ], 914932219838074920
 
 global mesids
 mesids = 0
@@ -182,6 +182,7 @@ class golosovanie(commands.Cog):
 
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):
+        global game_chat_maf
         guild = self.bot.get_guild(payload.guild_id)
         if guild == None:
             return
@@ -200,7 +201,7 @@ class golosovanie(commands.Cog):
         else:
             emoji = str(payload.emoji)
             channel = self.bot.get_channel(payload.channel_id)
-            if not channel.id == 806215020333236244:
+            if not channel.id == game_chat_maf:
                 return
             message = await channel.fetch_message(payload.message_id)
             if not message.id == mesids:
