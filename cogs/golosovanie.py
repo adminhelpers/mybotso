@@ -22,7 +22,7 @@ db = cluster["rodina"]
 bmafia = db["mafia"]
 
 global parse, game_chat_maf
-parse,  = [ ], 914932219838074920
+parse, game_chat_maf = [ ], 914932219838074920
 
 global mesids
 mesids = 0
