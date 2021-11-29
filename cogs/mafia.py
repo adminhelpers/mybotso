@@ -562,7 +562,7 @@ class mafia(commands.Cog):
                 bmafia.update_one({"id": member.id}, {"$set": {"active": 0}})
                 embed = discord.Embed(description = f'**Пользователь {member.mention} был выгнан из игры.**', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow())
                 embed.set_footer(text = f'Фолов: 4/4')
-                text = f'`[System]: Игрок {member.display_name}({bmafia.find_one({"leader": 1})["name"]}) был получил 4 фола и был исключён из игры.`'
+                text = f'`[System]: Игрок {member.display_name}({bmafia.find_one({"leader": 1})["name"]}) получил 4 фола и был исключён из игры.`'
                 fol = bmafia.find_one({"id": member.id})["fols"] + 1
                 uname = f'{bmafia.find_one({"id": member.id})["nicks"]}[Фолов: 3/4]'
                 bmafia.update_one({"id": member.id}, {"$set": {"active": 0, "nicks": uname, "fols": fol}})
@@ -640,8 +640,8 @@ class mafia(commands.Cog):
             bmafia.update_one({"id": member.id}, {"$set": {"fols": fol}})
             if fol == 2:
                 await member.edit(mute = False)
-            try: await member.edit(nick = f'{bmafia.find_one({"id": member.id})["nicks"]}[Фолов: {fol}/4]')
-            except: pass
+            await member.edit(nick = f'{bmafia.find_one({"id": member.id})["nicks"]}[Фолов: {fol}/4]')
+            
             embed = discord.Embed(description = f'**Пользователю {member.mention} сняли 1 фол!**', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow())
             embed.set_footer(text = f'Фолов: {fol}/4')
             return await ctx.send(embed = embed)
