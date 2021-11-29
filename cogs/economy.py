@@ -166,11 +166,11 @@ class econom(commands.Cog):
         if user.bot: pass
         else:
             emoji, channel = str(payload.emoji), self.bot.get_channel(payload.channel_id)
-            if not channel.id == 902666153674035280: return
+            if not channel.id == 915006300734251048: return
             message = await channel.fetch_message(payload.message_id)
-            if not message.id == 902669326551773205: return
+            if not message.id == 915006300734251048: return
             memb = discord.utils.get(message.guild.members, id=payload.user_id)
-            if emoji == '🎃': return await memb.add_roles(discord.utils.get(guild.roles, id = 902667071933009990))
+            if emoji == '❄️': return await memb.add_roles(discord.utils.get(guild.roles, id = 915006300734251048))
 
     @commands.Cog.listener()
     async def on_raw_reaction_remove(self, payload):
@@ -182,11 +182,11 @@ class econom(commands.Cog):
         if user.bot: pass
         else:
             emoji, channel = str(payload.emoji), self.bot.get_channel(payload.channel_id)
-            if not channel.id == 902666153674035280: return
+            if not channel.id == 915006300734251048: return
             message = await channel.fetch_message(payload.message_id)
-            if not message.id == 902669326551773205: return
+            if not message.id == 915006300734251048: return
             memb = discord.utils.get(message.guild.members, id=payload.user_id)   
-            if emoji == '🎃': return await memb.remove_roles(discord.utils.get(guild.roles, id = 902667071933009990))
+            if emoji == '❄️': return await memb.remove_roles(discord.utils.get(guild.roles, id = 915006300734251048))
 		
     @commands.command()
     @commands.has_permissions(administrator = True)
@@ -306,10 +306,10 @@ class econom(commands.Cog):
           except: m.append(f'Неизвестный тип с ID: {i["ids"]} - {i["messages"]} coins')
       print(m)
 
-    @commands.command(aliases = ["hwen"])
-    async def halloween(self, ctx):
+    @commands.command(aliases = ["rwinter"])
+    async def rolewinter(self, ctx):
       if not ctx.guild.id == 477547500232769536: return
-      embed = discord.Embed(title = 'Тили тили бом, закрой глаза скорее..', description = f'\🎃 **Скоро наступит ночь ужаса, ты готов?** \🎃\n\nИз тьмы выходят призраки и потусторонние существа, чтобы напугать тебя! Но мы не дадим тебя в обиду, ведь мы сами вселяем страх на том сервере \👻\n\n**Чтобы защитить себя от зла, стань этим злом! Нажми на реакцию тыквы Джона \🎃 и он выдаст тебе роль.**', color = 0xFB9E14)
+      embed = discord.Embed(title = 'Мороз и солнце, день чудесный!', description = f'\❄️ **Кажется, согласно календарю, у всех уже наступила зима!** \❄️\n\nБелый снег, пушистый в воздухе кружится\nИ на землю тихо падает, ложится.\n\n**В предверии праздников, хотим порадовать тебя очередной халявной ролью!\👀 Нажми на зимнюю реакцию \❄️ и бот сделает тебе подарок.**', color = 0x0CDEE7)
       embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
       embed.set_thumbnail(url = ctx.guild.icon_url)
       await ctx.message.delete()
