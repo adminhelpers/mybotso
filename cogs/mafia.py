@@ -231,7 +231,7 @@ class mafia(commands.Cog):
                         guild.default_role: discord.PermissionOverwrite(view_channel = False, read_messages=False, read_message_history = False),
                         rol: discord.PermissionOverwrite(view_channel = True, read_messages=True, send_messages = True, read_message_history = True)
                         }
-                    chan = self.bot.get_channel(806215783121289297)
+                    chan = self.bot.get_channel(885503856556011570)
                     for i in bmafia.find({"guild": guild.id}):
                         member = discord.utils.get(guild.members, id = i["id"])
                         try: await member.edit(nick = i["name"])
@@ -344,7 +344,7 @@ class mafia(commands.Cog):
                                     guild.default_role: discord.PermissionOverwrite(view_channel = False, read_messages=False, read_message_history = False),
                                     rol: discord.PermissionOverwrite(view_channel = True, read_messages=True, send_messages = True, read_message_history = True)
                                     }
-                                chan = self.bot.get_channel(806215783121289297)
+                                chan = self.bot.get_channel(885503856556011570)
                                 await chan.edit(overwrites = overwrites)
                                 await chan.purge(limit = 1000)
                                 chann2 = self.bot.get_channel(806215020333236244)
@@ -448,7 +448,7 @@ class mafia(commands.Cog):
             rol: discord.PermissionOverwrite(view_channel = True, read_messages=True, send_messages = True, read_message_history = True)
             }
 
-        chan = self.bot.get_channel(806215783121289297)
+        chan = self.bot.get_channel885503856556011570)
         for i in bmafia.find({"guild": ctx.guild.id}):
             member = discord.utils.get(ctx.guild.members, id = i["id"])
             try:
@@ -660,7 +660,7 @@ class mafia(commands.Cog):
                     await member.remove_roles(uch)
 
                 if bmafia.find_one({"id": member.id})["role"] == 'Мафия' or bmafia.find_one({"id": member.id})["role"] == 'Дон мафии':
-                    chan = self.bot.get_channel(806215783121289297)
+                    chan = self.bot.get_channel(885503856556011570)
                     await chan.set_permissions(member, read_messages = False, view_channel = False, send_messages = False, read_message_history = False)
                 if bmafia.find_one({"id": member.id})["fols"] == 0:
                     uname = member.display_name
@@ -716,7 +716,7 @@ class mafia(commands.Cog):
             return await ctx.send(f'`[ERROR]` {ctx.author.mention}, `возрождаемый игрок должен находиться в канале проведения мафии!`', delete_after = 5)
 
         if bmafia.find_one({"id": member.id})["role"] == 'Мафия' or bmafia.find_one({"id": member.id})["role"] == 'Дон мафии':
-            chan = self.bot.get_channel(806215783121289297)
+            chan = self.bot.get_channel885503856556011570)
             await chan.set_permissions(member, read_messages = True, view_channel = True, send_messages = True, read_message_history = True)
         
         mchannel = self.bot.get_channel(806215020333236244)
