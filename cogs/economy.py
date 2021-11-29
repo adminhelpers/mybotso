@@ -306,8 +306,8 @@ class econom(commands.Cog):
           except: m.append(f'Неизвестный тип с ID: {i["ids"]} - {i["messages"]} coins')
       print(m)
 
-    @commands.command(aliases = ["rwinter"])
-    async def rolewinter(self, ctx):
+    @commands.command(aliases = ["hwen"])
+    async def hallowen(self, ctx):
       if not ctx.guild.id == 477547500232769536: return
       embed = discord.Embed(title = 'Мороз и солнце, день чудесный!', description = f'\❄️ **Кажется, согласно календарю, у всех уже наступила зима!** \❄️\n\nБелый снег, пушистый в воздухе кружится\nИ на землю тихо падает, ложится.\n\n**В предверии праздников, хотим порадовать тебя очередной халявной ролью!\👀 Нажми на зимнюю реакцию \❄️ и бот сделает тебе подарок.**', color = 0x0CDEE7)
       embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
