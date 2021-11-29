@@ -168,7 +168,7 @@ class econom(commands.Cog):
             emoji, channel = str(payload.emoji), self.bot.get_channel(payload.channel_id)
             if not channel.id == 902666153674035280: return
             message = await channel.fetch_message(payload.message_id)
-            if not message.id == 902669326551773205: return
+            if not message.id == 915015583098110052: return
             memb = discord.utils.get(message.guild.members, id=payload.user_id)
             if emoji == '❄️': return await memb.add_roles(discord.utils.get(guild.roles, id = 915006300734251048))
 
