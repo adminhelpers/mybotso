@@ -693,13 +693,13 @@ class mafia(commands.Cog):
                 else:
                     embed.add_field(name = '`Действие`', value = f'**Игрок был убит мафией!**')
                     text = f'`[System]: Игрок {member.display_name}({bmafia.find_one({"id": member.id})["name"]}) покидает стол!`\n> `Был убит мафией!`'
-                    except: pass
+             
                 await mchannel.send(embed = embed)
 
                 for z in self.bot.get_channel(806214892012830770).members:
                     await z.send(text, delete_after = 15)
                 try: await member.edit(nick = bmafia.find_one({"id": member.id})["name"])
-
+                except: pass
             except:
 
                 return await ctx.send('`[ERROR]` `Неизвестная ошибка`', delete_after = 3)
