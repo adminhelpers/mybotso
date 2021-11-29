@@ -270,7 +270,7 @@ class mafia(commands.Cog):
                     guild = self.bot.get_guild(payload.guild_id)
                     f = 0
                     mafadd = self.bot.get_channel(806215783121289297)
-                    igr = discord.utils.get(guild.roles, id = 806215783121289297)
+                    igr = discord.utils.get(guild.roles, id = 914455571741167646)
                     dm = 0
                     mf = 0
                     force = [ ]
