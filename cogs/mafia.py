@@ -566,7 +566,8 @@ class mafia(commands.Cog):
                 fol = bmafia.find_one({"id": member.id})["fols"] + 1
                 uname = f'{bmafia.find_one({"id": member.id})["nicks"]}[Фолов: 3/4]'
                 bmafia.update_one({"id": member.id}, {"$set": {"active": 0, "nicks": uname, "fols": fol}})
-                await member.edit(nick = bmafia.find_one({"id": member.id})["name"])
+                try: await member.edit(nick = bmafia.find_one({"id": member.id})["name"])
+                except: pass                
                 for z in self.bot.get_channel(806214892012830770).members:
                     await z.send(text)
                 vhannel = self.bot.get_channel(806214892012830770)
@@ -595,9 +596,11 @@ class mafia(commands.Cog):
 
             bmafia.update_one({"id": member.id}, {"$set": {"fols": fol}})
             if fol == 1:
-                await member.edit(nick = f'{strr_a}[Фолов: {fol}/4]')
+                try: await member.edit(nick = f'{strr_a}[Фолов: {fol}/4]')
+                except: pass
             else:
-                await member.edit(nick = f'{bmafia.find_one({"id": member.id})["nicks"]}[Фолов: {fol}/4]')
+                try: await member.edit(nick = f'{bmafia.find_one({"id": member.id})["nicks"]}[Фолов: {fol}/4]')
+                except: pass
             if fol == 3:
                 embed = discord.Embed(description = f'**Пользователь {member.mention} пропускает следующую речь.\nПри получении ещё одного фола, он будет исключён из игры.**', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow())
                 embed.set_footer(text = f'Фолов: {fol}/4')
@@ -637,7 +640,8 @@ class mafia(commands.Cog):
             bmafia.update_one({"id": member.id}, {"$set": {"fols": fol}})
             if fol == 2:
                 await member.edit(mute = False)
-            await member.edit(nick = f'{bmafia.find_one({"id": member.id})["nicks"]}[Фолов: {fol}/4]')
+            try: await member.edit(nick = f'{bmafia.find_one({"id": member.id})["nicks"]}[Фолов: {fol}/4]')
+            except: pass
             embed = discord.Embed(description = f'**Пользователю {member.mention} сняли 1 фол!**', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow())
             embed.set_footer(text = f'Фолов: {fol}/4')
             return await ctx.send(embed = embed)
@@ -689,12 +693,12 @@ class mafia(commands.Cog):
                 else:
                     embed.add_field(name = '`Действие`', value = f'**Игрок был убит мафией!**')
                     text = f'`[System]: Игрок {member.display_name}({bmafia.find_one({"id": member.id})["name"]}) покидает стол!`\n> `Был убит мафией!`'
-
+                    except: pass
                 await mchannel.send(embed = embed)
 
                 for z in self.bot.get_channel(806214892012830770).members:
                     await z.send(text, delete_after = 15)
-                await member.edit(nick = bmafia.find_one({"id": member.id})["name"])
+                try: await member.edit(nick = bmafia.find_one({"id": member.id})["name"])
 
             except:
 
@@ -741,10 +745,12 @@ class mafia(commands.Cog):
         embed.set_footer(text = f'Приянтной игры, {member}!')
         if bmafia.find_one({"id": member.id})["fols"] == 4:  
             bmafia.update_one({"id": member.id}, {"$set": {"active": 1, "fols": 3}})
-            await member.edit(nick = f'{bmafia.find_one({"id": member.id})["num"]}[Фолов 3/4]')
+            try: await member.edit(nick = f'{bmafia.find_one({"id": member.id})["num"]}[Фолов 3/4]')
+            except: pass
         else:
             sets = bmafia.find_one({"id": member.id})["fols"]
-            await member.edit(nick = f'{bmafia.find_one({"id": member.id})["num"]}[Фолов {sets}/4]')
+            try: await member.edit(nick = f'{bmafia.find_one({"id": member.id})["num"]}[Фолов {sets}/4]')
+            except: pass
         embed.add_field(name = '`Информация:`', value = f'**Игрок {member.mention} был восстановлен ведущим\nНомер игрока: {bmafia.find_one({"id": member.id})["num"]}\nАккаунт: {bmafia.find_one({"id": member.id})["name"]}\nФолов: {sets}/4**')
         bmafia.update_one({"id": member.id}, {"$set": {"active": 1}})
 
@@ -778,7 +784,8 @@ class mafia(commands.Cog):
         await ctx.author.edit(nick = bmafia.find_one({"id": ctx.author.id})["name"])  
         bmafia.delete_one({"id": ctx.author.id})
         bmafia.insert_one({"guild": ctx.guild.id, "ved": member.id, "id": member.id, "name": member.display_name, "role": 0, "del": 1, "night": 0, "nicks": 0, "leader": 1})
-        await member.edit(nick = '[MAFIA]: Ведущий')
+        try: await member.edit(nick = '[MAFIA]: Ведущий')
+        except: pass
         str_a = ''.join(get_role)
         embed = discord.Embed(description = f'**Список игроков и их ролей:**\n{str_a}\n\n\n> **Все команды и правила мафии описаны в команде `/help`(3-я страница)**', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow())
         embed.set_author(name = 'Информация для нового ведущего', url = 'https://vk.com/dollarbabys', icon_url = 'https://sun9-36.userapi.com/c854428/v854428073/228488/tvUKvnDpcdk.jpg')
@@ -951,7 +958,8 @@ class mafia(commands.Cog):
                 return
         
         if discord.utils.get(before.guild.roles, id = 914455571741167646) in after.roles:
-            await after.edit(nick = before.display_name)     
+            try: await after.edit(nick = before.display_name)
+            except: pass     
 
 
 def setup(bot):
