@@ -436,7 +436,8 @@ class family(commands.Cog):
 					elif fam.find_one({"guild": ctx.guild.id, "name": amount, "leaderID": leader})["zam2"] == i: p = "zam2"
 					elif fam.find_one({"guild": ctx.guild.id, "name": amount, "leaderID": leader})["zam3"] == i: p = "zam3"
 					elif fam.find_one({"guild": ctx.guild.id, "name": amount, "leaderID": leader})["zam4"] == i: p = "zam4"
-					fam.update_one({"guild": ctx.guild.id, "name": amount, "leaderID": leader}, {"$set": {p: 1, "id": mas}})
+					try: fam.update_one({"guild": ctx.guild.id, "name": amount, "leaderID": leader}, {"$set": {p: 1, "id": mas}})
+					except: pass
 				else: 
 					member = discord.utils.get(ctx.guild.members, id = i)
 					if not member.id == leader:
