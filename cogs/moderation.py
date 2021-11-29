@@ -75,7 +75,7 @@ def is_accept(guild_id, mas, member: discord.Member):
           661284961428701209, # Глав. Модерация Discord
           714504039072661545, # Supervisor Moderation
           894702472826871850, # Машулька мурлёнок
-          894702472826871850] # Discord Guard
+          789910831868543027] # Discord Guard
     
     if mas == 'mf': mas = [743887697327816705, # Заместитель Гл. Модератора
           661284961428701209, # Глав. Модерация Discord
@@ -1022,7 +1022,7 @@ class moderation(commands.Cog):
 
     @commands.command() #mo
     async def warn(self, ctx, member: discord.Member = None, *, reason = None):
-        if not ctx.guild.id == 465086262383083520 or not is_accept_guild(ctx.guild.id) == 1: return 
+        if not is_accept_guild(ctx.guild.id) == 1: return 
 
         if is_accept(ctx.guild.id, 'mo', ctx.author) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
 
@@ -1102,7 +1102,7 @@ class moderation(commands.Cog):
 
     @commands.command()
     async def warnlog(self, ctx, member: discord.Member = None):
-        if not ctx.guild.id == 465086262383083520 or not is_accept_guild(ctx.guild.id) == 1: return 
+        if not is_accept_guild(ctx.guild.id) == 1: return 
 
         if member == None:
             member = ctx.author
@@ -1133,7 +1133,7 @@ class moderation(commands.Cog):
 
     @commands.command() # mo
     async def unwarn(self, ctx, numbed : int = None):
-        if not ctx.guild.id == 465086262383083520 or  not is_accept_guild(ctx.guild.id) == 1: return 
+        if not is_accept_guild(ctx.guild.id) == 1: return 
         
         if is_accept(ctx.guild.id, 'mo', ctx.author) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5) 
 
@@ -1160,7 +1160,7 @@ class moderation(commands.Cog):
 
     @commands.command() # mo
     async def unwarns(self, ctx, member: discord.Member):
-        if not ctx.guild.id == 465086262383083520 or  not is_accept_guild(ctx.guild.id) == 1: return 
+        if not is_accept_guild(ctx.guild.id) == 1: return 
 
         if is_accept(ctx.guild.id, 'mo', ctx.author) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`\n> `◘ Ваш ранг модератора слишком мал.`'), delete_after = 5)
 
