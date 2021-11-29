@@ -94,6 +94,7 @@ class golosovanie(commands.Cog):
         a2 = ''.join(kto)
         await ctx.send(embed = discord.Embed(description = f'**Голосование закончено, конечный результат:**\n{a}\n**Информация о голосовании:**\n{a2}', colour = 0xFB9E14))
         parse = [ ]
+
         kto = [ ]
         d = 0
 
