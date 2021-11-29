@@ -448,7 +448,7 @@ class mafia(commands.Cog):
             rol: discord.PermissionOverwrite(view_channel = True, read_messages=True, send_messages = True, read_message_history = True)
             }
 
-        chan = self.bot.get_channel885503856556011570)
+        chan = self.bot.get_channel(885503856556011570)
         for i in bmafia.find({"guild": ctx.guild.id}):
             member = discord.utils.get(ctx.guild.members, id = i["id"])
             try:
