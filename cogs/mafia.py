@@ -27,12 +27,15 @@ bmafia = db["mafia"]
 # print(family.find_one({"_id": ctx.author.id})["name"]) -> Получение отдельного значения(Коллекция: Family | Поиск по графе: _id | Значение графы: name) 
 # family.update_one({"_id": ctx.author.id}, {"$set": {"name": settle}}) -> Обновление значения в базе(Коллекция: Family | По графе: _id | Аргумент: $set - Замена | Значение графы: name | Устанавливаемое значение: settle)
 
-global chat_maf, chat_game_maf 
-chat_maf, chat_game_maf = 885503856556011570, 914932219838074920
+def get_guild(guild_id):
+    global chat_maf, chat_game_maf, voice_chat
+    global role_game, role_org, role_massiv
+    if guild_id == 477547500232769536:
+        chat_maf, chat_game_maf, voice_chat = 885503856556011570, 914932219838074920, 806214892012830770
+        role_org, role_game, role_massiv = 820012796523446352, 914455571741167646, ['Мафия', 'Дон мафии', 'Шериф', 'Врач', 'Мирный житель 1', 'Мирный житель 2', 'Мирный житель 3', 'Мирный житель 4', 'Мирный житель 5', 'Ночная Бабочка']
 
 global force, cids, prov, chisla, chisla1, get_role, players, role, game, messageid, coold, delb
 force, cids, prov, chisla, chisla1, get_role, players, role, game, messageid, coold, delb = [ ], [ ], 0, ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'], ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'], [ ], [ ], ['Мафия', 'Дон мафии', 'Шериф', 'Врач', 'Мирный житель 1', 'Мирный житель 2', 'Мирный житель 3', 'Мирный житель 4', 'Мирный житель 5', 'Ночная Бабочка'], 0, 0, 0, 0
-
 
 def setembed(title = None, thumb = None, footer = None, *, text):
     if title is None:
@@ -58,7 +61,7 @@ class mafia(commands.Cog):
 
     @commands.command()
     async def mhelp(self, ctx):
-        message = await ctx.send(embed = setembed(title = 'Команды игры в мафию', thumb = ctx.guild.icon_url, footer = '❌ - Закрыть', text = f'**💬 | Выдача времени:**\n> **`Ознакомительная, За столом, Предсмертная речи` - 1 Минута**\n> **`Оправдательная речь` - 30 секунд**\n> **Речь за столом после 0 круга, должна быть не менее 20 секунд.** `За нарушение выдаётся фол`\n> **События происходят в городе**\n\n💬 Список команд\n> **`/msts` - Начать игру**\n> **1. `/убить <member/memberID>` - Убить игрока**\n> **2. `/фол <member/memberID>` - Выдать фол игроку**\n> **3. `/унфол <member/memberID>` - Снять фол игроку**\n> **4. `/night` - Устанавовить режим "Ночь"(выключение микрофонов и закрытие чата)**\n> **6. `/day` - Установить режим "День"(Включение микрофонов и открытие чата, если у игрока 3 фола, мут не снимает)**\n> **7. `/mstop` - Закончить мафию**\n> **8. `/выставить <member/memberID>` - Выставить игрока на голосование**\n> **9. `/ungolos <member/memberID>` - Снять игрока с голосования**\n> **10. `/голосование` - Запустить режим голосования в канале "Чат-Мафии"**\n> **11. `/golist` - Посмотреть список проголосовавших.**\n> **12. `/линк` - Сделать упоминание о мафии(Раз в 10 минут)**\n> **13. `/heal` - Вернуть пользователя в игру(Если был убит по ошибке)**\n> **14. `/swap_ved @Пользователь#1234` - Передать права ведущего пользователю**\n> **15. `/gamerole` - Запросить список игроков мафии с описанием их ролей**\n**[P.S]: `/act` - Если игра забагалась, пишите это и после `/mstop`**\n\n**Доступно только ведущим!**'))
+        message = await ctx.send(embed = setembed(title = 'Команды игры в мафию', thumb = ctx.guild.icon_url, footer = '❌ - Закрыть', text = f'**💬 | Выдача времени:**\n> **`Ознакомительная, За столом, Предсмертная речи` - 1 Минута**\n> **`Оправдательная речь` - 30 секунд**\n> **Речь за столом после 0 круга, должна быть не менее 20 секунд.** `За нарушение выдаётся фол`\n> **События происходят в городе**\n\n💬 Список команд\n> **0. `/msts` - Начать игру**\n> **1. `/убить <member/memberID>` - Убить игрока**\n> **2. `/фол <member/memberID>` - Выдать фол игроку**\n> **3. `/унфол <member/memberID>` - Снять фол игроку**\n> **4. `/night` - Устанавовить режим "Ночь"(выключение микрофонов и закрытие чата)**\n> **6. `/day` - Установить режим "День"(Включение микрофонов и открытие чата, если у игрока 3 фола, мут не снимает)**\n> **7. `/mstop` - Закончить мафию**\n> **8. `/выставить <member/memberID>` - Выставить игрока на голосование**\n> **9. `/ungolos <member/memberID>` - Снять игрока с голосования**\n> **10. `/голосование` - Запустить режим голосования в канале "Чат-Мафии"**\n> **11. `/golist` - Посмотреть список проголосовавших.**\n> **12. `/линк` - Сделать упоминание о мафии(Раз в 10 минут)**\n> **13. `/heal` - Вернуть пользователя в игру(Если был убит по ошибке)**\n> **14. `/swap_ved @Пользователь#1234` - Передать права ведущего пользователю**\n> **15. `/gamerole` - Запросить список игроков мафии с описанием их ролей**\n**[P.S]: `/act` - Если игра забагалась, пишите это и после `/mstop`**\n\n**Доступно только ведущим!**'))
         await message.add_reaction('❌')
         try:
             react, user = await self.bot.wait_for('reaction_add', timeout= 120.0, check= lambda react, user: user == ctx.author and react.emoji in ['❌'])
@@ -72,15 +75,16 @@ class mafia(commands.Cog):
     @commands.command()
     @commands.cooldown(1, 600, commands.BucketType.member)
     async def msts(self, ctx):
-
+     
         if not ctx.guild.id == 477547500232769536:
             ctx.command.reset_cooldown(ctx)
             return
 
-        global chat_maf
-        global chat_game_maf
         global prov 
         global messageid
+        global chat_maf, chat_game_maf, voice_chat
+        global role_game, role_org, role_massiv
+
 
         await ctx.message.delete()
 
@@ -120,12 +124,14 @@ class mafia(commands.Cog):
 
     @commands.command(aliases = ['оповещение', 'линк'])
     @commands.cooldown(1, 600, commands.BucketType.member)
-    async def link(self, ctx):
-        global chat_maf
-        global chat_game_maf
+    async def link(self, ctx):      
         if not ctx.guild.id == 477547500232769536:
             ctx.command.reset_cooldown(ctx)
             return
+
+        global chat_maf, chat_game_maf, voice_chat
+        global role_game, role_org, role_massiv
+
 
         await ctx.message.delete()
 
@@ -146,8 +152,6 @@ class mafia(commands.Cog):
     @commands.Cog.listener()
     @commands.cooldown(1, 10, commands.BucketType.member)
     async def on_raw_reaction_add(self, payload):
-        global chat_maf
-        global chat_game_maf
         global players
         guild = self.bot.get_guild(payload.guild_id)
         if guild == None:
@@ -166,6 +170,9 @@ class mafia(commands.Cog):
         global coold
         global messageid
         global delb
+        global chat_maf, chat_game_maf, voice_chat
+        global role_game, role_org, role_massiv
+
 
         user = self.bot.get_user(payload.user_id)
         if user.bot:
@@ -434,8 +441,9 @@ class mafia(commands.Cog):
         global prov
         global chisla
         global chisla1
-        global chat_maf
-        global chat_game_maf
+        global chat_maf, chat_game_maf, voice_chat
+        global role_game, role_org, role_massiv
+
         global force
 
         if game == 0:
@@ -453,7 +461,7 @@ class mafia(commands.Cog):
         chisla = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10']
         get_role = [ ]
         role = ['Мафия', 'Дон мафии', 'Шериф', 'Врач', 'Мирный житель 1', 'Мирный житель 2', 'Мирный житель 3', 'Мирный житель 4', 'Мирный житель 5', 'Ночная Бабочка']
-        rol = discord.utils.get(ctx.guild.roles, id = 914455571741167646)
+        rol = discord.utils.get(ctx.guild.roles, id = role_org)
         overwrites = {
             ctx.guild.default_role: discord.PermissionOverwrite(view_channel = False, read_messages=False, read_message_history = False),
             rol: discord.PermissionOverwrite(view_channel = True, read_messages=True, send_messages = True, read_message_history = True)
@@ -539,6 +547,8 @@ class mafia(commands.Cog):
 
     @commands.command(aliases = ['фол'])
     async def fol(self, ctx, member: discord.Member = None):
+        global chat_maf, chat_game_maf, voice_chat
+        global role_game, role_org, role_massiv
 
         if not ctx.guild.id == 477547500232769536:
             return
@@ -614,6 +624,8 @@ class mafia(commands.Cog):
         
     @commands.command(aliases = ['унфол'])
     async def unfol(self, ctx, member: discord.Member = None):
+        global chat_maf, chat_game_maf, voice_chat
+        global role_game, role_org, role_massiv
 
         if not ctx.guild.id == 477547500232769536:
             return
@@ -650,8 +662,9 @@ class mafia(commands.Cog):
     async def mafkill(self, ctx, member: discord.Member = None, arg = None):
         global get_role
         global game
-        global chat_maf
-        global chat_game_maf
+        global chat_maf, chat_game_maf, voice_chat
+        global role_game, role_org, role_massiv
+
 
         if not ctx.guild.id == 477547500232769536:
             return
@@ -708,8 +721,9 @@ class mafia(commands.Cog):
     async def вернуть(self, ctx, member: discord.Member = None):
         global get_role
         global game
-        global chat_maf
-        global chat_game_maf
+        global chat_maf, chat_game_maf, voice_chat
+        global role_game, role_org, role_massiv
+
 
         if not ctx.guild.id == 477547500232769536:
             return
@@ -760,6 +774,9 @@ class mafia(commands.Cog):
     async def swap_ved(self, ctx, member: discord.Member = None):
         global get_role
         global game
+        global chat_maf, chat_game_maf, voice_chat
+        global role_game, role_org, role_massiv
+
 
         if not ctx.guild.id == 477547500232769536:
             return
@@ -801,6 +818,9 @@ class mafia(commands.Cog):
     async def get_roles(self, ctx):
         global get_role
         global game
+        global chat_maf, chat_game_maf, voice_chat
+        global role_game, role_org, role_massiv
+
 
         if not ctx.guild.id == 477547500232769536:
             return
@@ -826,8 +846,9 @@ class mafia(commands.Cog):
     async def night(self, ctx):
         global get_role
         global game
-        global chat_maf
-        global chat_game_maf
+        global chat_maf, chat_game_maf, voice_chat
+        global role_game, role_org, role_massiv
+
 
         if not ctx.guild.id == 477547500232769536:
             return
@@ -856,8 +877,9 @@ class mafia(commands.Cog):
     async def day(self, ctx):
         global get_role
         global game
-        global chat_maf
-        global chat_game_maf
+        global chat_maf, chat_game_maf, voice_chat
+        global role_game, role_org, role_massiv
+
 
         if not ctx.guild.id == 477547500232769536:
             return
@@ -889,6 +911,9 @@ class mafia(commands.Cog):
         global prov
         global messageid
         global delb
+        global chat_maf, chat_game_maf, voice_chat
+        global role_game, role_org, role_massiv
+
 
         ast = 0
 
@@ -947,6 +972,9 @@ class mafia(commands.Cog):
 
     @commands.Cog.listener()
     async def on_member_update(self, before, after):
+        global chat_maf, chat_game_maf, voice_chat
+        global role_game, role_org, role_massiv
+
         if not before.guild.id == 477547500232769536:
             return
 
