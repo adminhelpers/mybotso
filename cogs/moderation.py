@@ -84,6 +84,15 @@ def is_accept(guild_id, mas, member: discord.Member):
           789910831868543027, # Discord Guard
           817813676178407425, # Support Team
           652869023599558656] # Srectator
+
+    if mas == 'imd': mas = [743887697327816705, # Заместитель Гл. Модератора
+          661284961428701209, # Глав. Модерация Discord
+          714504039072661545, # Supervisor Moderation
+          894702472826871850, # Машулька мурлёнок
+          789910831868543027, # Discord Guard
+          817813676178407425, # Support Team
+          851768758267412480, # Junior Moderation
+          652869023599558656] # Srectator
     
     for i in member.roles:
       if i.id in mas: return 1
@@ -1631,9 +1640,9 @@ class moderation(commands.Cog):
         if member == None:
           member = ctx.author
 
-        if is_accept(ctx.guild.id, 'mf', ctx.author) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`'), delete_after = 5)
+        if is_accept(ctx.guild.id, 'imd', ctx.author) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Вам не доступна данная команда, потому что Вы:\n> `◘ Не являетесь модератором`'), delete_after = 5)
 
-        if is_accept(ctx.guild.id, 'mf', member) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Данная команда не доступна, потому что выбранный Вами пользователь:\n> `◘ Не является модератором`'), delete_after = 5)
+        if is_accept(ctx.guild.id, 'imd', member) == 0: return await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = f'Данная команда не доступна, потому что выбранный Вами пользователь:\n> `◘ Не является модератором`'), delete_after = 5)
         
         if moderr.count_documents({"id": member.id}) == 0 and moder.count_documents({"guild": 477547500232769536, "id": member.id}) == 0:
           return await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, данный пользователь не является модератором, либо он не сделал никаких действий.**', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow()), delete_after = 5)
