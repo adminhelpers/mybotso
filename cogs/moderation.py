@@ -81,7 +81,6 @@ def is_accept(guild_id, mas, member: discord.Member):
           661284961428701209, # Глав. Модерация Discord
           714504039072661545, # Supervisor Moderation
           894702472826871850, # Машулька мурлёнок
-          851768758267412480, # Junior Moderator
           789910831868543027, # Discord Guard
           817813676178407425, # Support Team
           652869023599558656] # Srectator
