@@ -625,7 +625,7 @@ async def on_message(ctx):
             if ctx.author.id in uje:
                 return
             
-            embed = discord.Embed(title = 'Получение ролей', description = f'**В Вашем ник-нэйме указан неверный тэг!\n`Discord >> Список всех фракционных тэгов`**', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow())
+            embed = discord.Embed(title = 'Получение ролей', description = f'**В Вашем ник-нэйме указан неверный тэг!\np.s. не забудь поставить ник по форме\n[Фракция Ранг/10] Nick_Name\n`Discord >> Список всех фракционных тэгов`**', colour = 0xFB9E14, timestamp = datetime.datetime.utcnow())
             embed.add_field(name = f'**Тэги Государственных Организаций:**', value = f'> `Пра-во, Банк, МРЭО, ФСБ, ГИБДД, ГУВД, РОВД, Армия, ТСР, НГ-А, МЗ-А, МЗ-Л, Судья`')
             embed.add_field(name = f'**Дополнительные тэги Нелегальных Организаций**', value = f'> `ФМ, СТ, СБ, ЧК, КМ, РМ, УМ`')
             embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
