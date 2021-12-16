@@ -282,7 +282,7 @@ class moderation(commands.Cog):
 
     @commands.command(aliases = ['ссылка', 'инвайт'])
     async def invite(self, ctx):
-        if ctx.guild.id == 477547500232769536: return await ctx.send(embed = discord.Embed(title = f'Discord Helper', description = f'''**Единая ссылка на приглашения пользователей --\n https://discord.gg/rodina03**''', colour = 0xFB9E14))
+        if ctx.guild.id == 477547500232769536: return await ctx.send(embed = discord.Embed(title = f'Discord Helper', description = f'''**Единая ссылка на приглашения пользователей --\n https://discord.gg/9qen8BGzv9**''', colour = 0xFB9E14))
 
     @commands.command() #mf
     async def vmute(self, ctx, member: discord.Member = None):
