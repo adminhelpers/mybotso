@@ -525,8 +525,8 @@ class econom(commands.Cog):
       else:
         tens.append(ctx.author.id)
         await ctx.send(embed = discord.Embed(title = f'Северный Округ | {gb}', description = f'**{ctx.author.mention}, Отдохни минутку и получишь результат!**', colour = 0x09F2C8))
-        a = random.randint(1, 2)
-        if a == 1:
+        a = random.choice([1, 2, 3])
+        if a != 2:
             await asyncio.sleep(5)
             bal = rebt(ctx.guild.id, ctx.author, amount)
             await ctx.send(embed = discord.Embed(title = f'{gguild} | {gb}', description = f'**{ctx.author.mention}, к сожалению, вы проиграли!\nТеперь Ваш баланс составляет: `{bal}` {pb}!**', colour = 0xff0000))
