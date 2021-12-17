@@ -571,7 +571,8 @@ class econom(commands.Cog):
         if ctx.guild == None: return
         if not ctx.guild.id == 477547500232769536 and not ctx.guild.id == 577511138032484360: return
         await ctx.message.delete()
-        mas = [743887697327816705, # Заместитель Гл. Модератора
+        mas = [918629809461010472, # Главный Модератор
+	       743887697327816705, # Заместитель Гл. Модератора
 	       661284961428701209, # Глав. Модерация Discord
 	       714504039072661545, # Supervisor Moderation
 	       894702472826871850] # Машулька мурлёнок
