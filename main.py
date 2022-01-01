@@ -194,7 +194,7 @@ async def shop(ctx):
 
 @bot.command()
 async def reportmessage(ctx):
-await bot.get_channel(817815183094448130).send(embed = discord.Embed(description = 'h'))
+    await bot.get_channel(817815183094448130).send(embed = discord.Embed(description = 'h'))
 
 @bot.command()
 async def avatar(ctx, member: discord.Member = None):
