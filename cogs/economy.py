@@ -188,7 +188,7 @@ class econom(commands.Cog):
             message = await channel.fetch_message(payload.message_id)
             if not message.id == 915017576508194867: return
             memb = discord.utils.get(message.guild.members, id=payload.user_id)   
-            if emoji == '❤️': return await memb.remove_roles(discord.utils.get(guild.roles, id = 915006300734251048))
+            if emoji == '❄️': return await memb.remove_roles(discord.utils.get(guild.roles, id = 915006300734251048))
 		
     @commands.command()
     @commands.has_permissions(administrator = True)
