@@ -550,7 +550,7 @@ class moderation(commands.Cog):
         if member == None:
             return await ctx.send(embed = discord.Embed(description = f'Пожалуйста, `@упомяните` участника для ограничения, опционально укажите срок и/или причину.\nДля выдачи голосового мута в конце ставьте `voice` или `v`\n`Форма:` **{reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]}mute @упоминание [длительность] [причина]**\n\n`{reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]}mute @Провокатор#1234 10s`\n-- я выдам роль мута на 10 минут\n`{reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]}mute @Провокатор#1234 10m за провокацию`\n-- я выдам роль мута на 10 минут с указанием причины\n`{reports.find_one({"guild_id": ctx.guild.id, "proverka": 1})["prefix"]}mute @Провокатор#1234 10m voice`\n-- я выдам голосовой мут на 10 минут\n\n• Допустимые значения: `s, m, h, d`\n• Вместо упоминания можно использовать `ID `участника.', colour = 0xFB9E14), delete_after = 30)  
 
-        if member.id == 327271413725659136: return await ctx.send(embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = 'Хозяина нельзя :('), delete_after = 10)
+        if member.id == 327271413725659136: return await ctx.send(embed = discord.Embed(title = '\⛩️ **__Ошибка доступа__**', description = 'Хозяина нельзя :(\✨'), delete_after = 10)
 
         if ctx.author.top_role.position <= member.top_role.position:
             return await ctx.send(f'`[ERR]` {ctx.author.mention}, `роль этого пользователя выше или равна Вашей!`', delete_after = 5)
