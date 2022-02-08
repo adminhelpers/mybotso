@@ -94,7 +94,7 @@ def is_accept(guild_id, mas, member: discord.Member):
           817813676178407425, # Discord Guard
           851768758267412480, # Junior Moderation
           652869023599558656] # Srectator
-    if member
+
     for i in member.roles:
       if i.id in mas: return 1
     return 0
