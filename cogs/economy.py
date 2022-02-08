@@ -171,6 +171,7 @@ class econom(commands.Cog):
             if not message.id == 915017576508194867: return
             memb = discord.utils.get(message.guild.members, id=payload.user_id)
             if emoji == '❄️': return await memb.add_roles(discord.utils.get(guild.roles, id = 915006300734251048))
+	    if emoji == '❤️': return await memb.add_roles(discord.utils.get(guild.roles, id = 936165314276753418))
 
 
 
@@ -189,7 +190,7 @@ class econom(commands.Cog):
             if not message.id == 915017576508194867: return
             memb = discord.utils.get(message.guild.members, id=payload.user_id)   
             if emoji == '❤️': return await memb.remove_roles(discord.utils.get(guild.roles, id = 915006300734251048))
-	    if emoji == '❤️': return await memb.add_roles(discord.utils.get(guild.roles, id = 936165314276753418))
+	    
 		
     @commands.command()
     @commands.has_permissions(administrator = True)
