@@ -171,24 +171,7 @@ class econom(commands.Cog):
             if not message.id == 915017576508194867: return
             memb = discord.utils.get(message.guild.members, id=payload.user_id)
             if emoji == '❄️': return await memb.add_roles(discord.utils.get(guild.roles, id = 915006300734251048))
-		
-    @commands.Cog.listener()
-    async def on_raw_reaction_add(self, payload):
-        guild = self.bot.get_guild(payload.guild_id)
-        if guild == None: return
-        if not guild.id == 477547500232769536: return
-
-        user = self.bot.get_user(payload.user_id)
-        if user.bot: pass
-        else:
-            emoji, channel = str(payload.emoji), self.bot.get_channel(payload.channel_id)
-            if not channel.id == 902666153674035280: return
-            message = await channel.fetch_message(payload.message_id)
-            if not message.id == 915017576508194867: return
-            memb = discord.utils.get(message.guild.members, id=payload.user_id)
-	    if emoji == '❤️': return await memb.add_roles(discord.utils.get(guild.roles, id = 936165314276753418))
-
-
+	
 
     @commands.Cog.listener()
     async def on_raw_reaction_remove(self, payload):
