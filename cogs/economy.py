@@ -309,7 +309,7 @@ class econom(commands.Cog):
       print(m)
 
     @commands.command(aliases = ["hwen"])
-    async def hellowen(self, ctx):
+    async def hallowen(self, ctx):
       if not ctx.guild.id == 477547500232769536: return
       embed = discord.Embed(title = 'Всем влюбленным сердцам!\❤️', description = f'\❤️**Есть ли у тебя вторая половинка или твое сердце просто наполнено прекрасным чувством?**\n\nЛюбовь — это счастье, которое дарят дргу другу, а мы дарим тебе временную роль <@&942693928950464512> для твоего профиля.**Нажми на реакцию \❤️ и бот подарит тебе частичку нашей любви.**', color = 0x0CDEE7)
       embed.set_footer(text = f'Support Team by lalalalal#5637', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
