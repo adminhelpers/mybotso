@@ -170,7 +170,7 @@ class econom(commands.Cog):
             message = await channel.fetch_message(payload.message_id)
             if not message.id == 915017576508194867: return
             memb = discord.utils.get(message.guild.members, id=payload.user_id)
-            if emoji == '❄️': return await memb.add_roles(discord.utils.get(guild.roles, id = 915006300734251048))
+            if emoji == '❤️': return await memb.add_roles(discord.utils.get(guild.roles, id = 942693928950464512))
 	
 
     @commands.Cog.listener()
@@ -187,7 +187,7 @@ class econom(commands.Cog):
             message = await channel.fetch_message(payload.message_id)
             if not message.id == 915017576508194867: return
             memb = discord.utils.get(message.guild.members, id=payload.user_id)   
-            if emoji == '❄️': return await memb.remove_roles(discord.utils.get(guild.roles, id = 915006300734251048))
+            if emoji == '❤️': return await memb.remove_roles(discord.utils.get(guild.roles, id = 942693928950464512))
 	    
 		
     @commands.command()
@@ -308,11 +308,11 @@ class econom(commands.Cog):
           except: m.append(f'Неизвестный тип с ID: {i["ids"]} - {i["messages"]} coins')
       print(m)
 
-    @commands.command(aliases = ["hwen"])
-    async def hallowen(self, ctx):
+    @commands.command(aliases = ["heart"])
+    async def heart(self, ctx):
       if not ctx.guild.id == 477547500232769536: return
-      embed = discord.Embed(title = 'Мороз и солнце, день чудесный!', description = f'\❄️ **Кажется, согласно календарю, у всех уже наступила зима!** \❄️\n\nБелый снег, пушистый в воздухе кружится\nИ на землю тихо падает, ложится.\n\n**В предверии праздников, хотим порадовать тебя очередной халявной ролью!\👀 Нажми на зимнюю реакцию \❄️ и бот сделает тебе подарок.**', color = 0x0CDEE7)
-      embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
+      embed = discord.Embed(title = 'Всем влюбленным сердцам!\❤️', description = f'\❤️ **Есть ли у тебя вторая половинка или твое сердцо просто наполнено прекрасным чувством?** \❤️\n\nЛюбовь — это счастье, которое дарят дргу другу, а мы дарим тебе временную роль <@&942693928950464512> для твоего профиля.\n\n**Нажми на реакцию \❤️ и бот подарит тебе частичку нашей любви.**', color = 0xff7ec6)
+      embed.set_footer(text = f'Support Team by lalalalal#5637', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
       embed.set_thumbnail(url = ctx.guild.icon_url)
       await ctx.message.delete()
       return await ctx.send('@everyone', embed = embed)
