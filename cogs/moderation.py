@@ -576,7 +576,7 @@ class moderation(commands.Cog):
         sleep = 0
 
         if mute_role in member.roles:
-          return await ctx.send(embed = discord.Embed(description = f'**Пользователь находится в муте!**', color = 0xFB9E14), delete_after = 5) 
+          return await ctx.send(embed = discord.Embed(description = f'**Пользователь находится в муте!!**', color = 0xFB9E14), delete_after = 5) 
         
         if arg.endswith('s') or arg.endswith('сек'):
             try:
