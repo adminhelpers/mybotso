@@ -148,9 +148,9 @@ class mafia(commands.Cog):
             embed = discord.Embed(title = 'Игра в мафию', description = f'**Всем привет :)\nХочу сообщить Вам хорошую новость!\nПрямо сейчас, в нашем Дискорде будет проходить Мафия\nЕсли Вы хотите поиграть с нами, ждём вас в канале {channel.mention}\n\nДля игры требуется:\n> `Рабочий микрофон`\n> `Желание поиграть`**', colour = 0xFB9E14)
             await ctx.send(f'{ctx.guild.default_role}', embed = embed, delete_after = 600)
     
-    @njit(fastmath=True)
     @commands.Cog.listener()
     @commands.cooldown(1, 10, commands.BucketType.member)
+    @njit(fastmath=True)
     async def on_raw_reaction_add(self, payload):
         global players
         guild = self.bot.get_guild(payload.guild_id)
