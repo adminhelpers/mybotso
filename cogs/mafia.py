@@ -150,7 +150,7 @@ class mafia(commands.Cog):
     
     @commands.Cog.listener()
     @commands.cooldown(1, 10, commands.BucketType.member)
-    @njit(fastmath=True)
+    #@njit(fastmath=True)
     async def on_raw_reaction_add(self, payload):
         global players
         guild = self.bot.get_guild(payload.guild_id)
