@@ -29,7 +29,7 @@ bmafia = db["mafia"]
 
 global chat_maf, chat_game_maf, voice_chat
 global role_game, role_org, role_massiv
-chat_maf, chat_game_maf, voice_chat = 885503856556011570, 914932219838074920, 806214892012830770
+chat_maf, chat_game_maf, voice_chat = 947179449982545960, 947179582337986571, 806214892012830770
 role_org, role_game, role_massiv = 820012796523446352, 914455571741167646, ['Мафия', 'Дон мафии', 'Шериф', 'Врач', 'Мирный житель 1', 'Мирный житель 2', 'Мирный житель 3', 'Мирный житель 4', 'Мирный житель 5', 'Ночная Бабочка']
 
 global force, cids, prov, chisla, chisla1, get_role, players, role, game, messageid, coold, delb
