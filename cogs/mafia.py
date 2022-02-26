@@ -27,12 +27,10 @@ bmafia = db["mafia"]
 # print(family.find_one({"_id": ctx.author.id})["name"]) -> Получение отдельного значения(Коллекция: Family | Поиск по графе: _id | Значение графы: name) 
 # family.update_one({"_id": ctx.author.id}, {"$set": {"name": settle}}) -> Обновление значения в базе(Коллекция: Family | По графе: _id | Аргумент: $set - Замена | Значение графы: name | Устанавливаемое значение: settle)
 
-def get_guild(guild_id):
-    global chat_maf, chat_game_maf, voice_chat
-    global role_game, role_org, role_massiv
-    if guild_id == 477547500232769536:
-        chat_maf, chat_game_maf, voice_chat = 885503856556011570, 914932219838074920, 806214892012830770
-        role_org, role_game, role_massiv = 820012796523446352, 914455571741167646, ['Мафия', 'Дон мафии', 'Шериф', 'Врач', 'Мирный житель 1', 'Мирный житель 2', 'Мирный житель 3', 'Мирный житель 4', 'Мирный житель 5', 'Ночная Бабочка']
+global chat_maf, chat_game_maf, voice_chat
+global role_game, role_org, role_massiv
+chat_maf, chat_game_maf, voice_chat = 885503856556011570, 914932219838074920, 806214892012830770
+role_org, role_game, role_massiv = 820012796523446352, 914455571741167646, ['Мафия', 'Дон мафии', 'Шериф', 'Врач', 'Мирный житель 1', 'Мирный житель 2', 'Мирный житель 3', 'Мирный житель 4', 'Мирный житель 5', 'Ночная Бабочка']
 
 global force, cids, prov, chisla, chisla1, get_role, players, role, game, messageid, coold, delb
 force, cids, prov, chisla, chisla1, get_role, players, role, game, messageid, coold, delb = [ ], [ ], 0, ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'], ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'], [ ], [ ], ['Мафия', 'Дон мафии', 'Шериф', 'Врач', 'Мирный житель 1', 'Мирный житель 2', 'Мирный житель 3', 'Мирный житель 4', 'Мирный житель 5', 'Ночная Бабочка'], 0, 0, 0, 0
