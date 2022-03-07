@@ -53,7 +53,7 @@ class privats(commands.Cog):
                     if len(i.members) == 0:
                         await i.delete()
                 channel2 = await member.guild.create_voice_channel(name=f"{member.display_name}",category=mainCategory)
-                await channel2.set_permissions(member, view_channel = True, connect = True, manage_channels = True, manage_permissions = True, speak = True, move_members = False, use_voice_activation = True, priority_speaker = True, mute_members = False, deafen_members = False)
+                await channel2.set_permissions(member, view_channel = True, connect = True, manage_channels = True, manage_permissions = False, speak = True, move_members = True, use_voice_activation = True, priority_speaker = True, mute_members = False, deafen_members = False)
                 vch = self.bot.get_channel(858567874507702272)
                 if not vch.members:
                     s = 0
