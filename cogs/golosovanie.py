@@ -45,7 +45,7 @@ class golosovanie(commands.Cog):
     async def on_ready(self):
         print(f'Cog golosovanie by dollar ム baby#3603 успешно запущен!')
 
-    @command.commands(aliases = ["перенеси"])
+    @commands.command(aliases = ["перенеси"])
     async def moving(self, ctx, member: discord.Member):
         kzam = discord.utils.get(ctx.guils.channels, name = "Кандидат на Заместителя")
         klid = discord.utils.get(ctx.guils.channels, name = "Обзвон [НЕ МЕШАТЬ]")
