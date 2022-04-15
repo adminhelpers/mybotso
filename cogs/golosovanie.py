@@ -45,6 +45,29 @@ class golosovanie(commands.Cog):
     async def on_ready(self):
         print(f'Cog golosovanie by dollar ム baby#3603 успешно запущен!')
 
+    @command.commands(aliases = ["перенеси"])
+    async def moving(self, ctx, member: discord.Member):
+        kzam = discord.utils.get(ctx.guils.channels, name = "Кандидат на Заместителя")
+        klid = discord.utils.get(ctx.guils.channels, name = "Обзвон [НЕ МЕШАТЬ]")
+        embed = discord.Embed(title = '\⛩️ **__Переносчик пользователей__**', description = f'{ctx.author}, вы находитесь в настройках переноса катигории **__СОБЕСЕДОВАНИЕ ЗАМКА__**.\nУкажите, в какой канал необходимо перенести пользователя:\n1️⃣ - {klid}\n2️⃣ - {kzam}')
+        embed.set_footer(text = f'Support Team by dollar ム baby#7641', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
+        message = await ctx.send(f'{ctx.author.mention}', embed = embed, delete_after = 30)
+        await message.add_reaction('1️⃣')
+        await message.add_reaction('2️⃣')
+        try:
+            react, user = await self.bot.wait_for('reaction_add', timeout= 30.0, check= lambda react, user: user == ctx.author and react.emoji in ['✅', '❌'])
+        except Exception:
+            return await message.delete()
+        else:
+            await message.delete()
+            await member.add_roles(discord.utils.get(ctx.guild.roles, id = 910232190175051887))
+            if str(react.emoji) == '1️⃣':
+                schannel = klid
+            elif str(react.emoji) == '2️⃣': 
+                schannel = kzam
+            await member.remove_roles(discord.utils.get(ctx.guild.roles, id = 910232190175051887))
+            await ctx.send(f'{ctx.author.mention}', discord.Embed(title = '\⛩️ **__Переносчик пользователей__**', description = f'{ctx.author}, вы успешно переместили пользователя {member.name}`({member.mention})` в голосовой канал {schannel}'))
+
     @commands.command()
     async def голосование(self, ctx):
         if not ctx.guild.id == 477547500232769536:
