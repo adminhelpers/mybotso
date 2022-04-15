@@ -57,7 +57,7 @@ class golosovanie(commands.Cog):
         await message.add_reaction('1️⃣')
         await message.add_reaction('2️⃣')
         try:
-            react, user = await self.bot.wait_for('reaction_add', timeout= 30.0, check= lambda react, user: user == ctx.author and react.emoji in ['✅', '❌'])
+            react, user = await self.bot.wait_for('reaction_add', timeout= 30.0, check= lambda react, user: user == ctx.author and react.emoji in ['1️⃣', '2️⃣'])
         except Exception:
             return await message.delete()
         else:
