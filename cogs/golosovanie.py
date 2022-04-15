@@ -48,8 +48,8 @@ class golosovanie(commands.Cog):
     @commands.command(aliases = ["перенеси"])
     async def moving(self, ctx, member: discord.Member):
         print('+')
-        kzam = discord.utils.get(ctx.guils.channels, name = "Кандидат на Заместителя")
-        klid = discord.utils.get(ctx.guils.channels, name = "Обзвон [НЕ МЕШАТЬ]")
+        kzam = discord.utils.get(ctx.guild.channels, name = "Кандидат на Заместителя")
+        klid = discord.utils.get(ctx.guild.channels, name = "Обзвон [НЕ МЕШАТЬ]")
         print('+ 2')
         embed = discord.Embed(title = '\⛩️ **__Переносчик пользователей__**', description = f'{ctx.author}, вы находитесь в настройках переноса катигории **__СОБЕСЕДОВАНИЕ ЗАМКА__**.\nУкажите, в какой канал необходимо перенести пользователя:\n1️⃣ - {klid.mention}\n2️⃣ - {kzam.meniton}')
         embed.set_footer(text = f'Support Team by dollar ム baby#7641', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
