@@ -9,6 +9,7 @@ import re
 import os
 import time 
 import os.path
+#ЕСЛИ ГДЕ-ТО НЕ РАБОТАЕТ КОД, ДОБАВИТЬ ИД В БОТ_ПРОЦЕСС(ЭТО В РОЛЯХ)
 import sqlite3
 import asyncio
 import json
@@ -548,7 +549,7 @@ async def on_message(ctx):
                         await ctx.author.send('`[SUCCESFULL] Ваши доказательства отправлены в необходимый канал`')
                         return
                       
-        elif not ctx.guild.id in [477547500232769536, 577511138032484360, 465086262383083520]: return 
+        elif not ctx.guild.id in [477547500232769536, 577511138032484360, 465086262383083520, 910223177278427146]: return 
         
     await bot.process_commands(ctx)        
     msg = ctx.content.lower()
