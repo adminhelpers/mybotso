@@ -69,7 +69,7 @@ class golosovanie(commands.Cog):
                 schannel = kzam
             await member.move_to(schannel)
             await member.remove_roles(discord.utils.get(ctx.guild.roles, id = 910232190175051887))
-            await ctx.send(f'{ctx.author.mention}', discord.Embed(title = '\⛩️ **__Переносчик пользователей__**', description = f'{ctx.author}, вы успешно переместили пользователя {member.name}`({member.mention})` в голосовой канал \🗣️ {schannel.name}'))
+            await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Переносчик пользователей__**', description = f'{ctx.author}, вы успешно переместили пользователя {member.name}`({member.mention})` в голосовой канал \🗣️ {schannel.name}'))
 
     @commands.command()
     async def голосование(self, ctx):
