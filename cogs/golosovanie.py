@@ -67,6 +67,7 @@ class golosovanie(commands.Cog):
                 schannel = klid
             elif str(react.emoji) == '2️⃣': 
                 schannel = kzam
+            await member.move_to(schannel)
             await member.remove_roles(discord.utils.get(ctx.guild.roles, id = 910232190175051887))
             await ctx.send(f'{ctx.author.mention}', discord.Embed(title = '\⛩️ **__Переносчик пользователей__**', description = f'{ctx.author}, вы успешно переместили пользователя {member.name}`({member.mention})` в голосовой канал \🗣️ {schannel.name}'))
 
