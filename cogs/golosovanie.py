@@ -48,16 +48,18 @@ class golosovanie(commands.Cog):
     @commands.command(aliases = ["перенеси"])
     async def moving(self, ctx, member: discord.Member):
         print('+')
-        kzam = discord.utils.get(ctx.guild.channels, name = "Кандидат на Заместителя")
-        klid = discord.utils.get(ctx.guild.channels, name = "Обзвон [НЕ МЕШАТЬ]")
+        kzam = discord.utils.get(ctx.guild.channels, name = "🔕︙зал ожидания")
+        klid = discord.utils.get(ctx.guild.channels, name = "🔒︙основной этап")
+        kitog = discord.utils.get(ctx.guild.channels, name = "💡︙итоги обзвона")
         print('+ 2')
-        embed = discord.Embed(title = '\⛩️ **__Переносчик пользователей__**', description = f'{ctx.author}, вы находитесь в настройках переноса катигории **__СОБЕСЕДОВАНИЕ ЗАМКА__**.\nУкажите, в какой канал необходимо перенести пользователя:\n1️⃣ — \🗣️ {klid}\n2️⃣ — \🗣️ {kzam}')
+        embed = discord.Embed(title = '\⛩️ **__Переносчик пользователей__**', description = f'{ctx.author}, вы находитесь в настройках переноса катигории **__СОБЕСЕДОВАНИЕ ЗАМКА__**.\nУкажите, в какой канал необходимо перенести пользователя:\n1️⃣ — \🗣️ {klid.name}\n2️⃣ — \🗣️ {kzam.name}\n3️⃣ — \🗣️ {kitog.name}')
         embed.set_footer(text = f'Support Team by dollar ム baby#7641', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
         message = await ctx.send(f'{ctx.author.mention}', embed = embed, delete_after = 30)
         await message.add_reaction('1️⃣')
         await message.add_reaction('2️⃣')
+        await message.add_reaction('3️⃣')
         try:
-            react, user = await self.bot.wait_for('reaction_add', timeout= 30.0, check= lambda react, user: user == ctx.author and react.emoji in ['1️⃣', '2️⃣'])
+            react, user = await self.bot.wait_for('reaction_add', timeout= 30.0, check= lambda react, user: user == ctx.author and react.emoji in ['1️⃣', '2️⃣', '3️⃣'])
         except Exception:
             return await message.delete()
         else:
@@ -67,6 +69,8 @@ class golosovanie(commands.Cog):
                 schannel = klid
             elif str(react.emoji) == '2️⃣': 
                 schannel = kzam
+            elif str(react.emoji) == '3️⃣': 
+                schannel = kitog
             await member.move_to(schannel)
             await member.remove_roles(discord.utils.get(ctx.guild.roles, id = 910232190175051887))
             await ctx.send(f'{ctx.author.mention}', embed = discord.Embed(title = '\⛩️ **__Переносчик пользователей__**', description = f'{ctx.author}, вы успешно переместили пользователя {member.mention}`({member.name})` в голосовой канал \🗣️ {schannel.name}'))
