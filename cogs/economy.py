@@ -742,7 +742,7 @@ class econom(commands.Cog):
             a = users.find_one({"guild": ctx.guild.id, "ids": ctx.author.id})["messages"]
             users.update_one({"guild": ctx.guild.id, "ids": ctx.author.id}, {"$set": {"messages": a + 1}})
             one, two = dt.strftime("%A"), dt.strftime("%d")
-            b = mons.find_one({"guild": ctx.guild.id, "ids": ctx.author.id})[one.loser()]
+            b = mons.find_one({"guild": ctx.guild.id, "ids": ctx.author.id})[one.lower()]
             if int(two) == mons.find_one({"guild": ctx.guild.id, "ids": ctx.author.id})["date"]: mons.update_one({"guild": ctx.guild.id, "ids": ctx.author.id}, {"$set": {one.lower(): b + 1}})
             else: 
                 mons.update_one({"guild": ctx.guild.id, "ids": ctx.author.id}, {"$set": {one.lower(): 1, "date": int(two)}})
