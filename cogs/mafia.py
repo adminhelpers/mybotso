@@ -15,7 +15,6 @@ from Cybernator import Paginator
 import jishaku
 import wikipedia
 from pymongo import MongoClient
-from numba import njit
 
 cluster = MongoClient("mongodb+srv://dbrbase:YqxZgV1GL8s4CVxX@rodinadb.rhew3.mongodb.net/rodinaname?retryWrites=true&w=majority")
 db = cluster["rodina"]
