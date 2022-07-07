@@ -513,7 +513,6 @@ async def on_message(ctx):
     global uje
     role_registr = ['!роль', 'роль', 'Роль', '!Роль']
 
-    if ctx.guild == None: return
     if not ctx.author.bot:
         print('+1')
         if not ctx.guild:
@@ -554,6 +553,7 @@ async def on_message(ctx):
                         await ctx.author.send('`[SUCCESFULL] Ваши доказательства отправлены в необходимый канал`')
                         return
                       
+        if ctx.guild == None: return       
         elif not ctx.guild.id in [477547500232769536, 577511138032484360, 465086262383083520, 910223177278427146]: return 
         
     await bot.process_commands(ctx)        
