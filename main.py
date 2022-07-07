@@ -514,15 +514,12 @@ async def on_message(ctx):
     role_registr = ['!роль', 'роль', 'Роль', '!Роль']
 
     if not ctx.author.bot:
-        print('+1')
         if not ctx.guild:
-            print('+2')
             for i in rolef.find({"user_id": ctx.author.id}):
                 if not i["zaproschannel"] == 0:
                     if ctx.attachments == []:
                         return
                     else:
-                        print('+3')
                         chanel = bot.get_channel(i["zaproschannel"])
                         guild = bot.get_guild(477547500232769536)
                         member = discord.utils.get(guild.members, id = i["user_id"])
@@ -534,7 +531,6 @@ async def on_message(ctx):
                         embed.set_footer(text = f'Support Team by dollar ム baby#3603', icon_url = 'https://images-ext-1.discordapp.net/external/cVW5pAsyoLnQiTP-DZzQ3hLnIq-2Kw3rBZUVZ33Cz30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/729309765431328799/684fd7878d39ba93511700dbf7a45931.webp?width=677&height=677')
                         embed.add_field(name = 'Аккаунт', value = f'`Пользователь`: {ctx.author.mention}', inline = True)
                         embed.add_field(name = 'Никнейм', value = f'`Ник:` {ctx.author.display_name}', inline = True)
-                        print('+4')
                         if i["leader"] > 1:
                             embed.add_field(name = 'Роли для выдачи', value = f'`Роли для выдачи`: {discord.utils.get(guild.roles, id = i["role_id"]).mention} `и` {discord.utils.get(guild.roles, id = i["leader"]).mention}', inline = False)
                         else:
@@ -545,7 +541,6 @@ async def on_message(ctx):
                         else:
                             embed.add_field(name = 'Действия', value = '`[✔️] - выдать роль.`\n`[❌] - отказать.`\n`[🇩] - удалить сообщение.`\n`[❔] - Запросить скрин-шот статистики`\n`[✏️] - Установить пользователю Nick_Name`')
                         embed.set_image(url = ctx.attachments[0].url)
-                        print('+5')
                         await message.edit(embed = embed)
                         embed1 = discord.Embed(description = f'**Скриншот прикреплён к изначальному [сообщению-запросу]({message.jump_url}).**', colour = 0xFB9E14) 
                         mesg = await chanel.send(f'`[UPDATE]` `Пользователь {member.display_name}`({member.mention}) `отправил доказательства на получение роли!`', embed = embed1)
@@ -556,6 +551,7 @@ async def on_message(ctx):
         if ctx.guild == None: return       
         elif not ctx.guild.id in [477547500232769536, 577511138032484360, 465086262383083520, 910223177278427146]: return 
         
+    if ctx.guild == None: return  
     await bot.process_commands(ctx)        
     msg = ctx.content.lower()
     if not ctx.guild.id == 477547500232769536: return
